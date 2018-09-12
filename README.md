@@ -8,7 +8,7 @@ However, if these types of tools serve as an excellent way to provide wider acce
 Currently, the industry, in general, does not track whether medical procedures or diagnoses work or not, and frequently patients don't monitor their health after a treatment as seriously as they should.
 According to studies, doctors have a hard time finding any data exploring the long-term effects of procedures and treatements, because 84 percent of U.S.-recognized medical specialties have no data registries at all.
 
-I would like to build a platform that allows a better follow-up of medical treatments.
+I would like to build a platform that, in addition to connecting the patient and the doctor through the scheduling of medical appointments, allows a better control of medical treatments after the visit.
 
 ### Project Technologies/Techniques (TBD)
 * Security/Authentication
