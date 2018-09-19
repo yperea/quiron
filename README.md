@@ -43,12 +43,10 @@ I would like to build a platform that, in addition to connecting the patient and
     * JUnit tests to achieve 80%+ code coverage
 * IDE: IntelliJ IDEA
 
-### Supporting Materials (TBD)
-* Screen Design
-* Application Flow
-* Database Model
+### Supporting Materials (WIP)
+* [Screen Design](docs/design/Screens.md)
 
-### Project Plan (TBD)
+### Project Plan (WIP)
 
 ### Journal (TBD)
 
