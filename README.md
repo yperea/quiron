@@ -1,7 +1,7 @@
-# Quiron Project
+# Project Quiron
 
 ### Problem Statement
-Although the health sector is traditionally a conservative and slow-adapting industry, there is an increasing volume of new tools providing new alternatives to provide medical care to patients in very innovative ways, such as web platforms where video-on-demand visits can be made with a variety of physicians, therapists, specialists and health professionals in general. For instance, websites like amwell.com or livehealthonline.com.
+Although health sector is traditionally a conservative and slow-adapting industry, there is an increasing volume of new tools providing new alternatives to provide medical care to patients in very innovative ways, such as web platforms where video-on-demand visits can be made with a variety of physicians, therapists, specialists and health professionals in general. For instance, websites like amwell.com or livehealthonline.com.
 
 However, if these types of tools serve as an excellent way to provide wider access to medical care, sometimes we would like to know what happens next ... after the visit is over.
 
@@ -10,7 +10,7 @@ According to studies, doctors have a hard time finding any data exploring the lo
 
 I would like to build a platform that, in addition to connecting the patient and the doctor through the scheduling of medical appointments, allows a better control of medical treatments after the visit.
 
-### Project Technologies/Techniques (TBD)
+### Project Technologies/Techniques (WIP)
 * Security/Authentication
     * Tomcat's JDBC Realm Authentication
     * Admin role: create/read/update/delete (crud) of all data

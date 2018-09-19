@@ -2,10 +2,12 @@
 
 | Date | Task | Hours | Notes|
 |------|------|-------|------|
-| 09/03/18| Set up project repository, write problem statement, journal example, technologies used| 2 | |
-| 09/03/18| Added a little more detail to the journal and technologies used in the readme.md   | .5  |   |
-| 09/07/18| Began researching the google maps api and weather services. Documented my findings in this repo | .5 | |
-| 09/07/18| Wireframes, created project in intellij, recorded video of the process/converted/posted to youtube, journal entry and updates to the project plan, created jsps | 4 | |
-| 09/07/18| Wireframe review and updates | .5 | |
-| 09/08/18| Added log4j, junit, hibernate, sql driver, geronimo, built first daos, updated week 3 details and exercises  | 4 | |
-| 09/08/18| Design and create database tables, journal entry, time entry, plan update | 1.5
+| 09/07/18| Chosing Individual Project. Researching about Telehealth platforms in the market. Preliminar understanding on the flow process.| 6 | |
+| 09/08/18| Watching Week2 videos. Working on Activities 1 to 4 for Week2. A little more researching about health apps in the market. Defining Preliminar project scope and problem statement definition. | 11 |   |
+| 09/09/18| Getting better understanding about the current platforms and the major issues on healthcare. Writing Problem Statement definition for Individual Project. | 4 | |
+| 09/09/18| Watching JUnit videos and Set up individual project.| 3 | |
+| 09/14/18| Working on Week 2 Exercise. | 7 | IDE Bug #1: Test coverage option not found in my Ubuntu IntelliJ. I had to run it from my Windows IntelliJ. I'm planning resintalling IntelliJ on my Ubuntu Machine and Test it out again. |
+| 09/15/18| Running Test Cases for Week 2 Exercise and Publish Evidence of Logging and Test Coverage. | 1 | |
+| 09/16/18| Watching Week 3 videos and solving IDE Bug #1 | 1.5 | IDE Bug #1: Solved! Cause: Code Coverage plugin was disabled. Solution: The plugin is activated by default. If the plugin is disabled, enable it on the Plugins settings page as described in Managing Plugins. If the plugin is disabled, the code coverage tabs will not be visible in the run/debug configuration dialogs. Visit [Code Coverage](https://www.jetbrains.com/help/idea/code-coverage.html) for more information. |
+| 09/18/18| Creating Screen Design for Individual Project. | 4 | |
+| 09/19/18| Adding Design Documents, Time Log and Project Plan for Individual Project. | 3 | |
