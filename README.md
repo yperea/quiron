@@ -46,7 +46,7 @@ I would like to build a platform that, in addition to connecting the patient and
 ### Supporting Materials
 * [Screen Design](docs/design/Screens.md)
 
-### [Project Plan] (PROJECTPLAN.md)
+### [Project Plan](PROJECTPLAN.md)
 
 ### Journal (TBD)
 
