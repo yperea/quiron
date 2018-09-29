@@ -1,97 +1,84 @@
 package co.net.quiron.persistence.shared;
 
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Root;
-
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import javax.persistence.criteria.*;
+import java.util.List;
 
 /**
- * A generic DAO somewhat inspired by http://rodrigouchoa.wordpress.com
+ * An entity DAO based on Generic DAO Class provided by Paula Waite.
  *
+ * @param <T> the type parameter
  */
-public class GenericDAO<T> {
+public class EntityDAO<T> {
     private Class<T> type;
+    private Session session;
+    private Transaction transaction;
     private final Logger logger = LogManager.getLogger(this.getClass());
 
-
     /**
-     * Instantiates a new Generic dao.
+     * Instantiates a new Entity DAO.
      *
-     * @param type the entity type, for example, User.
+     * @param entityType the entity type
      */
-    public GenericDAO(Class<T> type) {
-        this.type = type;
+    public EntityDAO(Class<T> entityType) {
+        this.type = entityType;
     }
 
     /**
-     * Gets all entities
+     * Gets all the records
      *
      * @return the all entities
      */
     public List<T> getAll() {
-        Session session = getSession();
-
+        session = getSession();
         CriteriaBuilder builder = session.getCriteriaBuilder();
-
         CriteriaQuery<T> query = builder.createQuery(type);
         Root<T> root = query.from(type);
         List<T> list = session.createQuery(query).getResultList();
         session.close();
         return list;
-
     }
-
 
     /**
      * Gets an entity by id
-     * @param id entity id to search by
-     * @return entity
+     *
+     * @param <T> the type parameter
+     * @param id  entity id to search by
+     * @return entity by id
      */
     public <T> T getById(int id) {
-        Session session = getSession();
+        session = getSession();
         T entity = (T)session.get(type, id);
         session.close();
         return entity;
     }
 
     /**
-     * update Entity
-     * @param entity Entity to be inserted or updated
-     */
-    public void saveOrUpdate(T entity) {
-        Session session = getSession();
-        Transaction transaction = session.beginTransaction();
-
-        session.saveOrUpdate(entity);
-
-        transaction.commit();
-        session.close();
-    }
-
-    /**
      * Insert an Entity
-     * @param entity  entity to be inserted or updated
-     * @return id of the inserted user
+     *
+     * @param entity entity to be inserted or updated
+     * @return id of the inserted record
      */
     public int insert(T entity) {
         int id = 0;
-
-        Session session = getSession();
-        Transaction transaction = session.beginTransaction();
-
+        session = getSession();
+        transaction = session.beginTransaction();
         id = (int)session.save(entity);
-
-        transaction.commit();
-        session.close();
         return id;
+    }
+
+    /**
+     * Update an Entity
+     *
+     * @param entity Entity to be inserted or updated
+     */
+    public void update(T entity) {
+        session = getSession();
+        transaction = session.beginTransaction();
+        session.saveOrUpdate(entity);
     }
 
     /**
@@ -100,13 +87,9 @@ public class GenericDAO<T> {
      * @param entity entity to be deleted
      */
     public void delete(T entity) {
-        Session session = getSession();
-        Transaction transaction = session.beginTransaction();
-
+        session = getSession();
+        transaction = session.beginTransaction();
         session.delete(entity);
-
-        transaction.commit();
-        session.close();
     }
 
     /**
@@ -115,5 +98,13 @@ public class GenericDAO<T> {
      */
     private Session getSession() {
         return SessionFactoryProvider.getSessionFactory().openSession();
+    }
+
+    /**
+     * Commit changes to the Database and closes the session.
+     */
+    public void saveChanges() {
+        transaction.commit();
+        session.close();
     }
 }

@@ -10,6 +10,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+/**
+ * Controller for the Address Type model.
+ */
 @WebServlet(
         name = "get-address-types",
         urlPatterns = {"/AddressTypes", "/AddressTypes/index"}

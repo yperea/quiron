@@ -11,10 +11,19 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * Test out The Address Types manager.
+ */
 class AddressTypesManagerTest {
 
+    /**
+     * Creates an AddressTypes manager object.
+     */
     AddressTypesManager addressTypesManager;
 
+    /**
+     * Sets up.
+     */
     @BeforeEach
     void setUp() {
         addressTypesManager = new AddressTypesManager();
@@ -22,39 +31,48 @@ class AddressTypesManagerTest {
         dbm.runSQL("cleandb.sql");
     }
 
+    /**
+     * Test the get all address types.
+     */
     @Test
     void testGetAllAddressTypes() {
         List<AddressType> addressTypeList = addressTypesManager.getAll();
         assertEquals(5, addressTypeList.size());
     }
 
+    /**
+     * Test the address type creation.
+     */
     @Test
     void testInsertAddressType() {
 
         String newAddressTypeName = "Headquarter";
         AddressType addressType = new AddressType(newAddressTypeName);
-        int id = addressTypesManager.insert(addressType);
+        int id = addressTypesManager.create(addressType);
 
-        AddressType insertedAddressType = addressTypesManager.getById(id);
+        AddressType insertedAddressType = addressTypesManager.get(id);
 
         assertNotEquals(0, id);
         assertEquals("Headquarter", insertedAddressType.getName());
         assertNotNull(insertedAddressType.getCreatedDate());
     }
 
+    /**
+     * Test the address type update.
+     */
     @Test
-    void UpdateAddressType() {
+    void testUpdateAddressType() {
 
         String newAddressTypeName = "Main Office";
         int addressTypeId = 3;
         Date currentModifiedDate = null;
 
-        AddressType addressTypeToUpdate = addressTypesManager.getById(addressTypeId);
+        AddressType addressTypeToUpdate = addressTypesManager.get(addressTypeId);
         addressTypeToUpdate.setName(newAddressTypeName);
         currentModifiedDate = addressTypeToUpdate.getModifiedDate();
 
         addressTypesManager.update(addressTypeToUpdate);
-        AddressType addressTypeUpdated = addressTypesManager.getById(addressTypeId);
+        AddressType addressTypeUpdated = addressTypesManager.get(addressTypeId);
 
         assertEquals(newAddressTypeName, addressTypeUpdated.getName());
         assertNotNull(addressTypeUpdated.getModifiedDate());
@@ -63,12 +81,14 @@ class AddressTypesManagerTest {
         }
     }
 
+    /**
+     * Test the address type deletion.
+     */
     @Test
-    void DeleteAddressType() {
+    void testDeleteAddressType() {
 
         int addressTypeIdToDelete = 3;
-
-        addressTypesManager.delete(addressTypesManager.getById(addressTypeIdToDelete));
-        assertNull(addressTypesManager.getById(addressTypeIdToDelete));
+        addressTypesManager.delete(addressTypesManager.get(addressTypeIdToDelete));
+        assertNull(addressTypesManager.get(addressTypeIdToDelete));
     }
 }

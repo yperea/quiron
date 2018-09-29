@@ -9,6 +9,11 @@ import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.Date;
 
+/**
+ * This class represents the Address Type domain for the application.
+ *
+ * @autor yperea
+ */
 @Entity(name = "AddressType")
 @Table(name = "ADDRESS_TYPES")
 @Data
@@ -46,7 +51,6 @@ public class AddressType {
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "ModifiedDate")
     private Date modifiedDate;
-
 
 }
 
