@@ -62,6 +62,38 @@ public class GenericDAO<T> {
     }
 
     /**
+     * update Entity
+     * @param entity Entity to be inserted or updated
+     */
+    public void saveOrUpdate(T entity) {
+        Session session = getSession();
+        Transaction transaction = session.beginTransaction();
+
+        session.saveOrUpdate(entity);
+
+        transaction.commit();
+        session.close();
+    }
+
+    /**
+     * Insert an Entity
+     * @param entity  entity to be inserted or updated
+     * @return id of the inserted user
+     */
+    public int insert(T entity) {
+        int id = 0;
+
+        Session session = getSession();
+        Transaction transaction = session.beginTransaction();
+
+        id = (int)session.save(entity);
+
+        transaction.commit();
+        session.close();
+        return id;
+    }
+
+    /**
      * Deletes the entity.
      *
      * @param entity entity to be deleted
@@ -69,7 +101,9 @@ public class GenericDAO<T> {
     public void delete(T entity) {
         Session session = getSession();
         Transaction transaction = session.beginTransaction();
+
         session.delete(entity);
+
         transaction.commit();
         session.close();
     }
@@ -80,7 +114,5 @@ public class GenericDAO<T> {
      */
     private Session getSession() {
         return SessionFactoryProvider.getSessionFactory().openSession();
-
     }
-
 }
