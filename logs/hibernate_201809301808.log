@@ -1,0 +1,583 @@
+[DEBUG] 2018-09-30 18:08:51.482 [main] IntegratorServiceImpl - Adding Integrator [org.hibernate.cfg.beanvalidation.BeanValidationIntegrator].
+[DEBUG] 2018-09-30 18:08:51.492 [main] IntegratorServiceImpl - Adding Integrator [org.hibernate.secure.spi.JaccIntegrator].
+[DEBUG] 2018-09-30 18:08:51.497 [main] IntegratorServiceImpl - Adding Integrator [org.hibernate.cache.internal.CollectionCacheInvalidator].
+[INFO ] 2018-09-30 18:08:51.571 [main] Version - HHH000412: Hibernate Core {5.2.12.Final}
+[INFO ] 2018-09-30 18:08:51.573 [main] Environment - HHH000206: hibernate.properties not found
+[DEBUG] 2018-09-30 18:08:51.619 [main] LocalXmlResourceResolver - Interpreting public/system identifier : [-//Hibernate/Hibernate Configuration DTD//EN] - [http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd]
+[DEBUG] 2018-09-30 18:08:51.620 [main] LocalXmlResourceResolver - Recognized hibernate-configuration identifier; attempting to resolve on classpath under org/hibernate/
+[DEBUG] 2018-09-30 18:08:51.626 [main] JaxbCfgProcessor - cfg.xml document did not define namespaces; wrapping in custom event reader to introduce namespace information
+[DEBUG] 2018-09-30 18:08:51.919 [main] ServiceBinding - Overriding existing service binding [org.hibernate.secure.spi.JaccService]
+[DEBUG] 2018-09-30 18:08:51.945 [main] RegionFactoryInitiator - Cache region factory : org.hibernate.cache.internal.NoCachingRegionFactory
+[INFO ] 2018-09-30 18:08:51.955 [main] Version - HCANN000001: Hibernate Commons Annotations {5.0.1.Final}
+[DEBUG] 2018-09-30 18:08:51.986 [main] BasicTypeRegistry - Adding type registration boolean -> org.hibernate.type.BooleanType@43015c69
+[DEBUG] 2018-09-30 18:08:51.986 [main] BasicTypeRegistry - Adding type registration boolean -> org.hibernate.type.BooleanType@43015c69
+[DEBUG] 2018-09-30 18:08:51.986 [main] BasicTypeRegistry - Adding type registration java.lang.Boolean -> org.hibernate.type.BooleanType@43015c69
+[DEBUG] 2018-09-30 18:08:51.987 [main] BasicTypeRegistry - Adding type registration numeric_boolean -> org.hibernate.type.NumericBooleanType@2415fc55
+[DEBUG] 2018-09-30 18:08:51.988 [main] BasicTypeRegistry - Adding type registration true_false -> org.hibernate.type.TrueFalseType@1890516e
+[DEBUG] 2018-09-30 18:08:51.989 [main] BasicTypeRegistry - Adding type registration yes_no -> org.hibernate.type.YesNoType@2bec854f
+[DEBUG] 2018-09-30 18:08:51.990 [main] BasicTypeRegistry - Adding type registration byte -> org.hibernate.type.ByteType@6dd7b5a3
+[DEBUG] 2018-09-30 18:08:51.991 [main] BasicTypeRegistry - Adding type registration byte -> org.hibernate.type.ByteType@6dd7b5a3
+[DEBUG] 2018-09-30 18:08:51.991 [main] BasicTypeRegistry - Adding type registration java.lang.Byte -> org.hibernate.type.ByteType@6dd7b5a3
+[DEBUG] 2018-09-30 18:08:51.992 [main] BasicTypeRegistry - Adding type registration character -> org.hibernate.type.CharacterType@7bf3a5d8
+[DEBUG] 2018-09-30 18:08:51.992 [main] BasicTypeRegistry - Adding type registration char -> org.hibernate.type.CharacterType@7bf3a5d8
+[DEBUG] 2018-09-30 18:08:51.992 [main] BasicTypeRegistry - Adding type registration java.lang.Character -> org.hibernate.type.CharacterType@7bf3a5d8
+[DEBUG] 2018-09-30 18:08:51.994 [main] BasicTypeRegistry - Adding type registration short -> org.hibernate.type.ShortType@5e21e98f
+[DEBUG] 2018-09-30 18:08:51.994 [main] BasicTypeRegistry - Adding type registration short -> org.hibernate.type.ShortType@5e21e98f
+[DEBUG] 2018-09-30 18:08:51.994 [main] BasicTypeRegistry - Adding type registration java.lang.Short -> org.hibernate.type.ShortType@5e21e98f
+[DEBUG] 2018-09-30 18:08:51.996 [main] BasicTypeRegistry - Adding type registration integer -> org.hibernate.type.IntegerType@3fce8fd9
+[DEBUG] 2018-09-30 18:08:51.996 [main] BasicTypeRegistry - Adding type registration int -> org.hibernate.type.IntegerType@3fce8fd9
+[DEBUG] 2018-09-30 18:08:51.996 [main] BasicTypeRegistry - Adding type registration java.lang.Integer -> org.hibernate.type.IntegerType@3fce8fd9
+[DEBUG] 2018-09-30 18:08:51.998 [main] BasicTypeRegistry - Adding type registration long -> org.hibernate.type.LongType@37911f88
+[DEBUG] 2018-09-30 18:08:51.999 [main] BasicTypeRegistry - Adding type registration long -> org.hibernate.type.LongType@37911f88
+[DEBUG] 2018-09-30 18:08:51.999 [main] BasicTypeRegistry - Adding type registration java.lang.Long -> org.hibernate.type.LongType@37911f88
+[DEBUG] 2018-09-30 18:08:52.000 [main] BasicTypeRegistry - Adding type registration float -> org.hibernate.type.FloatType@4f4c4b1a
+[DEBUG] 2018-09-30 18:08:52.001 [main] BasicTypeRegistry - Adding type registration float -> org.hibernate.type.FloatType@4f4c4b1a
+[DEBUG] 2018-09-30 18:08:52.001 [main] BasicTypeRegistry - Adding type registration java.lang.Float -> org.hibernate.type.FloatType@4f4c4b1a
+[DEBUG] 2018-09-30 18:08:52.002 [main] BasicTypeRegistry - Adding type registration double -> org.hibernate.type.DoubleType@3116c353
+[DEBUG] 2018-09-30 18:08:52.002 [main] BasicTypeRegistry - Adding type registration double -> org.hibernate.type.DoubleType@3116c353
+[DEBUG] 2018-09-30 18:08:52.003 [main] BasicTypeRegistry - Adding type registration java.lang.Double -> org.hibernate.type.DoubleType@3116c353
+[DEBUG] 2018-09-30 18:08:52.004 [main] BasicTypeRegistry - Adding type registration big_decimal -> org.hibernate.type.BigDecimalType@1130520d
+[DEBUG] 2018-09-30 18:08:52.004 [main] BasicTypeRegistry - Adding type registration java.math.BigDecimal -> org.hibernate.type.BigDecimalType@1130520d
+[DEBUG] 2018-09-30 18:08:52.006 [main] BasicTypeRegistry - Adding type registration big_integer -> org.hibernate.type.BigIntegerType@7a3793c7
+[DEBUG] 2018-09-30 18:08:52.006 [main] BasicTypeRegistry - Adding type registration java.math.BigInteger -> org.hibernate.type.BigIntegerType@7a3793c7
+[DEBUG] 2018-09-30 18:08:52.007 [main] BasicTypeRegistry - Adding type registration string -> org.hibernate.type.StringType@5456afaa
+[DEBUG] 2018-09-30 18:08:52.007 [main] BasicTypeRegistry - Adding type registration java.lang.String -> org.hibernate.type.StringType@5456afaa
+[DEBUG] 2018-09-30 18:08:52.008 [main] BasicTypeRegistry - Adding type registration nstring -> org.hibernate.type.StringNVarcharType@4a00d9cf
+[DEBUG] 2018-09-30 18:08:52.009 [main] BasicTypeRegistry - Adding type registration ncharacter -> org.hibernate.type.CharacterNCharType@4c012563
+[DEBUG] 2018-09-30 18:08:52.010 [main] BasicTypeRegistry - Adding type registration url -> org.hibernate.type.UrlType@329dbdbf
+[DEBUG] 2018-09-30 18:08:52.010 [main] BasicTypeRegistry - Adding type registration java.net.URL -> org.hibernate.type.UrlType@329dbdbf
+[DEBUG] 2018-09-30 18:08:52.011 [main] BasicTypeRegistry - Adding type registration Duration -> org.hibernate.type.DurationType@479cbee5
+[DEBUG] 2018-09-30 18:08:52.011 [main] BasicTypeRegistry - Adding type registration java.time.Duration -> org.hibernate.type.DurationType@479cbee5
+[DEBUG] 2018-09-30 18:08:52.063 [main] BasicTypeRegistry - Adding type registration Instant -> org.hibernate.type.InstantType@1f81aa00
+[DEBUG] 2018-09-30 18:08:52.063 [main] BasicTypeRegistry - Adding type registration java.time.Instant -> org.hibernate.type.InstantType@1f81aa00
+[DEBUG] 2018-09-30 18:08:52.065 [main] BasicTypeRegistry - Adding type registration LocalDateTime -> org.hibernate.type.LocalDateTimeType@55c53a33
+[DEBUG] 2018-09-30 18:08:52.066 [main] BasicTypeRegistry - Adding type registration java.time.LocalDateTime -> org.hibernate.type.LocalDateTimeType@55c53a33
+[DEBUG] 2018-09-30 18:08:52.072 [main] BasicTypeRegistry - Adding type registration LocalDate -> org.hibernate.type.LocalDateType@f14a7d4
+[DEBUG] 2018-09-30 18:08:52.072 [main] BasicTypeRegistry - Adding type registration java.time.LocalDate -> org.hibernate.type.LocalDateType@f14a7d4
+[DEBUG] 2018-09-30 18:08:52.084 [main] BasicTypeRegistry - Adding type registration LocalTime -> org.hibernate.type.LocalTimeType@27e47833
+[DEBUG] 2018-09-30 18:08:52.084 [main] BasicTypeRegistry - Adding type registration java.time.LocalTime -> org.hibernate.type.LocalTimeType@27e47833
+[DEBUG] 2018-09-30 18:08:52.096 [main] BasicTypeRegistry - Adding type registration OffsetDateTime -> org.hibernate.type.OffsetDateTimeType@1e4d3ce5
+[DEBUG] 2018-09-30 18:08:52.096 [main] BasicTypeRegistry - Adding type registration java.time.OffsetDateTime -> org.hibernate.type.OffsetDateTimeType@1e4d3ce5
+[DEBUG] 2018-09-30 18:08:52.098 [main] BasicTypeRegistry - Adding type registration OffsetTime -> org.hibernate.type.OffsetTimeType@1e81f160
+[DEBUG] 2018-09-30 18:08:52.098 [main] BasicTypeRegistry - Adding type registration java.time.OffsetTime -> org.hibernate.type.OffsetTimeType@1e81f160
+[DEBUG] 2018-09-30 18:08:52.102 [main] BasicTypeRegistry - Adding type registration ZonedDateTime -> org.hibernate.type.ZonedDateTimeType@78a773fd
+[DEBUG] 2018-09-30 18:08:52.102 [main] BasicTypeRegistry - Adding type registration java.time.ZonedDateTime -> org.hibernate.type.ZonedDateTimeType@78a773fd
+[DEBUG] 2018-09-30 18:08:52.111 [main] BasicTypeRegistry - Adding type registration date -> org.hibernate.type.DateType@68034211
+[DEBUG] 2018-09-30 18:08:52.111 [main] BasicTypeRegistry - Adding type registration java.sql.Date -> org.hibernate.type.DateType@68034211
+[DEBUG] 2018-09-30 18:08:52.118 [main] BasicTypeRegistry - Adding type registration time -> org.hibernate.type.TimeType@4167d97b
+[DEBUG] 2018-09-30 18:08:52.118 [main] BasicTypeRegistry - Adding type registration java.sql.Time -> org.hibernate.type.TimeType@4167d97b
+[DEBUG] 2018-09-30 18:08:52.120 [main] BasicTypeRegistry - Adding type registration timestamp -> org.hibernate.type.TimestampType@57ad2aa7
+[DEBUG] 2018-09-30 18:08:52.121 [main] BasicTypeRegistry - Adding type registration java.sql.Timestamp -> org.hibernate.type.TimestampType@57ad2aa7
+[DEBUG] 2018-09-30 18:08:52.121 [main] BasicTypeRegistry - Adding type registration java.util.Date -> org.hibernate.type.TimestampType@57ad2aa7
+[DEBUG] 2018-09-30 18:08:52.125 [main] BasicTypeRegistry - Adding type registration dbtimestamp -> org.hibernate.type.DbTimestampType@398dada8
+[DEBUG] 2018-09-30 18:08:52.131 [main] BasicTypeRegistry - Adding type registration calendar -> org.hibernate.type.CalendarType@12a94400
+[DEBUG] 2018-09-30 18:08:52.131 [main] BasicTypeRegistry - Adding type registration java.util.Calendar -> org.hibernate.type.CalendarType@12a94400
+[DEBUG] 2018-09-30 18:08:52.131 [main] BasicTypeRegistry - Adding type registration java.util.GregorianCalendar -> org.hibernate.type.CalendarType@12a94400
+[DEBUG] 2018-09-30 18:08:52.132 [main] BasicTypeRegistry - Adding type registration calendar_date -> org.hibernate.type.CalendarDateType@1ef6d34c
+[DEBUG] 2018-09-30 18:08:52.133 [main] BasicTypeRegistry - Adding type registration locale -> org.hibernate.type.LocaleType@2a225dd7
+[DEBUG] 2018-09-30 18:08:52.133 [main] BasicTypeRegistry - Adding type registration java.util.Locale -> org.hibernate.type.LocaleType@2a225dd7
+[DEBUG] 2018-09-30 18:08:52.134 [main] BasicTypeRegistry - Adding type registration currency -> org.hibernate.type.CurrencyType@616ac46a
+[DEBUG] 2018-09-30 18:08:52.135 [main] BasicTypeRegistry - Adding type registration java.util.Currency -> org.hibernate.type.CurrencyType@616ac46a
+[DEBUG] 2018-09-30 18:08:52.136 [main] BasicTypeRegistry - Adding type registration timezone -> org.hibernate.type.TimeZoneType@6337c201
+[DEBUG] 2018-09-30 18:08:52.136 [main] BasicTypeRegistry - Adding type registration java.util.TimeZone -> org.hibernate.type.TimeZoneType@6337c201
+[DEBUG] 2018-09-30 18:08:52.136 [main] BasicTypeRegistry - Adding type registration class -> org.hibernate.type.ClassType@28d18df5
+[DEBUG] 2018-09-30 18:08:52.137 [main] BasicTypeRegistry - Adding type registration java.lang.Class -> org.hibernate.type.ClassType@28d18df5
+[DEBUG] 2018-09-30 18:08:52.139 [main] BasicTypeRegistry - Adding type registration uuid-binary -> org.hibernate.type.UUIDBinaryType@4066c471
+[DEBUG] 2018-09-30 18:08:52.140 [main] BasicTypeRegistry - Adding type registration java.util.UUID -> org.hibernate.type.UUIDBinaryType@4066c471
+[DEBUG] 2018-09-30 18:08:52.141 [main] BasicTypeRegistry - Adding type registration uuid-char -> org.hibernate.type.UUIDCharType@1ae8bcbc
+[DEBUG] 2018-09-30 18:08:52.143 [main] BasicTypeRegistry - Adding type registration binary -> org.hibernate.type.BinaryType@6d026701
+[DEBUG] 2018-09-30 18:08:52.144 [main] BasicTypeRegistry - Adding type registration byte[] -> org.hibernate.type.BinaryType@6d026701
+[DEBUG] 2018-09-30 18:08:52.144 [main] BasicTypeRegistry - Adding type registration [B -> org.hibernate.type.BinaryType@6d026701
+[DEBUG] 2018-09-30 18:08:52.145 [main] BasicTypeRegistry - Adding type registration wrapper-binary -> org.hibernate.type.WrapperBinaryType@6304101a
+[DEBUG] 2018-09-30 18:08:52.145 [main] BasicTypeRegistry - Adding type registration Byte[] -> org.hibernate.type.WrapperBinaryType@6304101a
+[DEBUG] 2018-09-30 18:08:52.146 [main] BasicTypeRegistry - Adding type registration [Ljava.lang.Byte; -> org.hibernate.type.WrapperBinaryType@6304101a
+[DEBUG] 2018-09-30 18:08:52.147 [main] BasicTypeRegistry - Adding type registration row_version -> org.hibernate.type.RowVersionType@1a72a540
+[DEBUG] 2018-09-30 18:08:52.148 [main] BasicTypeRegistry - Adding type registration image -> org.hibernate.type.ImageType@5be49b60
+[DEBUG] 2018-09-30 18:08:52.149 [main] BasicTypeRegistry - Adding type registration characters -> org.hibernate.type.CharArrayType@45a4b042
+[DEBUG] 2018-09-30 18:08:52.149 [main] BasicTypeRegistry - Adding type registration char[] -> org.hibernate.type.CharArrayType@45a4b042
+[DEBUG] 2018-09-30 18:08:52.150 [main] BasicTypeRegistry - Adding type registration [C -> org.hibernate.type.CharArrayType@45a4b042
+[DEBUG] 2018-09-30 18:08:52.152 [main] BasicTypeRegistry - Adding type registration wrapper-characters -> org.hibernate.type.CharacterArrayType@f99f5e0
+[DEBUG] 2018-09-30 18:08:52.152 [main] BasicTypeRegistry - Adding type registration [Ljava.lang.Character; -> org.hibernate.type.CharacterArrayType@f99f5e0
+[DEBUG] 2018-09-30 18:08:52.152 [main] BasicTypeRegistry - Adding type registration Character[] -> org.hibernate.type.CharacterArrayType@f99f5e0
+[DEBUG] 2018-09-30 18:08:52.153 [main] BasicTypeRegistry - Adding type registration text -> org.hibernate.type.TextType@2474f125
+[DEBUG] 2018-09-30 18:08:52.154 [main] BasicTypeRegistry - Adding type registration ntext -> org.hibernate.type.NTextType@4816278d
+[DEBUG] 2018-09-30 18:08:52.158 [main] BasicTypeRegistry - Adding type registration blob -> org.hibernate.type.BlobType@6ee4d9ab
+[DEBUG] 2018-09-30 18:08:52.158 [main] BasicTypeRegistry - Adding type registration java.sql.Blob -> org.hibernate.type.BlobType@6ee4d9ab
+[DEBUG] 2018-09-30 18:08:52.159 [main] BasicTypeRegistry - Adding type registration materialized_blob -> org.hibernate.type.MaterializedBlobType@18e36d14
+[DEBUG] 2018-09-30 18:08:52.163 [main] BasicTypeRegistry - Adding type registration clob -> org.hibernate.type.ClobType@409c54f
+[DEBUG] 2018-09-30 18:08:52.163 [main] BasicTypeRegistry - Adding type registration java.sql.Clob -> org.hibernate.type.ClobType@409c54f
+[DEBUG] 2018-09-30 18:08:52.166 [main] BasicTypeRegistry - Adding type registration nclob -> org.hibernate.type.NClobType@6d07a63d
+[DEBUG] 2018-09-30 18:08:52.166 [main] BasicTypeRegistry - Adding type registration java.sql.NClob -> org.hibernate.type.NClobType@6d07a63d
+[DEBUG] 2018-09-30 18:08:52.167 [main] BasicTypeRegistry - Adding type registration materialized_clob -> org.hibernate.type.MaterializedClobType@68dc098b
+[DEBUG] 2018-09-30 18:08:52.167 [main] BasicTypeRegistry - Adding type registration materialized_nclob -> org.hibernate.type.MaterializedNClobType@2d6c53fc
+[DEBUG] 2018-09-30 18:08:52.169 [main] BasicTypeRegistry - Adding type registration serializable -> org.hibernate.type.SerializableType@7ceb3185
+[DEBUG] 2018-09-30 18:08:52.175 [main] BasicTypeRegistry - Adding type registration object -> org.hibernate.type.ObjectType@6f19ac19
+[DEBUG] 2018-09-30 18:08:52.175 [main] BasicTypeRegistry - Adding type registration java.lang.Object -> org.hibernate.type.ObjectType@6f19ac19
+[DEBUG] 2018-09-30 18:08:52.177 [main] BasicTypeRegistry - Adding type registration imm_date -> org.hibernate.type.AdaptedImmutableType@768fc0f2
+[DEBUG] 2018-09-30 18:08:52.177 [main] BasicTypeRegistry - Adding type registration imm_time -> org.hibernate.type.AdaptedImmutableType@5454d35e
+[DEBUG] 2018-09-30 18:08:52.178 [main] BasicTypeRegistry - Adding type registration imm_timestamp -> org.hibernate.type.AdaptedImmutableType@20c0a64d
+[DEBUG] 2018-09-30 18:08:52.178 [main] BasicTypeRegistry - Adding type registration imm_dbtimestamp -> org.hibernate.type.AdaptedImmutableType@455b6df1
+[DEBUG] 2018-09-30 18:08:52.179 [main] BasicTypeRegistry - Adding type registration imm_calendar -> org.hibernate.type.AdaptedImmutableType@4ddbbdf8
+[DEBUG] 2018-09-30 18:08:52.179 [main] BasicTypeRegistry - Adding type registration imm_calendar_date -> org.hibernate.type.AdaptedImmutableType@3f67593e
+[DEBUG] 2018-09-30 18:08:52.179 [main] BasicTypeRegistry - Adding type registration imm_binary -> org.hibernate.type.AdaptedImmutableType@1ab06251
+[DEBUG] 2018-09-30 18:08:52.179 [main] BasicTypeRegistry - Adding type registration imm_serializable -> org.hibernate.type.AdaptedImmutableType@41ab013
+[INFO ] 2018-09-30 18:08:52.197 [main] C3P0ConnectionProvider - HHH010002: C3P0 using driver: com.mysql.jdbc.Driver at URL: jdbc:mysql://localhost:3306/quirondb_test
+[INFO ] 2018-09-30 18:08:52.197 [main] C3P0ConnectionProvider - HHH10001001: Connection properties: {user=root, password=****}
+[INFO ] 2018-09-30 18:08:52.197 [main] C3P0ConnectionProvider - HHH10001003: Autocommit mode: false
+[INFO ] 2018-09-30 18:08:52.502 [main] C3P0ConnectionProvider - HHH10001007: JDBC isolation level: <unknown>
+[DEBUG] 2018-09-30 18:08:52.628 [main] JdbcEnvironmentInitiator - Database ->
+       name : MySQL
+    version : 5.7.23-0ubuntu0.16.04.1
+      major : 5
+      minor : 7
+[DEBUG] 2018-09-30 18:08:52.630 [main] JdbcEnvironmentInitiator - Driver ->
+       name : MySQL Connector Java
+    version : mysql-connector-java-5.1.39 ( Revision: 3289a357af6d09ecc1a10fd3c26e95183e5790ad )
+      major : 5
+      minor : 1
+[DEBUG] 2018-09-30 18:08:52.631 [main] JdbcEnvironmentInitiator - JDBC version : 4.0
+[INFO ] 2018-09-30 18:08:52.653 [main] Dialect - HHH000400: Using dialect: org.hibernate.dialect.MySQL5Dialect
+[DEBUG] 2018-09-30 18:08:52.730 [main] IdentifierHelperBuilder - JDBC driver metadata reported database stores quoted identifiers in more than one case
+[DEBUG] 2018-09-30 18:08:52.732 [main] IdentifierHelperBuilder - IdentifierCaseStrategy for both quoted and unquoted identifiers was set to the same strategy [MIXED]; that will likely lead to problems in schema update and validation if using quoted identifiers
+[DEBUG] 2018-09-30 18:08:52.818 [main] DefaultIdentifierGeneratorFactory - Registering IdentifierGenerator strategy [uuid2] -> [org.hibernate.id.UUIDGenerator]
+[DEBUG] 2018-09-30 18:08:52.818 [main] DefaultIdentifierGeneratorFactory - Registering IdentifierGenerator strategy [guid] -> [org.hibernate.id.GUIDGenerator]
+[DEBUG] 2018-09-30 18:08:52.819 [main] DefaultIdentifierGeneratorFactory - Registering IdentifierGenerator strategy [uuid] -> [org.hibernate.id.UUIDHexGenerator]
+[DEBUG] 2018-09-30 18:08:52.819 [main] DefaultIdentifierGeneratorFactory - Registering IdentifierGenerator strategy [uuid.hex] -> [org.hibernate.id.UUIDHexGenerator]
+[DEBUG] 2018-09-30 18:08:52.819 [main] DefaultIdentifierGeneratorFactory - Registering IdentifierGenerator strategy [assigned] -> [org.hibernate.id.Assigned]
+[DEBUG] 2018-09-30 18:08:52.820 [main] DefaultIdentifierGeneratorFactory - Registering IdentifierGenerator strategy [identity] -> [org.hibernate.id.IdentityGenerator]
+[DEBUG] 2018-09-30 18:08:52.821 [main] DefaultIdentifierGeneratorFactory - Registering IdentifierGenerator strategy [select] -> [org.hibernate.id.SelectGenerator]
+[DEBUG] 2018-09-30 18:08:52.821 [main] DefaultIdentifierGeneratorFactory - Registering IdentifierGenerator strategy [sequence] -> [org.hibernate.id.enhanced.SequenceStyleGenerator]
+[DEBUG] 2018-09-30 18:08:52.822 [main] DefaultIdentifierGeneratorFactory - Registering IdentifierGenerator strategy [seqhilo] -> [org.hibernate.id.SequenceHiLoGenerator]
+[DEBUG] 2018-09-30 18:08:52.822 [main] DefaultIdentifierGeneratorFactory - Registering IdentifierGenerator strategy [increment] -> [org.hibernate.id.IncrementGenerator]
+[DEBUG] 2018-09-30 18:08:52.823 [main] DefaultIdentifierGeneratorFactory - Registering IdentifierGenerator strategy [foreign] -> [org.hibernate.id.ForeignGenerator]
+[DEBUG] 2018-09-30 18:08:52.824 [main] DefaultIdentifierGeneratorFactory - Registering IdentifierGenerator strategy [sequence-identity] -> [org.hibernate.id.SequenceIdentityGenerator]
+[DEBUG] 2018-09-30 18:08:52.824 [main] DefaultIdentifierGeneratorFactory - Registering IdentifierGenerator strategy [enhanced-sequence] -> [org.hibernate.id.enhanced.SequenceStyleGenerator]
+[DEBUG] 2018-09-30 18:08:52.825 [main] DefaultIdentifierGeneratorFactory - Registering IdentifierGenerator strategy [enhanced-table] -> [org.hibernate.id.enhanced.TableGenerator]
+[DEBUG] 2018-09-30 18:08:52.871 [main] Namespace - Created database namespace [logicalName=Name{catalog=null, schema=null}, physicalName=Name{catalog=null, schema=null}]
+[DEBUG] 2018-09-30 18:08:52.920 [main] AnnotationBinder - Binding entity from annotated class: co.net.quiron.domain.admin.Country
+[DEBUG] 2018-09-30 18:08:52.943 [main] Ejb3Column - Binding column: Ejb3DiscriminatorColumn{logicalColumnName'DTYPE', discriminatorTypeName='string'}
+[DEBUG] 2018-09-30 18:08:52.948 [main] EntityBinder - Import with entity name Countries
+[DEBUG] 2018-09-30 18:08:52.952 [main] EntityBinder - Bind entity co.net.quiron.domain.admin.Country on table COUNTRIES
+[DEBUG] 2018-09-30 18:08:53.026 [main] Ejb3Column - Binding column: Ejb3Column{table=org.hibernate.mapping.Table(COUNTRIES), mappingColumn=CountryID, insertable=true, updatable=true, unique=false}
+[DEBUG] 2018-09-30 18:08:53.032 [main] PropertyBinder - MetadataSourceProcessor property id with lazy=false
+[DEBUG] 2018-09-30 18:08:53.035 [main] AbstractPropertyHolder - Attempting to locate auto-apply AttributeConverter for property [co.net.quiron.domain.admin.Country:id]
+[DEBUG] 2018-09-30 18:08:53.036 [main] SimpleValueBinder - building SimpleValue for id
+[DEBUG] 2018-09-30 18:08:53.039 [main] PropertyBinder - Building property id
+[DEBUG] 2018-09-30 18:08:53.049 [main] Ejb3Column - Binding column: Ejb3Column{table=org.hibernate.mapping.Table(COUNTRIES), mappingColumn=CountryCode, insertable=true, updatable=true, unique=false}
+[DEBUG] 2018-09-30 18:08:53.049 [main] PropertyBinder - MetadataSourceProcessor property code with lazy=false
+[DEBUG] 2018-09-30 18:08:53.049 [main] AbstractPropertyHolder - Attempting to locate auto-apply AttributeConverter for property [co.net.quiron.domain.admin.Country:code]
+[DEBUG] 2018-09-30 18:08:53.049 [main] SimpleValueBinder - building SimpleValue for code
+[DEBUG] 2018-09-30 18:08:53.050 [main] PropertyBinder - Building property code
+[DEBUG] 2018-09-30 18:08:53.051 [main] Ejb3Column - Binding column: Ejb3Column{table=org.hibernate.mapping.Table(COUNTRIES), mappingColumn=CreatedDate, insertable=true, updatable=true, unique=false}
+[DEBUG] 2018-09-30 18:08:53.051 [main] PropertyBinder - MetadataSourceProcessor property createdDate with lazy=false
+[DEBUG] 2018-09-30 18:08:53.051 [main] AbstractPropertyHolder - Attempting to locate auto-apply AttributeConverter for property [co.net.quiron.domain.admin.Country:createdDate]
+[DEBUG] 2018-09-30 18:08:53.052 [main] SimpleValueBinder - building SimpleValue for createdDate
+[DEBUG] 2018-09-30 18:08:53.052 [main] PropertyBinder - Building property createdDate
+[DEBUG] 2018-09-30 18:08:53.067 [main] Ejb3Column - Binding column: Ejb3Column{table=org.hibernate.mapping.Table(COUNTRIES), mappingColumn=ModifiedDate, insertable=true, updatable=true, unique=false}
+[DEBUG] 2018-09-30 18:08:53.068 [main] PropertyBinder - MetadataSourceProcessor property modifiedDate with lazy=false
+[DEBUG] 2018-09-30 18:08:53.068 [main] AbstractPropertyHolder - Attempting to locate auto-apply AttributeConverter for property [co.net.quiron.domain.admin.Country:modifiedDate]
+[DEBUG] 2018-09-30 18:08:53.068 [main] SimpleValueBinder - building SimpleValue for modifiedDate
+[DEBUG] 2018-09-30 18:08:53.068 [main] PropertyBinder - Building property modifiedDate
+[DEBUG] 2018-09-30 18:08:53.069 [main] Ejb3Column - Binding column: Ejb3Column{table=org.hibernate.mapping.Table(COUNTRIES), mappingColumn=Name, insertable=true, updatable=true, unique=false}
+[DEBUG] 2018-09-30 18:08:53.069 [main] PropertyBinder - MetadataSourceProcessor property name with lazy=false
+[DEBUG] 2018-09-30 18:08:53.069 [main] AbstractPropertyHolder - Attempting to locate auto-apply AttributeConverter for property [co.net.quiron.domain.admin.Country:name]
+[DEBUG] 2018-09-30 18:08:53.069 [main] SimpleValueBinder - building SimpleValue for name
+[DEBUG] 2018-09-30 18:08:53.069 [main] PropertyBinder - Building property name
+[DEBUG] 2018-09-30 18:08:53.074 [main] SimpleValueBinder - Starting fillSimpleValue for id
+[DEBUG] 2018-09-30 18:08:53.074 [main] SimpleValueBinder - Starting fillSimpleValue for code
+[DEBUG] 2018-09-30 18:08:53.075 [main] SimpleValueBinder - Starting fillSimpleValue for createdDate
+[DEBUG] 2018-09-30 18:08:53.075 [main] SimpleValueBinder - Starting fillSimpleValue for modifiedDate
+[DEBUG] 2018-09-30 18:08:53.075 [main] SimpleValueBinder - Starting fillSimpleValue for name
+[DEBUG] 2018-09-30 18:08:53.076 [main] PrimaryKey - Forcing column [countryid] to be non-null as it is part of the primary key for table [countries]
+[DEBUG] 2018-09-30 18:08:53.131 [main] SessionFactoryImpl - Building session factory
+[DEBUG] 2018-09-30 18:08:53.132 [main] Settings - SessionFactory name : null
+[DEBUG] 2018-09-30 18:08:53.132 [main] Settings - Automatic flush during beforeCompletion(): enabled
+[DEBUG] 2018-09-30 18:08:53.132 [main] Settings - Automatic session close at end of transaction: disabled
+[DEBUG] 2018-09-30 18:08:53.132 [main] Settings - Statistics: disabled
+[DEBUG] 2018-09-30 18:08:53.132 [main] Settings - Deleted entity synthetic identifier rollback: disabled
+[DEBUG] 2018-09-30 18:08:53.132 [main] Settings - Default entity-mode: pojo
+[DEBUG] 2018-09-30 18:08:53.132 [main] Settings - Check Nullability in Core (should be disabled when Bean Validation is on): enabled
+[DEBUG] 2018-09-30 18:08:53.132 [main] Settings - Allow initialization of lazy state outside session : disabled
+[DEBUG] 2018-09-30 18:08:53.133 [main] Settings - Using BatchFetchStyle : LEGACY
+[DEBUG] 2018-09-30 18:08:53.133 [main] Settings - Default batch fetch size: -1
+[DEBUG] 2018-09-30 18:08:53.133 [main] Settings - Maximum outer join fetch depth: 2
+[DEBUG] 2018-09-30 18:08:53.133 [main] Settings - Default null ordering: NONE
+[DEBUG] 2018-09-30 18:08:53.133 [main] Settings - Order SQL updates by primary key: disabled
+[DEBUG] 2018-09-30 18:08:53.133 [main] Settings - Order SQL inserts for batching: disabled
+[DEBUG] 2018-09-30 18:08:53.133 [main] Settings - multi-tenancy strategy : NONE
+[DEBUG] 2018-09-30 18:08:53.133 [main] Settings - JTA Track by Thread: enabled
+[DEBUG] 2018-09-30 18:08:53.133 [main] Settings - Query language substitutions: {}
+[DEBUG] 2018-09-30 18:08:53.133 [main] Settings - JPA query language strict compliance: disabled
+[DEBUG] 2018-09-30 18:08:53.133 [main] Settings - Named query checking : enabled
+[DEBUG] 2018-09-30 18:08:53.133 [main] Settings - Second-level cache: enabled
+[DEBUG] 2018-09-30 18:08:53.133 [main] Settings - Second-level query cache: disabled
+[DEBUG] 2018-09-30 18:08:53.134 [main] Settings - Second-level query cache factory: org.hibernate.cache.internal.StandardQueryCacheFactory@5cc69cfe
+[DEBUG] 2018-09-30 18:08:53.134 [main] Settings - Second-level cache region prefix: null
+[DEBUG] 2018-09-30 18:08:53.134 [main] Settings - Optimize second-level cache for minimal puts: disabled
+[DEBUG] 2018-09-30 18:08:53.134 [main] Settings - Structured second-level cache entries: disabled
+[DEBUG] 2018-09-30 18:08:53.134 [main] Settings - Second-level cache direct-reference entries: disabled
+[DEBUG] 2018-09-30 18:08:53.134 [main] Settings - Automatic eviction of collection cache: disabled
+[DEBUG] 2018-09-30 18:08:53.134 [main] Settings - JDBC batch size: 15
+[DEBUG] 2018-09-30 18:08:53.134 [main] Settings - JDBC batch updates for versioned data: enabled
+[DEBUG] 2018-09-30 18:08:53.134 [main] Settings - Scrollable result sets: enabled
+[DEBUG] 2018-09-30 18:08:53.134 [main] Settings - Wrap result sets: disabled
+[DEBUG] 2018-09-30 18:08:53.134 [main] Settings - JDBC3 getGeneratedKeys(): enabled
+[DEBUG] 2018-09-30 18:08:53.136 [main] Settings - JDBC result set fetch size: null
+[DEBUG] 2018-09-30 18:08:53.136 [main] Settings - Connection release mode: AFTER_TRANSACTION
+[DEBUG] 2018-09-30 18:08:53.136 [main] Settings - Generate SQL with comments: disabled
+[DEBUG] 2018-09-30 18:08:53.199 [main] SessionFactoryImpl - Session factory constructed with filter configurations : {}
+[DEBUG] 2018-09-30 18:08:53.199 [main] SessionFactoryImpl - Instantiating session factory with properties: {sun.desktop=gnome, awt.toolkit=sun.awt.X11.XToolkit, file.encoding.pkg=sun.io, java.specification.version=1.8, hibernate.c3p0.idle_test_period=3000, sun.cpu.isalist=, sun.jnu.encoding=UTF-8, hibernate.c3p0.min_size=5, java.class.path=/home/yperea/IntelliJ/lib/idea_rt.jar:/home/yperea/IntelliJ/plugins/junit/lib/junit-rt.jar:/home/yperea/IntelliJ/plugins/junit/lib/junit5-rt.jar:/usr/lib/jvm/java-8-oracle/jre/lib/charsets.jar:/usr/lib/jvm/java-8-oracle/jre/lib/deploy.jar:/usr/lib/jvm/java-8-oracle/jre/lib/ext/cldrdata.jar:/usr/lib/jvm/java-8-oracle/jre/lib/ext/dnsns.jar:/usr/lib/jvm/java-8-oracle/jre/lib/ext/jaccess.jar:/usr/lib/jvm/java-8-oracle/jre/lib/ext/jfxrt.jar:/usr/lib/jvm/java-8-oracle/jre/lib/ext/localedata.jar:/usr/lib/jvm/java-8-oracle/jre/lib/ext/nashorn.jar:/usr/lib/jvm/java-8-oracle/jre/lib/ext/sunec.jar:/usr/lib/jvm/java-8-oracle/jre/lib/ext/sunjce_provider.jar:/usr/lib/jvm/java-8-oracle/jre/lib/ext/sunpkcs11.jar:/usr/lib/jvm/java-8-oracle/jre/lib/ext/zipfs.jar:/usr/lib/jvm/java-8-oracle/jre/lib/javaws.jar:/usr/lib/jvm/java-8-oracle/jre/lib/jce.jar:/usr/lib/jvm/java-8-oracle/jre/lib/jfr.jar:/usr/lib/jvm/java-8-oracle/jre/lib/jfxswt.jar:/usr/lib/jvm/java-8-oracle/jre/lib/jsse.jar:/usr/lib/jvm/java-8-oracle/jre/lib/management-agent.jar:/usr/lib/jvm/java-8-oracle/jre/lib/plugin.jar:/usr/lib/jvm/java-8-oracle/jre/lib/resources.jar:/usr/lib/jvm/java-8-oracle/jre/lib/rt.jar:/home/yperea/IdeaProjects/quiron/target/test-classes:/home/yperea/IdeaProjects/quiron/target/classes:/home/yperea/.m2/repository/junit/junit/4.12/junit-4.12.jar:/home/yperea/.m2/repository/org/hamcrest/hamcrest-core/1.3/hamcrest-core-1.3.jar:/home/yperea/.m2/repository/org/junit/jupiter/junit-jupiter-engine/5.0.0/junit-jupiter-engine-5.0.0.jar:/home/yperea/.m2/repository/org/apiguardian/apiguardian-api/1.0.0/apiguardian-api-1.0.0.jar:/home/yperea/.m2/repository/org/junit/platform/junit-platform-engine/1.0.0/junit-platform-engine-1.0.0.jar:/home/yperea/.m2/repository/org/junit/platform/junit-platform-runner/1.0.0/junit-platform-runner-1.0.0.jar:/home/yperea/.m2/repository/org/junit/platform/junit-platform-launcher/1.0.0/junit-platform-launcher-1.0.0.jar:/home/yperea/.m2/repository/org/junit/platform/junit-platform-suite-api/1.0.0/junit-platform-suite-api-1.0.0.jar:/home/yperea/.m2/repository/org/junit/vintage/junit-vintage-engine/4.12.0/junit-vintage-engine-4.12.0.jar:/home/yperea/.m2/repository/org/junit/jupiter/junit-jupiter-api/5.3.1/junit-jupiter-api-5.3.1.jar:/home/yperea/.m2/repository/org/opentest4j/opentest4j/1.1.1/opentest4j-1.1.1.jar:/home/yperea/.m2/repository/org/junit/platform/junit-platform-commons/1.3.1/junit-platform-commons-1.3.1.jar:/home/yperea/.m2/repository/javax/javaee-web-api/7.0/javaee-web-api-7.0.jar:/home/yperea/.m2/repository/org/apache/logging/log4j/log4j-api/2.10.0/log4j-api-2.10.0.jar:/home/yperea/.m2/repository/org/apache/logging/log4j/log4j-core/2.10.0/log4j-core-2.10.0.jar:/home/yperea/.m2/repository/org/hibernate/hibernate-core/5.2.12.Final/hibernate-core-5.2.12.Final.jar:/home/yperea/.m2/repository/org/jboss/logging/jboss-logging/3.3.0.Final/jboss-logging-3.3.0.Final.jar:/home/yperea/.m2/repository/org/hibernate/javax/persistence/hibernate-jpa-2.1-api/1.0.0.Final/hibernate-jpa-2.1-api-1.0.0.Final.jar:/home/yperea/.m2/repository/org/javassist/javassist/3.20.0-GA/javassist-3.20.0-GA.jar:/home/yperea/.m2/repository/antlr/antlr/2.7.7/antlr-2.7.7.jar:/home/yperea/.m2/repository/org/jboss/spec/javax/transaction/jboss-transaction-api_1.2_spec/1.0.1.Final/jboss-transaction-api_1.2_spec-1.0.1.Final.jar:/home/yperea/.m2/repository/org/jboss/jandex/2.0.3.Final/jandex-2.0.3.Final.jar:/home/yperea/.m2/repository/com/fasterxml/classmate/1.3.0/classmate-1.3.0.jar:/home/yperea/.m2/repository/dom4j/dom4j/1.6.1/dom4j-1.6.1.jar:/home/yperea/.m2/repository/org/hibernate/common/hibernate-commons-annotations/5.0.1.Final/hibernate-commons-annotations-5.0.1.Final.jar:/home/yperea/.m2/repository/org/hibernate/hibernate-c3p0/5.2.12.Final/hibernate-c3p0-5.2.12.Final.jar:/home/yperea/.m2/repository/com/mchange/c3p0/0.9.5.2/c3p0-0.9.5.2.jar:/home/yperea/.m2/repository/com/mchange/mchange-commons-java/0.2.11/mchange-commons-java-0.2.11.jar:/home/yperea/.m2/repository/mysql/mysql-connector-java/5.1.39/mysql-connector-java-5.1.39.jar:/home/yperea/.m2/repository/jstl/jstl/1.2/jstl-1.2.jar:/home/yperea/.m2/repository/org/projectlombok/lombok/1.18.2/lombok-1.18.2.jar:/home/yperea/IntelliJ/lib/idea_rt.jar, java.vm.vendor=Oracle Corporation, sun.arch.data.model=64, idea.test.cyclic.buffer.size=1048576, java.vendor.url=http://java.oracle.com/, user.timezone=America/Chicago, os.name=Linux, java.vm.specification.version=1.8, user.country=US, sun.java.launcher=SUN_STANDARD, sun.boot.library.path=/usr/lib/jvm/java-8-oracle/jre/lib/amd64, sun.java.command=com.intellij.rt.execution.junit.JUnitStarter -ideVersion5 -junit5 co.net.quiron.application.admin.CountriesManagerTest, sun.cpu.endian=little, hibernate.c3p0.max_statements=50, user.home=/home/yperea, user.language=en, java.specification.vendor=Oracle Corporation, java.home=/usr/lib/jvm/java-8-oracle/jre, file.separator=/, line.separator=
+, hibernate.c3p0.timeout=300, java.vm.specification.vendor=Oracle Corporation, java.specification.name=Java Platform API Specification, java.awt.graphicsenv=sun.awt.X11GraphicsEnvironment, sun.boot.class.path=/usr/lib/jvm/java-8-oracle/jre/lib/resources.jar:/usr/lib/jvm/java-8-oracle/jre/lib/rt.jar:/usr/lib/jvm/java-8-oracle/jre/lib/sunrsasign.jar:/usr/lib/jvm/java-8-oracle/jre/lib/jsse.jar:/usr/lib/jvm/java-8-oracle/jre/lib/jce.jar:/usr/lib/jvm/java-8-oracle/jre/lib/charsets.jar:/usr/lib/jvm/java-8-oracle/jre/lib/jfr.jar:/usr/lib/jvm/java-8-oracle/jre/classes, connection.password=root, sun.management.compiler=HotSpot 64-Bit Tiered Compilers, hibernate.c3p0.max_size=20, java.runtime.version=1.8.0_181-b13, user.name=yperea, path.separator=:, hibernate.connection.username=root, os.version=4.15.0-34-generic, java.endorsed.dirs=/usr/lib/jvm/java-8-oracle/jre/lib/endorsed, java.runtime.name=Java(TM) SE Runtime Environment, hibernate.connection.url=jdbc:mysql://localhost:3306/quirondb_test, file.encoding=UTF-8, java.vm.name=Java HotSpot(TM) 64-Bit Server VM, hibernate.connection.driver_class=com.mysql.jdbc.Driver, java.vendor.url.bug=http://bugreport.sun.com/bugreport/, java.io.tmpdir=/tmp, java.version=1.8.0_181, user.dir=/home/yperea/IdeaProjects/quiron, os.arch=amd64, connection.username=root, java.vm.specification.name=Java Virtual Machine Specification, hibernate.connection.password=****, java.awt.printerjob=sun.print.PSPrinterJob, sun.os.patch.level=unknown, connection.driver_class=com.mysql.jdbc.Driver, hibernate.boot.CfgXmlAccessService.key=org.hibernate.boot.cfgxml.spi.LoadedConfig@4c4d362a, java.library.path=/usr/java/packages/lib/amd64:/usr/lib64:/lib64:/lib:/usr/lib, java.vm.info=mixed mode, java.vendor=Oracle Corporation, java.vm.version=25.181-b13, hibernate.bytecode.use_reflection_optimizer=false, java.ext.dirs=/usr/lib/jvm/java-8-oracle/jre/lib/ext:/usr/java/packages/lib/ext, sun.io.unicode.encoding=UnicodeLittle, connection.url=jdbc:mysql://localhost:3306/quirondb_test, java.class.version=52.0}
+[DEBUG] 2018-09-30 18:08:53.221 [main] TypeSafeActivator - Unable to acquire Bean Validation ValidatorFactory, skipping activation
+[DEBUG] 2018-09-30 18:08:53.221 [main] JaccIntegrator - Skipping JACC integration as it was not enabled
+[DEBUG] 2018-09-30 18:08:53.222 [main] SessionFactoryImpl - Instantiated session factory
+[DEBUG] 2018-09-30 18:08:53.266 [main] ClassLoaderAccessImpl - Not known whether passed class name [co.net.quiron.domain.admin.Country] is safe
+[DEBUG] 2018-09-30 18:08:53.266 [main] ClassLoaderAccessImpl - No temp ClassLoader provided; using live ClassLoader for loading potentially unsafe class : co.net.quiron.domain.admin.Country
+[DEBUG] 2018-09-30 18:08:53.287 [main] ClassLoaderAccessImpl - Not known whether passed class name [co.net.quiron.domain.admin.Country] is safe
+[DEBUG] 2018-09-30 18:08:53.287 [main] ClassLoaderAccessImpl - No temp ClassLoader provided; using live ClassLoader for loading potentially unsafe class : co.net.quiron.domain.admin.Country
+[DEBUG] 2018-09-30 18:08:53.372 [main] AbstractEntityPersister - Static SQL for entity: co.net.quiron.domain.admin.Country
+[DEBUG] 2018-09-30 18:08:53.373 [main] AbstractEntityPersister -  Version select: select CountryID from COUNTRIES where CountryID =?
+[DEBUG] 2018-09-30 18:08:53.373 [main] AbstractEntityPersister -  Snapshot select: select country_.CountryID, country_.CountryCode as CountryC2_0_, country_.CreatedDate as CreatedD3_0_, country_.ModifiedDate as Modified4_0_, country_.Name as Name5_0_ from COUNTRIES country_ where country_.CountryID=?
+[DEBUG] 2018-09-30 18:08:53.373 [main] AbstractEntityPersister -  Insert 0: insert into COUNTRIES (CountryCode, CreatedDate, ModifiedDate, Name, CountryID) values (?, ?, ?, ?, ?)
+[DEBUG] 2018-09-30 18:08:53.373 [main] AbstractEntityPersister -  Update 0: update COUNTRIES set CountryCode=?, CreatedDate=?, ModifiedDate=?, Name=? where CountryID=?
+[DEBUG] 2018-09-30 18:08:53.373 [main] AbstractEntityPersister -  Delete 0: delete from COUNTRIES where CountryID=?
+[DEBUG] 2018-09-30 18:08:53.373 [main] AbstractEntityPersister -  Identity insert: insert into COUNTRIES (CountryCode, CreatedDate, ModifiedDate, Name) values (?, ?, ?, ?)
+[DEBUG] 2018-09-30 18:08:53.404 [main] QuerySpacesImpl - Adding QuerySpace : uid = <gen:0> -> org.hibernate.loader.plan.build.internal.spaces.EntityQuerySpaceImpl@3c818ac4]
+[DEBUG] 2018-09-30 18:08:53.406 [main] MetamodelGraphWalker - Visiting attribute path : code
+[DEBUG] 2018-09-30 18:08:53.407 [main] MetamodelGraphWalker - Visiting attribute path : createdDate
+[DEBUG] 2018-09-30 18:08:53.407 [main] MetamodelGraphWalker - Visiting attribute path : modifiedDate
+[DEBUG] 2018-09-30 18:08:53.407 [main] MetamodelGraphWalker - Visiting attribute path : name
+[DEBUG] 2018-09-30 18:08:53.407 [main] FetchStyleLoadPlanBuildingAssociationVisitationStrategy - Building LoadPlan...
+[DEBUG] 2018-09-30 18:08:53.426 [main] LoadQueryJoinAndFetchProcessor - processing queryspace <gen:0>
+[DEBUG] 2018-09-30 18:08:53.431 [main] LoadPlanTreePrinter - LoadPlan(entity=co.net.quiron.domain.admin.Country)
+    - Returns
+       - EntityReturnImpl(entity=co.net.quiron.domain.admin.Country, querySpaceUid=<gen:0>, path=co.net.quiron.domain.admin.Country)
+    - QuerySpaces
+       - EntityQuerySpaceImpl(uid=<gen:0>, entity=co.net.quiron.domain.admin.Country)
+          - SQL table alias mapping - country0_
+          - alias suffix - 0_
+          - suffixed key columns - {CountryI1_0_0_}
+
+[DEBUG] 2018-09-30 18:08:53.435 [main] EntityLoader - Static select for entity co.net.quiron.domain.admin.Country [NONE]: select country0_.CountryID as CountryI1_0_0_, country0_.CountryCode as CountryC2_0_0_, country0_.CreatedDate as CreatedD3_0_0_, country0_.ModifiedDate as Modified4_0_0_, country0_.Name as Name5_0_0_ from COUNTRIES country0_ where country0_.CountryID=?
+[DEBUG] 2018-09-30 18:08:53.435 [main] QuerySpacesImpl - Adding QuerySpace : uid = <gen:0> -> org.hibernate.loader.plan.build.internal.spaces.EntityQuerySpaceImpl@c827db]
+[DEBUG] 2018-09-30 18:08:53.435 [main] MetamodelGraphWalker - Visiting attribute path : code
+[DEBUG] 2018-09-30 18:08:53.436 [main] MetamodelGraphWalker - Visiting attribute path : createdDate
+[DEBUG] 2018-09-30 18:08:53.436 [main] MetamodelGraphWalker - Visiting attribute path : modifiedDate
+[DEBUG] 2018-09-30 18:08:53.436 [main] MetamodelGraphWalker - Visiting attribute path : name
+[DEBUG] 2018-09-30 18:08:53.436 [main] FetchStyleLoadPlanBuildingAssociationVisitationStrategy - Building LoadPlan...
+[DEBUG] 2018-09-30 18:08:53.436 [main] LoadQueryJoinAndFetchProcessor - processing queryspace <gen:0>
+[DEBUG] 2018-09-30 18:08:53.436 [main] LoadPlanTreePrinter - LoadPlan(entity=co.net.quiron.domain.admin.Country)
+    - Returns
+       - EntityReturnImpl(entity=co.net.quiron.domain.admin.Country, querySpaceUid=<gen:0>, path=co.net.quiron.domain.admin.Country)
+    - QuerySpaces
+       - EntityQuerySpaceImpl(uid=<gen:0>, entity=co.net.quiron.domain.admin.Country)
+          - SQL table alias mapping - country0_
+          - alias suffix - 0_
+          - suffixed key columns - {CountryI1_0_0_}
+
+[DEBUG] 2018-09-30 18:08:53.437 [main] EntityLoader - Static select for entity co.net.quiron.domain.admin.Country [READ]: select country0_.CountryID as CountryI1_0_0_, country0_.CountryCode as CountryC2_0_0_, country0_.CreatedDate as CreatedD3_0_0_, country0_.ModifiedDate as Modified4_0_0_, country0_.Name as Name5_0_0_ from COUNTRIES country0_ where country0_.CountryID=?
+[DEBUG] 2018-09-30 18:08:53.438 [main] QuerySpacesImpl - Adding QuerySpace : uid = <gen:0> -> org.hibernate.loader.plan.build.internal.spaces.EntityQuerySpaceImpl@538cd0f2]
+[DEBUG] 2018-09-30 18:08:53.439 [main] MetamodelGraphWalker - Visiting attribute path : code
+[DEBUG] 2018-09-30 18:08:53.441 [main] MetamodelGraphWalker - Visiting attribute path : createdDate
+[DEBUG] 2018-09-30 18:08:53.443 [main] MetamodelGraphWalker - Visiting attribute path : modifiedDate
+[DEBUG] 2018-09-30 18:08:53.443 [main] MetamodelGraphWalker - Visiting attribute path : name
+[DEBUG] 2018-09-30 18:08:53.443 [main] FetchStyleLoadPlanBuildingAssociationVisitationStrategy - Building LoadPlan...
+[DEBUG] 2018-09-30 18:08:53.443 [main] LoadQueryJoinAndFetchProcessor - processing queryspace <gen:0>
+[DEBUG] 2018-09-30 18:08:53.443 [main] LoadPlanTreePrinter - LoadPlan(entity=co.net.quiron.domain.admin.Country)
+    - Returns
+       - EntityReturnImpl(entity=co.net.quiron.domain.admin.Country, querySpaceUid=<gen:0>, path=co.net.quiron.domain.admin.Country)
+    - QuerySpaces
+       - EntityQuerySpaceImpl(uid=<gen:0>, entity=co.net.quiron.domain.admin.Country)
+          - SQL table alias mapping - country0_
+          - alias suffix - 0_
+          - suffixed key columns - {CountryI1_0_0_}
+
+[DEBUG] 2018-09-30 18:08:53.443 [main] EntityLoader - Static select for entity co.net.quiron.domain.admin.Country [UPGRADE]: select country0_.CountryID as CountryI1_0_0_, country0_.CountryCode as CountryC2_0_0_, country0_.CreatedDate as CreatedD3_0_0_, country0_.ModifiedDate as Modified4_0_0_, country0_.Name as Name5_0_0_ from COUNTRIES country0_ where country0_.CountryID=? for update
+[DEBUG] 2018-09-30 18:08:53.443 [main] QuerySpacesImpl - Adding QuerySpace : uid = <gen:0> -> org.hibernate.loader.plan.build.internal.spaces.EntityQuerySpaceImpl@430fa4ef]
+[DEBUG] 2018-09-30 18:08:53.443 [main] MetamodelGraphWalker - Visiting attribute path : code
+[DEBUG] 2018-09-30 18:08:53.444 [main] MetamodelGraphWalker - Visiting attribute path : createdDate
+[DEBUG] 2018-09-30 18:08:53.444 [main] MetamodelGraphWalker - Visiting attribute path : modifiedDate
+[DEBUG] 2018-09-30 18:08:53.444 [main] MetamodelGraphWalker - Visiting attribute path : name
+[DEBUG] 2018-09-30 18:08:53.446 [main] FetchStyleLoadPlanBuildingAssociationVisitationStrategy - Building LoadPlan...
+[DEBUG] 2018-09-30 18:08:53.446 [main] LoadQueryJoinAndFetchProcessor - processing queryspace <gen:0>
+[DEBUG] 2018-09-30 18:08:53.446 [main] LoadPlanTreePrinter - LoadPlan(entity=co.net.quiron.domain.admin.Country)
+    - Returns
+       - EntityReturnImpl(entity=co.net.quiron.domain.admin.Country, querySpaceUid=<gen:0>, path=co.net.quiron.domain.admin.Country)
+    - QuerySpaces
+       - EntityQuerySpaceImpl(uid=<gen:0>, entity=co.net.quiron.domain.admin.Country)
+          - SQL table alias mapping - country0_
+          - alias suffix - 0_
+          - suffixed key columns - {CountryI1_0_0_}
+
+[DEBUG] 2018-09-30 18:08:53.446 [main] EntityLoader - Static select for entity co.net.quiron.domain.admin.Country [UPGRADE_NOWAIT]: select country0_.CountryID as CountryI1_0_0_, country0_.CountryCode as CountryC2_0_0_, country0_.CreatedDate as CreatedD3_0_0_, country0_.ModifiedDate as Modified4_0_0_, country0_.Name as Name5_0_0_ from COUNTRIES country0_ where country0_.CountryID=? for update
+[DEBUG] 2018-09-30 18:08:53.446 [main] QuerySpacesImpl - Adding QuerySpace : uid = <gen:0> -> org.hibernate.loader.plan.build.internal.spaces.EntityQuerySpaceImpl@22df874e]
+[DEBUG] 2018-09-30 18:08:53.446 [main] MetamodelGraphWalker - Visiting attribute path : code
+[DEBUG] 2018-09-30 18:08:53.447 [main] MetamodelGraphWalker - Visiting attribute path : createdDate
+[DEBUG] 2018-09-30 18:08:53.447 [main] MetamodelGraphWalker - Visiting attribute path : modifiedDate
+[DEBUG] 2018-09-30 18:08:53.447 [main] MetamodelGraphWalker - Visiting attribute path : name
+[DEBUG] 2018-09-30 18:08:53.447 [main] FetchStyleLoadPlanBuildingAssociationVisitationStrategy - Building LoadPlan...
+[DEBUG] 2018-09-30 18:08:53.447 [main] LoadQueryJoinAndFetchProcessor - processing queryspace <gen:0>
+[DEBUG] 2018-09-30 18:08:53.448 [main] LoadPlanTreePrinter - LoadPlan(entity=co.net.quiron.domain.admin.Country)
+    - Returns
+       - EntityReturnImpl(entity=co.net.quiron.domain.admin.Country, querySpaceUid=<gen:0>, path=co.net.quiron.domain.admin.Country)
+    - QuerySpaces
+       - EntityQuerySpaceImpl(uid=<gen:0>, entity=co.net.quiron.domain.admin.Country)
+          - SQL table alias mapping - country0_
+          - alias suffix - 0_
+          - suffixed key columns - {CountryI1_0_0_}
+
+[DEBUG] 2018-09-30 18:08:53.448 [main] EntityLoader - Static select for entity co.net.quiron.domain.admin.Country [UPGRADE_SKIPLOCKED]: select country0_.CountryID as CountryI1_0_0_, country0_.CountryCode as CountryC2_0_0_, country0_.CreatedDate as CreatedD3_0_0_, country0_.ModifiedDate as Modified4_0_0_, country0_.Name as Name5_0_0_ from COUNTRIES country0_ where country0_.CountryID=? for update
+[DEBUG] 2018-09-30 18:08:53.448 [main] QuerySpacesImpl - Adding QuerySpace : uid = <gen:0> -> org.hibernate.loader.plan.build.internal.spaces.EntityQuerySpaceImpl@5bdaf2ce]
+[DEBUG] 2018-09-30 18:08:53.448 [main] MetamodelGraphWalker - Visiting attribute path : code
+[DEBUG] 2018-09-30 18:08:53.448 [main] MetamodelGraphWalker - Visiting attribute path : createdDate
+[DEBUG] 2018-09-30 18:08:53.448 [main] MetamodelGraphWalker - Visiting attribute path : modifiedDate
+[DEBUG] 2018-09-30 18:08:53.448 [main] MetamodelGraphWalker - Visiting attribute path : name
+[DEBUG] 2018-09-30 18:08:53.448 [main] FetchStyleLoadPlanBuildingAssociationVisitationStrategy - Building LoadPlan...
+[DEBUG] 2018-09-30 18:08:53.448 [main] LoadQueryJoinAndFetchProcessor - processing queryspace <gen:0>
+[DEBUG] 2018-09-30 18:08:53.448 [main] LoadPlanTreePrinter - LoadPlan(entity=co.net.quiron.domain.admin.Country)
+    - Returns
+       - EntityReturnImpl(entity=co.net.quiron.domain.admin.Country, querySpaceUid=<gen:0>, path=co.net.quiron.domain.admin.Country)
+    - QuerySpaces
+       - EntityQuerySpaceImpl(uid=<gen:0>, entity=co.net.quiron.domain.admin.Country)
+          - SQL table alias mapping - country0_
+          - alias suffix - 0_
+          - suffixed key columns - {CountryI1_0_0_}
+
+[DEBUG] 2018-09-30 18:08:53.448 [main] EntityLoader - Static select for entity co.net.quiron.domain.admin.Country [FORCE]: select country0_.CountryID as CountryI1_0_0_, country0_.CountryCode as CountryC2_0_0_, country0_.CreatedDate as CreatedD3_0_0_, country0_.ModifiedDate as Modified4_0_0_, country0_.Name as Name5_0_0_ from COUNTRIES country0_ where country0_.CountryID=? for update
+[DEBUG] 2018-09-30 18:08:53.448 [main] QuerySpacesImpl - Adding QuerySpace : uid = <gen:0> -> org.hibernate.loader.plan.build.internal.spaces.EntityQuerySpaceImpl@1ce93c18]
+[DEBUG] 2018-09-30 18:08:53.448 [main] MetamodelGraphWalker - Visiting attribute path : code
+[DEBUG] 2018-09-30 18:08:53.448 [main] MetamodelGraphWalker - Visiting attribute path : createdDate
+[DEBUG] 2018-09-30 18:08:53.448 [main] MetamodelGraphWalker - Visiting attribute path : modifiedDate
+[DEBUG] 2018-09-30 18:08:53.448 [main] MetamodelGraphWalker - Visiting attribute path : name
+[DEBUG] 2018-09-30 18:08:53.449 [main] FetchStyleLoadPlanBuildingAssociationVisitationStrategy - Building LoadPlan...
+[DEBUG] 2018-09-30 18:08:53.449 [main] LoadQueryJoinAndFetchProcessor - processing queryspace <gen:0>
+[DEBUG] 2018-09-30 18:08:53.449 [main] LoadPlanTreePrinter - LoadPlan(entity=co.net.quiron.domain.admin.Country)
+    - Returns
+       - EntityReturnImpl(entity=co.net.quiron.domain.admin.Country, querySpaceUid=<gen:0>, path=co.net.quiron.domain.admin.Country)
+    - QuerySpaces
+       - EntityQuerySpaceImpl(uid=<gen:0>, entity=co.net.quiron.domain.admin.Country)
+          - SQL table alias mapping - country0_
+          - alias suffix - 0_
+          - suffixed key columns - {CountryI1_0_0_}
+
+[DEBUG] 2018-09-30 18:08:53.449 [main] EntityLoader - Static select for entity co.net.quiron.domain.admin.Country [PESSIMISTIC_READ]: select country0_.CountryID as CountryI1_0_0_, country0_.CountryCode as CountryC2_0_0_, country0_.CreatedDate as CreatedD3_0_0_, country0_.ModifiedDate as Modified4_0_0_, country0_.Name as Name5_0_0_ from COUNTRIES country0_ where country0_.CountryID=? lock in share mode
+[DEBUG] 2018-09-30 18:08:53.449 [main] QuerySpacesImpl - Adding QuerySpace : uid = <gen:0> -> org.hibernate.loader.plan.build.internal.spaces.EntityQuerySpaceImpl@1532c619]
+[DEBUG] 2018-09-30 18:08:53.449 [main] MetamodelGraphWalker - Visiting attribute path : code
+[DEBUG] 2018-09-30 18:08:53.449 [main] MetamodelGraphWalker - Visiting attribute path : createdDate
+[DEBUG] 2018-09-30 18:08:53.449 [main] MetamodelGraphWalker - Visiting attribute path : modifiedDate
+[DEBUG] 2018-09-30 18:08:53.449 [main] MetamodelGraphWalker - Visiting attribute path : name
+[DEBUG] 2018-09-30 18:08:53.449 [main] FetchStyleLoadPlanBuildingAssociationVisitationStrategy - Building LoadPlan...
+[DEBUG] 2018-09-30 18:08:53.449 [main] LoadQueryJoinAndFetchProcessor - processing queryspace <gen:0>
+[DEBUG] 2018-09-30 18:08:53.451 [main] LoadPlanTreePrinter - LoadPlan(entity=co.net.quiron.domain.admin.Country)
+    - Returns
+       - EntityReturnImpl(entity=co.net.quiron.domain.admin.Country, querySpaceUid=<gen:0>, path=co.net.quiron.domain.admin.Country)
+    - QuerySpaces
+       - EntityQuerySpaceImpl(uid=<gen:0>, entity=co.net.quiron.domain.admin.Country)
+          - SQL table alias mapping - country0_
+          - alias suffix - 0_
+          - suffixed key columns - {CountryI1_0_0_}
+
+[DEBUG] 2018-09-30 18:08:53.451 [main] EntityLoader - Static select for entity co.net.quiron.domain.admin.Country [PESSIMISTIC_WRITE]: select country0_.CountryID as CountryI1_0_0_, country0_.CountryCode as CountryC2_0_0_, country0_.CreatedDate as CreatedD3_0_0_, country0_.ModifiedDate as Modified4_0_0_, country0_.Name as Name5_0_0_ from COUNTRIES country0_ where country0_.CountryID=? for update
+[DEBUG] 2018-09-30 18:08:53.451 [main] QuerySpacesImpl - Adding QuerySpace : uid = <gen:0> -> org.hibernate.loader.plan.build.internal.spaces.EntityQuerySpaceImpl@1358b28e]
+[DEBUG] 2018-09-30 18:08:53.451 [main] MetamodelGraphWalker - Visiting attribute path : code
+[DEBUG] 2018-09-30 18:08:53.451 [main] MetamodelGraphWalker - Visiting attribute path : createdDate
+[DEBUG] 2018-09-30 18:08:53.451 [main] MetamodelGraphWalker - Visiting attribute path : modifiedDate
+[DEBUG] 2018-09-30 18:08:53.451 [main] MetamodelGraphWalker - Visiting attribute path : name
+[DEBUG] 2018-09-30 18:08:53.451 [main] FetchStyleLoadPlanBuildingAssociationVisitationStrategy - Building LoadPlan...
+[DEBUG] 2018-09-30 18:08:53.452 [main] LoadQueryJoinAndFetchProcessor - processing queryspace <gen:0>
+[DEBUG] 2018-09-30 18:08:53.452 [main] LoadPlanTreePrinter - LoadPlan(entity=co.net.quiron.domain.admin.Country)
+    - Returns
+       - EntityReturnImpl(entity=co.net.quiron.domain.admin.Country, querySpaceUid=<gen:0>, path=co.net.quiron.domain.admin.Country)
+    - QuerySpaces
+       - EntityQuerySpaceImpl(uid=<gen:0>, entity=co.net.quiron.domain.admin.Country)
+          - SQL table alias mapping - country0_
+          - alias suffix - 0_
+          - suffixed key columns - {CountryI1_0_0_}
+
+[DEBUG] 2018-09-30 18:08:53.452 [main] EntityLoader - Static select for entity co.net.quiron.domain.admin.Country [PESSIMISTIC_FORCE_INCREMENT]: select country0_.CountryID as CountryI1_0_0_, country0_.CountryCode as CountryC2_0_0_, country0_.CreatedDate as CreatedD3_0_0_, country0_.ModifiedDate as Modified4_0_0_, country0_.Name as Name5_0_0_ from COUNTRIES country0_ where country0_.CountryID=? for update
+[DEBUG] 2018-09-30 18:08:53.453 [main] QuerySpacesImpl - Adding QuerySpace : uid = <gen:0> -> org.hibernate.loader.plan.build.internal.spaces.EntityQuerySpaceImpl@19f9d595]
+[DEBUG] 2018-09-30 18:08:53.453 [main] MetamodelGraphWalker - Visiting attribute path : code
+[DEBUG] 2018-09-30 18:08:53.453 [main] MetamodelGraphWalker - Visiting attribute path : createdDate
+[DEBUG] 2018-09-30 18:08:53.453 [main] MetamodelGraphWalker - Visiting attribute path : modifiedDate
+[DEBUG] 2018-09-30 18:08:53.453 [main] MetamodelGraphWalker - Visiting attribute path : name
+[DEBUG] 2018-09-30 18:08:53.453 [main] FetchStyleLoadPlanBuildingAssociationVisitationStrategy - Building LoadPlan...
+[DEBUG] 2018-09-30 18:08:53.453 [main] LoadQueryJoinAndFetchProcessor - processing queryspace <gen:0>
+[DEBUG] 2018-09-30 18:08:53.453 [main] LoadPlanTreePrinter - LoadPlan(entity=co.net.quiron.domain.admin.Country)
+    - Returns
+       - EntityReturnImpl(entity=co.net.quiron.domain.admin.Country, querySpaceUid=<gen:0>, path=co.net.quiron.domain.admin.Country)
+    - QuerySpaces
+       - EntityQuerySpaceImpl(uid=<gen:0>, entity=co.net.quiron.domain.admin.Country)
+          - SQL table alias mapping - country0_
+          - alias suffix - 0_
+          - suffixed key columns - {CountryI1_0_0_}
+
+[DEBUG] 2018-09-30 18:08:53.453 [main] EntityLoader - Static select for entity co.net.quiron.domain.admin.Country [OPTIMISTIC]: select country0_.CountryID as CountryI1_0_0_, country0_.CountryCode as CountryC2_0_0_, country0_.CreatedDate as CreatedD3_0_0_, country0_.ModifiedDate as Modified4_0_0_, country0_.Name as Name5_0_0_ from COUNTRIES country0_ where country0_.CountryID=?
+[DEBUG] 2018-09-30 18:08:53.454 [main] QuerySpacesImpl - Adding QuerySpace : uid = <gen:0> -> org.hibernate.loader.plan.build.internal.spaces.EntityQuerySpaceImpl@2bfeb1ef]
+[DEBUG] 2018-09-30 18:08:53.454 [main] MetamodelGraphWalker - Visiting attribute path : code
+[DEBUG] 2018-09-30 18:08:53.454 [main] MetamodelGraphWalker - Visiting attribute path : createdDate
+[DEBUG] 2018-09-30 18:08:53.454 [main] MetamodelGraphWalker - Visiting attribute path : modifiedDate
+[DEBUG] 2018-09-30 18:08:53.454 [main] MetamodelGraphWalker - Visiting attribute path : name
+[DEBUG] 2018-09-30 18:08:53.454 [main] FetchStyleLoadPlanBuildingAssociationVisitationStrategy - Building LoadPlan...
+[DEBUG] 2018-09-30 18:08:53.454 [main] LoadQueryJoinAndFetchProcessor - processing queryspace <gen:0>
+[DEBUG] 2018-09-30 18:08:53.454 [main] LoadPlanTreePrinter - LoadPlan(entity=co.net.quiron.domain.admin.Country)
+    - Returns
+       - EntityReturnImpl(entity=co.net.quiron.domain.admin.Country, querySpaceUid=<gen:0>, path=co.net.quiron.domain.admin.Country)
+    - QuerySpaces
+       - EntityQuerySpaceImpl(uid=<gen:0>, entity=co.net.quiron.domain.admin.Country)
+          - SQL table alias mapping - country0_
+          - alias suffix - 0_
+          - suffixed key columns - {CountryI1_0_0_}
+
+[DEBUG] 2018-09-30 18:08:53.454 [main] EntityLoader - Static select for entity co.net.quiron.domain.admin.Country [OPTIMISTIC_FORCE_INCREMENT]: select country0_.CountryID as CountryI1_0_0_, country0_.CountryCode as CountryC2_0_0_, country0_.CreatedDate as CreatedD3_0_0_, country0_.ModifiedDate as Modified4_0_0_, country0_.Name as Name5_0_0_ from COUNTRIES country0_ where country0_.CountryID=?
+[DEBUG] 2018-09-30 18:08:53.475 [main] Loader - Static select for action ACTION_MERGE on entity co.net.quiron.domain.admin.Country: select country0_.CountryID as CountryI1_0_0_, country0_.CountryCode as CountryC2_0_0_, country0_.CreatedDate as CreatedD3_0_0_, country0_.ModifiedDate as Modified4_0_0_, country0_.Name as Name5_0_0_ from COUNTRIES country0_ where country0_.CountryID=?
+[DEBUG] 2018-09-30 18:08:53.476 [main] Loader - Static select for action ACTION_REFRESH on entity co.net.quiron.domain.admin.Country: select country0_.CountryID as CountryI1_0_0_, country0_.CountryCode as CountryC2_0_0_, country0_.CreatedDate as CreatedD3_0_0_, country0_.ModifiedDate as Modified4_0_0_, country0_.Name as Name5_0_0_ from COUNTRIES country0_ where country0_.CountryID=?
+[DEBUG] 2018-09-30 18:08:53.527 [main] SchemaManagementToolCoordinator - No actions specified; doing nothing
+[DEBUG] 2018-09-30 18:08:53.528 [main] JtaPlatformInitiator - No JtaPlatform was specified, checking resolver
+[DEBUG] 2018-09-30 18:08:53.529 [main] JtaPlatformResolverInitiator - No JtaPlatformResolver was specified, using default [org.hibernate.engine.transaction.jta.platform.internal.StandardJtaPlatformResolver]
+[DEBUG] 2018-09-30 18:08:53.534 [main] StandardJtaPlatformResolver - Could not resolve JtaPlatform, using default [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+[DEBUG] 2018-09-30 18:08:53.536 [main] NamedQueryRepository - Checking 0 named HQL queries
+[DEBUG] 2018-09-30 18:08:53.536 [main] NamedQueryRepository - Checking 0 named SQL queries
+[DEBUG] 2018-09-30 18:08:53.539 [main] SessionFactoryRegistry - Initializing SessionFactoryRegistry : org.hibernate.internal.SessionFactoryRegistry@3b8ee898
+[DEBUG] 2018-09-30 18:08:53.542 [main] SessionFactoryRegistry - Registering SessionFactory: 9985881d-3b57-4670-b3a8-92b8d237ea79 (<unnamed>)
+[DEBUG] 2018-09-30 18:08:53.543 [main] SessionFactoryRegistry - Not binding SessionFactory to JNDI, no JNDI name configured
+[DEBUG] 2018-09-30 18:08:53.638 [main] StatisticsInitiator - Statistics initialized [enabled=false]
+[DEBUG] 2018-09-30 18:08:53.646 [main] TransactionImpl - begin
+[DEBUG] 2018-09-30 18:08:53.659 [main] ActionQueue - Executing identity-insert immediately
+[DEBUG] 2018-09-30 18:08:53.663 [main] SQL - insert into COUNTRIES (CountryCode, CreatedDate, ModifiedDate, Name) values (?, ?, ?, ?)
+[DEBUG] 2018-09-30 18:08:53.705 [main] IdentifierGeneratorHelper - Natively generated identity: 6
+[DEBUG] 2018-09-30 18:08:53.705 [main] ResourceRegistryStandardImpl - HHH000387: ResultSet's statement was not registered
+[DEBUG] 2018-09-30 18:08:53.708 [main] TransactionImpl - committing
+[DEBUG] 2018-09-30 18:08:53.709 [main] AbstractFlushingEventListener - Processing flush-time cascades
+[DEBUG] 2018-09-30 18:08:53.710 [main] AbstractFlushingEventListener - Dirty checking collections
+[DEBUG] 2018-09-30 18:08:53.712 [main] AbstractFlushingEventListener - Flushed: 0 insertions, 0 updates, 0 deletions to 1 objects
+[DEBUG] 2018-09-30 18:08:53.712 [main] AbstractFlushingEventListener - Flushed: 0 (re)creations, 0 updates, 0 removals to 0 collections
+[DEBUG] 2018-09-30 18:08:53.713 [main] EntityPrinter - Listing entities:
+[DEBUG] 2018-09-30 18:08:53.714 [main] EntityPrinter - co.net.quiron.domain.admin.Country{code=JP, createdDate=Sun Sep 30 18:08:53 CDT 2018, modifiedDate=Sun Sep 30 18:08:53 CDT 2018, name=Japan, id=6}
+[DEBUG] 2018-09-30 18:08:53.716 [main] LogicalConnectionManagedImpl - Initiating JDBC connection release from afterTransaction
+[DEBUG] 2018-09-30 18:08:53.718 [main] LogicalConnectionManagedImpl - Initiating JDBC connection release from afterTransaction
+[DEBUG] 2018-09-30 18:08:53.724 [main] SQL - select country0_.CountryID as CountryI1_0_0_, country0_.CountryCode as CountryC2_0_0_, country0_.CreatedDate as CreatedD3_0_0_, country0_.ModifiedDate as Modified4_0_0_, country0_.Name as Name5_0_0_ from COUNTRIES country0_ where country0_.CountryID=?
+[DEBUG] 2018-09-30 18:08:53.730 [main] ResultSetProcessorImpl - Starting ResultSet row #0
+[DEBUG] 2018-09-30 18:08:53.730 [main] EntityReferenceInitializerImpl - On call to EntityIdentifierReaderImpl#resolve, EntityKey was already known; should only happen on root returns with an optional identifier specified
+[DEBUG] 2018-09-30 18:08:53.736 [main] TwoPhaseLoad - Resolving associations for [co.net.quiron.domain.admin.Country#6]
+[DEBUG] 2018-09-30 18:08:53.737 [main] TwoPhaseLoad - Done materializing entity [co.net.quiron.domain.admin.Country#6]
+[DEBUG] 2018-09-30 18:08:53.737 [main] ResourceRegistryStandardImpl - HHH000387: ResultSet's statement was not registered
+[DEBUG] 2018-09-30 18:08:53.737 [main] AbstractLoadPlanBasedEntityLoader - Done entity load : co.net.quiron.domain.admin.Country#6
+[DEBUG] 2018-09-30 18:08:53.737 [main] LogicalConnectionManagedImpl - Initiating JDBC connection release from afterTransaction
+[DEBUG] 2018-09-30 18:08:53.796 [main] SQL - select country0_.CountryID as CountryI1_0_0_, country0_.CountryCode as CountryC2_0_0_, country0_.CreatedDate as CreatedD3_0_0_, country0_.ModifiedDate as Modified4_0_0_, country0_.Name as Name5_0_0_ from COUNTRIES country0_ where country0_.CountryID=?
+[DEBUG] 2018-09-30 18:08:53.798 [main] ResultSetProcessorImpl - Starting ResultSet row #0
+[DEBUG] 2018-09-30 18:08:53.798 [main] EntityReferenceInitializerImpl - On call to EntityIdentifierReaderImpl#resolve, EntityKey was already known; should only happen on root returns with an optional identifier specified
+[DEBUG] 2018-09-30 18:08:53.799 [main] TwoPhaseLoad - Resolving associations for [co.net.quiron.domain.admin.Country#3]
+[DEBUG] 2018-09-30 18:08:53.799 [main] TwoPhaseLoad - Done materializing entity [co.net.quiron.domain.admin.Country#3]
+[DEBUG] 2018-09-30 18:08:53.799 [main] ResourceRegistryStandardImpl - HHH000387: ResultSet's statement was not registered
+[DEBUG] 2018-09-30 18:08:53.799 [main] AbstractLoadPlanBasedEntityLoader - Done entity load : co.net.quiron.domain.admin.Country#3
+[DEBUG] 2018-09-30 18:08:53.800 [main] LogicalConnectionManagedImpl - Initiating JDBC connection release from afterTransaction
+[DEBUG] 2018-09-30 18:08:53.801 [main] TransactionImpl - begin
+[DEBUG] 2018-09-30 18:08:53.807 [main] TransactionImpl - committing
+[DEBUG] 2018-09-30 18:08:53.807 [main] AbstractFlushingEventListener - Processing flush-time cascades
+[DEBUG] 2018-09-30 18:08:53.808 [main] AbstractFlushingEventListener - Dirty checking collections
+[DEBUG] 2018-09-30 18:08:53.810 [main] AbstractFlushingEventListener - Flushed: 0 insertions, 0 updates, 1 deletions to 1 objects
+[DEBUG] 2018-09-30 18:08:53.813 [main] AbstractFlushingEventListener - Flushed: 0 (re)creations, 0 updates, 0 removals to 0 collections
+[DEBUG] 2018-09-30 18:08:53.815 [main] EntityPrinter - Listing entities:
+[DEBUG] 2018-09-30 18:08:53.816 [main] EntityPrinter - co.net.quiron.domain.admin.Country{code=CA, createdDate=2018-09-30 18:08:53.0, modifiedDate=null, name=Canada, id=3}
+[DEBUG] 2018-09-30 18:08:53.830 [main] SQL - delete from COUNTRIES where CountryID=?
+[DEBUG] 2018-09-30 18:08:53.835 [main] LogicalConnectionManagedImpl - Initiating JDBC connection release from afterTransaction
+[DEBUG] 2018-09-30 18:08:53.836 [main] LogicalConnectionManagedImpl - Initiating JDBC connection release from afterTransaction
+[DEBUG] 2018-09-30 18:08:53.837 [main] JdbcCoordinatorImpl - HHH000420: Closing un-released batch
+[DEBUG] 2018-09-30 18:08:53.838 [main] SQL - select country0_.CountryID as CountryI1_0_0_, country0_.CountryCode as CountryC2_0_0_, country0_.CreatedDate as CreatedD3_0_0_, country0_.ModifiedDate as Modified4_0_0_, country0_.Name as Name5_0_0_ from COUNTRIES country0_ where country0_.CountryID=?
+[DEBUG] 2018-09-30 18:08:53.839 [main] ResourceRegistryStandardImpl - HHH000387: ResultSet's statement was not registered
+[DEBUG] 2018-09-30 18:08:53.839 [main] AbstractLoadPlanBasedEntityLoader - Done entity load : co.net.quiron.domain.admin.Country#3
+[DEBUG] 2018-09-30 18:08:53.839 [main] LogicalConnectionManagedImpl - Initiating JDBC connection release from afterTransaction
+[DEBUG] 2018-09-30 18:08:53.947 [main] CriteriaQueryImpl - Rendered criteria query -> select generatedAlias0 from Countries as generatedAlias0
+[DEBUG] 2018-09-30 18:08:53.974 [main] QueryTranslatorFactoryInitiator - QueryTranslatorFactory : org.hibernate.hql.internal.ast.ASTQueryTranslatorFactory@226b143b
+[INFO ] 2018-09-30 18:08:53.974 [main] QueryTranslatorFactoryInitiator - HHH000397: Using ASTQueryTranslatorFactory
+[DEBUG] 2018-09-30 18:08:54.017 [main] QueryTranslatorImpl - parse() - HQL: select generatedAlias0 from co.net.quiron.domain.admin.Country as generatedAlias0
+[DEBUG] 2018-09-30 18:08:54.029 [main] ErrorCounter - throwQueryException() : no errors
+[DEBUG] 2018-09-30 18:08:54.036 [main] QueryTranslatorImpl - --- HQL AST ---
+ \-[QUERY] Node: 'query'
+    \-[SELECT_FROM] Node: 'SELECT_FROM'
+       +-[FROM] Node: 'from'
+       |  \-[RANGE] Node: 'RANGE'
+       |     +-[DOT] Node: '.'
+       |     |  +-[DOT] Node: '.'
+       |     |  |  +-[DOT] Node: '.'
+       |     |  |  |  +-[DOT] Node: '.'
+       |     |  |  |  |  +-[DOT] Node: '.'
+       |     |  |  |  |  |  +-[IDENT] Node: 'co'
+       |     |  |  |  |  |  \-[IDENT] Node: 'net'
+       |     |  |  |  |  \-[IDENT] Node: 'quiron'
+       |     |  |  |  \-[IDENT] Node: 'domain'
+       |     |  |  \-[IDENT] Node: 'admin'
+       |     |  \-[IDENT] Node: 'Country'
+       |     \-[ALIAS] Node: 'generatedAlias0'
+       \-[SELECT] Node: 'select'
+          \-[IDENT] Node: 'generatedAlias0'
+
+[DEBUG] 2018-09-30 18:08:54.072 [main] HqlSqlBaseWalker - select << begin [level=1, statement=select]
+[DEBUG] 2018-09-30 18:08:54.114 [main] FromElement - FromClause{level=1} : co.net.quiron.domain.admin.Country (generatedAlias0) -> country0_
+[DEBUG] 2018-09-30 18:08:54.115 [main] FromReferenceNode - Resolved : generatedAlias0 -> country0_.CountryID
+[DEBUG] 2018-09-30 18:08:54.117 [main] HqlSqlBaseWalker - select : finishing up [level=1, statement=select]
+[DEBUG] 2018-09-30 18:08:54.117 [main] HqlSqlWalker - processQuery() :  ( SELECT ( {select clause} country0_.CountryID ) ( FromClause{level=1} COUNTRIES country0_ ) )
+[DEBUG] 2018-09-30 18:08:54.126 [main] JoinProcessor - Using FROM fragment [COUNTRIES country0_]
+[DEBUG] 2018-09-30 18:08:54.126 [main] HqlSqlBaseWalker - select >> end [level=1, statement=select]
+[DEBUG] 2018-09-30 18:08:54.126 [main] QueryTranslatorImpl - --- SQL AST ---
+ \-[SELECT] QueryNode: 'SELECT'  querySpaces (COUNTRIES)
+    +-[SELECT_CLAUSE] SelectClause: '{select clause}'
+    |  +-[ALIAS_REF] IdentNode: 'country0_.CountryID as CountryI1_0_' {alias=generatedAlias0, className=co.net.quiron.domain.admin.Country, tableAlias=country0_}
+    |  \-[SQL_TOKEN] SqlFragment: 'country0_.CountryCode as CountryC2_0_, country0_.CreatedDate as CreatedD3_0_, country0_.ModifiedDate as Modified4_0_, country0_.Name as Name5_0_'
+    \-[FROM] FromClause: 'from' FromClause{level=1, fromElementCounter=1, fromElements=1, fromElementByClassAlias=[generatedAlias0], fromElementByTableAlias=[country0_], fromElementsByPath=[], collectionJoinFromElementsByPath=[], impliedElements=[]}
+       \-[FROM_FRAGMENT] FromElement: 'COUNTRIES country0_' FromElement{explicit,not a collection join,not a fetch join,fetch non-lazy properties,classAlias=generatedAlias0,role=null,tableName=COUNTRIES,tableAlias=country0_,origin=null,columns={,className=co.net.quiron.domain.admin.Country}}
+
+[DEBUG] 2018-09-30 18:08:54.126 [main] ErrorCounter - throwQueryException() : no errors
+[DEBUG] 2018-09-30 18:08:54.135 [main] QueryTranslatorImpl - HQL: select generatedAlias0 from co.net.quiron.domain.admin.Country as generatedAlias0
+[DEBUG] 2018-09-30 18:08:54.135 [main] QueryTranslatorImpl - SQL: select country0_.CountryID as CountryI1_0_, country0_.CountryCode as CountryC2_0_, country0_.CreatedDate as CreatedD3_0_, country0_.ModifiedDate as Modified4_0_, country0_.Name as Name5_0_ from COUNTRIES country0_
+[DEBUG] 2018-09-30 18:08:54.135 [main] ErrorCounter - throwQueryException() : no errors
+[DEBUG] 2018-09-30 18:08:54.149 [main] SQL - select country0_.CountryID as CountryI1_0_, country0_.CountryCode as CountryC2_0_, country0_.CreatedDate as CreatedD3_0_, country0_.ModifiedDate as Modified4_0_, country0_.Name as Name5_0_ from COUNTRIES country0_
+[DEBUG] 2018-09-30 18:08:54.152 [main] Loader - Result set row: 0
+[DEBUG] 2018-09-30 18:08:54.153 [main] Loader - Result row: EntityKey[co.net.quiron.domain.admin.Country#1]
+[DEBUG] 2018-09-30 18:08:54.154 [main] Loader - Result set row: 1
+[DEBUG] 2018-09-30 18:08:54.154 [main] Loader - Result row: EntityKey[co.net.quiron.domain.admin.Country#2]
+[DEBUG] 2018-09-30 18:08:54.155 [main] Loader - Result set row: 2
+[DEBUG] 2018-09-30 18:08:54.155 [main] Loader - Result row: EntityKey[co.net.quiron.domain.admin.Country#3]
+[DEBUG] 2018-09-30 18:08:54.155 [main] Loader - Result set row: 3
+[DEBUG] 2018-09-30 18:08:54.155 [main] Loader - Result row: EntityKey[co.net.quiron.domain.admin.Country#4]
+[DEBUG] 2018-09-30 18:08:54.166 [main] Loader - Result set row: 4
+[DEBUG] 2018-09-30 18:08:54.167 [main] Loader - Result row: EntityKey[co.net.quiron.domain.admin.Country#5]
+[DEBUG] 2018-09-30 18:08:54.169 [main] TwoPhaseLoad - Resolving associations for [co.net.quiron.domain.admin.Country#1]
+[DEBUG] 2018-09-30 18:08:54.170 [main] TwoPhaseLoad - Done materializing entity [co.net.quiron.domain.admin.Country#1]
+[DEBUG] 2018-09-30 18:08:54.170 [main] TwoPhaseLoad - Resolving associations for [co.net.quiron.domain.admin.Country#2]
+[DEBUG] 2018-09-30 18:08:54.170 [main] TwoPhaseLoad - Done materializing entity [co.net.quiron.domain.admin.Country#2]
+[DEBUG] 2018-09-30 18:08:54.170 [main] TwoPhaseLoad - Resolving associations for [co.net.quiron.domain.admin.Country#3]
+[DEBUG] 2018-09-30 18:08:54.170 [main] TwoPhaseLoad - Done materializing entity [co.net.quiron.domain.admin.Country#3]
+[DEBUG] 2018-09-30 18:08:54.170 [main] TwoPhaseLoad - Resolving associations for [co.net.quiron.domain.admin.Country#4]
+[DEBUG] 2018-09-30 18:08:54.170 [main] TwoPhaseLoad - Done materializing entity [co.net.quiron.domain.admin.Country#4]
+[DEBUG] 2018-09-30 18:08:54.170 [main] TwoPhaseLoad - Resolving associations for [co.net.quiron.domain.admin.Country#5]
+[DEBUG] 2018-09-30 18:08:54.171 [main] TwoPhaseLoad - Done materializing entity [co.net.quiron.domain.admin.Country#5]
+[DEBUG] 2018-09-30 18:08:54.175 [main] LogicalConnectionManagedImpl - Initiating JDBC connection release from afterTransaction
+[DEBUG] 2018-09-30 18:08:54.232 [main] SQL - select country0_.CountryID as CountryI1_0_0_, country0_.CountryCode as CountryC2_0_0_, country0_.CreatedDate as CreatedD3_0_0_, country0_.ModifiedDate as Modified4_0_0_, country0_.Name as Name5_0_0_ from COUNTRIES country0_ where country0_.CountryID=?
+[DEBUG] 2018-09-30 18:08:54.234 [main] ResultSetProcessorImpl - Starting ResultSet row #0
+[DEBUG] 2018-09-30 18:08:54.234 [main] EntityReferenceInitializerImpl - On call to EntityIdentifierReaderImpl#resolve, EntityKey was already known; should only happen on root returns with an optional identifier specified
+[DEBUG] 2018-09-30 18:08:54.234 [main] TwoPhaseLoad - Resolving associations for [co.net.quiron.domain.admin.Country#4]
+[DEBUG] 2018-09-30 18:08:54.234 [main] TwoPhaseLoad - Done materializing entity [co.net.quiron.domain.admin.Country#4]
+[DEBUG] 2018-09-30 18:08:54.234 [main] ResourceRegistryStandardImpl - HHH000387: ResultSet's statement was not registered
+[DEBUG] 2018-09-30 18:08:54.235 [main] AbstractLoadPlanBasedEntityLoader - Done entity load : co.net.quiron.domain.admin.Country#4
+[DEBUG] 2018-09-30 18:08:54.235 [main] LogicalConnectionManagedImpl - Initiating JDBC connection release from afterTransaction
+[DEBUG] 2018-09-30 18:08:54.236 [main] TransactionImpl - begin
+[DEBUG] 2018-09-30 18:08:54.238 [main] TransactionImpl - committing
+[DEBUG] 2018-09-30 18:08:54.239 [main] AbstractFlushingEventListener - Processing flush-time cascades
+[DEBUG] 2018-09-30 18:08:54.239 [main] AbstractFlushingEventListener - Dirty checking collections
+[DEBUG] 2018-09-30 18:08:54.240 [main] AbstractFlushingEventListener - Flushed: 0 insertions, 1 updates, 0 deletions to 1 objects
+[DEBUG] 2018-09-30 18:08:54.240 [main] AbstractFlushingEventListener - Flushed: 0 (re)creations, 0 updates, 0 removals to 0 collections
+[DEBUG] 2018-09-30 18:08:54.240 [main] EntityPrinter - Listing entities:
+[DEBUG] 2018-09-30 18:08:54.240 [main] EntityPrinter - co.net.quiron.domain.admin.Country{code=ES, createdDate=2018-09-30 18:08:54.0, modifiedDate=null, name=Espana, id=4}
+[DEBUG] 2018-09-30 18:08:54.240 [main] SQL - update COUNTRIES set CountryCode=?, CreatedDate=?, ModifiedDate=?, Name=? where CountryID=?
+[DEBUG] 2018-09-30 18:08:54.244 [main] LogicalConnectionManagedImpl - Initiating JDBC connection release from afterTransaction
+[DEBUG] 2018-09-30 18:08:54.245 [main] LogicalConnectionManagedImpl - Initiating JDBC connection release from afterTransaction
+[DEBUG] 2018-09-30 18:08:54.245 [main] JdbcCoordinatorImpl - HHH000420: Closing un-released batch
+[DEBUG] 2018-09-30 18:08:54.245 [main] SQL - select country0_.CountryID as CountryI1_0_0_, country0_.CountryCode as CountryC2_0_0_, country0_.CreatedDate as CreatedD3_0_0_, country0_.ModifiedDate as Modified4_0_0_, country0_.Name as Name5_0_0_ from COUNTRIES country0_ where country0_.CountryID=?
+[DEBUG] 2018-09-30 18:08:54.246 [main] ResultSetProcessorImpl - Starting ResultSet row #0
+[DEBUG] 2018-09-30 18:08:54.246 [main] EntityReferenceInitializerImpl - On call to EntityIdentifierReaderImpl#resolve, EntityKey was already known; should only happen on root returns with an optional identifier specified
+[DEBUG] 2018-09-30 18:08:54.247 [main] TwoPhaseLoad - Resolving associations for [co.net.quiron.domain.admin.Country#4]
+[DEBUG] 2018-09-30 18:08:54.247 [main] TwoPhaseLoad - Done materializing entity [co.net.quiron.domain.admin.Country#4]
+[DEBUG] 2018-09-30 18:08:54.247 [main] ResourceRegistryStandardImpl - HHH000387: ResultSet's statement was not registered
+[DEBUG] 2018-09-30 18:08:54.247 [main] AbstractLoadPlanBasedEntityLoader - Done entity load : co.net.quiron.domain.admin.Country#4
+[DEBUG] 2018-09-30 18:08:54.247 [main] LogicalConnectionManagedImpl - Initiating JDBC connection release from afterTransaction

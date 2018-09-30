@@ -10,22 +10,26 @@ import java.time.LocalDate;
 import java.util.Date;
 
 /**
- * This class represents the Address Type domain for the application.
+ * This class represents the Country domain for the application.
  *
  * @autor yperea
  */
-@Entity(name = "AddressType")
-@Table(name = "ADDRESS_TYPES")
+@Entity(name = "Countries")
+@Table(name = "COUNTRIES")
 @Data
 @NoArgsConstructor
 @RequiredArgsConstructor
-public class AddressType {
+public class Country {
 
     @Id
-    @Column(name = "AddressTypeID")
+    @Column(name = "CountryID")
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
     @GenericGenerator(name = "native", strategy = "native")
     private int id;
+
+    @NonNull
+    @Column(name = "CountryCode")
+    private String code;
 
     @NonNull
     @Column(name = "Name")

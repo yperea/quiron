@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 5.7.23, for Win64 (x86_64)
+-- MySQL dump 10.13  Distrib 5.7.23, for Linux (x86_64)
 --
 -- Host: 127.0.0.1    Database: quirondb
 -- ------------------------------------------------------
--- Server version	5.7.23-log
+-- Server version	5.7.23-0ubuntu0.16.04.1
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -128,11 +128,12 @@ DROP TABLE IF EXISTS `COUNTRIES`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `COUNTRIES` (
+  `CountryID` int(11) NOT NULL AUTO_INCREMENT,
   `CountryCode` varchar(3) NOT NULL COMMENT 'ISO standard code for countries.',
   `Name` varchar(45) NOT NULL COMMENT 'Country name.',
   `CreatedDate` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Date and time the record was Created.',
   `ModifiedDate` datetime DEFAULT NULL,
-  PRIMARY KEY (`CountryCode`)
+  PRIMARY KEY (`CountryID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Lookup table containing the ISO standard codes for countries.';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -659,13 +660,13 @@ DROP TABLE IF EXISTS `STATE_PROVINCES`;
 CREATE TABLE `STATE_PROVINCES` (
   `StateProvinceID` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Primary key for State_Provinces records.',
   `StateProvinceCode` varchar(3) NOT NULL COMMENT 'ISO standard state or province code.',
-  `CountryCode` varchar(3) NOT NULL COMMENT 'ISO standard country or region code. Foreign key to COUNTRIES.CountryCode. ',
+  `CountryID` int(11) NOT NULL COMMENT 'ISO standard country or region code. Foreign key to COUNTRIES.CountryCode. ',
   `Name` varchar(45) NOT NULL COMMENT 'State or province description.',
   `CreatedDate` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Date and time the record was created.',
   `ModifiedDate` datetime DEFAULT NULL COMMENT 'Date and time the record was last updated.',
   PRIMARY KEY (`StateProvinceID`),
-  KEY `fk_STATE_PROVINCES_COUNTRIES1_idx` (`CountryCode`),
-  CONSTRAINT `fk_STATE_PROVINCES_COUNTRIES1` FOREIGN KEY (`CountryCode`) REFERENCES `COUNTRIES` (`CountryCode`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  KEY `fk_STATE_PROVINCES_COUNTRIES1_idx` (`CountryID`),
+  CONSTRAINT `STATE_PROVINCES_COUNTRIES_CountryID_fk` FOREIGN KEY (`CountryID`) REFERENCES `COUNTRIES` (`CountryID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='State and province lookup table.';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -816,4 +817,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-09-25 22:39:18
+-- Dump completed on 2018-09-30 17:37:51

@@ -1,6 +1,6 @@
 package co.net.quiron.controller.admin;
 
-import co.net.quiron.application.admin.AddressTypesManager;
+import co.net.quiron.application.admin.CountriesManager;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -11,26 +11,25 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
- * Controller for the Address Type model.
+ * Controller for the Country model.
  */
 @WebServlet(
-        name = "get-address-types",
-        urlPatterns = {"/AddressTypes", "/AddressTypes/index"}
+        name = "get-countries",
+        urlPatterns = {"/Countries", "/Countries/Index"}
 )
-public class AddressTypesController extends HttpServlet {
+public class CountriesController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
         //super.doGet(req, resp);
-        String url = "/admin/addressTypeList.jsp";
-        String title = "Address Type List";
+        String url = "/admin/countryList.jsp";
+        String title = "Country List";
 
-        AddressTypesManager addressTypesManager = new AddressTypesManager();
+        CountriesManager countriesManager = new CountriesManager();
 
-        req.setAttribute("addressTypes", addressTypesManager.getAll());
+        req.setAttribute("countries", countriesManager.getAll());
         req.setAttribute("title", title);
 
-        //RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(url);
         RequestDispatcher dispatcher = req.getRequestDispatcher(url);
         dispatcher.forward(req, resp);
     }

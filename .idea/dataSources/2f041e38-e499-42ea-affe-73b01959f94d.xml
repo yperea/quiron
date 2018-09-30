@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<dataSource name="quirondb_test@localhost">
+<dataSource name="quirondb@localhost">
   <database-model serializer="dbm" rdbms="MYSQL" format-version="4.11">
     <root id="1">
       <ServerVersion>5.7.23</ServerVersion>
@@ -17,11 +17,11 @@
       <Collation>utf8_general_ci</Collation>
     </schema>
     <schema id="5" parent="1" name="quirondb">
+      <Current>1</Current>
+      <Visible>1</Visible>
       <Collation>latin1_swedish_ci</Collation>
     </schema>
     <schema id="6" parent="1" name="quirondb_test">
-      <Current>1</Current>
-      <Visible>1</Visible>
       <Collation>latin1_swedish_ci</Collation>
     </schema>
     <schema id="7" parent="1" name="sample">
@@ -921,99 +921,99 @@
       <Charset>utf8mb4</Charset>
       <DefaultForCharset>0</DefaultForCharset>
     </collation>
-    <table id="232" parent="6" name="ADDRESSES">
+    <table id="232" parent="5" name="ADDRESSES">
       <Comment>Street address information for patiens, providers, care sites and pharmacies.</Comment>
       <Collation>utf8_general_ci</Collation>
     </table>
-    <table id="233" parent="6" name="ADDRESS_TYPES">
+    <table id="233" parent="5" name="ADDRESS_TYPES">
       <Comment>Types of addresses stored in the Address table. </Comment>
       <Collation>utf8_general_ci</Collation>
     </table>
-    <table id="234" parent="6" name="BANKS">
+    <table id="234" parent="5" name="BANKS">
       <Comment>Banks issuers of credit cards.</Comment>
       <Collation>utf8_general_ci</Collation>
     </table>
-    <table id="235" parent="6" name="CARD_TYPES">
+    <table id="235" parent="5" name="CARD_TYPES">
       <Comment>Type or franchise of credit cards.</Comment>
       <Collation>utf8_general_ci</Collation>
     </table>
-    <table id="236" parent="6" name="COUNTRIES">
+    <table id="236" parent="5" name="COUNTRIES">
       <Comment>Lookup table containing the ISO standard codes for countries.</Comment>
       <Collation>utf8_general_ci</Collation>
     </table>
-    <table id="237" parent="6" name="DIAGNOSIS">
+    <table id="237" parent="5" name="DIAGNOSIS">
       <Collation>utf8_general_ci</Collation>
     </table>
-    <table id="238" parent="6" name="DIAGNOSIS_CAUSES">
+    <table id="238" parent="5" name="DIAGNOSIS_CAUSES">
       <Collation>utf8_general_ci</Collation>
     </table>
-    <table id="239" parent="6" name="EMAIL_ADDRESSES">
+    <table id="239" parent="5" name="EMAIL_ADDRESSES">
       <Comment>Where to send a person email.</Comment>
       <Collation>utf8_general_ci</Collation>
     </table>
-    <table id="240" parent="6" name="ENTITIES">
+    <table id="240" parent="5" name="ENTITIES">
       <Comment>Source of the ID that connects providers and patients with address and contact information.</Comment>
       <Collation>utf8_general_ci</Collation>
     </table>
-    <table id="241" parent="6" name="ENTITY_ADDRESSES">
+    <table id="241" parent="5" name="ENTITY_ADDRESSES">
       <Comment>Cross-reference table mapping patients, providers, and institutions to their addresses.</Comment>
       <Collation>utf8_general_ci</Collation>
     </table>
-    <table id="242" parent="6" name="LOCATIONS">
+    <table id="242" parent="5" name="LOCATIONS">
       <Collation>utf8_general_ci</Collation>
     </table>
-    <table id="243" parent="6" name="MEDICATIONS">
+    <table id="243" parent="5" name="MEDICATIONS">
       <Collation>utf8_general_ci</Collation>
     </table>
-    <table id="244" parent="6" name="ORGANIZATIONS">
+    <table id="244" parent="5" name="ORGANIZATIONS">
       <Collation>utf8_general_ci</Collation>
     </table>
-    <table id="245" parent="6" name="PATIENTS">
+    <table id="245" parent="5" name="PATIENTS">
       <Collation>utf8_general_ci</Collation>
     </table>
-    <table id="246" parent="6" name="PERSONS">
+    <table id="246" parent="5" name="PERSONS">
       <Comment>Human beings involved with Quiron Project patients, patients contacts, and providers.</Comment>
       <Collation>utf8_general_ci</Collation>
     </table>
-    <table id="247" parent="6" name="PERSON_CREDITCARDS">
+    <table id="247" parent="5" name="PERSON_CREDITCARDS">
       <Comment>Person credit card information.</Comment>
       <Collation>utf8_general_ci</Collation>
     </table>
-    <table id="248" parent="6" name="PERSON_PHONES">
+    <table id="248" parent="5" name="PERSON_PHONES">
       <Comment>Telephone number and type of a person.</Comment>
       <Collation>utf8_general_ci</Collation>
     </table>
-    <table id="249" parent="6" name="PERSON_TYPES">
+    <table id="249" parent="5" name="PERSON_TYPES">
       <Comment>Type of a person.</Comment>
       <Collation>utf8_general_ci</Collation>
     </table>
-    <table id="250" parent="6" name="PHONE_TYPES">
+    <table id="250" parent="5" name="PHONE_TYPES">
       <Comment>Type of phone number of a person.</Comment>
       <Collation>utf8_general_ci</Collation>
     </table>
-    <table id="251" parent="6" name="PRESCRIPTIONS">
+    <table id="251" parent="5" name="PRESCRIPTIONS">
       <Collation>utf8_general_ci</Collation>
     </table>
-    <table id="252" parent="6" name="PROVIDERS">
+    <table id="252" parent="5" name="PROVIDERS">
       <Collation>utf8_general_ci</Collation>
     </table>
-    <table id="253" parent="6" name="PROVIDERS_LOCATIONS">
+    <table id="253" parent="5" name="PROVIDERS_LOCATIONS">
       <Collation>utf8_general_ci</Collation>
     </table>
-    <table id="254" parent="6" name="STATE_PROVINCES">
+    <table id="254" parent="5" name="STATE_PROVINCES">
       <Comment>State and province lookup table.</Comment>
       <Collation>utf8_general_ci</Collation>
     </table>
-    <table id="255" parent="6" name="TREATMENTS">
+    <table id="255" parent="5" name="TREATMENTS">
       <Collation>utf8_general_ci</Collation>
     </table>
-    <table id="256" parent="6" name="TREATMENTS_PRESCRIPTIONS">
+    <table id="256" parent="5" name="TREATMENTS_PRESCRIPTIONS">
       <Collation>utf8_general_ci</Collation>
     </table>
-    <table id="257" parent="6" name="USERS">
+    <table id="257" parent="5" name="USERS">
       <Collation>utf8_general_ci</Collation>
     </table>
-    <table id="258" parent="6" name="VISITS">
+    <table id="258" parent="5" name="VISITS">
       <Collation>utf8_general_ci</Collation>
     </table>
     <column id="259" parent="232" name="AddressID">
@@ -1081,7 +1081,7 @@
     </key>
     <foreign-key id="269" parent="232" name="fk_ADDRESSES_STATE_PROVINCES1">
       <ColNames>StateProvinceID</ColNames>
-      <RefSchemaName>quirondb_test</RefSchemaName>
+      <RefSchemaName>quirondb</RefSchemaName>
       <RefTableName>STATE_PROVINCES</RefTableName>
       <RefColNames>StateProvinceID</RefColNames>
     </foreign-key>
@@ -1280,25 +1280,25 @@
     </key>
     <foreign-key id="302" parent="237" name="fk_DIAGNOSIS_VISITS1">
       <ColNames>VisitID</ColNames>
-      <RefSchemaName>quirondb_test</RefSchemaName>
+      <RefSchemaName>quirondb</RefSchemaName>
       <RefTableName>VISITS</RefTableName>
       <RefColNames>VisitID</RefColNames>
     </foreign-key>
     <foreign-key id="303" parent="237" name="fk_DIAGNOSIS_VISITS2">
       <ColNames>PatientID</ColNames>
-      <RefSchemaName>quirondb_test</RefSchemaName>
+      <RefSchemaName>quirondb</RefSchemaName>
       <RefTableName>VISITS</RefTableName>
       <RefColNames>PatientID</RefColNames>
     </foreign-key>
     <foreign-key id="304" parent="237" name="fk_DIAGNOSIS_VISITS3">
       <ColNames>ProviderID</ColNames>
-      <RefSchemaName>quirondb_test</RefSchemaName>
+      <RefSchemaName>quirondb</RefSchemaName>
       <RefTableName>VISITS</RefTableName>
       <RefColNames>ProviderID</RefColNames>
     </foreign-key>
     <foreign-key id="305" parent="237" name="fk_DIAGNOSIS_DIAGNOSIS_CAUSES1">
       <ColNames>DiagnosisCauseID</ColNames>
-      <RefSchemaName>quirondb_test</RefSchemaName>
+      <RefSchemaName>quirondb</RefSchemaName>
       <RefTableName>DIAGNOSIS_CAUSES</RefTableName>
       <RefColNames>DiagnosisCauseID</RefColNames>
     </foreign-key>
@@ -1392,7 +1392,7 @@
     </key>
     <foreign-key id="321" parent="239" name="fk_EMAIL_ADDRESSES_PERSONS1">
       <ColNames>PersonID</ColNames>
-      <RefSchemaName>quirondb_test</RefSchemaName>
+      <RefSchemaName>quirondb</RefSchemaName>
       <RefTableName>PERSONS</RefTableName>
       <RefColNames>PersonID</RefColNames>
     </foreign-key>
@@ -1465,19 +1465,19 @@ AddressTypeID</ColNames>
     </key>
     <foreign-key id="333" parent="241" name="fk_ENTITIES_has_ADDRESSES_ENTITIES1">
       <ColNames>EntityID</ColNames>
-      <RefSchemaName>quirondb_test</RefSchemaName>
+      <RefSchemaName>quirondb</RefSchemaName>
       <RefTableName>ENTITIES</RefTableName>
       <RefColNames>EntityID</RefColNames>
     </foreign-key>
     <foreign-key id="334" parent="241" name="fk_ENTITIES_has_ADDRESSES_ADDRESSES1">
       <ColNames>AddressID</ColNames>
-      <RefSchemaName>quirondb_test</RefSchemaName>
+      <RefSchemaName>quirondb</RefSchemaName>
       <RefTableName>ADDRESSES</RefTableName>
       <RefColNames>AddressID</RefColNames>
     </foreign-key>
     <foreign-key id="335" parent="241" name="fk_ENTITY_ADDRESSES_ADDRESS_TYPES1">
       <ColNames>AddressTypeID</ColNames>
-      <RefSchemaName>quirondb_test</RefSchemaName>
+      <RefSchemaName>quirondb</RefSchemaName>
       <RefTableName>ADDRESS_TYPES</RefTableName>
       <RefColNames>AddressTypeID</RefColNames>
     </foreign-key>
@@ -1537,13 +1537,13 @@ EntityID</ColNames>
     </key>
     <foreign-key id="346" parent="242" name="fk_CARE_SITES_ENTITIES1">
       <ColNames>EntityID</ColNames>
-      <RefSchemaName>quirondb_test</RefSchemaName>
+      <RefSchemaName>quirondb</RefSchemaName>
       <RefTableName>ENTITIES</RefTableName>
       <RefColNames>EntityID</RefColNames>
     </foreign-key>
     <foreign-key id="347" parent="242" name="fk_CARE_SITES_ORGANIZATIONS1">
       <ColNames>OrganizationID</ColNames>
-      <RefSchemaName>quirondb_test</RefSchemaName>
+      <RefSchemaName>quirondb</RefSchemaName>
       <RefTableName>ORGANIZATIONS</RefTableName>
       <RefColNames>OrganizationID</RefColNames>
     </foreign-key>
@@ -1622,7 +1622,7 @@ EntityID</ColNames>
     </key>
     <foreign-key id="361" parent="244" name="fk_ORGANIZATIONS_ENTITIES1">
       <ColNames>OrganizationID</ColNames>
-      <RefSchemaName>quirondb_test</RefSchemaName>
+      <RefSchemaName>quirondb</RefSchemaName>
       <RefTableName>ENTITIES</RefTableName>
       <RefColNames>EntityID</RefColNames>
     </foreign-key>
@@ -1676,7 +1676,7 @@ EntityID</ColNames>
     </key>
     <foreign-key id="371" parent="245" name="fk_PATIENTS_PERSONS1">
       <ColNames>PatientID</ColNames>
-      <RefSchemaName>quirondb_test</RefSchemaName>
+      <RefSchemaName>quirondb</RefSchemaName>
       <RefTableName>PERSONS</RefTableName>
       <RefColNames>PersonID</RefColNames>
     </foreign-key>
@@ -1760,13 +1760,13 @@ EntityID</ColNames>
     </key>
     <foreign-key id="385" parent="246" name="fk_PERSONS_ENTITIES">
       <ColNames>PersonID</ColNames>
-      <RefSchemaName>quirondb_test</RefSchemaName>
+      <RefSchemaName>quirondb</RefSchemaName>
       <RefTableName>ENTITIES</RefTableName>
       <RefColNames>EntityID</RefColNames>
     </foreign-key>
     <foreign-key id="386" parent="246" name="fk_PERSONS_PERSON_TYPES1">
       <ColNames>PersonTypeID</ColNames>
-      <RefSchemaName>quirondb_test</RefSchemaName>
+      <RefSchemaName>quirondb</RefSchemaName>
       <RefTableName>PERSON_TYPES</RefTableName>
       <RefColNames>PersonTypeID</RefColNames>
     </foreign-key>
@@ -1848,19 +1848,19 @@ PersonID</ColNames>
     </key>
     <foreign-key id="400" parent="247" name="fk_PERSON_CREDITCARDS_PERSONS1">
       <ColNames>PersonID</ColNames>
-      <RefSchemaName>quirondb_test</RefSchemaName>
+      <RefSchemaName>quirondb</RefSchemaName>
       <RefTableName>PERSONS</RefTableName>
       <RefColNames>PersonID</RefColNames>
     </foreign-key>
     <foreign-key id="401" parent="247" name="fk_PERSON_CREDITCARDS_CARD_TYPES1">
       <ColNames>CardTypeID</ColNames>
-      <RefSchemaName>quirondb_test</RefSchemaName>
+      <RefSchemaName>quirondb</RefSchemaName>
       <RefTableName>CARD_TYPES</RefTableName>
       <RefColNames>CardTypeID</RefColNames>
     </foreign-key>
     <foreign-key id="402" parent="247" name="fk_PERSON_CREDITCARDS_BANKS1">
       <ColNames>BankID</ColNames>
-      <RefSchemaName>quirondb_test</RefSchemaName>
+      <RefSchemaName>quirondb</RefSchemaName>
       <RefTableName>BANKS</RefTableName>
       <RefColNames>BankID</RefColNames>
     </foreign-key>
@@ -1922,13 +1922,13 @@ PhoneTypeID</ColNames>
     </key>
     <foreign-key id="412" parent="248" name="fk_PERSON_PHONES_PERSONS1">
       <ColNames>PersonID</ColNames>
-      <RefSchemaName>quirondb_test</RefSchemaName>
+      <RefSchemaName>quirondb</RefSchemaName>
       <RefTableName>PERSONS</RefTableName>
       <RefColNames>PersonID</RefColNames>
     </foreign-key>
     <foreign-key id="413" parent="248" name="fk_PERSON_PHONES_PHONE_TYPES1">
       <ColNames>PhoneTypeID</ColNames>
-      <RefSchemaName>quirondb_test</RefSchemaName>
+      <RefSchemaName>quirondb</RefSchemaName>
       <RefTableName>PHONE_TYPES</RefTableName>
       <RefColNames>PhoneTypeID</RefColNames>
     </foreign-key>
@@ -2045,13 +2045,13 @@ PhoneTypeID</ColNames>
     </key>
     <foreign-key id="433" parent="251" name="fk_PRESCRIPTIONS_DIAGNOSIS1">
       <ColNames>DiagnosisID</ColNames>
-      <RefSchemaName>quirondb_test</RefSchemaName>
+      <RefSchemaName>quirondb</RefSchemaName>
       <RefTableName>DIAGNOSIS</RefTableName>
       <RefColNames>DiagnosisID</RefColNames>
     </foreign-key>
     <foreign-key id="434" parent="251" name="fk_PRESCRIPTIONS_MEDICATIONS1">
       <ColNames>MedicationID</ColNames>
-      <RefSchemaName>quirondb_test</RefSchemaName>
+      <RefSchemaName>quirondb</RefSchemaName>
       <RefTableName>MEDICATIONS</RefTableName>
       <RefColNames>MedicationID</RefColNames>
     </foreign-key>
@@ -2090,7 +2090,7 @@ PhoneTypeID</ColNames>
     </key>
     <foreign-key id="441" parent="252" name="fk_PROVIDERS_PERSONS1">
       <ColNames>ProviderID</ColNames>
-      <RefSchemaName>quirondb_test</RefSchemaName>
+      <RefSchemaName>quirondb</RefSchemaName>
       <RefTableName>PERSONS</RefTableName>
       <RefColNames>PersonID</RefColNames>
     </foreign-key>
@@ -2143,13 +2143,13 @@ ProviderID</ColNames>
     </key>
     <foreign-key id="451" parent="253" name="fk_CARE_SITES_has_PROVIDERS_CARE_SITES1">
       <ColNames>LocationID</ColNames>
-      <RefSchemaName>quirondb_test</RefSchemaName>
+      <RefSchemaName>quirondb</RefSchemaName>
       <RefTableName>LOCATIONS</RefTableName>
       <RefColNames>LocationID</RefColNames>
     </foreign-key>
     <foreign-key id="452" parent="253" name="fk_CARE_SITES_has_PROVIDERS_PROVIDERS1">
       <ColNames>ProviderID</ColNames>
-      <RefSchemaName>quirondb_test</RefSchemaName>
+      <RefSchemaName>quirondb</RefSchemaName>
       <RefTableName>PROVIDERS</RefTableName>
       <RefColNames>ProviderID</RefColNames>
     </foreign-key>
@@ -2207,7 +2207,7 @@ ProviderID</ColNames>
     </key>
     <foreign-key id="461" parent="254" name="STATE_PROVINCES_COUNTRIES_CountryID_fk">
       <ColNames>CountryID</ColNames>
-      <RefSchemaName>quirondb_test</RefSchemaName>
+      <RefSchemaName>quirondb</RefSchemaName>
       <RefTableName>COUNTRIES</RefTableName>
       <RefColNames>CountryID</RefColNames>
     </foreign-key>
@@ -2276,7 +2276,7 @@ ProviderID</ColNames>
     </key>
     <foreign-key id="474" parent="255" name="fk_TREATMENTS_DIAGNOSIS1">
       <ColNames>DiagnosisID</ColNames>
-      <RefSchemaName>quirondb_test</RefSchemaName>
+      <RefSchemaName>quirondb</RefSchemaName>
       <RefTableName>DIAGNOSIS</RefTableName>
       <RefColNames>DiagnosisID</RefColNames>
     </foreign-key>
@@ -2308,13 +2308,13 @@ PrescriptionID</ColNames>
     </key>
     <foreign-key id="480" parent="256" name="fk_TREATMENTS_has_PRESCRIPTIONS_TREATMENTS1">
       <ColNames>TreatmentID</ColNames>
-      <RefSchemaName>quirondb_test</RefSchemaName>
+      <RefSchemaName>quirondb</RefSchemaName>
       <RefTableName>TREATMENTS</RefTableName>
       <RefColNames>TreatmentID</RefColNames>
     </foreign-key>
     <foreign-key id="481" parent="256" name="fk_TREATMENTS_has_PRESCRIPTIONS_PRESCRIPTIONS1">
       <ColNames>PrescriptionID</ColNames>
-      <RefSchemaName>quirondb_test</RefSchemaName>
+      <RefSchemaName>quirondb</RefSchemaName>
       <RefTableName>PRESCRIPTIONS</RefTableName>
       <RefColNames>PrescriptionID</RefColNames>
     </foreign-key>
@@ -2463,13 +2463,13 @@ PrescriptionID</ColNames>
     </key>
     <foreign-key id="509" parent="258" name="fk_VISITS_PATIENTS1">
       <ColNames>PatientID</ColNames>
-      <RefSchemaName>quirondb_test</RefSchemaName>
+      <RefSchemaName>quirondb</RefSchemaName>
       <RefTableName>PATIENTS</RefTableName>
       <RefColNames>PatientID</RefColNames>
     </foreign-key>
     <foreign-key id="510" parent="258" name="fk_VISITS_PROVIDERS1">
       <ColNames>ProviderID</ColNames>
-      <RefSchemaName>quirondb_test</RefSchemaName>
+      <RefSchemaName>quirondb</RefSchemaName>
       <RefTableName>PROVIDERS</RefTableName>
       <RefColNames>ProviderID</RefColNames>
     </foreign-key>
