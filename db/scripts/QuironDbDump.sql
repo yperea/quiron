@@ -131,6 +131,7 @@ CREATE TABLE `COUNTRIES` (
   `CountryCode` varchar(3) NOT NULL COMMENT 'ISO standard code for countries.',
   `Name` varchar(45) NOT NULL COMMENT 'Country name.',
   `CreatedDate` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Date and time the record was Created.',
+  `ModifiedDate` datetime DEFAULT NULL,
   PRIMARY KEY (`CountryCode`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Lookup table containing the ISO standard codes for countries.';
 /*!40101 SET character_set_client = @saved_cs_client */;
