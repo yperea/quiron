@@ -8,6 +8,8 @@ import org.hibernate.annotations.UpdateTimestamp;
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * This class represents the Country domain for the application.
@@ -35,6 +37,9 @@ public class Country {
     @Column(name = "Name")
     private String name;
 
+    @OneToMany(mappedBy = "state", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+    private Set<State> states = new HashSet<>();
+
     /* Using Database Default value with a LocalDate type for createdDate
     @CreationTimestamp
     @Column(name = "CreatedDate", insertable = false)
@@ -55,6 +60,26 @@ public class Country {
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "ModifiedDate")
     private Date modifiedDate;
+
+    /**
+     * Add state to the collection within the Country.
+     *
+     * @param state the state
+     */
+    public void addState(State state) {
+        states.add(state);
+        state.setCountry(this);
+    }
+
+    /**
+     * Remove state from the collection.
+     *
+     * @param state the state
+     */
+    public void removeState(State state) {
+        states.remove(state);
+        state.setCountry(null);
+    }
 
 }
 

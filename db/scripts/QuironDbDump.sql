@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 5.7.23, for Linux (x86_64)
+-- MySQL dump 10.13  Distrib 5.7.23, for Win64 (x86_64)
 --
 -- Host: 127.0.0.1    Database: quirondb
 -- ------------------------------------------------------
--- Server version	5.7.23-0ubuntu0.16.04.1
+-- Server version	5.7.23-log
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -59,7 +59,7 @@ CREATE TABLE `ADDRESS_TYPES` (
   `CreatedDate` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Date and time the record was created.',
   `ModifiedDate` datetime DEFAULT NULL COMMENT 'Date and time the record was last updated.',
   PRIMARY KEY (`AddressTypeID`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COMMENT='Types of addresses stored in the Address table. ';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Types of addresses stored in the Address table. ';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -68,7 +68,6 @@ CREATE TABLE `ADDRESS_TYPES` (
 
 LOCK TABLES `ADDRESS_TYPES` WRITE;
 /*!40000 ALTER TABLE `ADDRESS_TYPES` DISABLE KEYS */;
-INSERT INTO `ADDRESS_TYPES` VALUES (1,'Home','2018-09-25 19:58:41',NULL),(2,'Billing','2018-09-25 19:58:41',NULL),(3,'Office','2018-09-25 19:58:41',NULL),(4,'Primary','2018-09-25 19:58:41',NULL),(5,'Shipping','2018-09-25 19:58:41',NULL);
 /*!40000 ALTER TABLE `ADDRESS_TYPES` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -83,6 +82,7 @@ CREATE TABLE `BANKS` (
   `BankID` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Primary key for Banks records.',
   `Name` varchar(45) NOT NULL COMMENT 'Name of the Bank.',
   `CreatedDate` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Date and time the record was created.',
+  `ModifiedDate` datetime DEFAULT NULL,
   PRIMARY KEY (`BankID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Banks issuers of credit cards.';
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -128,13 +128,14 @@ DROP TABLE IF EXISTS `COUNTRIES`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `COUNTRIES` (
-  `CountryID` int(11) NOT NULL AUTO_INCREMENT,
+  `CountryID` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Primary key for countries.',
   `CountryCode` varchar(3) NOT NULL COMMENT 'ISO standard code for countries.',
   `Name` varchar(45) NOT NULL COMMENT 'Country name.',
   `CreatedDate` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Date and time the record was Created.',
   `ModifiedDate` datetime DEFAULT NULL,
-  PRIMARY KEY (`CountryID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Lookup table containing the ISO standard codes for countries.';
+  PRIMARY KEY (`CountryID`),
+  UNIQUE KEY `CountryCode_UNIQUE` (`CountryCode`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='Lookup table containing the ISO standard codes for countries.';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -143,6 +144,7 @@ CREATE TABLE `COUNTRIES` (
 
 LOCK TABLES `COUNTRIES` WRITE;
 /*!40000 ALTER TABLE `COUNTRIES` DISABLE KEYS */;
+INSERT INTO `COUNTRIES` VALUES (1,'AD','Andorra','2018-10-01 18:04:41',NULL);
 /*!40000 ALTER TABLE `COUNTRIES` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -633,6 +635,7 @@ CREATE TABLE `PROVIDERS_LOCATIONS` (
   `StartTime` time DEFAULT NULL,
   `EndTime` time DEFAULT NULL,
   `CreatedDate` datetime DEFAULT CURRENT_TIMESTAMP,
+  `ModifiedDate` datetime DEFAULT NULL,
   PRIMARY KEY (`LocationID`,`ProviderID`),
   KEY `fk_CARE_SITES_has_PROVIDERS_PROVIDERS1_idx` (`ProviderID`),
   KEY `fk_CARE_SITES_has_PROVIDERS_CARE_SITES1_idx` (`LocationID`),
@@ -660,13 +663,13 @@ DROP TABLE IF EXISTS `STATE_PROVINCES`;
 CREATE TABLE `STATE_PROVINCES` (
   `StateProvinceID` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Primary key for State_Provinces records.',
   `StateProvinceCode` varchar(3) NOT NULL COMMENT 'ISO standard state or province code.',
-  `CountryID` int(11) NOT NULL COMMENT 'ISO standard country or region code. Foreign key to COUNTRIES.CountryCode. ',
   `Name` varchar(45) NOT NULL COMMENT 'State or province description.',
+  `CountryID` int(11) NOT NULL,
   `CreatedDate` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Date and time the record was created.',
   `ModifiedDate` datetime DEFAULT NULL COMMENT 'Date and time the record was last updated.',
   PRIMARY KEY (`StateProvinceID`),
   KEY `fk_STATE_PROVINCES_COUNTRIES1_idx` (`CountryID`),
-  CONSTRAINT `STATE_PROVINCES_COUNTRIES_CountryID_fk` FOREIGN KEY (`CountryID`) REFERENCES `COUNTRIES` (`CountryID`)
+  CONSTRAINT `fk_STATE_PROVINCES_COUNTRIES1` FOREIGN KEY (`CountryID`) REFERENCES `COUNTRIES` (`CountryID`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='State and province lookup table.';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -722,6 +725,7 @@ DROP TABLE IF EXISTS `TREATMENTS_PRESCRIPTIONS`;
 CREATE TABLE `TREATMENTS_PRESCRIPTIONS` (
   `TreatmentID` int(11) NOT NULL,
   `PrescriptionID` int(11) NOT NULL,
+  `CreatedDate` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`TreatmentID`,`PrescriptionID`),
   KEY `fk_TREATMENTS_has_PRESCRIPTIONS_PRESCRIPTIONS1_idx` (`PrescriptionID`),
   KEY `fk_TREATMENTS_has_PRESCRIPTIONS_TREATMENTS1_idx` (`TreatmentID`),
@@ -747,10 +751,15 @@ DROP TABLE IF EXISTS `USERS`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `USERS` (
+  `UserID` int(11) NOT NULL AUTO_INCREMENT,
   `Username` varchar(16) NOT NULL,
   `Email` varchar(255) DEFAULT NULL,
   `Password` varchar(32) NOT NULL,
-  `CreatedDate` timestamp NULL DEFAULT CURRENT_TIMESTAMP
+  `CreatedDate` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `ModifiedDate` datetime DEFAULT NULL,
+  PRIMARY KEY (`UserID`),
+  UNIQUE KEY `Username_UNIQUE` (`Username`),
+  UNIQUE KEY `Email_UNIQUE` (`Email`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -817,4 +826,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-09-30 17:37:51
+-- Dump completed on 2018-10-01 18:19:39
