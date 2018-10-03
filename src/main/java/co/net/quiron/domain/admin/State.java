@@ -14,11 +14,11 @@ import java.util.Date;
  *
  * @autor yperea
  */
-@Entity(name = "States")
-@Table(name = "STATE_PROVINCES")
 @Data
 @NoArgsConstructor
 @RequiredArgsConstructor
+@Entity(name = "State")
+@Table(name = "STATE_PROVINCES")
 public class State {
 
     @Id

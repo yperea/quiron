@@ -16,7 +16,7 @@ import java.util.Set;
  *
  * @autor yperea
  */
-@Entity(name = "Countries")
+@Entity(name = "Country")
 @Table(name = "COUNTRIES")
 @Data
 @NoArgsConstructor
@@ -37,7 +37,7 @@ public class Country {
     @Column(name = "Name")
     private String name;
 
-    @OneToMany(mappedBy = "state", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "country", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     private Set<State> states = new HashSet<>();
 
     /* Using Database Default value with a LocalDate type for createdDate
