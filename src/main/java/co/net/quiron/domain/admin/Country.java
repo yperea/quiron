@@ -9,6 +9,7 @@ import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -45,7 +46,6 @@ public class Country {
     @Column(name = "CreatedDate", insertable = false)
     private LocalDate createdDate;
     */
-
     @CreationTimestamp
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "CreatedDate")
@@ -55,8 +55,8 @@ public class Country {
     @Column(name = "ModifiedDate")
     private LocalDate modifiedDate;
     */
-
     @UpdateTimestamp
+    @EqualsAndHashCode.Exclude
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "ModifiedDate")
     private Date modifiedDate;

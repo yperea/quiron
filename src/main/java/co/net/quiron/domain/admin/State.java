@@ -8,6 +8,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.Date;
+import java.util.Objects;
 
 /**
  * This class represents the State or Province domain for the application.
@@ -36,15 +37,19 @@ public class State {
     private String name;
 
     @NonNull
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
     @ManyToOne
+    @JoinColumn(name = "CountryID")
     private Country country;
 
     @CreationTimestamp
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "CreatedDate")
-    private Date createdDate; //@CreationTimestamp annotation only works with Date or Calendar types
+    private Date createdDate;
 
     @UpdateTimestamp
+    @EqualsAndHashCode.Exclude
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "ModifiedDate")
     private Date modifiedDate;

@@ -23,7 +23,7 @@ public class CountriesManager {
      *
      * @return the list of countries
      */
-    public List<Country> getAll(){
+    public List<Country> getCountryList(){
         return countryRepository.getAll();
     }
 
@@ -33,7 +33,7 @@ public class CountriesManager {
      * @param id the id
      * @return the country
      */
-    public Country get(int id) {
+    public Country getCountry(int id) {
         return countryRepository.get(id);
     }
 
@@ -41,11 +41,10 @@ public class CountriesManager {
      * Creates a new Country.
      *
      * @param country the country to be created
-     * @return the int
+     * @return the country just created
      */
-    public int create (Country country) {
-        int i = countryRepository.create(country);
-        return i;
+    public Country create (Country country) {
+        return countryRepository.create(country);
     }
 
     /**

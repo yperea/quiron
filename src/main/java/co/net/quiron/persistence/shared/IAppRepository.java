@@ -31,7 +31,7 @@ public interface IAppRepository<T> {
      * @param entity the entity
      * @return the int
      */
-    int create(T entity);
+    T create(T entity);
 
     /**
      * Deletes an entity.

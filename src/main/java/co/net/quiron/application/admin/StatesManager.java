@@ -15,17 +15,12 @@ public class StatesManager {
         stateRepository = new AppRepository<>(State.class);
     }
 
-    public StatesManager (Country country) {
-        this();
-        this.country = country;
-    }
-
     /**
      * Gets the list of all of the States.
      *
      * @return the list of states
      */
-    public List<State> getAll(){
+    public List<State> getStateList(){
         return stateRepository.getAll();
     }
 
@@ -35,7 +30,7 @@ public class StatesManager {
      * @param id the id
      * @return the state
      */
-    public State get(int id) {
+    public State getState(int id) {
         return stateRepository.get(id);
     }
 
@@ -43,12 +38,10 @@ public class StatesManager {
      * Creates a new State.
      *
      * @param state the state to be created
-     * @return the int
+     * @return the state just created
      */
-    public int create (State state) {
-        country.addState(state);
-        int i = stateRepository.create(state);
-        return i;
+    public State create (State state) {
+        return stateRepository.create(state);
     }
 
     /**

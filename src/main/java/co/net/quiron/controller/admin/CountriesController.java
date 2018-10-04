@@ -27,7 +27,7 @@ public class CountriesController extends HttpServlet {
 
         CountriesManager countriesManager = new CountriesManager();
 
-        req.setAttribute("countries", countriesManager.getAll());
+        req.setAttribute("countries", countriesManager.getCountryList());
         req.setAttribute("title", title);
 
         RequestDispatcher dispatcher = req.getRequestDispatcher(url);

@@ -67,6 +67,7 @@ public class EntityDAO<T> {
         session = getSession();
         transaction = session.beginTransaction();
         id = (int)session.save(entity);
+
         return id;
     }
 
