@@ -57,7 +57,8 @@ class StatesManagerTest {
      */
     @Test
     void testCreateState() {
-        Country country = countriesManager.getCountry(1);
+        //Country country = countriesManager.getCountry(1);
+        Country country = countriesManager.get(1);
         State newState = new State("WI", "Wisconsin", country);
         country.addState(newState);
         State createdState = statesManager.create(newState);
@@ -74,7 +75,8 @@ class StatesManagerTest {
     @Test
     void testUpdateState() {
         State stateToUpdate = statesManager.getState(1);
-        Country newCountry = countriesManager.getCountry(2);
+        //Country newCountry = countriesManager.getCountry(2);
+        Country newCountry = countriesManager.get(2);
 
         stateToUpdate.setCode("NS");
         stateToUpdate.setName("Nova Scotia");

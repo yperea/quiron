@@ -1,18 +1,21 @@
 package co.net.quiron.application.admin;
 
-import co.net.quiron.domain.admin.Country;
 import co.net.quiron.domain.admin.State;
 import co.net.quiron.persistence.shared.AppRepository;
 import co.net.quiron.persistence.shared.IAppRepository;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.List;
 
 public class StatesManager {
+
+    private final Logger logger = LogManager.getLogger(this.getClass());
     private IAppRepository<State> stateRepository;
-    private Country country;
 
     public StatesManager() {
         stateRepository = new AppRepository<>(State.class);
+        logger.info("StatesManager(): Instantiating StatesManager class.");
     }
 
     /**
@@ -21,7 +24,12 @@ public class StatesManager {
      * @return the list of states
      */
     public List<State> getStateList(){
-        return stateRepository.getAll();
+        List<State> states = stateRepository.getAll();
+
+        logger.debug("getStateList(): Returning list of States.");
+        logger.trace("getStateList(): Returning " + states);
+
+        return states;
     }
 
     /**
@@ -31,7 +39,13 @@ public class StatesManager {
      * @return the state
      */
     public State getState(int id) {
-        return stateRepository.get(id);
+        State state = stateRepository.get(id);
+
+        logger.debug("getState(): Returning State.");
+        logger.trace("getState(): Returning " + state);
+
+        return state;
+
     }
 
     /**
@@ -41,7 +55,11 @@ public class StatesManager {
      * @return the state just created
      */
     public State create (State state) {
+        logger.debug("create(State): Creating State.");
+        logger.trace("create(State): Creating " + state);
+
         return stateRepository.create(state);
+
     }
 
     /**
@@ -50,7 +68,11 @@ public class StatesManager {
      * @param state the state to be updated
      */
     public void update (State state) {
+        logger.debug("update(State): Updating State.");
+        logger.trace("update(State): Updating " + state);
+
         stateRepository.update(state);
+
     }
 
     /**
@@ -59,7 +81,11 @@ public class StatesManager {
      * @param state the state to be deleted
      */
     public void delete (State state) {
+        logger.debug("delete(State): Deleting State.");
+        logger.trace("delete(State): Deleting " + state);
+
         stateRepository.delete(state);
+
     }
     
 }

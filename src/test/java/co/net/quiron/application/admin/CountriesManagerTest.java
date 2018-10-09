@@ -37,7 +37,8 @@ class CountriesManagerTest {
      */
     @Test
     void testGetCountryById() {
-        Country country = countriesManager.getCountry(1);
+//        Country country = countriesManager.getCountry(1);
+        Country country = countriesManager.get(1);
         assertEquals("United States", country.getName());
     }
 
@@ -47,7 +48,8 @@ class CountriesManagerTest {
      */
     @Test
     void testGetAllCountries() {
-        List<Country> countryList = countriesManager.getCountryList();
+        //List<Country> countryList = countriesManager.getCountryList();
+        List<Country> countryList = countriesManager.getList();
         assertEquals(5, countryList.size());
     }
 
@@ -79,12 +81,14 @@ class CountriesManagerTest {
         int countryId = 4;
         Date currentModifiedDate = null;
 
-        Country countryToUpdate = countriesManager.getCountry(countryId);
+        //Country countryToUpdate = countriesManager.getCountry(countryId);
+        Country countryToUpdate = countriesManager.get(countryId);
         countryToUpdate.setName(newCountryName);
         currentModifiedDate = countryToUpdate.getModifiedDate();
 
         countriesManager.update(countryToUpdate);
-        Country countryUpdated = countriesManager.getCountry(countryId);
+        //Country countryUpdated = countriesManager.getCountry(countryId);
+        Country countryUpdated = countriesManager.get(countryId);
 
         assertEquals(countryToUpdate, countryUpdated);
         assertNotNull(countryUpdated.getModifiedDate());
@@ -100,8 +104,13 @@ class CountriesManagerTest {
     void testDeleteCountry() {
 
         int countryIdToDelete = 3;
+/*
         countriesManager.delete(countriesManager.getCountry(countryIdToDelete));
         assertNull(countriesManager.getCountry(countryIdToDelete));
+*/
+        countriesManager.delete(countriesManager.get(countryIdToDelete));
+        assertNull(countriesManager.get(countryIdToDelete));
+
     }
 
     /**

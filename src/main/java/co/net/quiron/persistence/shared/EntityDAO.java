@@ -25,6 +25,7 @@ public class EntityDAO<T> {
      */
     public EntityDAO(Class<T> entityType) {
         this.type = entityType;
+        logger.trace("EntityDAO(Class<T>): Instantiating EntityDAO.");
     }
 
     /**
@@ -39,6 +40,8 @@ public class EntityDAO<T> {
         Root<T> root = query.from(type);
         List<T> list = session.createQuery(query).getResultList();
         session.close();
+
+        logger.trace("getAll(): Returning the List<T> of Entities.");
         return list;
     }
 
@@ -53,6 +56,8 @@ public class EntityDAO<T> {
         session = getSession();
         T entity = (T)session.get(type, id);
         session.close();
+
+        logger.trace("getById(int): Returning the <T> Entity.");
         return entity;
     }
 
@@ -68,6 +73,7 @@ public class EntityDAO<T> {
         transaction = session.beginTransaction();
         id = (int)session.save(entity);
 
+        logger.trace("insert(T): Inserting the <T> Entity.");
         return id;
     }
 
@@ -80,6 +86,7 @@ public class EntityDAO<T> {
         session = getSession();
         transaction = session.beginTransaction();
         session.saveOrUpdate(entity);
+        logger.trace("update(T): Updating the <T> Entity.");
     }
 
     /**
@@ -91,6 +98,7 @@ public class EntityDAO<T> {
         session = getSession();
         transaction = session.beginTransaction();
         session.delete(entity);
+        logger.trace("delete(T): Deleting the <T> Entity.");
     }
 
     /**
@@ -98,6 +106,7 @@ public class EntityDAO<T> {
      * @return session
      */
     private Session getSession() {
+        logger.trace("getSession(): Opening Hibernate Session.");
         return SessionFactoryProvider.getSessionFactory().openSession();
     }
 
@@ -107,5 +116,6 @@ public class EntityDAO<T> {
     public void saveChanges() {
         transaction.commit();
         session.close();
+        logger.trace("saveChanges(): Closing Hibernate Session.");
     }
 }
