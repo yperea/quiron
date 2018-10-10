@@ -19,7 +19,7 @@
 | 09/28/18| Researching about best practices for branching. Implement a dao and Hibernate in my Individual Project. | 5 | |
 | 09/29/18| Implementing CRUD operations on AddressTypes Table of Individual Project Database for Week 4 Exercise. | 6 | |
 | 09/30/18| Watching Week 5 videos. Refactoring Week1-User-Display-Exercise project to implement Hibernate One to Many Demo. Implementing CRUD operations on Countries Entity of Individual Project Database for Week 4 Exercise. | 6 | |
-| 10/01/18| Fixing/re-factoring Week1-User-Display-Exercise project... | 3 | Error deploying the webapp. java.lang.IllegalStateException: ContainerBase.addChild: start: org.apache.catalina.LifecycleException: Failed to start component [StandardEngine[Catalina].StandardHost[localhost].StandardContext[/exercise1]]. |
+| 10/01/18| Fixing/re-factoring Week1-User-Display-Exercise project... | 3 | Error deploying the webapp. java.lang.IllegalStateException: ContainerBase.addChild: start: org.apache.catalina.LifecycleException: Failed to start component StandardEngine [Catalina]... |
 | 10/02/18| Implementing Hibernate One To Many Demo on Week1-User-display-Exercise project. | 1 | |
 | 10/02/18| Implementing Hibernate One To Many on Project Quiron. Entities Countries and States. | 2 | |
 | 10/03/18| Implementing Hibernate One To Many on Project Quiron. Entities Countries and States. | 1 | |
