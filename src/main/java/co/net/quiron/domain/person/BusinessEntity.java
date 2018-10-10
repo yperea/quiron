@@ -14,9 +14,8 @@ import java.util.Date;
  */
 @Entity(name="BusinessEntity")
 @Table(name="ENTITIES")
-@NoArgsConstructor
-@RequiredArgsConstructor
 @Data
+@NoArgsConstructor
 public class BusinessEntity {
 
     @Id
