@@ -1,4 +1,4 @@
-package co.net.quiron.application.admin;
+package co.net.quiron.application.shared;
 
 import co.net.quiron.persistence.shared.AppRepository;
 import co.net.quiron.persistence.shared.IAppRepository;
@@ -7,7 +7,7 @@ import org.apache.logging.log4j.Logger;
 
 import java.util.List;
 
-public abstract class EntitiesManager<T> {
+public abstract class EntityManager<T> {
 
     private final Logger logger = LogManager.getLogger(this.getClass());
     private IAppRepository<T> entityRepository;
@@ -15,9 +15,9 @@ public abstract class EntitiesManager<T> {
     /**
      * Instantiates a new Entities manager.
      */
-    public EntitiesManager(Class<T> entityType) {
+    public EntityManager(Class<T> entityType) {
         entityRepository = new AppRepository<>(entityType);
-        logger.info("EntitiesManager(): Instantiating EntitiesManager class.");
+        logger.info("EntityManager(): Instantiating EntityManager class.");
     }
 
     /**
@@ -43,48 +43,48 @@ public abstract class EntitiesManager<T> {
     public T get(int id) {
         T entity = entityRepository.get(id);
 
-        logger.debug("getEntity(): Returning Entity.");
+        logger.debug("getEntity(): Returning BusinessEntity.");
         logger.trace("getEntity(): Returning " + entity);
 
         return entity;
     }
 
     /**
-     * Creates a new Entity.
+     * Creates a new BusinessEntity.
      *
      * @param entity the entity to be created
      * @return the entity just created
      */
     public T create (T entity) {
 
-        logger.debug("create(Entity): Creating Entity.");
-        logger.trace("create(Entity): Creating " + entity);
+        logger.debug("create(BusinessEntity): Creating BusinessEntity.");
+        logger.trace("create(BusinessEntity): Creating " + entity);
 
         return entityRepository.create(entity);
     }
 
     /**
-     * Updates a specific Entity.
+     * Updates a specific BusinessEntity.
      *
      * @param entity the entity to be updated
      */
     public void update (T entity) {
 
-        logger.debug("update(Entity): Updating Entity.");
-        logger.trace("update(Entity): Updating " + entity);
+        logger.debug("update(BusinessEntity): Updating BusinessEntity.");
+        logger.trace("update(BusinessEntity): Updating " + entity);
 
         entityRepository.update(entity);
     }
 
     /**
-     * Deletes a specific Entity.
+     * Deletes a specific BusinessEntity.
      *
      * @param entity the entity to be deleted
      */
     public void delete (T entity) {
 
-        logger.debug("delete(Entity): Deleting Entity.");
-        logger.trace("delete(Entity): Deleting " + entity);
+        logger.debug("delete(BusinessEntity): Deleting BusinessEntity.");
+        logger.trace("delete(BusinessEntity): Deleting " + entity);
 
         entityRepository.delete(entity);
     }

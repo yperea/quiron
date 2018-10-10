@@ -1,16 +1,14 @@
 package co.net.quiron.application.admin;
 
+import co.net.quiron.application.shared.EntityManager;
 import co.net.quiron.domain.admin.Country;
-import co.net.quiron.persistence.shared.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-
-import java.util.List;
 
 /**
  * Holds the business logic to handle Countries operations.
  */
-public class CountriesManager extends EntitiesManager<Country> {
+public class CountryManager extends EntityManager<Country> {
 
     private final Logger logger = LogManager.getLogger(this.getClass());
     //private IAppRepository<Country> countryRepository;
@@ -18,10 +16,10 @@ public class CountriesManager extends EntitiesManager<Country> {
     /**
      * Instantiates a new Countries manager.
      */
-    public CountriesManager() {
+    public CountryManager() {
         super(Country.class);
         //countryRepository = new AppRepository<>(Country.class);
-        logger.info("CountriesManager(): Instantiating CountriesManager class.");
+        logger.info("CountryManager(): Instantiating CountryManager class.");
     }
 
     /**

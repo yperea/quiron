@@ -45,7 +45,7 @@ public class AppRepository<T> implements IAppRepository<T> {
     }
 
     /**
-     * Creates an Entity in the database
+     * Creates an BusinessEntity in the database
      *
      * @param entity entity to be inserted or updated
      * @return id of the inserted record
@@ -60,7 +60,7 @@ public class AppRepository<T> implements IAppRepository<T> {
     }*/
 
     /**
-     * Creates an Entity in the database
+     * Creates an BusinessEntity in the database
      *
      * @param entity entity to be inserted or updated
      * @return the inserted record
@@ -73,9 +73,9 @@ public class AppRepository<T> implements IAppRepository<T> {
     }
 
     /**
-     * Updates an Entity
+     * Updates an BusinessEntity
      *
-     * @param entity Entity to be inserted or updated
+     * @param entity BusinessEntity to be inserted or updated
      */
     @Override
     public void update(T entity) {

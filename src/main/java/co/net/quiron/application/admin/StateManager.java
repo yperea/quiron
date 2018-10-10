@@ -1,21 +1,23 @@
 package co.net.quiron.application.admin;
 
+import co.net.quiron.application.shared.EntityManager;
 import co.net.quiron.domain.admin.State;
-import co.net.quiron.persistence.shared.AppRepository;
 import co.net.quiron.persistence.shared.IAppRepository;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.util.List;
-
-public class StatesManager {
+/**
+ * Holds the business logic to handle States operations.
+ */
+public class StateManager extends EntityManager<State> {
 
     private final Logger logger = LogManager.getLogger(this.getClass());
     private IAppRepository<State> stateRepository;
 
-    public StatesManager() {
-        stateRepository = new AppRepository<>(State.class);
-        logger.info("StatesManager(): Instantiating StatesManager class.");
+    public StateManager() {
+        super(State.class);
+        //stateRepository = new AppRepository<>(State.class);
+        logger.info("StateManager(): Instantiating StateManager class.");
     }
 
     /**
@@ -23,6 +25,7 @@ public class StatesManager {
      *
      * @return the list of states
      */
+    /*
     public List<State> getStateList(){
         List<State> states = stateRepository.getAll();
 
@@ -31,6 +34,7 @@ public class StatesManager {
 
         return states;
     }
+    */
 
     /**
      * Gets a specific state by its id.
@@ -38,6 +42,7 @@ public class StatesManager {
      * @param id the id
      * @return the state
      */
+    /*
     public State getState(int id) {
         State state = stateRepository.get(id);
 
@@ -47,6 +52,7 @@ public class StatesManager {
         return state;
 
     }
+    */
 
     /**
      * Creates a new State.
@@ -54,6 +60,7 @@ public class StatesManager {
      * @param state the state to be created
      * @return the state just created
      */
+    /*
     public State create (State state) {
         logger.debug("create(State): Creating State.");
         logger.trace("create(State): Creating " + state);
@@ -61,12 +68,14 @@ public class StatesManager {
         return stateRepository.create(state);
 
     }
+    */
 
     /**
      * Updates a specific State.
      *
      * @param state the state to be updated
      */
+    /*
     public void update (State state) {
         logger.debug("update(State): Updating State.");
         logger.trace("update(State): Updating " + state);
@@ -74,12 +83,14 @@ public class StatesManager {
         stateRepository.update(state);
 
     }
+    */
 
     /**
      * Deletes a specific State.
      *
      * @param state the state to be deleted
      */
+    /*
     public void delete (State state) {
         logger.debug("delete(State): Deleting State.");
         logger.trace("delete(State): Deleting " + state);
@@ -87,5 +98,6 @@ public class StatesManager {
         stateRepository.delete(state);
 
     }
-    
+    */
+
 }

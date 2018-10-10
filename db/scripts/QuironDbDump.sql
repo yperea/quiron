@@ -223,13 +223,13 @@ DROP TABLE IF EXISTS `EMAIL_ADDRESSES`;
 CREATE TABLE `EMAIL_ADDRESSES` (
   `EmailAddressID` int(11) NOT NULL COMMENT 'Primary key. ID of this email address.',
   `PersonID` int(11) NOT NULL COMMENT 'Person associated with this email address.  Foreign key to PERSONS.PersonID',
-  `EmailAddress` varchar(50) NOT NULL COMMENT 'E-mail address for the person.',
+  `EmailAddress` varchar(50) NOT NULL COMMENT 'E-mail address for the patient.',
   `CreatedDate` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Date and time the record was created.',
   `ModifiedDate` datetime DEFAULT NULL COMMENT 'Date and time the record was last updated.',
   PRIMARY KEY (`EmailAddressID`),
   KEY `fk_EMAIL_ADDRESSES_PERSONS1_idx` (`PersonID`),
   CONSTRAINT `fk_EMAIL_ADDRESSES_PERSONS1` FOREIGN KEY (`PersonID`) REFERENCES `PERSONS` (`PersonID`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Where to send a person email.';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Where to send a patient email.';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -422,10 +422,10 @@ CREATE TABLE `PERSONS` (
   `PersonID` int(11) NOT NULL,
   `PersonTypeID` int(11) NOT NULL,
   `Title` varchar(8) NOT NULL COMMENT 'A courtesy title. For example, Mr. or Ms.',
-  `FirstName` varchar(45) NOT NULL COMMENT 'First name of the person.',
-  `MiddleName` varchar(45) DEFAULT NULL COMMENT 'Middle name or middle initial of the person.',
-  `LastName` varchar(45) NOT NULL COMMENT 'Last name of the person.',
-  `LastName2` varchar(45) DEFAULT NULL COMMENT 'Second Last name of the person (If Any).',
+  `FirstName` varchar(45) NOT NULL COMMENT 'First name of the patient.',
+  `MiddleName` varchar(45) DEFAULT NULL COMMENT 'Middle name or middle initial of the patient.',
+  `LastName` varchar(45) NOT NULL COMMENT 'Last name of the patient.',
+  `LastName2` varchar(45) DEFAULT NULL COMMENT 'Second Last name of the patient (If Any).',
   `Suffix` varchar(10) DEFAULT NULL COMMENT 'Surname suffix. For example, Sr. or Jr.',
   `CreatedDate` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Date and time the record was created.',
   `ModifiedDate` datetime DEFAULT NULL COMMENT 'Date and time the record was last updated.',
@@ -490,7 +490,7 @@ DROP TABLE IF EXISTS `PERSON_PHONES`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `PERSON_PHONES` (
-  `PersonID` int(11) NOT NULL COMMENT 'Entity identification number. Foreign key to PersonID.',
+  `PersonID` int(11) NOT NULL COMMENT 'BusinessEntity identification number. Foreign key to PersonID.',
   `Number` varchar(25) NOT NULL COMMENT 'Telephone number identification number.',
   `PhoneTypeID` int(11) NOT NULL COMMENT 'Type of phone number. Foreign key to PhoneTypeID.',
   `Extension` varchar(10) DEFAULT NULL COMMENT 'Extension number.',
@@ -501,7 +501,7 @@ CREATE TABLE `PERSON_PHONES` (
   KEY `fk_PERSON_PHONES_PHONE_TYPES1_idx` (`PhoneTypeID`),
   CONSTRAINT `fk_PERSON_PHONES_PERSONS1` FOREIGN KEY (`PersonID`) REFERENCES `PERSONS` (`PersonID`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_PERSON_PHONES_PHONE_TYPES1` FOREIGN KEY (`PhoneTypeID`) REFERENCES `PHONE_TYPES` (`PhoneTypeID`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Telephone number and type of a person.';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Telephone number and type of a patient.';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -526,7 +526,7 @@ CREATE TABLE `PERSON_TYPES` (
   `CreatedDate` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Date and time the record was created.',
   `ModifiedDate` datetime DEFAULT NULL COMMENT 'Date and time the record was last updated.',
   PRIMARY KEY (`PersonTypeID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Type of a person.';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Type of a patient.';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -551,7 +551,7 @@ CREATE TABLE `PHONE_TYPES` (
   `CreatedDate` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Date and time the record was created.',
   `ModifiedDate` datetime DEFAULT NULL COMMENT 'Date and time the record was last updated.',
   PRIMARY KEY (`PhoneTypeID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Type of phone number of a person.';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Type of phone number of a patient.';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --

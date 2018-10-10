@@ -19,7 +19,7 @@ public class EntityDAO<T> {
     private final Logger logger = LogManager.getLogger(this.getClass());
 
     /**
-     * Instantiates a new Entity DAO.
+     * Instantiates a new BusinessEntity DAO.
      *
      * @param entityType the entity type
      */
@@ -57,12 +57,12 @@ public class EntityDAO<T> {
         T entity = (T)session.get(type, id);
         session.close();
 
-        logger.trace("getById(int): Returning the <T> Entity.");
+        logger.trace("getById(int): Returning the <T> BusinessEntity.");
         return entity;
     }
 
     /**
-     * Insert an Entity
+     * Insert an BusinessEntity
      *
      * @param entity entity to be inserted or updated
      * @return id of the inserted record
@@ -73,20 +73,20 @@ public class EntityDAO<T> {
         transaction = session.beginTransaction();
         id = (int)session.save(entity);
 
-        logger.trace("insert(T): Inserting the <T> Entity.");
+        logger.trace("insert(T): Inserting the <T> BusinessEntity.");
         return id;
     }
 
     /**
-     * Update an Entity
+     * Update an BusinessEntity
      *
-     * @param entity Entity to be inserted or updated
+     * @param entity BusinessEntity to be inserted or updated
      */
     public void update(T entity) {
         session = getSession();
         transaction = session.beginTransaction();
         session.saveOrUpdate(entity);
-        logger.trace("update(T): Updating the <T> Entity.");
+        logger.trace("update(T): Updating the <T> BusinessEntity.");
     }
 
     /**
@@ -98,7 +98,7 @@ public class EntityDAO<T> {
         session = getSession();
         transaction = session.beginTransaction();
         session.delete(entity);
-        logger.trace("delete(T): Deleting the <T> Entity.");
+        logger.trace("delete(T): Deleting the <T> BusinessEntity.");
     }
 
     /**

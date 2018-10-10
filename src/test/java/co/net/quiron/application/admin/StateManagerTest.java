@@ -13,21 +13,21 @@ import static org.junit.jupiter.api.Assertions.*;
 /**
  * The type States manager test.
  */
-class StatesManagerTest {
+class StateManagerTest {
 
     /**
      * The States manager.
      */
-    StatesManager statesManager;
-    CountriesManager countriesManager;
+    StateManager stateManager;
+    CountryManager countryManager;
 
     /**
      * Sets up.
      */
     @BeforeEach
     void setUp() {
-        statesManager = new StatesManager();
-        countriesManager = new CountriesManager();
+        stateManager = new StateManager();
+        countryManager = new CountryManager();
 
         DatabaseManager dbm = DatabaseManager.getInstance();
         dbm.runSQL("cleandb.sql");
@@ -38,7 +38,7 @@ class StatesManagerTest {
      */
     @Test
     void testGetAllStates() {
-        List<State> stateList = statesManager.getStateList();
+        List<State> stateList = stateManager.getList();
         assertEquals(10, stateList.size());
     }
 
@@ -46,8 +46,8 @@ class StatesManagerTest {
      * Test get state by id.
      */
     @Test
-    void testGetStateById() {
-        State state = statesManager.getState(1);
+    void testGetById() {
+        State state = stateManager.get(1);
         assertNotNull(state);
         assertEquals("Alaska", state.getName());
     }
@@ -57,11 +57,11 @@ class StatesManagerTest {
      */
     @Test
     void testCreateState() {
-        //Country country = countriesManager.getCountry(1);
-        Country country = countriesManager.get(1);
+        //Country country = countryManager.getCountry(1);
+        Country country = countryManager.get(1);
         State newState = new State("WI", "Wisconsin", country);
         country.addState(newState);
-        State createdState = statesManager.create(newState);
+        State createdState = stateManager.create(newState);
 
         assertNotNull(createdState);
         assertEquals(newState.getCode(), createdState.getCode());
@@ -74,16 +74,16 @@ class StatesManagerTest {
      */
     @Test
     void testUpdateState() {
-        State stateToUpdate = statesManager.getState(1);
-        //Country newCountry = countriesManager.getCountry(2);
-        Country newCountry = countriesManager.get(2);
+        State stateToUpdate = stateManager.get(1);
+        //Country newCountry = countryManager.getCountry(2);
+        Country newCountry = countryManager.get(2);
 
         stateToUpdate.setCode("NS");
         stateToUpdate.setName("Nova Scotia");
         stateToUpdate.setCountry(newCountry);
 
-        statesManager.update(stateToUpdate);
-        State stateUpdated = statesManager.getState(1);
+        stateManager.update(stateToUpdate);
+        State stateUpdated = stateManager.get(1);
 
         assertEquals(stateToUpdate, stateUpdated);
     }
@@ -93,7 +93,7 @@ class StatesManagerTest {
      */
     @Test
     void testDeleteState() {
-        statesManager.delete(statesManager.getState(1));
-        assertNull(statesManager.getState(1));
+        stateManager.delete(stateManager.get(1));
+        assertNull(stateManager.get(1));
     }
 }
