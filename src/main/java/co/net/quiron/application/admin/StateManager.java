@@ -7,7 +7,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 /**
- * Holds the business logic to handle States operations.
+ * Holds the business logic to handle the States.
  */
 public class StateManager extends EntityManager<State> {
 
