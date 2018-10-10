@@ -11,14 +11,12 @@ import org.apache.logging.log4j.Logger;
 public class CountryManager extends EntityManager<Country> {
 
     private final Logger logger = LogManager.getLogger(this.getClass());
-    //private IAppRepository<Country> countryRepository;
 
     /**
      * Instantiates a new Countries manager.
      */
     public CountryManager() {
         super(Country.class);
-        //countryRepository = new AppRepository<>(Country.class);
         logger.info("CountryManager(): Instantiating CountryManager class.");
     }
 
