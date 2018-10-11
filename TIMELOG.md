@@ -17,8 +17,6 @@
 | 09/24/18| Watching Week 4 videos and implementing Hibernate Demo. | 3 | |
 | 09/25/18| Implementing Hibernate in Project Quiron. Defining packages structure. | 3 | |
 | 09/28/18| Researching about best practices for branching. Implement a dao and Hibernate in my Individual Project. | 5 | |
-<<<<<<< HEAD
-=======
 | 09/29/18| Implementing CRUD operations on AddressTypes Table of Individual Project Database for Week 4 Exercise. | 6 | |
 | 09/30/18| Watching Week 5 videos. Refactoring Week1-User-Display-Exercise project to implement Hibernate One to Many Demo. Implementing CRUD operations on Countries Entity of Individual Project Database for Week 4 Exercise. | 6 | |
 | 10/01/18| Fixing/re-factoring Week1-User-Display-Exercise project... | 3 | Error deploying the webapp. java.lang.IllegalStateException: ContainerBase.addChild: start: org.apache.catalina.LifecycleException: Failed to start component StandardEngine [Catalina]... |
@@ -33,6 +31,4 @@
 | 10/07/18| Working on the web template for Individual Project. | 10 | |
 | 10/08/18| Working on Individual Project: Designing Security Model | 2 | |
 | 10/09/18| Working on Individual Project: Implementing Security Model and ManytoMany Relationship with Hibernate| 4 | |
-
->>>>>>> 74e642a69a6354ada2d49b162d96b10775428192
 
