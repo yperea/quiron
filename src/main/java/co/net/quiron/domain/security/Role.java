@@ -30,8 +30,10 @@ public class Role {
     @Column(name = "Description")
     private String description;
 
-/*    @ManyToMany(mappedBy = "roles")
-    private Set<User> users = new HashSet<>();*/
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
+    @ManyToMany(mappedBy = "roles")
+    private Set<User> users = new HashSet<>();
 
     @CreationTimestamp
     @Temporal(TemporalType.TIMESTAMP)

@@ -40,14 +40,15 @@ public class User {
     @Column(name = "Password")
     private String password;
 
-    /*
-    @ManyToMany(cascade = {CascadeType.ALL})
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
+    @ManyToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER)
     @JoinTable(
             name = "USERS_ROLES",
             joinColumns = {@JoinColumn(name = "UserID")},
             inverseJoinColumns = {@JoinColumn(name = "RoleID")})
     private Set<Role> roles = new HashSet<>();
-    */
+
 
     @CreationTimestamp
     @Temporal(TemporalType.TIMESTAMP)
@@ -66,20 +67,16 @@ public class User {
      *
      * @param role the role
      */
-    /*
     public void addRole(Role role) {
         roles.add(role);
     }
-    */
 
     /**
      * Remove a role from the collection.
      *
      * @param role the role
      */
-    /*
     public void removeRole(Role role) {
         roles.remove(role);
     }
-    */
 }

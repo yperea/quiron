@@ -48,14 +48,24 @@ public class EntityDAO<T> {
     /**
      * Gets an entity by id
      *
-     * @param <T> the type parameter
      * @param id  entity id to search by
      * @return entity by id
      */
-    public <T> T getById(int id) {
+    public T getById(int id) {
+
         session = getSession();
-        T entity = (T)session.get(type, id);
+        T entity = session.get(type, id);
         session.close();
+
+        /*
+        session = getSession();
+        CriteriaBuilder builder = session.getCriteriaBuilder();
+        CriteriaQuery<T> query = builder.createQuery(type);
+        Root<T> root = query.from(type);
+        query.select(root).where(builder.equal(root.get("id"),id));
+        T entity = session.createQuery(query).getSingleResult();
+        session.close();
+        */
 
         logger.trace("getById(int): Returning the <T> BusinessEntity.");
         return entity;
