@@ -2,21 +2,38 @@ package co.net.quiron.application.admin;
 
 import co.net.quiron.application.shared.EntityManager;
 import co.net.quiron.domain.security.Role;
+import co.net.quiron.domain.security.User;
 import co.net.quiron.test.util.DatabaseManager;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * The type Role manager test.
+ */
 class RoleManagerTest {
 
+    /**
+     * The Role manager.
+     */
     EntityManager<Role> roleManager;
+    /**
+     * The User manager.
+     */
+    EntityManager<User> userManager;
 
+    /**
+     * Sets up.
+     */
     @BeforeEach
     void setUp() {
         roleManager = new RoleManager();
+        userManager = new UserManager();
         DatabaseManager dbm = DatabaseManager.getInstance();
         dbm.runSQL("cleandb.sql");
     }
@@ -90,20 +107,34 @@ class RoleManagerTest {
     }
 
     /**
-     * Test create state.
+     * Test adding set of users to existent role.
      */
+    /*
     @Test
-    void testCreateRoleWithOneState() {
-        //Role newRole = new Role("GB", "United Kingdom");
-        //State newState = new State("ENG", "England", newRole);
-        //newRole.addState(newState);
+    void testAddingSetOfUsersToExistentRole() {
+        int firstUserId = 1;
+        int secondUserId = 2;
 
-        //Role createdRole = roleManager.create(newRole);
+        int roleId = 2;
+        int usersAssigned = 0;
 
-        //assertNotNull(createdRole);
-        //assertEquals(newRole.getCode(), createdRole.getCode());
-        //assertEquals(newRole.getName(), createdRole.getName());
-        //assertEquals(1, createdRole.getStates().size());
+        Set<User> users = new HashSet<>();
 
+        Role roleToUpdate = roleManager.get(roleId);
+        User firstUser = userManager.get(firstUserId);
+        User secondUser = userManager.get(secondUserId);
+
+        users.add(firstUser);
+        users.add(secondUser);
+
+        roleToUpdate.setUsers(users);
+        roleManager.update(roleToUpdate);
+
+        Role roleUpdated = roleManager.get(roleId);
+
+        usersAssigned = roleUpdated.getUsers().size();
+
+        assertEquals(2,usersAssigned);
     }
+    */
 }
