@@ -9,7 +9,7 @@
   <login-config>
     <auth-method>FORM</auth-method>
     <form-login-config>
-      <form-login-page>/signin.jsp</form-login-page>
+      <form-login-page>/public/signin.jsp</form-login-page>
       <form-error-page>/accessdenied.jsp</form-error-page>
     </form-login-config>
   </login-config>

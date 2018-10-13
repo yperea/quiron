@@ -69,7 +69,7 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
 
 <!-- Bootstrap Core JavaScript -->
-<script src="style/js/holder.min.js"></script>
+<script src="${root}/style/js/holder.min.js"></script>
 <script>
     // Example starter JavaScript for disabling form submissions if there are invalid fields
     (function() {

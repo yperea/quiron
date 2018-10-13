@@ -2,8 +2,8 @@
 
     <div class="container">
 
-        <a class="navbar-brand nav-link" href="./">
-            <img src="style/img/QuironLogo360x140.png" class="my-logo"/>
+        <a class="navbar-brand nav-link" href="${root}">
+            <img src="${root}/style/img/QuironLogo360x140.png" class="my-logo"/>
         </a>
 
         <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
@@ -46,19 +46,19 @@
                         <a class="dropdown-item" href="#">Blog Post</a>
                     </div>
                 </li>
-                <li class="nav-item"><a class="nav-link" href="#">Sign&nbsp;Up</a></li>
-                <li class="nav-item"><a class="nav-link" href="signin.jsp">Log&nbsp;In</a></li>
+                <li class="nav-item"><a class="nav-link" href="${root}/public/signup.jsp">Sign&nbsp;Up</a></li>
+                <li class="nav-item"><a class="nav-link" href="${root}/account/myprofile.jsp">Log&nbsp;In</a></li>
 
                 <li class="dropdown user-menu">
                     <a class="nav-link" href="#" class="dropdown-toggle" data-toggle="dropdown">
-                        <img alt="Profile Picture" class="user-image" src="style/img/male.jpg" />
+                        <img alt="Profile Picture" class="user-image" src="${root}/style/img/male.jpg" />
                         &nbsp;<span class="hidden-xs"></span>
                     </a>
                     <ul class="dropdown-menu">
                         <li class="my-user-header">
                             <img alt="Profile Picture"
                                  class="img-circle"
-                                 src="style/img/male.jpg" />
+                                 src="${root}/style/img/male.jpg" />
                             <p>Yesid Perea
                                 <small>(yperea)</small>
                             </p>
