@@ -3,14 +3,14 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
          version="3.1">
-  <display-name>Quiron Web Application</display-name>
+  <display-name>Project Quiron</display-name>
 
   <!-- Tell the server to use form-based authentication. -->
   <login-config>
     <auth-method>FORM</auth-method>
     <form-login-config>
-      <form-login-page>/public/signin.jsp</form-login-page>
-      <form-error-page>/public/accessdenied.jsp</form-error-page>
+      <form-login-page>/signin.jsp</form-login-page>
+      <form-error-page>/accessdenied.jsp</form-error-page>
     </form-login-config>
   </login-config>
 
@@ -30,7 +30,7 @@
 
   <security-constraint>
     <web-resource-collection>
-      <web-resource-name>country</web-resource-name>
+      <web-resource-name>Admin</web-resource-name>
       <url-pattern>/admin/*</url-pattern>
     </web-resource-collection>
     <auth-constraint>
@@ -38,8 +38,23 @@
     </auth-constraint>
   </security-constraint>
 
+  <security-constraint>
+    <web-resource-collection>
+      <web-resource-name>Account</web-resource-name>
+      <url-pattern>/account/*</url-pattern>
+    </web-resource-collection>
+    <auth-constraint>
+      <role-name>Administrator</role-name>
+      <role-name>User</role-name>
+    </auth-constraint>
+  </security-constraint>
+
+
   <security-role>
     <role-name>Administrator</role-name>
+  </security-role>
+  <security-role>
+    <role-name>User</role-name>
   </security-role>
 
 </web-app>

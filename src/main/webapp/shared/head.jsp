@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="Project Quiron">
     <meta name="author" content="Yesid Perea">
-    <link rel="icon" href="../img/favicon.png">
+    <link rel="icon" href="style/img/QuironIcon75x75.png">
 
     <title>${title}</title>
 
@@ -16,27 +16,22 @@
           crossorigin="anonymous">
 
     <!-- Bootstrap validator CSS -->
-    <link href="../css/form-validation.css" rel="stylesheet">
+    <link href="style/css/form-validation.css" rel="stylesheet" />
+
+
+    <!-- Bootstrap Carousel CSS -->
+    <link href="style/css/carousel.css" rel="stylesheet" />
+
+    <!-- Bootstrap Carousel CSS -->
+    <link href="style/css/dashboard.css" rel="stylesheet" />
+
 
     <link rel="stylesheet"
           href="https://use.fontawesome.com/releases/v5.3.1/css/all.css"
           integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU"
           crossorigin="anonymous">
 
-    <!-- https://startbootstrap.com - SB Admin 2 Template -->
-    <link href="templates/startbootstrap-sb-admin/dist/css/sb-admin-2.css" rel="stylesheet">
-
-    <!-- https://startbootstrap.com - Landing Page Template -->
-    <link href="templates/startbootstrap-landing-page/css/landing-page.min.css" rel="stylesheet">
-
-    <!-- https://startbootstrap.com - Modern Business Template -->
-    <link href="templates/startbootstrap-modern-business/css/modern-business.css" rel="stylesheet">
-    <link href="templates/startbootstrap-landing-page/vendor/simple-line-icons/css/simple-line-icons.css" rel="stylesheet" type="text/css">
-
-    <!-- http://getbootstrap.com - Dashboard Template -->
-    <link href="templates/bootstrap/css/dashboard.css" rel="stylesheet">
-
     <!-- Project Quiron Style Sheet -->
-    <link rel="stylesheet" href="../css/main.css" />
+    <link rel="stylesheet" href="style/css/main.css" />
 
 </head>

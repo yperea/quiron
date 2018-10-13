@@ -11,7 +11,7 @@ DELETE FROM ROLES;
 ALTER TABLE ROLES AUTO_INCREMENT = 1;
 INSERT INTO ROLES (RoleName, Description) VALUES('Administrator', 'System administrator');
 INSERT INTO ROLES (RoleName, Description) VALUES('User', 'System user');
-INSERT INTO USERS(Username, Email, Password ) VALUES ('yesper', 'yesper@aol.com', '1234');
+INSERT INTO USERS(Username, Email, Password ) VALUES ('yperea', 'ypereamartinez@madisoncollege.edu', '1234');
 INSERT INTO USERS(Username, Email, Password ) VALUES ('clacar', 'clacar@aol.com', '4567');
 INSERT INTO COUNTRIES(CountryCode, Name) VALUES ('US', 'United States');
 INSERT INTO COUNTRIES(CountryCode, Name) VALUES ('CO', 'Colombia');
@@ -23,6 +23,7 @@ INSERT INTO STATE_PROVINCES (StateProvinceCode, Name, CountryID) VALUES ('AL', '
 INSERT INTO STATE_PROVINCES (StateProvinceCode, Name, CountryID) VALUES ('AR', 'Arkansas', 1);
 INSERT INTO STATE_PROVINCES (StateProvinceCode, Name, CountryID) VALUES ('AZ', 'Arizona', 1);
 INSERT INTO STATE_PROVINCES (StateProvinceCode, Name, CountryID) VALUES ('CA', 'California', 1);
+INSERT INTO STATE_PROVINCES (StateProvinceCode, Name, CountryID) VALUES ('WI', 'Wisconsin', 1);
 INSERT INTO STATE_PROVINCES (StateProvinceCode, Name, CountryID) VALUES ('AB', 'Alberta', 3);
 INSERT INTO STATE_PROVINCES (StateProvinceCode, Name, CountryID) VALUES ('BC', 'British Columbia', 3);
 INSERT INTO STATE_PROVINCES (StateProvinceCode, Name, CountryID) VALUES ('LB', 'Labrador', 3);
