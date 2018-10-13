@@ -6,10 +6,8 @@ import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
-import java.time.LocalDate;
 import java.util.Date;
 import java.util.HashSet;
-import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -61,6 +59,7 @@ public class Country {
     @Column(name = "ModifiedDate")
     private Date modifiedDate;
 
+
     /**
      * Add state to the collection within the Country.
      *
@@ -69,6 +68,8 @@ public class Country {
     public void addState(State state) {
         states.add(state);
         state.setCountry(this);
+
+        //logger.trace("addState(State): Adding the State to the collection.");
     }
 
     /**
@@ -79,7 +80,8 @@ public class Country {
     public void removeState(State state) {
         states.remove(state);
         state.setCountry(null);
-    }
 
+        //logger.trace("removeState(State): Removing the State from the collection.");
+    }
 }
 

@@ -6,7 +6,6 @@ import co.net.quiron.test.util.DatabaseManager;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -15,19 +14,19 @@ import static org.junit.jupiter.api.Assertions.*;
 /**
  * Test out The Countries manager.
  */
-class CountriesManagerTest {
+class CountryManagerTest {
 
     /**
      * Creates an Countries manager object.
      */
-    CountriesManager countriesManager;
+    CountryManager countryManager;
 
     /**
      * Sets up.
      */
     @BeforeEach
     void setUp() {
-        countriesManager = new CountriesManager();
+        countryManager = new CountryManager();
         DatabaseManager dbm = DatabaseManager.getInstance();
         dbm.runSQL("cleandb.sql");
     }
@@ -37,7 +36,8 @@ class CountriesManagerTest {
      */
     @Test
     void testGetCountryById() {
-        Country country = countriesManager.getCountry(1);
+//        Country country = countryManager.getCountry(1);
+        Country country = countryManager.get(1);
         assertEquals("United States", country.getName());
     }
 
@@ -47,7 +47,8 @@ class CountriesManagerTest {
      */
     @Test
     void testGetAllCountries() {
-        List<Country> countryList = countriesManager.getCountryList();
+        //List<Country> countryList = countryManager.getCountryList();
+        List<Country> countryList = countryManager.getList();
         assertEquals(5, countryList.size());
     }
 
@@ -61,7 +62,7 @@ class CountriesManagerTest {
         String newCountryCode = "JP";
         String newCountryName = "Japan";
         Country newCountry = new Country(newCountryCode, newCountryName);
-        Country insertedCountry = countriesManager.create(newCountry);
+        Country insertedCountry = countryManager.create(newCountry);
 
         assertNotNull(insertedCountry);
         assertEquals("JP", insertedCountry.getCode());
@@ -79,12 +80,14 @@ class CountriesManagerTest {
         int countryId = 4;
         Date currentModifiedDate = null;
 
-        Country countryToUpdate = countriesManager.getCountry(countryId);
+        //Country countryToUpdate = countryManager.getCountry(countryId);
+        Country countryToUpdate = countryManager.get(countryId);
         countryToUpdate.setName(newCountryName);
         currentModifiedDate = countryToUpdate.getModifiedDate();
 
-        countriesManager.update(countryToUpdate);
-        Country countryUpdated = countriesManager.getCountry(countryId);
+        countryManager.update(countryToUpdate);
+        //Country countryUpdated = countryManager.getCountry(countryId);
+        Country countryUpdated = countryManager.get(countryId);
 
         assertEquals(countryToUpdate, countryUpdated);
         assertNotNull(countryUpdated.getModifiedDate());
@@ -100,8 +103,13 @@ class CountriesManagerTest {
     void testDeleteCountry() {
 
         int countryIdToDelete = 3;
-        countriesManager.delete(countriesManager.getCountry(countryIdToDelete));
-        assertNull(countriesManager.getCountry(countryIdToDelete));
+/*
+        countryManager.delete(countryManager.getCountry(countryIdToDelete));
+        assertNull(countryManager.getCountry(countryIdToDelete));
+*/
+        countryManager.delete(countryManager.get(countryIdToDelete));
+        assertNull(countryManager.get(countryIdToDelete));
+
     }
 
     /**
@@ -113,7 +121,7 @@ class CountriesManagerTest {
         State newState = new State("ENG", "England", newCountry);
         newCountry.addState(newState);
 
-        Country createdCountry = countriesManager.create(newCountry);
+        Country createdCountry = countryManager.create(newCountry);
 
         assertNotNull(createdCountry);
         assertEquals(newCountry.getCode(), createdCountry.getCode());

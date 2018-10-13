@@ -19,12 +19,13 @@ public class EntityDAO<T> {
     private final Logger logger = LogManager.getLogger(this.getClass());
 
     /**
-     * Instantiates a new Entity DAO.
+     * Instantiates a new BusinessEntity DAO.
      *
      * @param entityType the entity type
      */
     public EntityDAO(Class<T> entityType) {
         this.type = entityType;
+        logger.trace("EntityDAO(Class<T>): Instantiating EntityDAO.");
     }
 
     /**
@@ -39,25 +40,39 @@ public class EntityDAO<T> {
         Root<T> root = query.from(type);
         List<T> list = session.createQuery(query).getResultList();
         session.close();
+
+        logger.trace("getAll(): Returning the List<T> of Entities.");
         return list;
     }
 
     /**
      * Gets an entity by id
      *
-     * @param <T> the type parameter
      * @param id  entity id to search by
      * @return entity by id
      */
-    public <T> T getById(int id) {
+    public T getById(int id) {
+
         session = getSession();
-        T entity = (T)session.get(type, id);
+        T entity = session.get(type, id);
         session.close();
+
+        /*
+        session = getSession();
+        CriteriaBuilder builder = session.getCriteriaBuilder();
+        CriteriaQuery<T> query = builder.createQuery(type);
+        Root<T> root = query.from(type);
+        query.select(root).where(builder.equal(root.get("id"),id));
+        T entity = session.createQuery(query).getSingleResult();
+        session.close();
+        */
+
+        logger.trace("getById(int): Returning the <T> BusinessEntity.");
         return entity;
     }
 
     /**
-     * Insert an Entity
+     * Insert an BusinessEntity
      *
      * @param entity entity to be inserted or updated
      * @return id of the inserted record
@@ -68,18 +83,34 @@ public class EntityDAO<T> {
         transaction = session.beginTransaction();
         id = (int)session.save(entity);
 
+        logger.trace("insert(T): Inserting the <T> BusinessEntity.");
         return id;
     }
 
+/*
+
+    public T insert(T entity) {
+
+        session = getSession();
+        transaction = session.beginTransaction();
+        T newEntity = type.cast(session.save(entity));
+
+        logger.trace("insert(T): Inserting the <T> BusinessEntity.");
+        return newEntity;
+    }
+*/
+
+
     /**
-     * Update an Entity
+     * Update an BusinessEntity
      *
-     * @param entity Entity to be inserted or updated
+     * @param entity BusinessEntity to be inserted or updated
      */
     public void update(T entity) {
         session = getSession();
         transaction = session.beginTransaction();
         session.saveOrUpdate(entity);
+        logger.trace("update(T): Updating the <T> BusinessEntity.");
     }
 
     /**
@@ -91,6 +122,7 @@ public class EntityDAO<T> {
         session = getSession();
         transaction = session.beginTransaction();
         session.delete(entity);
+        logger.trace("delete(T): Deleting the <T> BusinessEntity.");
     }
 
     /**
@@ -98,6 +130,7 @@ public class EntityDAO<T> {
      * @return session
      */
     private Session getSession() {
+        logger.trace("getSession(): Opening Hibernate Session.");
         return SessionFactoryProvider.getSessionFactory().openSession();
     }
 
@@ -107,5 +140,6 @@ public class EntityDAO<T> {
     public void saveChanges() {
         transaction.commit();
         session.close();
+        logger.trace("saveChanges(): Closing Hibernate Session.");
     }
 }

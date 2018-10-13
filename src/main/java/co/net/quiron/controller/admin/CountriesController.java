@@ -1,6 +1,6 @@
 package co.net.quiron.controller.admin;
 
-import co.net.quiron.application.admin.CountriesManager;
+import co.net.quiron.application.admin.CountryManager;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -25,9 +25,9 @@ public class CountriesController extends HttpServlet {
         String url = "/admin/countryList.jsp";
         String title = "Country List";
 
-        CountriesManager countriesManager = new CountriesManager();
+        CountryManager countryManager = new CountryManager();
 
-        req.setAttribute("countries", countriesManager.getCountryList());
+        req.setAttribute("countries", countryManager.getList());
         req.setAttribute("title", title);
 
         RequestDispatcher dispatcher = req.getRequestDispatcher(url);
