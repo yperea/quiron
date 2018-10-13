@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 5.7.23, for Win64 (x86_64)
+-- MySQL dump 10.13  Distrib 5.7.23, for Linux (x86_64)
 --
 -- Host: 127.0.0.1    Database: quirondb
 -- ------------------------------------------------------
--- Server version	5.7.23-log
+-- Server version	5.7.23-0ubuntu0.16.04.1
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -59,7 +59,7 @@ CREATE TABLE `ADDRESS_TYPES` (
   `CreatedDate` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Date and time the record was created.',
   `ModifiedDate` datetime DEFAULT NULL COMMENT 'Date and time the record was last updated.',
   PRIMARY KEY (`AddressTypeID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Types of addresses stored in the Address table. ';
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COMMENT='Types of addresses stored in the Address table. ';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -68,6 +68,7 @@ CREATE TABLE `ADDRESS_TYPES` (
 
 LOCK TABLES `ADDRESS_TYPES` WRITE;
 /*!40000 ALTER TABLE `ADDRESS_TYPES` DISABLE KEYS */;
+INSERT INTO `ADDRESS_TYPES` VALUES (1,'Home','2018-10-11 21:35:54',NULL),(2,'Billing','2018-10-11 21:35:54',NULL),(3,'Office','2018-10-11 21:35:54',NULL),(4,'Primary','2018-10-11 21:35:54',NULL),(5,'Shipping','2018-10-11 21:35:55',NULL);
 /*!40000 ALTER TABLE `ADDRESS_TYPES` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -135,7 +136,7 @@ CREATE TABLE `COUNTRIES` (
   `ModifiedDate` datetime DEFAULT NULL,
   PRIMARY KEY (`CountryID`),
   UNIQUE KEY `CountryCode_UNIQUE` (`CountryCode`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='Lookup table containing the ISO standard codes for countries.';
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COMMENT='Lookup table containing the ISO standard codes for countries.';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -144,7 +145,7 @@ CREATE TABLE `COUNTRIES` (
 
 LOCK TABLES `COUNTRIES` WRITE;
 /*!40000 ALTER TABLE `COUNTRIES` DISABLE KEYS */;
-INSERT INTO `COUNTRIES` VALUES (1,'AD','Andorra','2018-10-01 18:04:41',NULL);
+INSERT INTO `COUNTRIES` VALUES (1,'US','United States','2018-10-11 21:35:49',NULL),(2,'CO','Colombia','2018-10-11 21:35:49',NULL),(3,'CA','Canada','2018-10-11 21:35:50',NULL),(4,'ES','Spain','2018-10-11 21:35:50',NULL),(5,'FR','France','2018-10-11 21:35:51',NULL);
 /*!40000 ALTER TABLE `COUNTRIES` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -223,13 +224,13 @@ DROP TABLE IF EXISTS `EMAIL_ADDRESSES`;
 CREATE TABLE `EMAIL_ADDRESSES` (
   `EmailAddressID` int(11) NOT NULL COMMENT 'Primary key. ID of this email address.',
   `PersonID` int(11) NOT NULL COMMENT 'Person associated with this email address.  Foreign key to PERSONS.PersonID',
-  `EmailAddress` varchar(50) NOT NULL COMMENT 'E-mail address for the patient.',
+  `EmailAddress` varchar(50) NOT NULL COMMENT 'E-mail address for the person.',
   `CreatedDate` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Date and time the record was created.',
   `ModifiedDate` datetime DEFAULT NULL COMMENT 'Date and time the record was last updated.',
   PRIMARY KEY (`EmailAddressID`),
   KEY `fk_EMAIL_ADDRESSES_PERSONS1_idx` (`PersonID`),
   CONSTRAINT `fk_EMAIL_ADDRESSES_PERSONS1` FOREIGN KEY (`PersonID`) REFERENCES `PERSONS` (`PersonID`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Where to send a patient email.';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Where to send a person email.';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -422,14 +423,15 @@ CREATE TABLE `PERSONS` (
   `PersonID` int(11) NOT NULL,
   `PersonTypeID` int(11) NOT NULL,
   `Title` varchar(8) NOT NULL COMMENT 'A courtesy title. For example, Mr. or Ms.',
-  `FirstName` varchar(45) NOT NULL COMMENT 'First name of the patient.',
-  `MiddleName` varchar(45) DEFAULT NULL COMMENT 'Middle name or middle initial of the patient.',
-  `LastName` varchar(45) NOT NULL COMMENT 'Last name of the patient.',
-  `LastName2` varchar(45) DEFAULT NULL COMMENT 'Second Last name of the patient (If Any).',
+  `FirstName` varchar(45) NOT NULL COMMENT 'First name of the person.',
+  `MiddleName` varchar(45) DEFAULT NULL COMMENT 'Middle name or middle initial of the person.',
+  `LastName` varchar(45) NOT NULL COMMENT 'Last name of the person.',
+  `LastName2` varchar(45) DEFAULT NULL COMMENT 'Second Last name of the person (If Any).',
   `Suffix` varchar(10) DEFAULT NULL COMMENT 'Surname suffix. For example, Sr. or Jr.',
   `CreatedDate` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Date and time the record was created.',
   `ModifiedDate` datetime DEFAULT NULL COMMENT 'Date and time the record was last updated.',
   PRIMARY KEY (`PersonID`),
+  UNIQUE KEY `PERSONS_pk` (`PersonID`,`PersonTypeID`),
   KEY `fk_PERSONS_ENTITIES_idx` (`PersonID`),
   KEY `fk_PERSONS_PERSON_TYPES1_idx` (`PersonTypeID`),
   CONSTRAINT `fk_PERSONS_ENTITIES` FOREIGN KEY (`PersonID`) REFERENCES `ENTITIES` (`EntityID`) ON DELETE NO ACTION ON UPDATE NO ACTION,
@@ -490,7 +492,7 @@ DROP TABLE IF EXISTS `PERSON_PHONES`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `PERSON_PHONES` (
-  `PersonID` int(11) NOT NULL COMMENT 'BusinessEntity identification number. Foreign key to PersonID.',
+  `PersonID` int(11) NOT NULL COMMENT 'Entity identification number. Foreign key to PersonID.',
   `Number` varchar(25) NOT NULL COMMENT 'Telephone number identification number.',
   `PhoneTypeID` int(11) NOT NULL COMMENT 'Type of phone number. Foreign key to PhoneTypeID.',
   `Extension` varchar(10) DEFAULT NULL COMMENT 'Extension number.',
@@ -501,7 +503,7 @@ CREATE TABLE `PERSON_PHONES` (
   KEY `fk_PERSON_PHONES_PHONE_TYPES1_idx` (`PhoneTypeID`),
   CONSTRAINT `fk_PERSON_PHONES_PERSONS1` FOREIGN KEY (`PersonID`) REFERENCES `PERSONS` (`PersonID`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_PERSON_PHONES_PHONE_TYPES1` FOREIGN KEY (`PhoneTypeID`) REFERENCES `PHONE_TYPES` (`PhoneTypeID`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Telephone number and type of a patient.';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Telephone number and type of a person.';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -526,7 +528,7 @@ CREATE TABLE `PERSON_TYPES` (
   `CreatedDate` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Date and time the record was created.',
   `ModifiedDate` datetime DEFAULT NULL COMMENT 'Date and time the record was last updated.',
   PRIMARY KEY (`PersonTypeID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Type of a patient.';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Type of a person.';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -536,6 +538,34 @@ CREATE TABLE `PERSON_TYPES` (
 LOCK TABLES `PERSON_TYPES` WRITE;
 /*!40000 ALTER TABLE `PERSON_TYPES` DISABLE KEYS */;
 /*!40000 ALTER TABLE `PERSON_TYPES` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `PERSON_USERS`
+--
+
+DROP TABLE IF EXISTS `PERSON_USERS`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `PERSON_USERS` (
+  `PersonID` int(11) NOT NULL,
+  `PersonTypeID` int(11) NOT NULL,
+  `UserID` int(11) NOT NULL,
+  `CreatedDate` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`PersonID`,`PersonTypeID`,`UserID`),
+  KEY `fk_USERS_has_PERSONS_USERS1_idx` (`UserID`),
+  KEY `fk_PERSON_USERS_PERSONS1_idx` (`PersonID`,`PersonTypeID`),
+  CONSTRAINT `fk_PERSON_USERS_PERSONS1` FOREIGN KEY (`PersonID`, `PersonTypeID`) REFERENCES `PERSONS` (`PersonID`, `PersonTypeID`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `PERSON_USERS`
+--
+
+LOCK TABLES `PERSON_USERS` WRITE;
+/*!40000 ALTER TABLE `PERSON_USERS` DISABLE KEYS */;
+/*!40000 ALTER TABLE `PERSON_USERS` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -551,7 +581,7 @@ CREATE TABLE `PHONE_TYPES` (
   `CreatedDate` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Date and time the record was created.',
   `ModifiedDate` datetime DEFAULT NULL COMMENT 'Date and time the record was last updated.',
   PRIMARY KEY (`PhoneTypeID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Type of phone number of a patient.';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Type of phone number of a person.';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -654,6 +684,34 @@ LOCK TABLES `PROVIDERS_LOCATIONS` WRITE;
 UNLOCK TABLES;
 
 --
+-- Table structure for table `ROLES`
+--
+
+DROP TABLE IF EXISTS `ROLES`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `ROLES` (
+  `RoleID` int(11) NOT NULL AUTO_INCREMENT,
+  `RoleName` varchar(15) NOT NULL,
+  `Description` varchar(512) DEFAULT NULL,
+  `CreatedDate` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `ModifiedDate` datetime DEFAULT NULL,
+  PRIMARY KEY (`RoleID`),
+  UNIQUE KEY `RoleName_UNIQUE` (`RoleName`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `ROLES`
+--
+
+LOCK TABLES `ROLES` WRITE;
+/*!40000 ALTER TABLE `ROLES` DISABLE KEYS */;
+INSERT INTO `ROLES` VALUES (1,'Administrator','System administrator','2018-10-11 21:35:49',NULL),(2,'User','System user','2018-10-11 21:35:49',NULL);
+/*!40000 ALTER TABLE `ROLES` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `STATE_PROVINCES`
 --
 
@@ -670,7 +728,7 @@ CREATE TABLE `STATE_PROVINCES` (
   PRIMARY KEY (`StateProvinceID`),
   KEY `fk_STATE_PROVINCES_COUNTRIES1_idx` (`CountryID`),
   CONSTRAINT `fk_STATE_PROVINCES_COUNTRIES1` FOREIGN KEY (`CountryID`) REFERENCES `COUNTRIES` (`CountryID`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='State and province lookup table.';
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8 COMMENT='State and province lookup table.';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -679,6 +737,7 @@ CREATE TABLE `STATE_PROVINCES` (
 
 LOCK TABLES `STATE_PROVINCES` WRITE;
 /*!40000 ALTER TABLE `STATE_PROVINCES` DISABLE KEYS */;
+INSERT INTO `STATE_PROVINCES` VALUES (1,'AK','Alaska',1,'2018-10-11 21:35:51',NULL),(2,'AL','Alabama',1,'2018-10-11 21:35:51',NULL),(3,'AR','Arkansas',1,'2018-10-11 21:35:51',NULL),(4,'AZ','Arizona',1,'2018-10-11 21:35:51',NULL),(5,'CA','California',1,'2018-10-11 21:35:52',NULL),(6,'AB','Alberta',3,'2018-10-11 21:35:52',NULL),(7,'BC','British Columbia',3,'2018-10-11 21:35:52',NULL),(8,'LB','Labrador',3,'2018-10-11 21:35:52',NULL),(9,'MB','Manitoba',3,'2018-10-11 21:35:52',NULL),(10,'NB','Brunswick',3,'2018-10-11 21:35:53',NULL);
 /*!40000 ALTER TABLE `STATE_PROVINCES` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -751,16 +810,16 @@ DROP TABLE IF EXISTS `USERS`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `USERS` (
-  `UserID` int(11) NOT NULL AUTO_INCREMENT,
+  `UserID` int(11) NOT NULL,
   `Username` varchar(16) NOT NULL,
-  `Email` varchar(255) DEFAULT NULL,
-  `Password` varchar(32) NOT NULL,
+  `Email` varchar(255) CHARACTER SET utf8 DEFAULT NULL,
+  `Password` varchar(32) CHARACTER SET utf8 NOT NULL,
   `CreatedDate` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `ModifiedDate` datetime DEFAULT NULL,
   PRIMARY KEY (`UserID`),
   UNIQUE KEY `Username_UNIQUE` (`Username`),
   UNIQUE KEY `Email_UNIQUE` (`Email`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -769,8 +828,47 @@ CREATE TABLE `USERS` (
 
 LOCK TABLES `USERS` WRITE;
 /*!40000 ALTER TABLE `USERS` DISABLE KEYS */;
+INSERT INTO `USERS` VALUES (1,'yesper','yesper@aol.com','1234','2018-10-11 21:35:49',NULL),(2,'clacar','clacar@aol.com','4567','2018-10-11 21:35:49',NULL);
 /*!40000 ALTER TABLE `USERS` ENABLE KEYS */;
 UNLOCK TABLES;
+
+--
+-- Table structure for table `USERS_ROLES`
+--
+
+DROP TABLE IF EXISTS `USERS_ROLES`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `USERS_ROLES` (
+  `RoleID` int(11) DEFAULT NULL,
+  `RoleName` varchar(45) NOT NULL,
+  `UserID` int(11) DEFAULT NULL,
+  `Username` varchar(16) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `USERS_ROLES`
+--
+
+LOCK TABLES `USERS_ROLES` WRITE;
+/*!40000 ALTER TABLE `USERS_ROLES` DISABLE KEYS */;
+INSERT INTO `USERS_ROLES` VALUES (2,'User',2,'clacar'),(1,'Administrator',1,'yesper');
+/*!40000 ALTER TABLE `USERS_ROLES` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Temporary table structure for view `User_Role_View`
+--
+
+DROP TABLE IF EXISTS `User_Role_View`;
+/*!50001 DROP VIEW IF EXISTS `User_Role_View`*/;
+SET @saved_cs_client     = @@character_set_client;
+SET character_set_client = utf8;
+/*!50001 CREATE VIEW `User_Role_View` AS SELECT 
+ 1 AS `username`,
+ 1 AS `rolename`*/;
+SET character_set_client = @saved_cs_client;
 
 --
 -- Table structure for table `VISITS`
@@ -816,6 +914,86 @@ LOCK TABLES `VISITS` WRITE;
 /*!40000 ALTER TABLE `VISITS` DISABLE KEYS */;
 /*!40000 ALTER TABLE `VISITS` ENABLE KEYS */;
 UNLOCK TABLES;
+
+--
+-- Temporary table structure for view `V_USERS`
+--
+
+DROP TABLE IF EXISTS `V_USERS`;
+/*!50001 DROP VIEW IF EXISTS `V_USERS`*/;
+SET @saved_cs_client     = @@character_set_client;
+SET character_set_client = utf8;
+/*!50001 CREATE VIEW `V_USERS` AS SELECT 
+ 1 AS `Username`,
+ 1 AS `Password`*/;
+SET character_set_client = @saved_cs_client;
+
+--
+-- Temporary table structure for view `V_USERS_ROLES`
+--
+
+DROP TABLE IF EXISTS `V_USERS_ROLES`;
+/*!50001 DROP VIEW IF EXISTS `V_USERS_ROLES`*/;
+SET @saved_cs_client     = @@character_set_client;
+SET character_set_client = utf8;
+/*!50001 CREATE VIEW `V_USERS_ROLES` AS SELECT 
+ 1 AS `Username`,
+ 1 AS `RoleName`*/;
+SET character_set_client = @saved_cs_client;
+
+--
+-- Final view structure for view `User_Role_View`
+--
+
+/*!50001 DROP VIEW IF EXISTS `User_Role_View`*/;
+/*!50001 SET @saved_cs_client          = @@character_set_client */;
+/*!50001 SET @saved_cs_results         = @@character_set_results */;
+/*!50001 SET @saved_col_connection     = @@collation_connection */;
+/*!50001 SET character_set_client      = utf8 */;
+/*!50001 SET character_set_results     = utf8 */;
+/*!50001 SET collation_connection      = utf8_general_ci */;
+/*!50001 CREATE ALGORITHM=UNDEFINED */
+/*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
+/*!50001 VIEW `User_Role_View` AS select `u`.`Username` AS `username`,`r`.`RoleName` AS `rolename` from ((`USERS` `u` join `USERS_ROLES` `ur` on((`u`.`UserID` = `ur`.`UserID`))) join `ROLES` `r` on((`ur`.`RoleID` = `r`.`RoleID`))) */;
+/*!50001 SET character_set_client      = @saved_cs_client */;
+/*!50001 SET character_set_results     = @saved_cs_results */;
+/*!50001 SET collation_connection      = @saved_col_connection */;
+
+--
+-- Final view structure for view `V_USERS`
+--
+
+/*!50001 DROP VIEW IF EXISTS `V_USERS`*/;
+/*!50001 SET @saved_cs_client          = @@character_set_client */;
+/*!50001 SET @saved_cs_results         = @@character_set_results */;
+/*!50001 SET @saved_col_connection     = @@collation_connection */;
+/*!50001 SET character_set_client      = utf8 */;
+/*!50001 SET character_set_results     = utf8 */;
+/*!50001 SET collation_connection      = utf8_general_ci */;
+/*!50001 CREATE ALGORITHM=UNDEFINED */
+/*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
+/*!50001 VIEW `V_USERS` AS select `U`.`Username` AS `Username`,`U`.`Password` AS `Password` from `USERS` `U` */;
+/*!50001 SET character_set_client      = @saved_cs_client */;
+/*!50001 SET character_set_results     = @saved_cs_results */;
+/*!50001 SET collation_connection      = @saved_col_connection */;
+
+--
+-- Final view structure for view `V_USERS_ROLES`
+--
+
+/*!50001 DROP VIEW IF EXISTS `V_USERS_ROLES`*/;
+/*!50001 SET @saved_cs_client          = @@character_set_client */;
+/*!50001 SET @saved_cs_results         = @@character_set_results */;
+/*!50001 SET @saved_col_connection     = @@collation_connection */;
+/*!50001 SET character_set_client      = utf8 */;
+/*!50001 SET character_set_results     = utf8 */;
+/*!50001 SET collation_connection      = utf8_general_ci */;
+/*!50001 CREATE ALGORITHM=UNDEFINED */
+/*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
+/*!50001 VIEW `V_USERS_ROLES` AS select `U`.`Username` AS `Username`,`R`.`RoleName` AS `RoleName` from ((`USERS_ROLES` `UR` join `USERS` `U` on((`UR`.`UserID` = `U`.`UserID`))) join `ROLES` `R` on((`UR`.`RoleID` = `R`.`RoleID`))) */;
+/*!50001 SET character_set_client      = @saved_cs_client */;
+/*!50001 SET character_set_results     = @saved_cs_results */;
+/*!50001 SET collation_connection      = @saved_col_connection */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -826,4 +1004,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-10-01 18:19:39
+-- Dump completed on 2018-10-12 19:55:18

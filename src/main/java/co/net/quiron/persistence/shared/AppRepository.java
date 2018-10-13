@@ -65,12 +65,21 @@ public class AppRepository<T> implements IAppRepository<T> {
      * @param entity entity to be inserted or updated
      * @return the inserted record
      */
+
     @Override
     public T create(T entity) {
         int i = entityDAO.insert(entity);
         entityDAO.saveChanges();
         return get(i);
     }
+/*
+    @Override
+    public T create(T entity) {
+        T newEntity = entityDAO.insert(entity);
+        entityDAO.saveChanges();
+        return newEntity;
+    }
+*/
 
     /**
      * Updates an BusinessEntity

@@ -9,7 +9,9 @@
 <html lang="en">
 <%@include file="shared/head.jsp"%>
 <body>
-<body>
+
+    <a href = "admin/countryList.jsp">Go to the Country Search</a>
+
     <!-- Navigation -->
     <%@include file="shared/topbar.jsp" %>
 

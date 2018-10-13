@@ -20,6 +20,7 @@
         <mapping class="co.net.quiron.domain.admin.State"/>
         <mapping class="co.net.quiron.domain.security.User" />
         <mapping class="co.net.quiron.domain.security.Role" />
+        <mapping class="co.net.quiron.domain.security.UserRole" />
 
 
     </session-factory>

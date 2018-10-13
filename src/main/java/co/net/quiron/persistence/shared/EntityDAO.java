@@ -87,6 +87,20 @@ public class EntityDAO<T> {
         return id;
     }
 
+/*
+
+    public T insert(T entity) {
+
+        session = getSession();
+        transaction = session.beginTransaction();
+        T newEntity = type.cast(session.save(entity));
+
+        logger.trace("insert(T): Inserting the <T> BusinessEntity.");
+        return newEntity;
+    }
+*/
+
+
     /**
      * Update an BusinessEntity
      *
