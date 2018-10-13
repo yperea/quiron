@@ -82,7 +82,7 @@
 <!-- Custom Theme JavaScript -->
 <script src="templates/startbootstrap-sb-admin/dist/js/sb-admin-2.js"></script>
 
-<script src="templates/app/js/holder.min.js"></script>
+<script src="../js/holder.min.js"></script>
 <script>
     // Example starter JavaScript for disabling form submissions if there are invalid fields
     (function() {

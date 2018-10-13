@@ -48,14 +48,14 @@
 
                 <li class="dropdown user-menu">
                     <a class="nav-link" href="#" class="dropdown-toggle" data-toggle="dropdown">
-                        <img alt="Profile Picture" class="user-image" src="templates/app/img/male.jpg" />
+                        <img alt="Profile Picture" class="user-image" src="../img/male.jpg" />
                         &nbsp;<span class="hidden-xs"></span>
                     </a>
                     <ul class="dropdown-menu">
                         <li class="my-user-header">
                             <img alt="Profile Picture"
                                  class="img-circle"
-                                 src="templates/app/img/male.jpg" />
+                                 src="../img/male.jpg" />
                             <p>Yesid Perea
                                 <small>(yperea)</small>
                             </p>

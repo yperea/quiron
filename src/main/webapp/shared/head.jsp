@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="Project Quiron">
     <meta name="author" content="Yesid Perea">
-    <link rel="icon" href="templates/app/img/favicon.png">
+    <link rel="icon" href="../img/favicon.png">
 
     <title>${title}</title>
 
@@ -16,7 +16,7 @@
           crossorigin="anonymous">
 
     <!-- Bootstrap validator CSS -->
-    <link href="templates/app/css/form-validation.css" rel="stylesheet">
+    <link href="../css/form-validation.css" rel="stylesheet">
 
     <link rel="stylesheet"
           href="https://use.fontawesome.com/releases/v5.3.1/css/all.css"
@@ -37,6 +37,6 @@
     <link href="templates/bootstrap/css/dashboard.css" rel="stylesheet">
 
     <!-- Project Quiron Style Sheet -->
-    <link rel="stylesheet" href="templates/app/css/main.css" />
+    <link rel="stylesheet" href="../css/main.css" />
 
 </head>
