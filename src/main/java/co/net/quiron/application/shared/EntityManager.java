@@ -1,7 +1,7 @@
 package co.net.quiron.application.shared;
 
 import co.net.quiron.persistence.shared.AppRepository;
-import co.net.quiron.persistence.shared.IAppRepository;
+import co.net.quiron.persistence.interfaces.IAppRepository;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 

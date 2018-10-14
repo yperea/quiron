@@ -1,5 +1,7 @@
 package co.net.quiron.persistence.shared;
 
+import co.net.quiron.persistence.interfaces.IAppRepository;
+
 import java.util.List;
 
 /**

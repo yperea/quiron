@@ -1,4 +1,4 @@
-package co.net.quiron.persistence.shared;
+package co.net.quiron.persistence.interfaces;
 
 import java.util.List;
 

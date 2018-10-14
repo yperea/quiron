@@ -17,7 +17,7 @@ import java.io.IOException;
         name = "get-countries",
         urlPatterns = {"/Countries", "/Countries/Index"}
 )
-public class CountriesController extends HttpServlet {
+public class Countries extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 

@@ -9,24 +9,10 @@
   <login-config>
     <auth-method>FORM</auth-method>
     <form-login-config>
-      <form-login-page>/public/signin.jsp</form-login-page>
+      <form-login-page>/public/signin</form-login-page>
       <form-error-page>/accessdenied.jsp</form-error-page>
     </form-login-config>
   </login-config>
-
-  <!-- Protect everything within the "investing" directory. -->
-  <!--
-  <security-constraint>
-    <web-resource-collection>
-      <web-resource-name>admin-folder-name</web-resource-name>
-      <url-pattern>/admin/*</url-pattern>
-    </web-resource-collection>
-    <auth-constraint>
-      <role-name>user</role-name>
-      <role-name>administrator</role-name>
-    </auth-constraint>
-  </security-constraint>
-  -->
 
   <security-constraint>
     <web-resource-collection>

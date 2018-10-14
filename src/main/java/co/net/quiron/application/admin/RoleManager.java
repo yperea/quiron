@@ -1,7 +1,7 @@
 package co.net.quiron.application.admin;
 
 import co.net.quiron.application.shared.EntityManager;
-import co.net.quiron.domain.security.Role;
+import co.net.quiron.domain.account.Role;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 

@@ -46,7 +46,7 @@
                         <a class="dropdown-item" href="#">Blog Post</a>
                     </div>
                 </li>
-                <li class="nav-item"><a class="nav-link" href="${root}/public/signup.jsp">Sign&nbsp;Up</a></li>
+                <li class="nav-item"><a class="nav-link" href="${root}/public/signup">Sign&nbsp;Up</a></li>
                 <li class="nav-item"><a class="nav-link" href="${root}/account/myprofile.jsp">Log&nbsp;In</a></li>
 
                 <li class="dropdown user-menu">
@@ -72,7 +72,7 @@
                             </div>
 
                             <div class="pull-right">
-                                <a href="logout.php"
+                                <a href="${root}/public/logout"
                                    class="btn btn-default"><i class="fa fa-power-off"></i>&nbsp;Log Out</a>
                             </div>
                         </li>

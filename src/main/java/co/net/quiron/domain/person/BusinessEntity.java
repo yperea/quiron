@@ -1,13 +1,13 @@
 package co.net.quiron.domain.person;
 
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * This class represents a Business entity.
@@ -19,7 +19,7 @@ import java.util.Date;
 public class BusinessEntity {
 
     @Id
-    @Column(name = "EntitiID")
+    @Column(name = "EntityID")
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
     @GenericGenerator(name = "native", strategy = "native")
     private int id;

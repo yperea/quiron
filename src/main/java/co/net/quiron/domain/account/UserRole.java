@@ -1,4 +1,4 @@
-package co.net.quiron.domain.security;
+package co.net.quiron.domain.account;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;

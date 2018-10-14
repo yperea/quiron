@@ -1,13 +1,12 @@
 package co.net.quiron.application.admin;
 
 import co.net.quiron.application.shared.EntityManager;
-import co.net.quiron.domain.security.Role;
-import co.net.quiron.domain.security.User;
+import co.net.quiron.domain.account.Role;
+import co.net.quiron.domain.account.User;
 import co.net.quiron.test.util.DatabaseManager;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -19,13 +18,7 @@ import static org.junit.jupiter.api.Assertions.*;
  */
 class UserManagerTest {
 
-    /**
-     * The User manager.
-     */
     EntityManager<User> userManager;
-    /**
-     * The Role manager.
-     */
     EntityManager<Role> roleManager;
 
     /**
@@ -46,7 +39,7 @@ class UserManagerTest {
     void testGetUserById() {
         User user = userManager.get(1);
         String username = user.getUsername();
-        assertEquals("yesper", username );
+        assertEquals("yperea", username );
     }
 
     /**
@@ -55,7 +48,7 @@ class UserManagerTest {
     @Test
     void testGetAllUsers() {
         List<User> userList = userManager.getList();
-        assertEquals(2, userList.size());
+        assertEquals(3, userList.size());
     }
 
     /**
@@ -64,15 +57,15 @@ class UserManagerTest {
     @Test
     void testCreateUser() {
 
-        String newUserName = "ypereamartinez";
-        String newEmail = "ypereamartinez@madisoncollege.edu";
+        String newUserName = "jsmith";
+        String newEmail = "jsmith@aol.com";
         String newPassword = "1234";
         User newUser = new User(newUserName, newEmail, newPassword);
         User insertedUser = userManager.create(newUser);
 
         assertNotNull(insertedUser);
-        assertEquals("ypereamartinez", insertedUser.getUsername());
-        assertEquals("ypereamartinez@madisoncollege.edu", insertedUser.getEmail());
+        assertEquals("jsmith", insertedUser.getUsername());
+        assertEquals("jsmith@aol.com", insertedUser.getEmail());
         assertEquals("1234", insertedUser.getPassword());
         assertNotNull(insertedUser.getCreatedDate());
     }
@@ -165,8 +158,8 @@ class UserManagerTest {
      */
     @Test
     void testCreateUserWithOneRole() {
-        String newUserName = "ypereamartinez";
-        String newEmail = "ypereamartinez@madisoncollege.edu";
+        String newUserName = "jsmith";
+        String newEmail = "jsmith@aol.com";
         String newPassword = "1234";
 
         int userRoleId = 2; //User Role
@@ -183,8 +176,8 @@ class UserManagerTest {
         Role newRole = insertedUser.getRoles().stream().findFirst().get();
 
         assertNotNull(insertedUser);
-        assertEquals("ypereamartinez", insertedUser.getUsername());
-        assertEquals("ypereamartinez@madisoncollege.edu", insertedUser.getEmail());
+        assertEquals("jsmith", insertedUser.getUsername());
+        assertEquals("jsmith@aol.com", insertedUser.getEmail());
         assertEquals("1234", insertedUser.getPassword());
         assertNotNull(insertedUser.getCreatedDate());
         assertEquals(1,rolesAssigned);

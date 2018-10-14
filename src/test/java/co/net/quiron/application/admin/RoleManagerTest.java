@@ -1,15 +1,13 @@
 package co.net.quiron.application.admin;
 
 import co.net.quiron.application.shared.EntityManager;
-import co.net.quiron.domain.security.Role;
-import co.net.quiron.domain.security.User;
+import co.net.quiron.domain.account.Role;
+import co.net.quiron.domain.account.User;
 import co.net.quiron.test.util.DatabaseManager;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -94,6 +92,7 @@ class RoleManagerTest {
         assertNotNull(roleUpdated.getModifiedDate());
     }
 
+    //TODO: Create Test Case for Roles with children
     /**
      * Test the role deletion.
      */

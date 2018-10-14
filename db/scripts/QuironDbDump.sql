@@ -54,7 +54,7 @@ DROP TABLE IF EXISTS `PERSONS` ;
 CREATE TABLE IF NOT EXISTS `PERSONS` (
   `PersonID` INT NOT NULL,
   `PersonTypeID` INT NOT NULL,
-  `Title` NVARCHAR(8) NOT NULL COMMENT 'A courtesy title. For example, Mr. or Ms.',
+  `Title` NVARCHAR(8) NULL COMMENT 'A courtesy title. For example, Mr. or Ms.',
   `FirstName` NVARCHAR(45) NOT NULL COMMENT 'First name of the person.',
   `MiddleName` NVARCHAR(45) NULL COMMENT 'Middle name or middle initial of the person.',
   `LastName` NVARCHAR(45) NOT NULL COMMENT 'Last name of the person.',

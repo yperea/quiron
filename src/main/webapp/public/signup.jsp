@@ -18,8 +18,11 @@
 
         <div class="row justify-content-center">
             <div class="col-md-8">
-                <!--<h4 class="mb-3">Your account</h4>-->
-                <form class="needs-validation" novalidate>
+                <!--<h4 class="mb-3">Your person</h4>-->
+                <form class="needs-validation"
+                      action="${root}/public/signup"
+                      method="POST"
+                      novalidate>
                     <div class="row">
                         <div class="col-md-6 mb-3">
                             <label for="firstName">First name</label>

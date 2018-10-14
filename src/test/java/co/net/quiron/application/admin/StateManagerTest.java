@@ -39,7 +39,7 @@ class StateManagerTest {
     @Test
     void testGetAllStates() {
         List<State> stateList = stateManager.getList();
-        assertEquals(10, stateList.size());
+        assertEquals(11, stateList.size());
     }
 
     /**

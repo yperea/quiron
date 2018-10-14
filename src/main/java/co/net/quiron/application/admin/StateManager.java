@@ -2,7 +2,7 @@ package co.net.quiron.application.admin;
 
 import co.net.quiron.application.shared.EntityManager;
 import co.net.quiron.domain.admin.State;
-import co.net.quiron.persistence.shared.IAppRepository;
+import co.net.quiron.persistence.interfaces.IAppRepository;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 

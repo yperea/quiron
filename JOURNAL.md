@@ -82,7 +82,7 @@ JDBCRealm relies specifically on a user table and a user roles table that each h
   possible for class examples, I am back to the structure tomcat requires
   which meant eliminating the role and user_role tables.
 
-Regenerated the database diagrams to account for above.
+Regenerated the database diagrams to person for above.
 
 The current config is set such that anyone can view pages listed immediately
   under the web directory. The pages in the "user" directory require login

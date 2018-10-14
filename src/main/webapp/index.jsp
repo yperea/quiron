@@ -5,9 +5,10 @@
     <%@include file="shared/head.jsp"%>
 </head>
 
-<body>
+<body class="bg-light">
     <!-- Navigation -->
     <%@include file="shared/topbar.jsp" %>
+
     <header>
         <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
             <ol class="carousel-indicators">
@@ -138,6 +139,7 @@
         <!-- /END THE FEATURETTES -->
 
     </div><!-- /.container -->
+    <%@include file="shared/cdn-jss.jsp"%>
     <%@include file="shared/footer.jsp"%>
 </body>
 </html>
