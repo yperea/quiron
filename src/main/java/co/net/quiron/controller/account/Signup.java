@@ -1,7 +1,6 @@
 package co.net.quiron.controller.account;
 
-import co.net.quiron.application.admin.UserManager;
-import co.net.quiron.application.util.FormManager;
+import co.net.quiron.application.account.AccountManager;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.http.HttpServlet;
@@ -12,8 +11,6 @@ import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 @WebServlet(
         name="signup",
@@ -33,76 +30,60 @@ public class Signup extends HttpServlet {
         RequestDispatcher dispatcher = request.getRequestDispatcher(url);
         dispatcher.forward(request, response);
 
-        //response.sendRedirect("employee-add");
     }
 
     @Override
     protected void doPost(HttpServletRequest request,
                           HttpServletResponse response) throws ServletException, IOException {
 
-        String url = "/account/myprofile.jsp";
-        String title = "My Profile";
-        FormManager formManager = new FormManager();
+        String url = "/public/signup";
+        String title = "Sign Up";
+
+        boolean successfullSignup = false;
+        int userTypeId = 3; //Patient
+        int roleId = 2; //User
+
+        AccountManager accountManager;
+
         HttpSession session = request.getSession();
-        List<String> requiredFields = getRequiredFields();
         request.setAttribute("title", title);
 
+        if ((request.getParameter("firstName") != null || !request.getParameter("firstName").isEmpty() )
+            && (request.getParameter("lastName") != null || !request.getParameter("lastName").isEmpty())
+            && (request.getParameter("userName") != null || !request.getParameter("lastName").isEmpty())
+            && (request.getParameter("email") != null || !request.getParameter("email").isEmpty())
+            && (request.getParameter("password") != null || !request.getParameter("password").isEmpty())
+            && (request.getParameter("confirmation") != null || !request.getParameter("confirmation").isEmpty())) {
 
 
-        String firstName = formManager.getValue(request.getParameter("firstName"));
-        String lastName = formManager.getValue(request.getParameter("lastName"));
-        String ssn = formManager.getValue(request.getParameter("ssn"));
-        String department = formManager.getValue(request.getParameter("department"));
-        String room = formManager.getValue(request.getParameter("room"));
-        String phone = formManager.getValue(request.getParameter("phone"));
+            String firstName = request.getParameter("firstName");
+            String lastName = request.getParameter("lastName");
+            String userName = request.getParameter("userName");
+            String email = request.getParameter("email");
+            String password = request.getParameter("password");
+            String confirmation = request.getParameter("confirmation");
 
-        if (formManager.validForm(request, requiredFields)) {
+            accountManager =  new AccountManager();
+            successfullSignup = accountManager.signup(userTypeId, roleId, firstName, lastName, userName, email, password, confirmation);
+            session.setAttribute("account", accountManager);
 
-            UserManager userManager = new UserManager();
-
-           // String resultMessage = directory.addEmployee(firstName, lastName, ssn, department, room, phone);
-           //session.setAttribute("project4AddMessage", resultMessage);
-
-            // Redirect to Add Employee page
-            response.sendRedirect("/public/signup");
-
-        } else {
-
-            String urlContent = "jsp/employeeAdd.jsp";
-            String pageTitle = "Add Employee";
-
-            // Content page attributes
-            request.setAttribute("contentPage", urlContent);
-            request.setAttribute("pageTitle", pageTitle);
-
-            // Form attributes
-            request.setAttribute("firstName", firstName);
-            request.setAttribute("lastName", lastName);
-            request.setAttribute("ssn", ssn);
-            request.setAttribute("department", department);
-            request.setAttribute("room", room);
-            request.setAttribute("phone", phone);
-            request.setAttribute("errorDataEntry", true);
-
-            // Forwarding
-            RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(url);
-            dispatcher.forward(request, response);
         }
 
-    }
+        if (successfullSignup) {
+            response.sendRedirect("/quiron/account/myprofile.jsp");
+        } else {
+            request.setAttribute("firstName", request.getParameter("firstName"));
+            request.setAttribute("lastName", request.getParameter("lastName"));
+            request.setAttribute("userName", request.getParameter("userName"));
+            request.setAttribute("email", request.getParameter("email"));
 
-    /**
-     * Returns a list with the required form fields to validate.
-     *
-     * @return List of required fields.
-     */
-    private List<String> getRequiredFields() {
+/*
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/public/signup.jsp");
+            dispatcher.forward(request, response);
+*/
 
-        List<String> requiredFields = new ArrayList<>();
-        requiredFields.add("firstName");
-        requiredFields.add("lastName");
-        requiredFields.add("ssn");
+            response.sendRedirect("/public/signup");
 
-        return requiredFields;
+        }
     }
 }

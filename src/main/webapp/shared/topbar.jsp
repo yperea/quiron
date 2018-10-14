@@ -59,7 +59,7 @@
                             <img alt="Profile Picture"
                                  class="img-circle"
                                  src="${root}/style/img/male.jpg" />
-                            <p>Yesid Perea
+                            <p>${account.person.firstName} - Yesid Perea
                                 <small>(yperea)</small>
                             </p>
                         </li>

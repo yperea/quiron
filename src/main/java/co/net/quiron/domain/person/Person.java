@@ -1,5 +1,6 @@
 package co.net.quiron.domain.person;
 
+import co.net.quiron.domain.account.User;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -7,6 +8,8 @@ import org.hibernate.annotations.UpdateTimestamp;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 @Data
 @NoArgsConstructor
@@ -30,7 +33,22 @@ public class Person implements Serializable {
     @Column(name = "PersonTypeID")
     private int type;
 
-    @NonNull
+    /*
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
+    @ManyToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "PERSON_USERS",
+            joinColumns = {@JoinColumn(name = "PersonID")},
+            inverseJoinColumns = {@JoinColumn(name = "UserID")})
+    private Set<Person> users = new HashSet<>();
+    */
+
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
+    @ManyToMany(mappedBy = "persons")
+    private Set<User> users = new HashSet<>();
+
     @Column(name = "Title")
     private String title;
 

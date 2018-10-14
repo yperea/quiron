@@ -1,5 +1,6 @@
 package co.net.quiron.domain.account;
 
+import co.net.quiron.domain.person.Person;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.GenericGenerator;
@@ -50,6 +51,24 @@ public class User {
     private Set<Role> roles = new HashSet<>();
 
 
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
+    @ManyToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "PERSON_USERS",
+            joinColumns = {@JoinColumn(name = "UserID")},
+            inverseJoinColumns = {@JoinColumn(name = "PersonID")})
+    private Set<Person> persons = new HashSet<>();
+
+
+/*
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
+    @ManyToMany(mappedBy = "users")
+    private Set<Person> persons = new HashSet<>();
+*/
+
+
     @CreationTimestamp
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "CreatedDate")
@@ -79,4 +98,23 @@ public class User {
     public void removeRole(Role role) {
         roles.remove(role);
     }
+
+    /**
+     * Add a person to the collection.
+     *
+     * @param person the person
+     */
+    public void addPerson(Person person) {
+        persons.add(person);
+    }
+
+    /**
+     * Remove a person from the collection.
+     *
+     * @param person the person
+     */
+    public void removePerson(Person person) {
+        persons.remove(person);
+    }
+
 }

@@ -156,7 +156,8 @@
         </div>
     </main>
 
-<%@include file="../shared/footer.jsp"%>
+    <%@include file="../shared/cdn-jss.jsp"%>
+    <%@include file="../shared/footer.jsp"%>
 
 </body>
 </html>

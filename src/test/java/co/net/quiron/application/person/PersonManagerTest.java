@@ -43,7 +43,7 @@ class PersonManagerTest {
         BusinessEntity newEntity = new BusinessEntity();
         BusinessEntity insertedEntity = businessEntityManager.create(newEntity);
 
-        Person person = new Person(3, "Mr.", "John", "Smith");
+        Person person = new Person(3, "John", "Smith");
         person.setEntity(insertedEntity);
 
         Person insertedPerson = personManager.create(person);

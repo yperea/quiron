@@ -20,10 +20,8 @@ INSERT INTO ROLES (RoleName, Description) VALUES('Administrator', 'System admini
 INSERT INTO ROLES (RoleName, Description) VALUES('User', 'System user');
 INSERT INTO USERS(Username, Email, Password ) VALUES ('yperea', 'ypereamartinez@madisoncollege.edu', '1234');
 INSERT INTO USERS(Username, Email, Password ) VALUES ('clacar', 'clacar@aol.com', '4567');
-INSERT INTO USERS(Username, Email, Password ) VALUES ('admin', 'yesid.perea@outlook.com', '1234');
 INSERT INTO USERS_ROLES(UserID, RoleID) VALUES (1,1);
 INSERT INTO USERS_ROLES(UserID, RoleID) VALUES (2,2);
-INSERT INTO USERS_ROLES(UserID, RoleID) VALUES (3,1);
 INSERT INTO ENTITIES (CreatedDate) VALUES (CURRENT_TIMESTAMP);
 INSERT INTO ENTITIES (CreatedDate) VALUES (CURRENT_TIMESTAMP);
 INSERT INTO PERSON_TYPES(PersonTypeName) VALUES("Employee");

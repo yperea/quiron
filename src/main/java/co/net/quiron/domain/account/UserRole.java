@@ -13,10 +13,14 @@ import java.util.Date;
 @Entity(name = "UserRole")
 @Table(name = "USERS_ROLES")
 @Data
-@NoArgsConstructor
-@RequiredArgsConstructor
-public class UserRole implements Serializable {
+//@NoArgsConstructor
+//@RequiredArgsConstructor
+public class UserRole  {
 
+    @EmbeddedId
+    private UserRoleId id;
+
+    /*
     @Id
     @ManyToOne
     @NonNull
@@ -28,7 +32,7 @@ public class UserRole implements Serializable {
     @NonNull
     @JoinColumn(name = "RoleName")
     private Role role;
-
+    */
 /*
     private String roleName;
 

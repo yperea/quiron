@@ -26,14 +26,26 @@
                     <div class="row">
                         <div class="col-md-6 mb-3">
                             <label for="firstName">First name</label>
-                            <input type="text" class="form-control" id="firstName" placeholder="" value="" required>
+                            <input type="text"
+                                   class="form-control"
+                                   id="firstName"
+                                   name="firstName"
+                                   placeholder=""
+                                   value="${firstName}"
+                                   required />
                             <div class="invalid-feedback">
                                 Valid first name is required.
                             </div>
                         </div>
                         <div class="col-md-6 mb-3">
                             <label for="lastName">Last name</label>
-                            <input type="text" class="form-control" id="lastName" placeholder="" value="" required>
+                            <input type="text"
+                                   class="form-control"
+                                   id="lastName"
+                                   name="lastName"
+                                   placeholder=""
+                                   value="${lastName}"
+                                   required />
                             <div class="invalid-feedback">
                                 Valid last name is required.
                             </div>
@@ -41,8 +53,14 @@
                     </div>
 
                     <div class="mb-3">
-                        <label for="username">Username <span class="text-muted"></span></label>
-                        <input type="username" class="form-control" id="username" placeholder="Username" required>
+                        <label for="userName">Username <span class="text-muted"></span></label>
+                        <input type="text"
+                               class="form-control"
+                               id="userName"
+                               name="userName"
+                               placeholder="Username"
+                               value="${userName}"
+                               required />
                         <div class="invalid-feedback">
                             Your username is required.
                         </div>
@@ -54,7 +72,13 @@
                             <div class="input-group-prepend">
                                 <span class="input-group-text">@</span>
                             </div>
-                            <input type="email" class="form-control" id="email" placeholder="you@example.com" required>
+                            <input type="email"
+                                   class="form-control"
+                                   id="email"
+                                   name="email"
+                                   placeholder="you@example.com"
+                                   value="${email}"
+                                   required />
                             <div class="invalid-feedback" style="width: 100%;">
                                 Please enter a valid email address.
                             </div>
@@ -64,14 +88,26 @@
                     <div class="row">
                         <div class="col-md-6 mb-3">
                             <label for="password">Password</label>
-                            <input type="password" class="form-control" id="password" placeholder="" value="" required>
+                            <input type="password"
+                                   class="form-control"
+                                   id="password"
+                                   name="password"
+                                   placeholder=""
+                                   value=""
+                                   required />
                             <div class="invalid-feedback">
                                 Valid password is required.
                             </div>
                         </div>
                         <div class="col-md-6 mb-3">
-                            <label for="password2">Confirmation</label>
-                            <input type="password" class="form-control" id="password2" placeholder="Password Confirmation" value="" required>
+                            <label for="confirmation">Confirmation</label>
+                            <input type="confirmation"
+                                   class="form-control"
+                                   id="confirmation"
+                                   name="confirmation"
+                                   placeholder="Password Confirmation"
+                                   value=""
+                                   required />
                             <div class="invalid-feedback">
                                 Valid password is required.
                             </div>
