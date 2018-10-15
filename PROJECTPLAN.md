@@ -18,23 +18,22 @@
 
 ### Week 4 Checkpoint 1
 - [ ] Create document application flow.
-- [ ] Determine possible Web Services or APIs to use.
-- [ ] Create the database and user table.
 - [ ] Create the objects and entities for hibernate.
 - [ ] Start Professional Development Presentation.
 - [ ] Set up logging for project.
 
 ### Week 5
-- [ ] Create class uml diagram.
+- [ ] Create class uml diagram.*
 - [ ] Create templates for jsps using bootstrap.
-- [ ] Create tables for patients, providers, visits and treatments.
-- [ ] Create scripts to populate support tables.
+- [ ] Create database.
+- [ ] Create scripts to populate support tables.*
 
 ### Week 6
-- [ ] Create authentication process for patients and providers.
-- [ ] Build Sign Up process for patients.
+- [ ] Create authentication process for patients and providers(-).
+- [ ] Build SignUp, SignIn and Logout process for patients (+).
 - [ ] Create db on AWS.
 - [ ] Deploy to AWS for first time.
+- [ ] Determine possible Web Services or APIs to use.
 - [ ] Prepare for Checkpoint 2: Database designed and created, at least one DAO implemented with Hibernate, DAO is unit tested, Log4J is implemented (no System.out.printlns), class design and any other diagrams you plan to use have been created.
 
 ### Week 7 Checkpoint 2
@@ -42,13 +41,13 @@
 - [ ] Set up authentication locally.
 - [ ] Set up authentication on AWS.
 - [ ] Review and incorporate any feedback from Checkpoint 2.
-- [ ] Build crud jsps for Patient Account.
+- [ ] Build crud jsps for Patient Account.*
 - [ ] Prepare Professional Development Presentation.
 
 ### Week 8 AWS CI Presentation
-- [ ] Build visit schedule jsps?.
 - [ ] Build visits and treatment tracking jsps for Patients and Providers views.
 - [ ] Prepare for Checkpoint 3: Deployed to AWS, at least one JSP that displays data from the database is implemented.
+- [ ] Implement Hibernate Validator (?)
 
 ### Week 9 Checkpoint 3
 - [ ] Review and incorporate feedback from Checkpoint 3.

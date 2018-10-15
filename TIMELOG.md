@@ -31,4 +31,11 @@
 | 10/07/18| Working on the web template for Individual Project. | 10 | |
 | 10/08/18| Working on Individual Project: Designing Security Model | 2 | |
 | 10/09/18| Working on Individual Project: Implementing Security Model and ManytoMany Relationship with Hibernate| 4 | |
+| 10/10/18| Peer Review 1| 3 | |
+| 10/11/18| Working on Individual Project: Implementing JDBC Realm Authentication in Project Quiron.<br>Going back to the original state of ManyToMany implementation for Users and Roles. | 10 | Now I'm using a VIEW to get the user_name and role_name without violating 1NF of my USERS_ROLES table but apparently something is happening because Tomcat cannot access that view.<br>-Bug 2: Retrieving no roles for the user: GenericPrincipal[yperea()]<br>Solution: Grant tomcat user access to the VIEW. Seems pretty obvious now after 10h of work!! :(|
+| 10/12/18| Implementing Look & Feel and Navigation to the web site.| 3 | |
+| 10/12/18| Working on Week 7 exercise | 1 | |
+| 10/12/18| Working on Individual Project: Implementing Account Signup.| 6 | |
+| 10/13/18| Working on Individual Project: Implementing Account Signup| 4 | |
+
 
