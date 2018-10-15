@@ -7,6 +7,11 @@ import org.apache.logging.log4j.Logger;
 
 import java.util.List;
 
+/**
+ * The type Entity manager.
+ *
+ * @param <T> the type parameter
+ */
 public abstract class EntityManager<T> {
 
     private final Logger logger = LogManager.getLogger(this.getClass());
@@ -14,6 +19,8 @@ public abstract class EntityManager<T> {
 
     /**
      * Instantiates a new Entities manager.
+     *
+     * @param entityType the entity type
      */
     public EntityManager(Class<T> entityType) {
         entityRepository = new AppRepository<>(entityType);
@@ -30,6 +37,38 @@ public abstract class EntityManager<T> {
 
         logger.debug("getList(): Returning list of Entities.");
         logger.trace("getList(): Returning " + entities);
+
+        return entities;
+    }
+
+    /**
+     * Gets the list of all of the Entities which property is equals to the value.
+     *
+     * @param propertyName the property name
+     * @param value        the value
+     * @return the list
+     */
+    public List<T> getListEquals(String propertyName, String value){
+        List<T> entities = entityRepository.getByPropertyEqual(propertyName, value);
+
+        logger.debug("getListEquals(): Returning list of Entities.");
+        logger.trace("getListEquals(): Returning " + entities);
+
+        return entities;
+    }
+
+    /**
+     * Gets the list of all of the Entities which property contains the value.
+     *
+     * @param propertyName the property name
+     * @param value        the value
+     * @return the list
+     */
+    public List<T> getListContains(String propertyName, String value){
+        List<T> entities = entityRepository.getByPropertyLike(propertyName, value);
+
+        logger.debug("getListContains(): Returning list of Entities.");
+        logger.trace("getListContains(): Returning " + entities);
 
         return entities;
     }

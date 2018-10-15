@@ -9,6 +9,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
+/**
+ * Logout Controller.
+ */
 @WebServlet(
         name = "logout",
         urlPatterns = {"/public/logout"}
@@ -19,12 +22,11 @@ public class Logout extends HttpServlet {
     protected void doGet(HttpServletRequest request,
                HttpServletResponse response) throws ServletException, IOException {
 
-        String url = "/public/signin";
+        String url = "/quiron/";
 
         HttpSession session = request.getSession();
         session.invalidate();
 
-        RequestDispatcher dispatcher = request.getRequestDispatcher(url);
-        dispatcher.forward(request, response);
+        response.sendRedirect(url);
     }
 }

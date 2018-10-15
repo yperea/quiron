@@ -6,7 +6,6 @@ import javax.servlet.RequestDispatcher;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpSession;
@@ -70,7 +69,7 @@ public class Signup extends HttpServlet {
         }
 
         if (successfullSignup) {
-            response.sendRedirect("/quiron/account/myprofile.jsp");
+            response.sendRedirect("/quiron/patient/profile");
         } else {
             request.setAttribute("firstName", request.getParameter("firstName"));
             request.setAttribute("lastName", request.getParameter("lastName"));

@@ -3,7 +3,7 @@
     <div class="container">
 
         <a class="navbar-brand nav-link" href="${root}">
-            <img src="${root}/style/img/QuironLogo360x140.png" class="my-logo"/>
+            <img src="${root}/style/img/QuironLogo140.png" class="my-logo"/>
         </a>
 
         <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
@@ -30,12 +30,7 @@
             -->
             <!-- Right menu navigation bar -->
             <ul class="navbar-nav ml-auto">
-                <li class="nav-item">
-                    <a class="nav-link" href="dashboard-admin.jsp">Dashboard</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="dashboard.jsp">My Account</a>
-                </li>
+                <!--
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownBlog" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         Blog
@@ -46,38 +41,47 @@
                         <a class="dropdown-item" href="#">Blog Post</a>
                     </div>
                 </li>
-                <li class="nav-item"><a class="nav-link" href="${root}/public/signup">Sign&nbsp;Up</a></li>
-                <li class="nav-item"><a class="nav-link" href="${root}/account/myprofile.jsp">Log&nbsp;In</a></li>
+                -->
 
-                <li class="dropdown user-menu">
-                    <a class="nav-link" href="#" class="dropdown-toggle" data-toggle="dropdown">
-                        <img alt="Profile Picture" class="user-image" src="${root}/style/img/male.jpg" />
-                        &nbsp;<span class="hidden-xs"></span>
-                    </a>
-                    <ul class="dropdown-menu">
-                        <li class="my-user-header">
-                            <img alt="Profile Picture"
-                                 class="img-circle"
-                                 src="${root}/style/img/male.jpg" />
-                            <p>${account.person.firstName} - Yesid Perea
-                                <small>(yperea)</small>
-                            </p>
+                <c:choose>
+                    <c:when test="${account.signed != null}" >
+                        <li class="dropdown user-menu">
+                            <a class="nav-link" href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                <img alt="Profile Picture" class="user-image" src="${root}/style/img/male.jpg" />
+                                &nbsp;<span class="hidden-xs"></span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li class="my-user-header">
+                                    <img alt="Profile Picture"
+                                         class="img-circle"
+                                         src="${root}/style/img/male.jpg" />
+                                    <p>
+                                        ${account.person.firstName} ${account.person.lastName}
+                                        <br/><small>(${account.user.username})</small>
+                                    </p>
+                                </li>
+
+                                <li class="my-user-footer">
+
+                                    <div class="pull-left">
+                                        <a href="profile.php"
+                                           class="btn btn-default"><i class="fa fa-user"></i>&nbsp;Profile</a>
+                                    </div>
+
+                                    <div class="pull-right">
+                                        <a href="${root}/public/logout"
+                                           class="btn btn-default"><i class="fa fa-power-off"></i>&nbsp;Log Out</a>
+                                    </div>
+                                </li>
+                            </ul>
                         </li>
+                    </c:when>
 
-                        <li class="my-user-footer">
-
-                            <div class="pull-left">
-                                <a href="profile.php"
-                                   class="btn btn-default"><i class="fa fa-user"></i>&nbsp;Profile</a>
-                            </div>
-
-                            <div class="pull-right">
-                                <a href="${root}/public/logout"
-                                   class="btn btn-default"><i class="fa fa-power-off"></i>&nbsp;Log Out</a>
-                            </div>
-                        </li>
-                    </ul>
-                </li>
+                    <c:otherwise>
+                        <li class="nav-item"><a class="nav-link" href="${root}/public/signup">Sign&nbsp;Up</a></li>
+                        <li class="nav-item"><a class="nav-link" href="${root}/patient/profile">Log&nbsp;In</a></li>
+                    </c:otherwise>
+                </c:choose>
 
             </ul>
 

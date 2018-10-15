@@ -25,22 +25,21 @@ public class AppRepository<T> implements IAppRepository<T> {
         entityDAO = new EntityDAO<>(entityType);
     }
 
-    /**
-     * Gets all the records
-     *
-     * @return the all entities
-     */
     @Override
     public List<T> getAll() {
         return entityDAO.getAll();
     }
 
-    /**
-     * Gets an entity by id
-     *
-     * @param id  entity id to search by
-     * @return entity by id
-     */
+    @Override
+    public List<T> getByPropertyEqual(String propertyName, String value) {
+        return entityDAO.getByPropertyEqual(propertyName, value);
+    }
+
+    @Override
+    public List<T> getByPropertyLike(String propertyName, String value) {
+        return entityDAO.getByPropertyLike(propertyName, value);
+    }
+
     @Override
     public T get(int id) {
         return entityDAO.getById(id);
@@ -61,13 +60,6 @@ public class AppRepository<T> implements IAppRepository<T> {
         return i;
     }*/
 
-    /**
-     * Creates an BusinessEntity in the database
-     *
-     * @param entity entity to be inserted or updated
-     * @return the inserted record
-     */
-
     @Override
     public T create(T entity) {
         int i = entityDAO.insert(entity);
@@ -83,22 +75,12 @@ public class AppRepository<T> implements IAppRepository<T> {
     }
 */
 
-    /**
-     * Updates an BusinessEntity
-     *
-     * @param entity BusinessEntity to be inserted or updated
-     */
     @Override
     public void update(T entity) {
         entityDAO.update(entity);
         entityDAO.saveChanges();
     }
 
-    /**
-     * Deletes an entity.
-     *
-     * @param entity entity to be deleted
-     */
     @Override
     public void delete(T entity) {
         entityDAO.delete(entity);

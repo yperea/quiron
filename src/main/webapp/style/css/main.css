@@ -131,5 +131,18 @@ footer {
 }
 
 .pull-right {
-    float: right;
+    float: right!important;
+}
+
+.pull-left {
+    float: left!important;
+}
+
+.fixed-top {
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+    z-index: 1030;
+    border-bottom: 1px solid #d2d6da;
 }

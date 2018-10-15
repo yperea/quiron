@@ -46,6 +46,45 @@ public class EntityDAO<T> {
     }
 
     /**
+     * Get objects by property (exact match)
+     * sample usage: getByPropertyEqual("lastname", "Curry")
+     */
+    public List<T> getByPropertyEqual(String propertyName, String value) {
+        session = getSession();
+
+        CriteriaBuilder builder = session.getCriteriaBuilder();
+        CriteriaQuery<T> query = builder.createQuery(type);
+        Root<T> root = query.from(type);
+        query.select(root).where(builder.equal(root.get(propertyName), value));
+        List<T> list = session.createQuery( query ).getResultList();
+        session.close();
+
+        logger.debug("Searching for {} with {} = {}", type.getName(), propertyName, value);
+        return list;
+    }
+
+    /**
+     * Get objects by property (like)
+     * sample usage: getByPropertyLike("lastname", "C")
+     */
+    public List<T> getByPropertyLike(String propertyName, String value) {
+        session = getSession();
+
+        CriteriaBuilder builder = session.getCriteriaBuilder();
+        CriteriaQuery<T> query = builder.createQuery(type);
+        Root<T> root = query.from(type);
+        Expression<String> propertyPath = root.get(propertyName);
+
+        query.where(builder.like(propertyPath, "%" + value + "%"));
+        List<T> list = session.createQuery( query ).getResultList();
+        session.close();
+
+        logger.debug("Searching for {} with {} like {}", type.getName(), propertyName, value);
+        return list;
+    }
+
+
+    /**
      * Gets an entity by id
      *
      * @param id  entity id to search by

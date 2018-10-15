@@ -28,7 +28,7 @@ body {
   bottom: 0;
   left: 0;
   z-index: 100; /* Behind the navbar */
-  padding: 48px 0 0; /* Height of navbar */
+  padding: 80px 0 0; /* Height of navbar */
   box-shadow: inset -1px 0 0 rgba(0, 0, 0, .1);
 }
 
@@ -96,9 +96,28 @@ body {
 
 .form-control {
   padding: .75rem 1rem;
-  border-width: 0;
-  border-radius: 0;
+  /*border-width: 0;*/
+  border-radius: .25rem;
+  border: 1px solid #d2d6da;
+  background-color: #f1f6fb;
 }
+/*
+.form-control {
+  display: block;
+  width: 100%;
+  height: calc(2.25rem + 2px);
+  padding: .375rem .75rem;
+  font-size: 1rem;
+  line-height: 1.5;
+  color: #495057;
+  background-color: #fff;
+  background-clip: padding-box;
+  border: 1px solid #ced4da;
+  /* border-radius: .25rem;
+  transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}
+*/
+
 
 
 .form-control-dark {

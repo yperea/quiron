@@ -18,6 +18,18 @@ public interface IAppRepository<T> {
     List<T> getAll();
 
     /**
+     * Get a collection of entities by property (exact match)
+     * sample usage: getByPropertyEqual("lastname", "Curry")
+     */
+    List<T> getByPropertyEqual(String propertyName, String value);
+
+    /**
+     * Get a collection of entities by property (like)
+     * sample usage: getByPropertyLike("lastname", "C")
+     */
+    List<T> getByPropertyLike(String propertyName, String value);
+
+    /**
      * Gets an entity.
      *
      * @param id the id

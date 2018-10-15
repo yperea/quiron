@@ -52,6 +52,7 @@ class UserManagerTest {
         assertEquals("yperea", username );
     }
 
+
     /**
      * Test the get all users.
      */
@@ -60,6 +61,29 @@ class UserManagerTest {
         List<User> userList = userManager.getList();
         assertEquals(3, userList.size());
     }
+
+    /**
+     * Test the get all users by property.
+     */
+    @Test
+    void testGetUsersEquals() {
+
+        String username = "yesper";
+        List<User> userList = userManager.getListEquals("username", username);
+        assertEquals(1, userList.size());
+    }
+
+    /**
+     * Test the get all users by Username.
+     */
+    @Test
+    void testGetUsersLike() {
+
+        String username = "r";
+        List<User> userList = userManager.getListContains("username", username);
+        assertEquals(2, userList.size());
+    }
+
 
     /**
      * Test the user creation.

@@ -19,30 +19,30 @@
 
             <div class="carousel-inner" role="listbox">
                 <!-- Slide One - Set the background image for this slide in the line below -->
-                <div class="carousel-item active" style="background-image: url('style/img/slide-background01.jpg')">
+                <div class="carousel-item active" style="background-image: url('style/img/slide-background14.jpg')">
                     <div class="container">
                         <div class="carousel-caption text-left">
-                            <h1>Example headline.</h1>
-                            <p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
-                            <p><a class="btn btn-lg btn-primary" href="#" role="button">Sign up today</a></p>
+                            <h1>Project Quiron.</h1>
+                            <p>Caring and Learning.</p>
+                            <p><a class="btn btn-lg btn-primary" href="/public/signup" role="button">Sign up today</a></p>
                         </div>
                     </div>
                 </div>
                 <!-- Slide Two - Set the background image for this slide in the line below -->
-                <div class="carousel-item" style="background-image: url('style/img/slide-background07.jpg')">
+                <div class="carousel-item" style="background-image: url('style/img/call-background.jpg')">
                     <div class="carousel-caption">
-                        <h1>Another example headline.</h1>
+                        <h1>Get Involved.</h1>
                         <p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
                         <p><a class="btn btn-lg btn-primary" href="#" role="button">Learn more</a></p>
                     </div>
                 </div>
                 <!-- Slide Three - Set the background image for this slide in the line below -->
-                <div class="carousel-item" style="background-image: url('style/img/slide-background08.jpg')">
+                <div class="carousel-item" style="background-image: url('style/img/slide-background11.jpg')">
                     <div class="container">
                         <div class="carousel-caption text-right">
                             <h1>One more for good measure.</h1>
                             <p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
-                            <p><a class="btn btn-lg btn-primary" href="#" role="button">Browse gallery</a></p>
+                            <p><a class="btn btn-lg btn-primary" href="/public/signup" role="button">Sign up today</a></p>
                         </div>
                     </div>
                 </div>

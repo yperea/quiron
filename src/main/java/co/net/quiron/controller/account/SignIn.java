@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
- * Controller for the Country model.
+ * Sign In Controller.
  */
 @WebServlet (
         name="signin",
@@ -25,8 +25,19 @@ public class SignIn extends HttpServlet {
         String title = "Sign In";
 
         request.setAttribute("title", title);
+        //response.sendRedirect("/quiron/patient/profile");
+
         RequestDispatcher dispatcher = request.getRequestDispatcher(url);
         dispatcher.forward(request, response);
 
+
+    }
+
+    @Override
+    protected void doPost(HttpServletRequest request,
+                          HttpServletResponse response) throws ServletException, IOException {
+
+        String url = "/public/signin";
+        String title = "Sign In";
     }
 }
