@@ -1,7 +1,7 @@
 # Project Quiron
 
 ### Problem Statement
-Although health sector is traditionally a conservative and slow-adapting industry, there is an increasing volume of new tools providing new alternatives to provide medical care to patients in very innovative ways, such as web platforms where video-on-demand visits can be made with a variety of physicians, therapists, specialists and health professionals in general. For instance, websites like [amwell.com][www.amwell.com] or [livehealthonline.com][livehealthonline.com].
+Although health sector is traditionally a conservative and slow-adapting industry, there is an increasing volume of new tools providing new alternatives to provide medical care to patients in very innovative ways, such as web platforms where video-on-demand visits can be made with a variety of physicians, therapists, specialists and health professionals in general. For instance, websites like [amwell.com](www.amwell.com) or [livehealthonline.com](www.livehealthonline.com).
 
 However, if these types of tools serve as an excellent way to provide wider access to medical care, sometimes we would like to know what happens next ... after the visit is over.
 
