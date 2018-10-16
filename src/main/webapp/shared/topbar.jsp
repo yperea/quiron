@@ -64,12 +64,12 @@
                                 <li class="my-user-footer">
 
                                     <div class="pull-left">
-                                        <a href="profile.php"
+                                        <a href="${root}/patient/profile"
                                            class="btn btn-default"><i class="fa fa-user"></i>&nbsp;Profile</a>
                                     </div>
 
                                     <div class="pull-right">
-                                        <a href="${root}/public/logout"
+                                        <a href="${root}/account/logout"
                                            class="btn btn-default"><i class="fa fa-power-off"></i>&nbsp;Log Out</a>
                                     </div>
                                 </li>
@@ -78,7 +78,7 @@
                     </c:when>
 
                     <c:otherwise>
-                        <li class="nav-item"><a class="nav-link" href="${root}/public/signup">Sign&nbsp;Up</a></li>
+                        <li class="nav-item"><a class="nav-link" href="${root}/account/signup">Sign&nbsp;Up</a></li>
                         <li class="nav-item"><a class="nav-link" href="${root}/patient/profile">Log&nbsp;In</a></li>
                     </c:otherwise>
                 </c:choose>

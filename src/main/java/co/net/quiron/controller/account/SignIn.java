@@ -13,7 +13,7 @@ import java.io.IOException;
  */
 @WebServlet (
         name="signin",
-        urlPatterns = {"/public/signin" }
+        urlPatterns = {"/account/signin" }
 )
 public class SignIn extends HttpServlet {
 
@@ -21,7 +21,7 @@ public class SignIn extends HttpServlet {
     protected void doGet (HttpServletRequest request,
                           HttpServletResponse response) throws ServletException, IOException {
 
-        String url = "/public/signin.jsp";
+        String url = "/account/signin.jsp";
         String title = "Sign In";
 
         request.setAttribute("title", title);
@@ -37,7 +37,7 @@ public class SignIn extends HttpServlet {
     protected void doPost(HttpServletRequest request,
                           HttpServletResponse response) throws ServletException, IOException {
 
-        String url = "/public/signin";
+        String url = "/account/signin";
         String title = "Sign In";
     }
 }

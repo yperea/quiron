@@ -9,7 +9,7 @@
   <login-config>
     <auth-method>FORM</auth-method>
     <form-login-config>
-      <form-login-page>/public/signin</form-login-page>
+      <form-login-page>/account/signin</form-login-page>
       <form-error-page>/accessdenied.jsp</form-error-page>
     </form-login-config>
   </login-config>
@@ -27,7 +27,7 @@
   <security-constraint>
     <web-resource-collection>
       <web-resource-name>Account</web-resource-name>
-      <url-pattern>/account/*</url-pattern>
+      <url-pattern>/account/logout</url-pattern>
     </web-resource-collection>
     <auth-constraint>
       <role-name>Administrator</role-name>
