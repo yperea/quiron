@@ -1,5 +1,7 @@
-package co.net.quiron.application.admin;
+package co.net.quiron.application.account;
 
+import co.net.quiron.application.account.RoleManager;
+import co.net.quiron.application.account.UserManager;
 import co.net.quiron.application.person.BusinessEntityManager;
 import co.net.quiron.application.person.PersonManager;
 import co.net.quiron.application.shared.EntityManager;
@@ -49,7 +51,7 @@ class UserManagerTest {
     void testGetUserById() {
         User user = userManager.get(1);
         String username = user.getUsername();
-        assertEquals("yperea", username );
+        assertEquals("yesper", username );
     }
 
 
@@ -59,7 +61,7 @@ class UserManagerTest {
     @Test
     void testGetAllUsers() {
         List<User> userList = userManager.getList();
-        assertEquals(3, userList.size());
+        assertEquals(2, userList.size());
     }
 
     /**

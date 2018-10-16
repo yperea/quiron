@@ -1,7 +1,5 @@
 package co.net.quiron.application.account;
 
-import co.net.quiron.application.admin.RoleManager;
-import co.net.quiron.application.admin.UserManager;
 import co.net.quiron.application.person.PersonManager;
 import co.net.quiron.application.shared.EntityManager;
 import co.net.quiron.domain.account.Role;
@@ -56,11 +54,8 @@ class AccountManagerTest {
 
         User user = userManager.get(3);
         Role role = roleManager.get(roleId);
-
         Person person = user.getPersons().stream().findFirst().get();
         Role userRole = user.getRoles().stream().findFirst().get();
-
-
 
         assertTrue(isSignedUp);
         assertEquals(userName, user.getUsername());
@@ -68,6 +63,23 @@ class AccountManagerTest {
         assertEquals(user, accountManager.getUser());
         assertEquals(person, accountManager.getPerson());
         assertEquals(role, userRole);
+    }
 
+    /**
+     * Test Load user account.
+     */
+    @Test
+    void loadUserAccount() {
+        String userName = "yesper";
+        accountManager.loadUserAccount(userName);
+
+        User user = userManager.get(1);
+        Person person = personManager.get(1);
+
+        User userAccount = accountManager.getUser();
+        Person userProfile = accountManager.getPerson();
+
+        assertEquals(user, userAccount);
+        assertEquals(person, userProfile);
     }
 }

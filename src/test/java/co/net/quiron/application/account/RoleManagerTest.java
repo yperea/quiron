@@ -1,5 +1,7 @@
-package co.net.quiron.application.admin;
+package co.net.quiron.application.account;
 
+import co.net.quiron.application.account.RoleManager;
+import co.net.quiron.application.account.UserManager;
 import co.net.quiron.application.shared.EntityManager;
 import co.net.quiron.domain.account.Role;
 import co.net.quiron.domain.account.User;
