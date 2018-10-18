@@ -3,7 +3,7 @@
 <Context docBase="quiron" path="/quiron" reloadable="true">
     <Realm className="org.apache.catalina.realm.JDBCRealm"
            driverName="com.mysql.jdbc.Driver"
-           connectionURL="jdbc:mysql://localhost:3306/quirondb?user=tomcat&amp;password=tomcat&amp;autoReconnect=true&amp;useSSL=false&amp;useJDBCCompliantTimezoneShift=true&amp;serverTimezone=UTC"
+           connectionURL="jdbc:mysql://localhost:3306/quirondb?user=tomcat&amp;password=t0mc4t&amp;autoReconnect=true&amp;useSSL=false&amp;useJDBCCompliantTimezoneShift=true&amp;serverTimezone=UTC"
            userTable="USERS" userNameCol="Username" userCredCol="Password"
            userRoleTable="V_USERS_ROLES" roleNameCol="RoleName" >
     </Realm>
