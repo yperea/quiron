@@ -17,9 +17,10 @@ import java.util.Date;
 //@RequiredArgsConstructor
 public class UserRole  {
 
-    @EmbeddedId
-    private UserRoleId id;
 
+    /*@EmbeddedId
+    private UserRoleId id;
+*/
     /*
     @Id
     @ManyToOne
