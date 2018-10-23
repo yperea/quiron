@@ -317,14 +317,14 @@ DROP TABLE IF EXISTS `USERS` ;
 
 CREATE TABLE IF NOT EXISTS `USERS` (
   `UserID` INT NOT NULL AUTO_INCREMENT,
-  `UserName` NVARCHAR(16) NOT NULL,
+  `Username` NVARCHAR(16) NOT NULL,
   `Email` NVARCHAR(255) NULL,
   `Password` NVARCHAR(32) NOT NULL,
   `CreatedDate` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `ModifiedDate` DATETIME NULL,
   PRIMARY KEY (`UserID`));
 
-CREATE UNIQUE INDEX `UserName_UNIQUE` ON `USERS` (`UserName` ASC);
+CREATE UNIQUE INDEX `Username_UNIQUE` ON `USERS` (`Username` ASC);
 
 CREATE UNIQUE INDEX `Email_UNIQUE` ON `USERS` (`Email` ASC);
 
@@ -767,7 +767,7 @@ USE `quirondb` ;
 -- -----------------------------------------------------
 -- Placeholder table for view `V_USERS_ROLES`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `V_USERS_ROLES` (`UserName` INT, `RoleName` INT);
+CREATE TABLE IF NOT EXISTS `V_USERS_ROLES` (`Username` INT, `RoleName` INT);
 
 -- -----------------------------------------------------
 -- View `V_USERS_ROLES`
@@ -777,7 +777,7 @@ DROP VIEW IF EXISTS `V_USERS_ROLES` ;
 USE `quirondb`;
 CREATE  OR REPLACE VIEW `V_USERS_ROLES` AS
   SELECT
-         U.UserName AS UserName, R.RoleName AS RoleName
+         U.Username AS Username, R.RoleName AS Rolename
   FROM
        USERS_ROLES UR
          INNER JOIN
