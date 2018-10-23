@@ -2,6 +2,4 @@
 
 set -e
 
-sudo /opt/tomee/bin/shutdown.sh
-
-#service tomcat7 stop
+service tomcat7 stop
