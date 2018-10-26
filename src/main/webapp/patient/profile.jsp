@@ -40,7 +40,7 @@
                                    id="firstName"
                                    name="firstName"
                                    placeholder=""
-                                   value="${firstName}"
+                                   value="${account.person.firstName}"
                                    required />
                             <div class="invalid-feedback">
                                 Valid first name is required.
@@ -53,7 +53,7 @@
                                    id="lastName"
                                    name="lastName"
                                    placeholder=""
-                                   value="${lastName}"
+                                   value="${account.person.lastName}"
                                    required />
                             <div class="invalid-feedback">
                                 Valid last name is required.
@@ -68,7 +68,7 @@
                                id="userName"
                                name="userName"
                                placeholder="Username"
-                               value="${userName}"
+                               value="${account.user.username}"
                                required />
                         <div class="invalid-feedback">
                             Your username is required.
@@ -86,7 +86,7 @@
                                    id="email"
                                    name="email"
                                    placeholder="you@example.com"
-                                   value="${email}"
+                                   value="${account.user.email}"
                                    required />
                             <div class="invalid-feedback" style="width: 100%;">
                                 Please enter a valid email address.
@@ -94,47 +94,79 @@
                         </div>
                     </div>
 
+                    <div class="mb-3">
+                        <label for="address">Address</label>
+                        <input type="text"
+                               class="form-control"
+                               id="address"
+                               name="address"
+                               placeholder="1234 Main St"
+                               value=""
+                               required />
+                        <div class="invalid-feedback">
+                            Please enter your address.
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="address2">Address 2 <span class="text-muted">(Optional)</span></label>
+                        <input type="text"
+                               class="form-control"
+                               id="address2"
+                               name="address2"
+                               placeholder="Apartment or suite" />
+                    </div>
+
                     <div class="row">
-                        <div class="col-md-6 mb-3">
-                            <label for="password">Password</label>
-                            <input type="password"
-                                   class="form-control"
-                                   id="password"
-                                   name="password"
-                                   placeholder=""
-                                   value=""
-                                   required />
+                        <div class="col-md-5 mb-3">
+                            <label for="country">Country</label>
+                            <select class="custom-select d-block w-100"
+                                    id="country"
+                                    name="country"
+                                    required />
+                                <option value="1">Choose...</option>
+                                <option>United States</option>
+                            </select>
                             <div class="invalid-feedback">
-                                Valid password is required.
+                                Please select a valid country.
                             </div>
                         </div>
-                        <div class="col-md-6 mb-3">
-                            <label for="confirmation">Confirmation</label>
-                            <input type="confirmation"
+                        <div class="col-md-4 mb-3">
+                            <label for="state">State</label>
+                            <select class="custom-select d-block w-100"
+                                    id="state"
+                                    name="state"
+                                    required />
+                                <option value="6">Choose...</option>
+                                <option>Wisconsin</option>
+                            </select>
+                            <div class="invalid-feedback">
+                                Please provide a valid state.
+                            </div>
+                        </div>
+                        <div class="col-md-3 mb-3">
+                            <label for="zip">Zip</label>
+                            <input type="text"
                                    class="form-control"
-                                   id="confirmation"
-                                   name="confirmation"
-                                   placeholder="Password Confirmation"
-                                   value=""
+                                   id="zip"
+                                   name="zip"
+                                   placeholder=""
                                    required />
                             <div class="invalid-feedback">
-                                Valid password is required.
+                                Zip code required.
                             </div>
                         </div>
                     </div>
 
                     <hr class="mb-4">
 
-                    <div class="checkbox mb-3">
-                        <label>
-                            <input type="checkbox" value="i-agree"> I agree to these <a href="#">Terms of Use.</a>
-                        </label>
-                    </div>
-                    <button class="btn btn-primary btn-lg btn-block" type="submit">Sign Up</button>
+                    <button class="btn btn-success btn-lg btn-block" type="submit">Save</button>
                 </form>
             </div>
         </div>
         <br/>
+
+        <!--
         <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
             <h4 class="h4">Details</h4>
         </div>
@@ -269,6 +301,7 @@
                 </table>
             </div>
         </div>
+        -->
     </main>
 
     <%@include file="../shared/cdn-jss.jsp"%>

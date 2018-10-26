@@ -64,8 +64,8 @@
                                 <li class="my-user-footer">
 
                                     <div class="pull-left">
-                                        <a href="${root}/patient/profile"
-                                           class="btn btn-default"><i class="fa fa-user"></i>&nbsp;Profile</a>
+                                        <a href="${root}/account/credentials"
+                                           class="btn btn-default"><i class="fas fa-user-lock"></i>&nbsp;Account</a>
                                     </div>
 
                                     <div class="pull-right">
