@@ -6,7 +6,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 /**
- * The type Person manager.
+ * Handles Person operations.
  */
 public class PersonManager extends EntityManager<Person> {
 

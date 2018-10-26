@@ -1,6 +1,9 @@
 package co.net.quiron.domain.admin;
 
+import co.net.quiron.domain.person.Address;
 import lombok.*;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -8,7 +11,9 @@ import org.hibernate.annotations.UpdateTimestamp;
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 /**
  * This class represents the State or Province domain for the application.
@@ -21,6 +26,9 @@ import java.util.Objects;
 @Entity(name = "State")
 @Table(name = "STATE_PROVINCES")
 public class State {
+
+    @Transient
+    private final Logger logger = LogManager.getLogger(this.getClass());
 
     @Id
     @Column(name = "StateProvinceID")
@@ -43,6 +51,10 @@ public class State {
     @JoinColumn(name = "CountryID")
     private Country country;
 
+    /*TODO: Solve error when is FetchType.LAZY. org.hibernate.LazyInitializationException: failed to lazily initialize a collection of role... could not initialize proxy - no Session*/
+    @OneToMany(mappedBy = "state", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+    private Set<Address> addresses = new HashSet<>();
+
     @CreationTimestamp
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "CreatedDate")
@@ -54,5 +66,28 @@ public class State {
     @Column(name = "ModifiedDate")
     private Date modifiedDate;
 
+
+    /**
+     * Add address.
+     *
+     * @param address the address
+     */
+    public void addAddress(Address address) {
+        addresses.add(address);
+        address.setState(this);
+        logger.info("Adding address to addresses collection");
+    }
+
+
+    /**
+     * Remove address.
+     *
+     * @param address the address
+     */
+    public void removeAddress(Address address) {
+        addresses.remove(address);
+        address.setState(null);
+        logger.info("Removing address from addresses collection");
+    }
 }
 
