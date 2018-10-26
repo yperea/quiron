@@ -16,9 +16,6 @@ import static org.junit.jupiter.api.Assertions.*;
  */
 class CountryManagerTest {
 
-    /**
-     * Creates an Countries manager object.
-     */
     CountryManager countryManager;
 
     /**
@@ -32,7 +29,7 @@ class CountryManagerTest {
     }
 
     /**
-     * Test the get all countries.
+     * Test getting Country by its ID.
      */
     @Test
     void testGetCountryById() {

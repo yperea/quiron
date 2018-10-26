@@ -13,7 +13,7 @@ import java.util.Date;
  * This class represents the Address type domain for the application.
  */
 @Entity(name = "AddressType")
-@Table(name = "ADDRESSS_TYPES")
+@Table(name = "ADDRESS_TYPES")
 @Data
 @NoArgsConstructor
 @RequiredArgsConstructor

@@ -18,6 +18,7 @@
 
         <mapping class="co.net.quiron.domain.admin.Country"/>
         <mapping class="co.net.quiron.domain.admin.State" />
+        <mapping class="co.net.quiron.domain.admin.AddressType"/>
         <mapping class="co.net.quiron.domain.account.User" />
         <mapping class="co.net.quiron.domain.account.Role" />
         <mapping class="co.net.quiron.domain.person.BusinessEntity" />
