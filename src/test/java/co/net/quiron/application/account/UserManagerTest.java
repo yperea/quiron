@@ -133,6 +133,8 @@ class UserManagerTest {
 
         int userIdToDelete = 2;
 
+        /*TODO: Check DB Constraints scenario when a user is deleted, the person related to it is deleted too. */
+
         userManager.delete(userManager.get(userIdToDelete));
         assertNull(userManager.get(userIdToDelete));
     }

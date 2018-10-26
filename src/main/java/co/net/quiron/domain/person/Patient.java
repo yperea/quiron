@@ -20,7 +20,7 @@ public class Patient {
     @Column(name = "PatientID")
     private int id;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.EAGER)
     @MapsId
     @EqualsAndHashCode.Exclude
     @ToString.Exclude

@@ -22,7 +22,7 @@ public class Person implements Serializable {
     @Column(name = "PersonID")
     private int id;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.EAGER)
     @MapsId
     @EqualsAndHashCode.Exclude
     @ToString.Exclude

@@ -1,5 +1,6 @@
 DELETE FROM PERSON_USERS;
 DELETE FROM USERS_ROLES;
+DELETE FROM PATIENTS;
 DELETE FROM PERSONS;
 ALTER TABLE PERSONS AUTO_INCREMENT = 1;
 DELETE FROM ENTITIES;
@@ -31,6 +32,8 @@ INSERT INTO PERSONS (PersonID, PersonTypeID, Title, FirstName, MiddleName, LastN
 INSERT INTO PERSONS (PersonID, PersonTypeID, Title, FirstName, MiddleName, LastName, LastName2, Suffix) VALUES(2, 3, null, 'Claudia', 'Patricia', 'Carabali', 'Chacon', null);
 INSERT INTO PERSON_USERS (PersonID, PersonTypeID, UserID) VALUES (1, 1, 1);
 INSERT INTO PERSON_USERS (PersonID, PersonTypeID, UserID) VALUES (2, 3, 2);
+INSERT INTO PATIENTS(PatientID, BirthDate, Gender, CompanyID, SubscriberCode, IsPrimarySubscriber) VALUES(1, "1977-6-15", "M", 1, "111111", 0);
+INSERT INTO PATIENTS(PatientID, BirthDate, Gender, CompanyID, SubscriberCode, IsPrimarySubscriber) VALUES(2, "1974-3-18", "F", 1, "222222", 1);
 INSERT INTO COUNTRIES(CountryCode, Name) VALUES ('US', 'United States');
 INSERT INTO COUNTRIES(CountryCode, Name) VALUES ('CO', 'Colombia');
 INSERT INTO COUNTRIES(CountryCode, Name) VALUES ('CA', 'Canada');
