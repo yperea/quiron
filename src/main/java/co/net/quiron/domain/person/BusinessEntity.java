@@ -27,18 +27,15 @@ public class BusinessEntity {
     @Column(name = "CreatedDate")
     private Date createdDate; //@CreationTimestamp annotation only works with Date or Calendar types
 
-    /*
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
     @ManyToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER)
-    @JoinTable(name = "ENTITY_ADDRESSES",
-               joinColumns = {@JoinColumn(name = "EntityID")},
-               inverseJoinColumns = @JoinColumn(name = "AddressID"))
-    @MapKeyJoinColumn(name = "AddressTypeID")
-    @ElementCollection
-    //private Set<Address> addresses = new HashSet<>();
-    private Map<AddressType, Address> addresses = new HashMap<>();
-    */
+    @JoinTable(
+            name = "ENTITY_ADDRESSES",
+            joinColumns = {@JoinColumn(name = "EntityID")},
+            inverseJoinColumns = {@JoinColumn(name = "AddressID")})
+    private Set<Address> addresses = new HashSet<>();
+
     /*
     @OneToMany(mappedBy = "entityAddressId.entity", cascade = {CascadeType.ALL}, fetch = FetchType.EAGER)
     private Set<EntityAddress> entityAddresses = new HashSet<>();
@@ -48,5 +45,23 @@ public class BusinessEntity {
     @ToString.Exclude
     @OneToMany(mappedBy = "entity", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<EntityAddress> entityAddresses = new HashSet<>();
+
+    /**
+     * Add an address to the collection.
+     *
+     * @param address the address
+     */
+    public void addAddress(Address address) {
+        addresses.add(address);
+    }
+
+    /**
+     * Remove an address from the collection.
+     *
+     * @param address the address
+     */
+    public void removeaddress(Address address) {
+        addresses.remove(address);
+    }
 
 }

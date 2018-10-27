@@ -1,7 +1,9 @@
 package co.net.quiron.application.person;
 
+import co.net.quiron.application.admin.AddressTypeManager;
 import co.net.quiron.application.admin.StateManager;
 import co.net.quiron.application.shared.EntityManager;
+import co.net.quiron.domain.admin.AddressType;
 import co.net.quiron.domain.admin.State;
 import co.net.quiron.domain.person.Address;
 import co.net.quiron.test.util.DatabaseManager;
@@ -19,6 +21,7 @@ class AddressManagerTest {
 
     EntityManager<Address> addressManager;
     EntityManager<State> stateManager;
+    EntityManager<AddressType> addressTypeManager;
 
     /**
      * Initializes managers and data for the test.
@@ -27,6 +30,8 @@ class AddressManagerTest {
     void setUp() {
         addressManager = new AddressManager();
         stateManager = new StateManager();
+        addressTypeManager = new AddressTypeManager();
+
         DatabaseManager dbm = DatabaseManager.getInstance();
         dbm.runSQL("cleandb.sql");
     }
@@ -58,11 +63,13 @@ class AddressManagerTest {
     void testCreateAddress() {
 
         State state = stateManager.get(6);
+        AddressType addressType = addressTypeManager.get(3);
+
         String address1 = "211 North Carroll Street";
         String city = "Madison";
         String postalCode = "53703";
 
-        Address newAddress = new Address(address1, city, state, postalCode);
+        Address newAddress = new Address(address1, city, state, addressType, postalCode);
         Address createAddress = addressManager.create(newAddress);
 
         assertNotNull(createAddress);
@@ -77,9 +84,11 @@ class AddressManagerTest {
 
         Address address = addressManager.get(1);
         State state = stateManager.get(5);
+        AddressType addressType = addressTypeManager.get(1);
         String address1 = "2125 Commercial Avenue";
         address.setAddressLine1(address1);
         address.setState(state);
+        address.setAddressType(addressType);
         addressManager.update(address);
         Address updatedAddress = addressManager.get(1);
 

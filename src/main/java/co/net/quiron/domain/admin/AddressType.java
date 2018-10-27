@@ -1,5 +1,6 @@
 package co.net.quiron.domain.admin;
 
+import co.net.quiron.domain.person.Address;
 import co.net.quiron.domain.person.EntityAddress;
 import co.net.quiron.domain.person.BusinessEntity;
 import lombok.*;
@@ -48,8 +49,7 @@ public class AddressType {
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
     @OneToMany(mappedBy = "addressType", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<EntityAddress> entityAddresses = new HashSet<>();
-
+    private Set<Address> addresses = new HashSet<>();
 
     @CreationTimestamp
     @Temporal(TemporalType.TIMESTAMP)

@@ -57,6 +57,6 @@ INSERT INTO ADDRESS_TYPES(Name) VALUES ('Home');
 INSERT INTO ADDRESS_TYPES(Name) VALUES ('Billing');
 INSERT INTO ADDRESS_TYPES(Name) VALUES ('Office');
 INSERT INTO ADDRESS_TYPES(Name) VALUES ('Shipping');
-INSERT INTO ADDRESSES(AddressLine1, AddressLine2, City, StateProvinceID, PostalCode) VALUES ('1701 Wright Street', 'Floor 3', 'Madison', 6, 53704);
-INSERT INTO ADDRESSES(AddressLine1, AddressLine2, City, StateProvinceID, PostalCode) VALUES ('3591 Anderson Street', null, 'Madison', 6, 53704);
+INSERT INTO ADDRESSES(AddressLine1, AddressLine2, City, StateProvinceID, AddressTypeID, PostalCode) VALUES ('1701 Wright Street', 'Floor 3', 'Madison', 6, 3, 53704);
+INSERT INTO ADDRESSES(AddressLine1, AddressLine2, City, StateProvinceID, AddressTypeID, PostalCode) VALUES ('3591 Anderson Street', null, 'Madison', 6, 3, 53704);
 

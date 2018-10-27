@@ -1,5 +1,6 @@
 package co.net.quiron.domain.person;
 
+import co.net.quiron.domain.admin.AddressType;
 import co.net.quiron.domain.admin.State;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
@@ -43,26 +44,34 @@ public class Address {
     private State state;
 
     @NonNull
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
+    @ManyToOne
+    @JoinColumn(name = "AddressTypeID")
+    private AddressType addressType;
+
+
+    @NonNull
     @Column(name = "PostalCode")
     private String postalCode;
 
-    /*
+    @Column(name = "Name")
+    private String name;
+
+    @Column(name = "Description")
+    private String description;
+
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
     @ManyToMany(mappedBy = "addresses")
     private Set<BusinessEntity> entities = new HashSet<>();
-    */
 
-/*
-    @OneToMany(mappedBy = "entityAddressId.address", cascade = {CascadeType.ALL}, fetch = FetchType.EAGER)
-    private Set<EntityAddress> entityAddresses = new HashSet<>();
-*/
-
+    /*
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
     @OneToMany(mappedBy = "address", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<EntityAddress> entityAddresses = new HashSet<>();
-
+    */
 
     @CreationTimestamp
     @Temporal(TemporalType.TIMESTAMP)
