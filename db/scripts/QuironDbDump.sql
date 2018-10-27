@@ -10,7 +10,7 @@ SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,N
 -- -----------------------------------------------------
 -- Schema quirondb
 -- -----------------------------------------------------
---DROP SCHEMA IF EXISTS `quirondb` ;
+-- DROP SCHEMA IF EXISTS `quirondb` ;
 
 -- -----------------------------------------------------
 -- Schema quirondb
@@ -831,10 +831,10 @@ SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
 
---GRANT SELECT ON USERS to 'tomcat'@'localhost';
---GRANT SELECT ON ROLES to 'tomcat'@'localhost';
---GRANT SELECT ON USERS_ROLES to 'tomcat'@'localhost';
---GRANT SELECT ON V_USERS_ROLES to 'tomcat'@'localhost';
+-- GRANT SELECT ON USERS to 'tomcat'@'localhost';
+-- GRANT SELECT ON ROLES to 'tomcat'@'localhost';
+-- GRANT SELECT ON USERS_ROLES to 'tomcat'@'localhost';
+-- GRANT SELECT ON V_USERS_ROLES to 'tomcat'@'localhost';
 
 DELETE FROM PERSON_USERS;
 DELETE FROM USERS_ROLES;
