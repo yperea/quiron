@@ -126,9 +126,7 @@ public class EntityDAO<T> {
         return id;
     }
 
-/*
-
-    public T insert(T entity) {
+    public T insert2(T entity) {
 
         session = getSession();
         transaction = session.beginTransaction();
@@ -137,7 +135,6 @@ public class EntityDAO<T> {
         logger.trace("insert(T): Inserting the <T> BusinessEntity.");
         return newEntity;
     }
-*/
 
 
     /**

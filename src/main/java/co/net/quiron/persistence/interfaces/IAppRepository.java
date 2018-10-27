@@ -46,6 +46,15 @@ public interface IAppRepository<T> {
     T create(T entity);
 
     /**
+     * Creates an entity.
+     *
+     * @param entity the entity
+     * @return the int
+     */
+    T create2(T entity);
+
+
+    /**
      * Deletes an entity.
      *
      * @param entity the entity

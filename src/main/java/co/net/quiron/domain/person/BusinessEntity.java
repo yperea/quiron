@@ -5,9 +5,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 /**
  * This class represents a Business entity.
@@ -28,5 +26,27 @@ public class BusinessEntity {
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "CreatedDate")
     private Date createdDate; //@CreationTimestamp annotation only works with Date or Calendar types
+
+    /*
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
+    @ManyToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER)
+    @JoinTable(name = "ENTITY_ADDRESSES",
+               joinColumns = {@JoinColumn(name = "EntityID")},
+               inverseJoinColumns = @JoinColumn(name = "AddressID"))
+    @MapKeyJoinColumn(name = "AddressTypeID")
+    @ElementCollection
+    //private Set<Address> addresses = new HashSet<>();
+    private Map<AddressType, Address> addresses = new HashMap<>();
+    */
+    /*
+    @OneToMany(mappedBy = "entityAddressId.entity", cascade = {CascadeType.ALL}, fetch = FetchType.EAGER)
+    private Set<EntityAddress> entityAddresses = new HashSet<>();
+    */
+
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
+    @OneToMany(mappedBy = "entity", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<EntityAddress> entityAddresses = new HashSet<>();
 
 }

@@ -25,6 +25,7 @@
         <mapping class="co.net.quiron.domain.person.Person" />
         <mapping class="co.net.quiron.domain.person.Patient" />
         <mapping class="co.net.quiron.domain.person.Address" />
+        <mapping class="co.net.quiron.domain.person.EntityAddress" />
 
     </session-factory>
 

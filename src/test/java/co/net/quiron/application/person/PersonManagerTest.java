@@ -11,11 +11,17 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * Person manager tester.
+ */
 class PersonManagerTest {
 
     EntityManager<BusinessEntity> businessEntityManager;
     EntityManager<Person> personManager;
 
+    /**
+     * Initializes managers and data for the test.
+     */
     @BeforeEach
     void setUp() {
         businessEntityManager = new BusinessEntityManager();
@@ -24,6 +30,9 @@ class PersonManagerTest {
         dbm.runSQL("cleandb.sql");
     }
 
+    /**
+     * Test get person by id.
+     */
     @Test
     void testGetPersonById() {
         Person person = personManager.get(1);
@@ -31,12 +40,18 @@ class PersonManagerTest {
         assertEquals("Yesid", firstName);
     }
 
+    /**
+     * Test get all persons.
+     */
     @Test
     void testGetAllPersons() {
         List<Person> personList = personManager.getList();
         assertEquals(2, personList.size());
     }
 
+    /**
+     * Test create person.
+     */
     @Test
     void testCreatePerson() {
 

@@ -8,6 +8,8 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity(name = "Address")
 @Table(name = "ADDRESSES")
@@ -43,6 +45,23 @@ public class Address {
     @NonNull
     @Column(name = "PostalCode")
     private String postalCode;
+
+    /*
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
+    @ManyToMany(mappedBy = "addresses")
+    private Set<BusinessEntity> entities = new HashSet<>();
+    */
+
+/*
+    @OneToMany(mappedBy = "entityAddressId.address", cascade = {CascadeType.ALL}, fetch = FetchType.EAGER)
+    private Set<EntityAddress> entityAddresses = new HashSet<>();
+*/
+
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
+    @OneToMany(mappedBy = "address", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<EntityAddress> entityAddresses = new HashSet<>();
 
 
     @CreationTimestamp

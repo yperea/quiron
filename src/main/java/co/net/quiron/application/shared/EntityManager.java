@@ -103,6 +103,21 @@ public abstract class EntityManager<T> {
     }
 
     /**
+     * Creates a new Entity.
+     *
+     * @param entity the entity to be created
+     * @return the entity just created
+     */
+    public T create2 (T entity) {
+
+        logger.debug("create2(T): Creating Entity.");
+        logger.trace("create2(T): Creating " + entity);
+
+        return entityRepository.create2(entity);
+    }
+
+
+    /**
      * Updates a specific Entity.
      *
      * @param entity the entity to be updated

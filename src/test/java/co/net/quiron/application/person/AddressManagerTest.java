@@ -12,11 +12,17 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * Address manager tester.
+ */
 class AddressManagerTest {
 
     EntityManager<Address> addressManager;
     EntityManager<State> stateManager;
 
+    /**
+     * Initializes managers and data for the test.
+     */
     @BeforeEach
     void setUp() {
         addressManager = new AddressManager();
@@ -25,6 +31,9 @@ class AddressManagerTest {
         dbm.runSQL("cleandb.sql");
     }
 
+    /**
+     * Test get address by id.
+     */
     @Test
     void testGetAddressByID() {
         Address address = addressManager.get(1);
@@ -33,12 +42,18 @@ class AddressManagerTest {
         assertEquals("1701 Wright Street", address.getAddressLine1());
     }
 
+    /**
+     * Test get all addresses.
+     */
     @Test
     void testGetAllAddresses() {
         List<Address> addressList = addressManager.getList();
         assertEquals(2,addressList.size());
     }
 
+    /**
+     * Test create address.
+     */
     @Test
     void testCreateAddress() {
 
@@ -54,6 +69,9 @@ class AddressManagerTest {
         assertEquals(newAddress.getAddressLine1(), createAddress.getAddressLine1());
     }
 
+    /**
+     * Test update address.
+     */
     @Test
     void testUpdateAddress() {
 
@@ -69,6 +87,9 @@ class AddressManagerTest {
         assertEquals(address, updatedAddress);
     }
 
+    /**
+     * Test delete address.
+     */
     @Test
     void testDeleteAddress() {
 

@@ -11,10 +11,16 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * Business entity manager tester.
+ */
 class BusinessEntityManagerTest {
 
     EntityManager<BusinessEntity> businessEntityManager;
 
+    /**
+     * Initializes manager and data for the test.
+     */
     @BeforeEach
     void setUp() {
         businessEntityManager = new BusinessEntityManager();
@@ -22,6 +28,9 @@ class BusinessEntityManagerTest {
         dbm.runSQL("cleandb.sql");
     }
 
+    /**
+     * Test get entity by id.
+     */
     @Test
     void testGetEntityById() {
         BusinessEntity entity = businessEntityManager.get(1);
@@ -29,12 +38,18 @@ class BusinessEntityManagerTest {
         assertEquals(1, id);
     }
 
+    /**
+     * Test get all entities.
+     */
     @Test
     void testGetAllEntities() {
         List<BusinessEntity> entityList = businessEntityManager.getList();
         assertEquals(2, entityList.size());
     }
 
+    /**
+     * Test create entity.
+     */
     @Test
     void testCreateEntity() {
 

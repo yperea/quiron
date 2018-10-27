@@ -1,5 +1,7 @@
 package co.net.quiron.domain.admin;
 
+import co.net.quiron.domain.person.EntityAddress;
+import co.net.quiron.domain.person.BusinessEntity;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.GenericGenerator;
@@ -7,6 +9,8 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 
 /**
@@ -28,6 +32,24 @@ public class AddressType {
     @NonNull
     @Column(name = "Name")
     private String name;
+
+    /*
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
+    @ManyToMany(mappedBy = "addresstypes")
+    private Set<BusinessEntity> entities = new HashSet<>();
+    */
+
+/*
+    @OneToMany(mappedBy = "entityAddressId.addressType", cascade = {CascadeType.ALL}, fetch = FetchType.EAGER)
+    private Set<EntityAddress> entityAddresses = new HashSet<>();
+*/
+
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
+    @OneToMany(mappedBy = "addressType", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<EntityAddress> entityAddresses = new HashSet<>();
+
 
     @CreationTimestamp
     @Temporal(TemporalType.TIMESTAMP)

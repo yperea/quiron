@@ -6,7 +6,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 /**
- * The type Business entity manager.
+ * Handles Business entity operations.
  */
 public class BusinessEntityManager extends EntityManager<BusinessEntity> {
 

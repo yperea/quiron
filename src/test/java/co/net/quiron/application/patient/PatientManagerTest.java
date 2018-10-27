@@ -16,7 +16,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
- * Patient manager test.
+ * Patient manager tester.
  */
 class PatientManagerTest {
 
