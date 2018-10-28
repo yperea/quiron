@@ -1,11 +1,11 @@
 package co.net.quiron.application.patient;
 
+import co.net.quiron.application.person.AddressManager;
 import co.net.quiron.application.person.BusinessEntityManager;
 import co.net.quiron.application.person.PersonManager;
 import co.net.quiron.application.shared.EntityManager;
-import co.net.quiron.domain.person.BusinessEntity;
-import co.net.quiron.domain.person.Patient;
-import co.net.quiron.domain.person.Person;
+import co.net.quiron.application.patient.PatientManager;
+import co.net.quiron.domain.person.*;
 import co.net.quiron.test.util.DatabaseManager;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -22,7 +22,8 @@ class PatientManagerTest {
 
     EntityManager<BusinessEntity> businessEntityManager;
     EntityManager<Person> personManager;
-    EntityManager<Patient> patientManager;
+    PatientManager patientManager;
+    AddressManager addressManager;
 
     /**
      * Initializes managers and data for the test.
@@ -33,6 +34,8 @@ class PatientManagerTest {
         businessEntityManager = new BusinessEntityManager();
         personManager = new PersonManager();
         patientManager = new PatientManager();
+        addressManager = new AddressManager();
+
         DatabaseManager dbm = DatabaseManager.getInstance();
         dbm.runSQL("cleandb.sql");
 
@@ -88,4 +91,26 @@ class PatientManagerTest {
         assertEquals("Smith", insertedPatient.getPerson().getLastName());
         assertNotNull(insertedEntity.getCreatedDate());
     }
+
+    /**
+     * Test Load user account.
+     */
+    @Test
+    void testGetPatientProfile() {
+
+        String userName = "yesper";
+        Profile profile = patientManager.getPatientProfile(userName);
+
+        Person person = personManager.get(1);
+        Address address = addressManager.get(1);
+
+        Person personProfile = profile.getPerson();
+        Address addressProfile = profile.getAddress();
+
+
+        assertEquals(person, personProfile);
+        assertEquals(address, addressProfile);
+
+    }
+
 }

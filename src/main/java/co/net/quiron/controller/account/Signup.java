@@ -49,7 +49,7 @@ public class Signup extends HttpServlet {
 
         if ((request.getParameter("firstName") != null || !request.getParameter("firstName").isEmpty() )
             && (request.getParameter("lastName") != null || !request.getParameter("lastName").isEmpty())
-            && (request.getParameter("userName") != null || !request.getParameter("lastName").isEmpty())
+            && (request.getParameter("userName") != null || !request.getParameter("userName").isEmpty())
             && (request.getParameter("email") != null || !request.getParameter("email").isEmpty())
             && (request.getParameter("password") != null || !request.getParameter("password").isEmpty())
             && (request.getParameter("confirmation") != null || !request.getParameter("confirmation").isEmpty())) {
@@ -69,7 +69,7 @@ public class Signup extends HttpServlet {
         }
 
         if (successfullSignup) {
-            response.sendRedirect("/quiron/patient/profile");
+            response.sendRedirect("/quiron/patient/Profile");
         } else {
             request.setAttribute("firstName", request.getParameter("firstName"));
             request.setAttribute("lastName", request.getParameter("lastName"));

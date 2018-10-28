@@ -25,7 +25,7 @@ public class SignIn extends HttpServlet {
         String title = "Sign In";
 
         request.setAttribute("title", title);
-        //response.sendRedirect("/quiron/patient/profile");
+        //response.sendRedirect("/quiron/patient/Profile");
 
         RequestDispatcher dispatcher = request.getRequestDispatcher(url);
         dispatcher.forward(request, response);

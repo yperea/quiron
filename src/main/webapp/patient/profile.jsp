@@ -29,7 +29,7 @@
             <div class="col-md-9">
                 <!--<h4 class="mb-3">Your person</h4>-->
                 <form class="needs-validation"
-                      action="${root}/public/signup"
+                      action="${root}/patient/profile"
                       method="POST"
                       novalidate>
                     <div class="row">
@@ -40,7 +40,7 @@
                                    id="firstName"
                                    name="firstName"
                                    placeholder=""
-                                   value="${account.person.firstName}"
+                                   value="${profile.person.firstName}"
                                    required />
                             <div class="invalid-feedback">
                                 Valid first name is required.
@@ -53,7 +53,7 @@
                                    id="lastName"
                                    name="lastName"
                                    placeholder=""
-                                   value="${account.person.lastName}"
+                                   value="${profile.person.lastName}"
                                    required />
                             <div class="invalid-feedback">
                                 Valid last name is required.
@@ -62,46 +62,13 @@
                     </div>
 
                     <div class="mb-3">
-                        <label for="userName">Username <span class="text-muted"></span></label>
+                        <label for="address1">Address</label>
                         <input type="text"
                                class="form-control"
-                               id="userName"
-                               name="userName"
-                               placeholder="Username"
-                               value="${account.user.username}"
-                               required />
-                        <div class="invalid-feedback">
-                            Your username is required.
-                        </div>
-                    </div>
-
-                    <div class="mb-3">
-                        <label for="email">Email</label>
-                        <div class="input-group">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text">@</span>
-                            </div>
-                            <input type="email"
-                                   class="form-control"
-                                   id="email"
-                                   name="email"
-                                   placeholder="you@example.com"
-                                   value="${account.user.email}"
-                                   required />
-                            <div class="invalid-feedback" style="width: 100%;">
-                                Please enter a valid email address.
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="mb-3">
-                        <label for="address">Address</label>
-                        <input type="text"
-                               class="form-control"
-                               id="address"
-                               name="address"
-                               placeholder="1234 Main St"
-                               value=""
+                               id="address1"
+                               name="address1"
+                               placeholder=""
+                               value="${profile.address.addressLine1}"
                                required />
                         <div class="invalid-feedback">
                             Please enter your address.
@@ -114,21 +81,22 @@
                                class="form-control"
                                id="address2"
                                name="address2"
-                               placeholder="Apartment or suite" />
+                               value="${profile.address.addressLine2}"
+                               placeholder="" />
                     </div>
 
                     <div class="row">
                         <div class="col-md-5 mb-3">
-                            <label for="country">Country</label>
-                            <select class="custom-select d-block w-100"
-                                    id="country"
-                                    name="country"
-                                    required />
-                                <option value="1">Choose...</option>
-                                <option>United States</option>
-                            </select>
+                            <label for="city">City</label>
+                            <input type="text"
+                                   class="form-control"
+                                   id="city"
+                                   name="city"
+                                   placeholder=""
+                                   value="${profile.address.city}"
+                                   required />
                             <div class="invalid-feedback">
-                                Please select a valid country.
+                                City required.
                             </div>
                         </div>
                         <div class="col-md-4 mb-3">
@@ -137,8 +105,10 @@
                                     id="state"
                                     name="state"
                                     required />
-                                <option value="6">Choose...</option>
-                                <option>Wisconsin</option>
+                                <option value="">Choose...</option>
+                                <c:forEach var="state" items="${states}">
+                                <option value="${state.id}">${state.code}</option>
+                                </c:forEach>
                             </select>
                             <div class="invalid-feedback">
                                 Please provide a valid state.
@@ -150,6 +120,7 @@
                                    class="form-control"
                                    id="zip"
                                    name="zip"
+                                   value="${profile.address.postalCode}"
                                    placeholder=""
                                    required />
                             <div class="invalid-feedback">

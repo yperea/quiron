@@ -59,4 +59,5 @@ INSERT INTO ADDRESS_TYPES(Name) VALUES ('Office');
 INSERT INTO ADDRESS_TYPES(Name) VALUES ('Shipping');
 INSERT INTO ADDRESSES(AddressLine1, AddressLine2, City, StateProvinceID, AddressTypeID, PostalCode) VALUES ('1701 Wright Street', 'Floor 3', 'Madison', 6, 3, 53704);
 INSERT INTO ADDRESSES(AddressLine1, AddressLine2, City, StateProvinceID, AddressTypeID, PostalCode) VALUES ('3591 Anderson Street', null, 'Madison', 6, 3, 53704);
-
+INSERT INTO ENTITY_ADDRESSES(EntityID, AddressID) VALUE (1,1);
+INSERT INTO ENTITY_ADDRESSES(EntityID, AddressID) VALUE (2,2);
