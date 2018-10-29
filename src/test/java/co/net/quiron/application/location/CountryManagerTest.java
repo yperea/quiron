@@ -1,7 +1,8 @@
-package co.net.quiron.application.admin;
+package co.net.quiron.application.location;
 
-import co.net.quiron.domain.admin.Country;
-import co.net.quiron.domain.admin.State;
+import co.net.quiron.application.admin.CountryManager;
+import co.net.quiron.domain.location.Country;
+import co.net.quiron.domain.location.State;
 import co.net.quiron.test.util.DatabaseManager;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

@@ -1,7 +1,7 @@
 package co.net.quiron.application.person;
 
 import co.net.quiron.application.shared.EntityManager;
-import co.net.quiron.domain.person.Address;
+import co.net.quiron.domain.location.Address;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 

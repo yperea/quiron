@@ -52,6 +52,36 @@
                         </div>
                     </div>
 
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="birthDate">Date of Birth</label>
+                            <input type="text"
+                                   class="form-control"
+                                   id="birthDate"
+                                   name="birthDate"
+                                   placeholder="mm/dd/yyyy"
+                                   value="${birthDate}"
+                                   required />
+                            <div class="invalid-feedback">
+                                Please enter a valid date of birth.
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="gender">Gender</label>
+                            <select class="custom-select d-block w-100"
+                                    id="gender"
+                                    name="gender"
+                                    required />
+                            <option value="">Choose...</option>
+                            <option value="M" <c:if test="${gender == 'M'}">selected</c:if> >Male</option>
+                            <option value="F" <c:if test="${gender == 'F'}">selected</c:if> >Female</option>
+                            </select>
+                            <div class="invalid-feedback">
+                                Please provide a gender.
+                            </div>
+                        </div>
+                    </div>
+
                     <div class="mb-3">
                         <label for="userName">Username <span class="text-muted"></span></label>
                         <input type="text"
@@ -101,7 +131,7 @@
                         </div>
                         <div class="col-md-6 mb-3">
                             <label for="confirmation">Confirmation</label>
-                            <input type="confirmation"
+                            <input type="password"
                                    class="form-control"
                                    id="confirmation"
                                    name="confirmation"

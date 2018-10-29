@@ -13,6 +13,7 @@
     <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
         <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
             <h1 class="h2">My Account</h1>
+            <!--
             <div class="btn-toolbar mb-2 mb-md-0">
                 <div class="btn-group mr-2">
                     <button class="btn btn-sm btn-outline-secondary">Share</button>
@@ -23,13 +24,14 @@
                     This week
                 </button>
             </div>
+            -->
         </div>
         <br/>
         <div class="row justify-content-center">
             <div class="col-md-9">
                 <!--<h4 class="mb-3">Your person</h4>-->
                 <form class="needs-validation"
-                      action="${root}/public/signup"
+                      action="${root}/account/credentials"
                       method="POST"
                       novalidate>
 
@@ -40,7 +42,7 @@
                                id="userName"
                                name="userName"
                                placeholder="Username"
-                               value="${account.user.username}"
+                               value="${account.username}"
                                required
                                readonly />
                         <div class="invalid-feedback">
@@ -59,7 +61,7 @@
                                    id="email"
                                    name="email"
                                    placeholder="you@example.com"
-                                   value="${account.user.email}"
+                                   value="${account.email}"
                                    required
                                    readonly />
                             <div class="invalid-feedback" style="width: 100%;">
@@ -84,11 +86,11 @@
                         </div>
                         <div class="col-md-6 mb-3">
                             <label for="confirmation">Password Confirmation</label>
-                            <input type="confirmation"
+                            <input type="password"
                                    class="form-control"
                                    id="confirmation"
                                    name="confirmation"
-                                   placeholder="Password Confirmation"
+                                   placeholder=""
                                    value=""
                                    required />
                             <div class="invalid-feedback">

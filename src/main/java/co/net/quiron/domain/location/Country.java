@@ -1,4 +1,4 @@
-package co.net.quiron.domain.admin;
+package co.net.quiron.domain.location;
 
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;

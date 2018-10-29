@@ -1,8 +1,5 @@
-package co.net.quiron.domain.admin;
+package co.net.quiron.domain.location;
 
-import co.net.quiron.domain.person.Address;
-import co.net.quiron.domain.person.EntityAddress;
-import co.net.quiron.domain.person.BusinessEntity;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.GenericGenerator;

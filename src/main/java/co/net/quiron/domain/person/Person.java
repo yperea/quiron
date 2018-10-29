@@ -14,24 +14,39 @@ import java.util.Set;
 @Data
 @NoArgsConstructor
 @RequiredArgsConstructor
+@EqualsAndHashCode(callSuper = true)
 @Entity(name = "Person")
 @Table(name = "PERSONS")
-public class Person implements Serializable {
+@PrimaryKeyJoinColumn(name = "PersonID")
+public class Person extends BusinessEntity implements Serializable {
 
+
+/*
     @Id
     @Column(name = "PersonID")
-    private int id;
+    protected int id;
 
     @OneToOne(fetch = FetchType.EAGER)
     @MapsId
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
     @JoinColumn(name = "PersonID")
-    private BusinessEntity entity;
+    protected BusinessEntity entity;
+*/
 
     @NonNull
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
+    @ManyToOne
+    @JoinColumn(name = "PersonTypeID")
+    protected PersonType personType;
+
+
+/*
+    @NonNull
     @Column(name = "PersonTypeID")
-    private int type;
+    protected int type;
+*/
 
     /*
     @EqualsAndHashCode.Exclude
@@ -41,44 +56,46 @@ public class Person implements Serializable {
             name = "PERSON_USERS",
             joinColumns = {@JoinColumn(name = "PersonID")},
             inverseJoinColumns = {@JoinColumn(name = "UserID")})
-    private Set<Person> users = new HashSet<>();
+    protected Set<Person> users = new HashSet<>();
     */
 
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
-    @ManyToMany(mappedBy = "persons")
-    private Set<User> users = new HashSet<>();
+    @ManyToMany(mappedBy = "persons", cascade = {CascadeType.ALL}, fetch = FetchType.EAGER)
+    protected Set<User> users = new HashSet<>();
 
     @Column(name = "Title")
-    private String title;
+    protected String title;
 
     @NonNull
     @Column(name = "FirstName")
-    private String firstName;
+    protected String firstName;
 
     @Column(name = "MiddleName")
-    private String middleName;
+    protected String middleName;
 
     @NonNull
     @Column(name = "LastName")
-    private String lastName;
+    protected String lastName;
 
     @Column(name = "LastName2")
-    private String lastName2;
+    protected String lastName2;
 
     @Column(name = "Suffix")
-    private String suffix;
+    protected String suffix;
 
 
+/*
     @CreationTimestamp
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "CreatedDate")
-    private Date createdDate;
+    protected Date createdDate;
+*/
 
     @UpdateTimestamp
     @EqualsAndHashCode.Exclude
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "ModifiedDate")
-    private Date modifiedDate;
+    protected Date modifiedDate;
 
 }

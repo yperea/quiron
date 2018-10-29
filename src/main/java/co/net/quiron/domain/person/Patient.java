@@ -11,11 +11,14 @@ import java.util.Date;
 
 @NoArgsConstructor
 @RequiredArgsConstructor
+@EqualsAndHashCode(callSuper = true)
 @Data
 @Entity(name = "Patient")
 @Table(name = "PATIENTS")
-public class Patient {
+@PrimaryKeyJoinColumn(name = "PatientID")
+public class Patient extends Person {
 
+/*
     @Id
     @Column(name = "PatientID")
     private int id;
@@ -26,6 +29,7 @@ public class Patient {
     @ToString.Exclude
     @JoinColumn(name = "PatientID")
     private Person person;
+*/
 
     @NonNull
     @Column(name = "BirthDate")
@@ -44,6 +48,14 @@ public class Patient {
     @Column(name = "IsPrimarySubscriber")
     private boolean isPrimarySubscriber;
 
+    public Patient(PersonType personType, String firstName, String lastName, LocalDate birthDate, String gender) {
+        super(personType, firstName, lastName);
+        this.birthDate = birthDate;
+        this.gender =  gender;
+    }
+
+
+/*
     @CreationTimestamp
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "CreatedDate")
@@ -54,7 +66,6 @@ public class Patient {
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "ModifiedDate")
     private Date modifiedDate;
-
-
+*/
 
 }

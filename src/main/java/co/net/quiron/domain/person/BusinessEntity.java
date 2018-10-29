@@ -1,5 +1,6 @@
 package co.net.quiron.domain.person;
 
+import co.net.quiron.domain.location.Address;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.GenericGenerator;
@@ -14,18 +15,19 @@ import java.util.*;
 @Table(name="ENTITIES")
 @Data
 @NoArgsConstructor
+@Inheritance(strategy = InheritanceType.JOINED)
 public class BusinessEntity {
 
     @Id
     @Column(name = "EntityID")
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
     @GenericGenerator(name = "native", strategy = "native")
-    private int id;
+    protected int id;
 
     @CreationTimestamp
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "CreatedDate")
-    private Date createdDate; //@CreationTimestamp annotation only works with Date or Calendar types
+    protected Date createdDate; //@CreationTimestamp annotation only works with Date or Calendar types
 
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
@@ -34,18 +36,18 @@ public class BusinessEntity {
             name = "ENTITY_ADDRESSES",
             joinColumns = {@JoinColumn(name = "EntityID")},
             inverseJoinColumns = {@JoinColumn(name = "AddressID")})
-    private Set<Address> addresses = new HashSet<>();
+    protected Set<Address> addresses = new HashSet<>();
 
     /*
     @OneToMany(mappedBy = "entityAddressId.entity", cascade = {CascadeType.ALL}, fetch = FetchType.EAGER)
     private Set<EntityAddress> entityAddresses = new HashSet<>();
     */
-
+    /*
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
     @OneToMany(mappedBy = "entity", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<EntityAddress> entityAddresses = new HashSet<>();
-
+    protected Set<EntityAddress> entityAddresses = new HashSet<>();
+    */
     /**
      * Add an address to the collection.
      *

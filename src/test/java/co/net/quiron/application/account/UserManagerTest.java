@@ -225,6 +225,7 @@ class UserManagerTest {
     /**
      * Test create user with a Person information.
      */
+/*
     @Test
     void testCreateUserWithAPerson() {
         String newUserName = "jsmith";
@@ -270,6 +271,7 @@ class UserManagerTest {
         assertEquals("Smith", newPerson.getLastName());
 
     }
+*/
 
 
 }

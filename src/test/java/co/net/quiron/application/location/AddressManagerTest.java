@@ -1,11 +1,12 @@
-package co.net.quiron.application.person;
+package co.net.quiron.application.location;
 
 import co.net.quiron.application.admin.AddressTypeManager;
 import co.net.quiron.application.admin.StateManager;
+import co.net.quiron.application.person.AddressManager;
 import co.net.quiron.application.shared.EntityManager;
-import co.net.quiron.domain.admin.AddressType;
-import co.net.quiron.domain.admin.State;
-import co.net.quiron.domain.person.Address;
+import co.net.quiron.domain.location.AddressType;
+import co.net.quiron.domain.location.State;
+import co.net.quiron.domain.location.Address;
 import co.net.quiron.test.util.DatabaseManager;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

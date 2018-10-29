@@ -56,8 +56,8 @@
                                          class="img-circle"
                                          src="${root}/style/img/male.jpg" />
                                     <p>
-                                        ${account.person.firstName} ${account.person.lastName}
-                                        <br/><small>(${account.user.username})</small>
+                                        ${account.firstName} ${account.lastName}
+                                        <br/><small>(${account.username})</small>
                                     </p>
                                 </li>
 

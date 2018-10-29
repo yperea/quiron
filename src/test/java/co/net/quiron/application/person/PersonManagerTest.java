@@ -3,6 +3,7 @@ package co.net.quiron.application.person;
 import co.net.quiron.application.shared.EntityManager;
 import co.net.quiron.domain.person.BusinessEntity;
 import co.net.quiron.domain.person.Person;
+import co.net.quiron.domain.person.PersonType;
 import co.net.quiron.test.util.DatabaseManager;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -16,16 +17,18 @@ import static org.junit.jupiter.api.Assertions.*;
  */
 class PersonManagerTest {
 
-    EntityManager<BusinessEntity> businessEntityManager;
-    EntityManager<Person> personManager;
+    PersonManager personManager;
+    PersonTypeManager personTypeManager;
 
     /**
      * Initializes managers and data for the test.
      */
     @BeforeEach
     void setUp() {
-        businessEntityManager = new BusinessEntityManager();
+
         personManager = new PersonManager();
+        personTypeManager = new PersonTypeManager();
+
         DatabaseManager dbm = DatabaseManager.getInstance();
         dbm.runSQL("cleandb.sql");
     }
@@ -52,27 +55,23 @@ class PersonManagerTest {
     /**
      * Test create person.
      */
+
     @Test
     void testCreatePerson() {
 
-        BusinessEntity newEntity = new BusinessEntity();
-        BusinessEntity insertedEntity = businessEntityManager.create(newEntity);
+        String firstName = "John";
+        String lastName = "Smith";
+        PersonType personType =  personTypeManager.get(3);
 
-        Person person = new Person(3, "John", "Smith");
-        person.setEntity(insertedEntity);
-
+        Person person = new Person(personType, firstName, lastName);
         Person insertedPerson = personManager.create(person);
-
-        assertNotNull(insertedEntity);
-        assertEquals(3, insertedEntity.getId());
-        assertNotNull(insertedEntity.getCreatedDate());
 
         assertNotNull(insertedPerson);
         assertEquals(3, insertedPerson.getId());
         assertEquals("John", insertedPerson.getFirstName());
         assertEquals("Smith", insertedPerson.getLastName());
-        assertNotNull(insertedEntity.getCreatedDate());
 
     }
+
 
 }

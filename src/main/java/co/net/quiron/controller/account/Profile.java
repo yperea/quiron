@@ -1,9 +1,9 @@
-package co.net.quiron.controller.patient;
+package co.net.quiron.controller.account;
 
 import co.net.quiron.application.account.AccountManager;
+import co.net.quiron.application.account.ProfileManager;
 import co.net.quiron.application.admin.CountryManager;
-import co.net.quiron.application.admin.StateManager;
-import co.net.quiron.application.patient.PatientManager;
+import co.net.quiron.domain.location.State;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.Set;
 
 @WebServlet(
         name="patient-profile",
@@ -25,16 +26,14 @@ public class Profile extends HttpServlet {
                          HttpServletResponse response) throws ServletException, IOException {
 
         HttpSession session = request.getSession();
-
-
-/*
-        if (session.getAttribute("username") == null) {
+        /*
+        if (session.getAttribute("account") == null) {
             // Session is expired
             session.setAttribute("expireSessionMessage","Your session has expired. Try again.");
             response.sendRedirect("/quiron/account/logout");
             return;
         }
-*/
+        */
 
         String url = "/patient/profile.jsp";
         String title = "My Profile";
@@ -43,16 +42,16 @@ public class Profile extends HttpServlet {
         request.setAttribute("title", title);
 
         AccountManager accountManager =  new AccountManager();
-        PatientManager patientManager = new PatientManager();
-
+        ProfileManager profileManager = new ProfileManager();
 
         accountManager.loadUserAccount(username);
         session.setAttribute("username", username);
         session.setAttribute("account", accountManager);
-        session.setAttribute("profile", patientManager.getPatientProfile(username));
+        session.setAttribute("profile", profileManager.getPatientProfile(accountManager));
 
-        StateManager stateManager = new StateManager();
-        session.setAttribute("states", stateManager.getList());
+        CountryManager countryManager = new CountryManager();
+        Set<State> states = countryManager.get(1).getStates();
+        session.setAttribute("states", states);
 
         RequestDispatcher dispatcher = request.getRequestDispatcher(url);
         dispatcher.forward(request, response);
@@ -65,63 +64,48 @@ public class Profile extends HttpServlet {
 
 
         HttpSession session = request.getSession();
-
-/*
-        if (session.getAttribute("username") == null) {
+        /*
+        if (session.getAttribute("account") == null) {
             // Session is expired
             session.setAttribute("expireSessionMessage","Your session has expired. Try again.");
             response.sendRedirect("/account/logout");
             return;
         }
-*/
+        */
 
-        String url = "/patient/profile";
+        String url = "/quiron/patient/profile";
         String title = "My Profile";
-
         request.setAttribute("title", title);
 
-        PatientManager patientManager;
+        ProfileManager profileManager;
         AccountManager accountManager =  (AccountManager) session.getAttribute("account");
 
-        int personId = accountManager.getPerson().getId();
-        String username = accountManager.getUser().getUsername();
-
-        String firstName = request.getParameter("firstName");
-        String lastName = request.getParameter("lastName");
-        String address1 = request.getParameter("address1");
-        String address2 = request.getParameter("address2");
-        String city =  request.getParameter("city");
-        int stateId = Integer.parseInt(request.getParameter("state"));
-        String postalCode = request.getParameter("zip");
-
         if ((request.getParameter("firstName") != null || !request.getParameter("firstName").isEmpty() )
-//                && (request.getParameter("lastName") != null || !request.getParameter("lastName").isEmpty())
- //               && (request.getParameter("address1") != null || !request.getParameter("address1").isEmpty())
- //               && (request.getParameter("city") != null || !request.getParameter("city").isEmpty())
-//                && (request.getParameter("stateId") != null || !request.getParameter("stateId").isEmpty())
-//                && (request.getParameter("zip") != null || !request.getParameter("zip").isEmpty())
+                && (request.getParameter("lastName") != null || !request.getParameter("lastName").isEmpty())
+                && (request.getParameter("birthDate") != null || !request.getParameter("birthDate").isEmpty())
+                && (request.getParameter("gender") != null || !request.getParameter("gender").isEmpty())
+                && (request.getParameter("address1") != null || !request.getParameter("address1").isEmpty())
+                && (request.getParameter("city") != null || !request.getParameter("city").isEmpty())
+                && (request.getParameter("state") != null || !request.getParameter("state").isEmpty())
+                && (request.getParameter("zip") != null || !request.getParameter("zip").isEmpty())) {
 
-        ) {
-
-
-/*
             String firstName = request.getParameter("firstName");
             String lastName = request.getParameter("lastName");
+            String birthDate = request.getParameter("birthDate");
+            String gender = request.getParameter("gender");
             String address1 = request.getParameter("address1");
             String address2 = request.getParameter("address2");
             String city =  request.getParameter("city");
-            int stateId = Integer.parseInt(request.getParameter("stateId"));
-            String postalCode = request.getParameter("postalCode");
-*/
+            int stateId = Integer.parseInt(request.getParameter("state"));
+            String postalCode = request.getParameter("zip");
 
-            patientManager =  new PatientManager();
+            profileManager =  new ProfileManager();
 
-            session.setAttribute("profile", patientManager.saveProfile(personId, firstName, lastName, address1, address2,
-                    city, stateId, postalCode));
-
+            session.setAttribute("profile", profileManager.savePatientProfile(accountManager, firstName, lastName,
+                                 address1, address2, city, stateId, postalCode, birthDate, gender));
         }
 
-        response.sendRedirect("/quiron/patient/profile");
+        response.sendRedirect(url);
 
         /*
         if (successfullUpdate) {
@@ -136,10 +120,7 @@ public class Profile extends HttpServlet {
             request.setAttribute("postalCode", request.getParameter("postalCode"));
 
             response.sendRedirect(url);
-
         }
         */
     }
-
-
 }

@@ -16,17 +16,15 @@
         <property name="hibernate.c3p0.max_statements">50</property>
         <property name="hibernate.c3p0.idle_test_period">3000</property>
 
-        <mapping class="co.net.quiron.domain.admin.Country"/>
-        <mapping class="co.net.quiron.domain.admin.State"/>
-        <mapping class="co.net.quiron.domain.admin.AddressType"/>
+        <mapping class="co.net.quiron.domain.location.Country"/>
+        <mapping class="co.net.quiron.domain.location.State"/>
+        <mapping class="co.net.quiron.domain.location.AddressType"/>
         <mapping class="co.net.quiron.domain.account.User" />
         <mapping class="co.net.quiron.domain.account.Role" />
         <mapping class="co.net.quiron.domain.person.BusinessEntity" />
         <mapping class="co.net.quiron.domain.person.Person" />
         <mapping class="co.net.quiron.domain.person.Patient" />
-        <mapping class="co.net.quiron.domain.person.Address" />
-        <mapping class="co.net.quiron.domain.person.EntityAddress" />
-
+        <mapping class="co.net.quiron.domain.location.Address" />
+        <mapping class="co.net.quiron.domain.person.PersonType"/>
     </session-factory>
-
 </hibernate-configuration>

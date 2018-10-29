@@ -1,6 +1,7 @@
-package co.net.quiron.application.admin;
+package co.net.quiron.application.location;
 
-import co.net.quiron.domain.admin.AddressType;
+import co.net.quiron.application.admin.AddressTypeManager;
+import co.net.quiron.domain.location.AddressType;
 import co.net.quiron.test.util.DatabaseManager;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -73,14 +74,18 @@ class AddressTypeManagerTest {
         assertNotNull(addressTypeUpdated.getModifiedDate());
     }
 
+    /*TODO: Implement a Test Case for deleting an Addresstype with linked addresses */
     /**
      * Test the addressType deletion.
      */
     @Test
     void testDeleteAddressType() {
 
-        int addressTypeIdToDelete = 3;
-        addressTypeManager.delete(addressTypeManager.get(addressTypeIdToDelete));
+        int addressTypeIdToDelete = 5;
+        String newAddressTypeName = "Main";
+        AddressType newAddressType = new AddressType(newAddressTypeName);
+        AddressType insertedAddressType = addressTypeManager.create(newAddressType);
+        addressTypeManager.delete(insertedAddressType);
         assertNull(addressTypeManager.get(addressTypeIdToDelete));
     }
 }

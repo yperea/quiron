@@ -1,9 +1,8 @@
 package co.net.quiron.application.person;
 
 import co.net.quiron.application.shared.EntityManager;
-import co.net.quiron.domain.person.Address;
+import co.net.quiron.domain.location.Address;
 import co.net.quiron.domain.person.BusinessEntity;
-import co.net.quiron.domain.person.Person;
 import co.net.quiron.test.util.DatabaseManager;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

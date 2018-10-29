@@ -4,10 +4,14 @@ import co.net.quiron.application.person.PersonManager;
 import co.net.quiron.application.shared.EntityManager;
 import co.net.quiron.domain.account.Role;
 import co.net.quiron.domain.account.User;
+import co.net.quiron.domain.person.Patient;
 import co.net.quiron.domain.person.Person;
 import co.net.quiron.test.util.DatabaseManager;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -47,21 +51,26 @@ class AccountManagerTest {
         String email = "jsmith@msn.com";
         String password = "1324";
         String confirmation = "1324";
+        String birthDate = "06/15/1977";
+        String gender = "M";
         int personTypeId = 3; //Patient
         int roleId = 2; //User
 
-        boolean isSignedUp = accountManager.signup(personTypeId, roleId, firstName, lastName, userName, email, password, confirmation);
+        boolean isSignedUp = accountManager.signup(personTypeId, roleId, firstName, lastName,
+                                                    userName, email, birthDate, gender, password, confirmation);
 
         User user = userManager.get(3);
         Role role = roleManager.get(roleId);
-        Person person = user.getPersons().stream().findFirst().get();
+        Patient patient = (Patient) user.getPersons().stream().findFirst().get();
+        //Person person = user.getPersons().stream().findFirst().get();
+        //Person person = patient;
         Role userRole = user.getRoles().stream().findFirst().get();
 
         assertTrue(isSignedUp);
         assertEquals(userName, user.getUsername());
-        assertEquals(firstName, person.getFirstName());
-        assertEquals(user, accountManager.getUser());
-        assertEquals(person, accountManager.getPerson());
+        assertEquals(firstName, patient.getFirstName());
+        assertEquals(firstName, accountManager.getFirstName());
+        assertEquals(true, accountManager.isSigned());
         assertEquals(role, userRole);
     }
 
@@ -71,15 +80,14 @@ class AccountManagerTest {
     @Test
     void loadUserAccount() {
         String userName = "yesper";
+        String firstName = "Yesid";
         accountManager.loadUserAccount(userName);
 
         User user = userManager.get(1);
         Person person = personManager.get(1);
 
-        User userAccount = accountManager.getUser();
-        Person userProfile = accountManager.getPerson();
-
-        assertEquals(user, userAccount);
-        assertEquals(person, userProfile);
+        assertEquals(userName, accountManager.getUsername());
+        assertEquals(firstName, accountManager.getFirstName());
+        assertEquals(true, accountManager.isSigned());
     }
 }

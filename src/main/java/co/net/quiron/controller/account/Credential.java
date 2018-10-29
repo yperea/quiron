@@ -40,4 +40,29 @@ public class Credential extends HttpServlet {
 
     }
 
+    @Override
+    protected void doPost(HttpServletRequest request,
+                          HttpServletResponse response) throws ServletException, IOException {
+
+        HttpSession session = request.getSession();
+        AccountManager accountManager;
+
+        String url = "/quiron/account/credentials";
+        String title = "Account Credentials";
+        request.setAttribute("title", title);
+
+        if ((request.getParameter("password") != null || !request.getParameter("password").isEmpty())
+                && (request.getParameter("confirmation") != null || !request.getParameter("confirmation").isEmpty())) {
+
+            String password = request.getParameter("password");
+            String confirmation = request.getParameter("confirmation");
+
+            accountManager =  (AccountManager) session.getAttribute("account");
+            accountManager.saveCredentials(password, confirmation);
+            session.setAttribute("account", accountManager);
+
+        }
+
+        response.sendRedirect(url);
+    }
 }

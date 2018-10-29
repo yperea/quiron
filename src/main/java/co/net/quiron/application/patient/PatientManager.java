@@ -2,22 +2,19 @@ package co.net.quiron.application.patient;
 
 import co.net.quiron.application.account.UserManager;
 import co.net.quiron.application.admin.AddressTypeManager;
-import co.net.quiron.application.admin.CountryManager;
 import co.net.quiron.application.admin.StateManager;
 import co.net.quiron.application.person.AddressManager;
 import co.net.quiron.application.person.BusinessEntityManager;
 import co.net.quiron.application.person.PersonManager;
 import co.net.quiron.application.shared.EntityManager;
+import co.net.quiron.domain.account.Profile;
 import co.net.quiron.domain.account.User;
-import co.net.quiron.domain.admin.AddressType;
-import co.net.quiron.domain.admin.Country;
-import co.net.quiron.domain.admin.State;
+import co.net.quiron.domain.location.Address;
+import co.net.quiron.domain.location.AddressType;
+import co.net.quiron.domain.location.State;
 import co.net.quiron.domain.person.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-
-import java.time.LocalDate;
-import java.util.Set;
 
 /**
  * Handles Patient entity operations.
@@ -36,12 +33,15 @@ public class PatientManager extends EntityManager<Patient> {
         logger.info("PatientManager(): Instantiating PatientManager class.");
     }
 
-    /**
+/*
+    */
+/**
      * Gets patient Profile.
      *
      * @param username the username
      * @return the patient Profile
-     */
+     *//*
+
     public Profile getPatientProfile(String username) {
 
         logger.info("getPatientProfile(Person): Instantiating Managers.");
@@ -120,4 +120,5 @@ public class PatientManager extends EntityManager<Patient> {
 
         return profile;
     }
+*/
 }

@@ -1,5 +1,8 @@
 package co.net.quiron.controller.account;
 
+import co.net.quiron.application.account.AccountManager;
+import co.net.quiron.application.account.ProfileManager;
+
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -25,12 +28,9 @@ public class SignIn extends HttpServlet {
         String title = "Sign In";
 
         request.setAttribute("title", title);
-        //response.sendRedirect("/quiron/patient/Profile");
 
         RequestDispatcher dispatcher = request.getRequestDispatcher(url);
         dispatcher.forward(request, response);
-
-
     }
 
     @Override
@@ -39,5 +39,10 @@ public class SignIn extends HttpServlet {
 
         String url = "/account/signin";
         String title = "Sign In";
+
+        AccountManager accountManager =  new AccountManager();
+        ProfileManager profileManager = new ProfileManager();
+
+        //accountManager.loadUserAccount(username);
     }
 }

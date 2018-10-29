@@ -47,9 +47,11 @@ public class Signup extends HttpServlet {
         HttpSession session = request.getSession();
         request.setAttribute("title", title);
 
-        if ((request.getParameter("firstName") != null || !request.getParameter("firstName").isEmpty() )
+        if ((request.getParameter("firstName") != null || !request.getParameter("firstName").isEmpty())
             && (request.getParameter("lastName") != null || !request.getParameter("lastName").isEmpty())
             && (request.getParameter("userName") != null || !request.getParameter("userName").isEmpty())
+            && (request.getParameter("birthDate") != null || !request.getParameter("birthDate").isEmpty())
+            && (request.getParameter("gender") != null || !request.getParameter("gender").isEmpty())
             && (request.getParameter("email") != null || !request.getParameter("email").isEmpty())
             && (request.getParameter("password") != null || !request.getParameter("password").isEmpty())
             && (request.getParameter("confirmation") != null || !request.getParameter("confirmation").isEmpty())) {
@@ -58,18 +60,20 @@ public class Signup extends HttpServlet {
             String firstName = request.getParameter("firstName");
             String lastName = request.getParameter("lastName");
             String userName = request.getParameter("userName");
+            String birthDate = request.getParameter("birthDate");
+            String gender = request.getParameter("gender");
             String email = request.getParameter("email");
             String password = request.getParameter("password");
             String confirmation = request.getParameter("confirmation");
 
             accountManager =  new AccountManager();
-            successfullSignup = accountManager.signup(userTypeId, roleId, firstName, lastName, userName, email, password, confirmation);
+            successfullSignup = accountManager.signup(userTypeId, roleId, firstName, lastName, userName, email, birthDate, gender, password, confirmation);
             session.setAttribute("account", accountManager);
 
         }
 
         if (successfullSignup) {
-            response.sendRedirect("/quiron/patient/Profile");
+            response.sendRedirect("/quiron/patient/profile");
         } else {
             request.setAttribute("firstName", request.getParameter("firstName"));
             request.setAttribute("lastName", request.getParameter("lastName"));

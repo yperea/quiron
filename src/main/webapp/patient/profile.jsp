@@ -1,4 +1,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="tags" tagdir="/WEB-INF/tags" %>
+
 <!DOCTYPE html>
 <html lang="en">
 <%@include file="../shared/head.jsp"%>
@@ -13,6 +16,7 @@
     <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
         <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
             <h1 class="h2">My Profile</h1>
+            <!--
             <div class="btn-toolbar mb-2 mb-md-0">
                 <div class="btn-group mr-2">
                     <button class="btn btn-sm btn-outline-secondary">Share</button>
@@ -23,6 +27,7 @@
                     This week
                 </button>
             </div>
+            -->
         </div>
         <br/>
         <div class="row justify-content-center">
@@ -40,7 +45,7 @@
                                    id="firstName"
                                    name="firstName"
                                    placeholder=""
-                                   value="${profile.person.firstName}"
+                                   value="${profile.patient.firstName}"
                                    required />
                             <div class="invalid-feedback">
                                 Valid first name is required.
@@ -53,10 +58,40 @@
                                    id="lastName"
                                    name="lastName"
                                    placeholder=""
-                                   value="${profile.person.lastName}"
+                                   value="${profile.patient.lastName}"
                                    required />
                             <div class="invalid-feedback">
                                 Valid last name is required.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="birthDate">Date of Birth</label>
+                            <input type="text"
+                                   class="form-control"
+                                   id="birthDate"
+                                   name="birthDate"
+                                   placeholder="mm/dd/yyyy"
+                                   value="<tags:localDate date="${profile.patient.birthDate}" pattern="MM/d/yyyy"/>"
+                                   required />
+                            <div class="invalid-feedback">
+                                Please enter a valid date of birth.
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="gender">Gender</label>
+                            <select class="custom-select d-block w-100"
+                                    id="gender"
+                                    name="gender"
+                                    required />
+                                <option value="">Choose...</option>
+                                <option value="M" <c:if test="${profile.patient.gender == 'M'}">selected</c:if> >Male</option>
+                                <option value="F" <c:if test="${profile.patient.gender == 'F'}">selected</c:if> >Female</option>
+                            </select>
+                            <div class="invalid-feedback">
+                                Please provide a gender.
                             </div>
                         </div>
                     </div>
@@ -100,14 +135,14 @@
                             </div>
                         </div>
                         <div class="col-md-4 mb-3">
-                            <label for="state">State</label>
+                            <label for="state">State ${profile.address.state.id}</label>
                             <select class="custom-select d-block w-100"
                                     id="state"
                                     name="state"
                                     required />
                                 <option value="">Choose...</option>
                                 <c:forEach var="state" items="${states}">
-                                <option value="${state.id}">${state.code}</option>
+                                <option value="${state.id}" <c:if test="${profile.address.state.id == state.id}">selected</c:if> >${state.code} - ${state.name}</option>
                                 </c:forEach>
                             </select>
                             <div class="invalid-feedback">

@@ -1,10 +1,9 @@
-package co.net.quiron.application.patient;
+package co.net.quiron.application.person;
 
-import co.net.quiron.application.person.AddressManager;
-import co.net.quiron.application.person.BusinessEntityManager;
-import co.net.quiron.application.person.PersonManager;
-import co.net.quiron.application.shared.EntityManager;
 import co.net.quiron.application.patient.PatientManager;
+import co.net.quiron.application.person.AddressManager;
+import co.net.quiron.application.person.PersonTypeManager;
+import co.net.quiron.domain.account.Profile;
 import co.net.quiron.domain.person.*;
 import co.net.quiron.test.util.DatabaseManager;
 import org.junit.jupiter.api.BeforeEach;
@@ -20,10 +19,11 @@ import static org.junit.jupiter.api.Assertions.*;
  */
 class PatientManagerTest {
 
-    EntityManager<BusinessEntity> businessEntityManager;
-    EntityManager<Person> personManager;
+    //EntityManager<BusinessEntity> businessEntityManager;
+    //EntityManager<Person> personManager;
     PatientManager patientManager;
     AddressManager addressManager;
+    PersonTypeManager personTypeManager;
 
     /**
      * Initializes managers and data for the test.
@@ -31,10 +31,11 @@ class PatientManagerTest {
     @BeforeEach
     void setUp() {
 
-        businessEntityManager = new BusinessEntityManager();
-        personManager = new PersonManager();
+        //businessEntityManager = new BusinessEntityManager();
+        //personManager = new PersonManager();
         patientManager = new PatientManager();
         addressManager = new AddressManager();
+        personTypeManager = new PersonTypeManager();
 
         DatabaseManager dbm = DatabaseManager.getInstance();
         dbm.runSQL("cleandb.sql");
@@ -44,12 +45,15 @@ class PatientManagerTest {
     /**
      * Tests get patient by id.
      */
+
     @Test
     void testGetPatientById() {
         Patient patient = patientManager.get(1);
-        String firstName = patient.getPerson().getFirstName();
+        //String firstName = patient.getPerson().getFirstName();
+        String firstName = patient.getFirstName();
         assertEquals("Yesid", firstName);
     }
+
 
     /**
      * Tests get all patients.
@@ -63,6 +67,7 @@ class PatientManagerTest {
     /**
      * Tests create patient.
      */
+/*
     @Test
     void testCreatePatient() {
 
@@ -91,16 +96,40 @@ class PatientManagerTest {
         assertEquals("Smith", insertedPatient.getPerson().getLastName());
         assertNotNull(insertedEntity.getCreatedDate());
     }
+*/
+
+    @Test
+    void testCreatePatient() {
+
+        LocalDate birthDate = LocalDate.parse("1968-01-01");
+        String gender = "M";
+        String firstName = "John";
+        String lastName = "Smith";
+        PersonType personType = personTypeManager.get(3);
+
+        Patient patient = new Patient(personType, firstName, lastName, birthDate, gender);
+        Patient insertedPatient = patientManager.create(patient);
+
+        assertNotNull(insertedPatient);
+        assertEquals("John", insertedPatient.getFirstName());
+        assertEquals("Smith", insertedPatient.getLastName());
+        assertNotNull(insertedPatient.getCreatedDate());
+    }
+
 
     /**
      * Test Load user account.
      */
+/*
     @Test
     void testGetPatientProfile() {
 
         String userName = "yesper";
         Profile profile = patientManager.getPatientProfile(userName);
 
+
+*/
+/*
         Person person = personManager.get(1);
         Address address = addressManager.get(1);
 
@@ -110,7 +139,10 @@ class PatientManagerTest {
 
         assertEquals(person, personProfile);
         assertEquals(address, addressProfile);
+*//*
+
 
     }
+*/
 
 }
