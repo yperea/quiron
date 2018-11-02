@@ -10,7 +10,7 @@
     <auth-method>FORM</auth-method>
     <form-login-config>
       <form-login-page>/account/signin</form-login-page>
-      <form-error-page>/accessdenied.jsp</form-error-page>
+      <form-error-page>/account/access-denied</form-error-page>
     </form-login-config>
   </login-config>
 

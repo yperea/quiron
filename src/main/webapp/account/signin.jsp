@@ -1,5 +1,31 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="yp" uri="http://yperea.co/ctags" %>
+
 <c:set var="root" value="/quiron" scope="session" />
+
+<%--
+<c:if test="${account.message != null}">
+
+    <c:choose>
+        <c:when test = "${account.message.type == 'ERROR'}">
+            <c:set var="alertType" value="alert-danger" scope="request" />
+        </c:when>
+
+        <c:when test = "${account.message.type == 'WARNING'}">
+            <c:set var="alertType" value="alert-warning" scope="request" />
+        </c:when>
+
+        <c:otherwise>
+            <c:set var="alertType" value="alert-info" scope="request" />
+        </c:otherwise>
+    </c:choose>
+
+    <c:set var="alertDescription" value="${account.message.description}" scope="request" />
+    <c:set var="redirectUrl" value="${account.message.redirect}" scope="request" />
+    <c:remove var="account" scope="session" />
+</c:if>
+--%>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -22,9 +48,25 @@
 
 <body class="text-center">
 
+
 <form class="form-signin" action="j_security_check" method="POST">
     <img class="mb-4" src="../style/img/QuironIcon75x75.png" alt="" width="72" height="72">
     <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
+
+
+<%--
+    <c:if test="${alertType != null}">
+    <div class="alert ${alertType}" role="alert">${alertDescription}
+        <c:if test="${redirectUrl != null}">
+        <a href="${redirectUrl}" class="alert-link">CLICK HERE</a> to continue.
+        </c:if>
+    </div>
+    </c:if>
+--%>
+
+    <yp:alert type="${account.message.type}" url="${account.message.redirect}">${account.message.description}</yp:alert>
+    <c:remove var="account" scope="session" />
+
     <label for="username" class="sr-only">Email address</label>
     <input type="text" id="username" name="j_username" class="form-control" placeholder="Username" required autofocus>
     <label for="password" class="sr-only">Password</label>

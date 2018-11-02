@@ -106,6 +106,12 @@
       <scope>provided</scope>
     </dependency>
 
+    <dependency>
+      <groupId>co.yperea</groupId>
+      <artifactId>alert-message-tag</artifactId>
+      <version>1.0</version>
+    </dependency>
+
   </dependencies>
 
   <build>

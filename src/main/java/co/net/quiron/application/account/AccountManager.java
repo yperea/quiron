@@ -10,6 +10,7 @@ import co.net.quiron.domain.person.BusinessEntity;
 import co.net.quiron.domain.person.Patient;
 import co.net.quiron.domain.person.Person;
 import co.net.quiron.domain.person.PersonType;
+import co.net.quiron.util.Message;
 import lombok.Data;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -32,6 +33,7 @@ public class AccountManager {
     private String firstName;
     private String lastName;
     private String email;
+    private Message message;
 
     /**
      * Hanldes the Application Sign Up.
