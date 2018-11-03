@@ -49,7 +49,7 @@ class PersonManagerTest {
     @Test
     void testGetAllPersons() {
         List<Person> personList = personManager.getList();
-        assertEquals(2, personList.size());
+        assertEquals(3, personList.size());
     }
 
     /**
@@ -66,7 +66,7 @@ class PersonManagerTest {
         Person insertedPerson = personManager.create(person);
 
         assertNotNull(insertedPerson);
-        assertEquals(5, insertedPerson.getId());
+        assertEquals(6, insertedPerson.getId());
         assertEquals("John", insertedPerson.getFirstName());
         assertEquals("Smith", insertedPerson.getLastName());
     }

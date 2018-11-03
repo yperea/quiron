@@ -95,6 +95,7 @@ class AddressManagerTest {
         assertEquals(address, updatedAddress);
     }
 
+    /*TODO: Fix Delete address test*/
     /**
      * Test delete address.
      */

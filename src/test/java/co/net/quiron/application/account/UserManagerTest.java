@@ -52,7 +52,7 @@ class UserManagerTest {
     @Test
     void testGetAllUsers() {
         List<User> userList = userManager.getList();
-        assertEquals(3, userList.size());
+        assertEquals(4, userList.size());
     }
 
     /**

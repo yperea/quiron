@@ -52,7 +52,7 @@ public class ProviderManagerTest {
     @Test
     void testGetAllProviders() {
         List<Provider> providerList = providerManager.getList();
-        assertEquals(1, providerList.size());
+        assertEquals(2, providerList.size());
     }
 
     /**

@@ -67,7 +67,7 @@ class PatientManagerTest {
     @Test
     void testGetAllPatients() {
         List<Patient> patientList = patientManager.getList();
-        assertEquals(1, patientList.size());
+        assertEquals(2, patientList.size());
     }
 
     /**
