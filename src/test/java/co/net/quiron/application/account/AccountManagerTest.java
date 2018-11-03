@@ -1,6 +1,6 @@
 package co.net.quiron.application.account;
 
-import co.net.quiron.application.person.PersonManager;
+import co.net.quiron.application.factory.ManagerFactory;
 import co.net.quiron.application.shared.EntityManager;
 import co.net.quiron.domain.account.Role;
 import co.net.quiron.domain.account.User;
@@ -9,10 +9,6 @@ import co.net.quiron.domain.person.Person;
 import co.net.quiron.test.util.DatabaseManager;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
@@ -31,9 +27,9 @@ class AccountManagerTest {
     @BeforeEach
     void setUp() {
         accountManager = new AccountManager();
-        userManager = new UserManager();
-        personManager = new PersonManager();
-        roleManager = new RoleManager();
+        userManager = ManagerFactory.getManager(User.class);
+        personManager = ManagerFactory.getManager(Person.class);
+        roleManager = ManagerFactory.getManager(Role.class);
 
         DatabaseManager dbm = DatabaseManager.getInstance();
         dbm.runSQL("cleandb.sql");
@@ -59,11 +55,9 @@ class AccountManagerTest {
         boolean isSignedUp = accountManager.signup(personTypeId, roleId, firstName, lastName,
                                                     userName, email, birthDate, gender, password, confirmation);
 
-        User user = userManager.get(3);
+        User user = userManager.getListEquals("username", userName).get(0);
         Role role = roleManager.get(roleId);
         Patient patient = (Patient) user.getPersons().stream().findFirst().get();
-        //Person person = user.getPersons().stream().findFirst().get();
-        //Person person = patient;
         Role userRole = user.getRoles().stream().findFirst().get();
 
         assertTrue(isSignedUp);

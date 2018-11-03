@@ -11,6 +11,11 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
+/**
+ * This class represents the Person domain for the application.
+ *
+ * @autor yperea
+ */
 @Data
 @NoArgsConstructor
 @RequiredArgsConstructor

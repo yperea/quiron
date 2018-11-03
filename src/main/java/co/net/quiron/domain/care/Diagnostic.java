@@ -1,8 +1,6 @@
-package co.net.quiron.domain.location;
+package co.net.quiron.domain.care;
 
-import co.net.quiron.domain.location.AddressType;
-import co.net.quiron.domain.location.State;
-import co.net.quiron.domain.person.BusinessEntity;
+
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.GenericGenerator;
@@ -14,63 +12,45 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * This class represents the Address domain for the application.
+ * This class represents Diagnostic domain for the application.
  *
  * @autor yperea
  */
-@Entity(name = "Address")
-@Table(name = "ADDRESSES")
+@Entity(name = "Diagnostic")
+@Table(name = "DIAGNOSTICS")
 @NoArgsConstructor
 @RequiredArgsConstructor
 @Data
-public class Address {
+public class Diagnostic {
 
     @Id
-    @Column(name = "AddressID")
+    @Column(name = "DiagnosticID")
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
     @GenericGenerator(name = "native", strategy = "native")
     private int id;
 
-    @NonNull
-    @Column(name = "AddressLine1")
-    private String addressLine1;
 
-    @Column(name = "AddressLine2")
-    private String addressLine2;
-
-    @NonNull
-    @Column(name = "City")
-    private String city;
+    @Column(name = "Comments")
+    private String comments;
 
     @NonNull
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
     @ManyToOne
-    @JoinColumn(name = "StateProvinceID")
-    private State state;
+    @JoinColumn(name = "VisitID")
+    private Visit visit;
 
     @NonNull
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
     @ManyToOne
-    @JoinColumn(name = "AddressTypeID")
-    private AddressType addressType;
+    @JoinColumn(name = "DiagnosticCauseID")
+    private DiagnosticCause cause;
 
 
-    @NonNull
-    @Column(name = "PostalCode")
-    private String postalCode;
-
-    @Column(name = "Name")
-    private String name;
-
-    @Column(name = "Description")
-    private String description;
-
-    @EqualsAndHashCode.Exclude
-    @ToString.Exclude
-    @ManyToMany(mappedBy = "addresses")
-    private Set<BusinessEntity> entities = new HashSet<>();
+    /*TODO: Solve error when is FetchType.LAZY. org.hibernate.LazyInitializationException: failed to lazily initialize a collection of role... could not initialize proxy - no Session*/
+    @OneToMany(mappedBy = "diagnostic", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+    private Set<Prescription> prescriptions = new HashSet<>();
 
     /*
     @EqualsAndHashCode.Exclude

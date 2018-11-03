@@ -1,14 +1,19 @@
 package co.net.quiron.application.account;
 
-import co.net.quiron.application.admin.AddressTypeManager;
-import co.net.quiron.application.admin.StateManager;
-import co.net.quiron.application.patient.PatientManager;
-import co.net.quiron.application.person.AddressManager;
+import co.net.quiron.application.factory.ManagerFactory;
+import co.net.quiron.application.shared.EntityManager;
 import co.net.quiron.domain.account.Profile;
+import co.net.quiron.domain.account.Role;
+import co.net.quiron.domain.account.User;
+import co.net.quiron.domain.institution.Organization;
 import co.net.quiron.domain.location.Address;
 import co.net.quiron.domain.location.AddressType;
 import co.net.quiron.domain.location.State;
 import co.net.quiron.domain.person.Patient;
+import co.net.quiron.domain.person.PersonType;
+import co.net.quiron.util.Message;
+import co.net.quiron.util.MessageType;
+import lombok.Data;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -18,16 +23,32 @@ import java.time.format.DateTimeFormatter;
 /**
  * The type Profile manager.
  */
+@Data
 public class ProfileManager {
 
     private final Logger logger = LogManager.getLogger(this.getClass());
     private Profile profile;
+    private Message message;
+
+    private EntityManager<User> userManager;
+    private EntityManager<Role> roleManager;
+    private EntityManager<Patient> patientManager;
+    private EntityManager<PersonType> personTypeManager;
+    private EntityManager<Address> addressManager;
+
 
     /**
      * Instantiates a new Profile manager.
      */
     public ProfileManager() {
         profile = new Profile();
+
+        logger.info("ProfileManager(): Instantiating Managers.");
+        patientManager = ManagerFactory.getManager(Patient.class);
+        personTypeManager = ManagerFactory.getManager(PersonType.class);
+        userManager = ManagerFactory.getManager(User.class);
+        roleManager = ManagerFactory.getManager(Role.class);
+        addressManager = ManagerFactory.getManager(Address.class);
     }
 
     /*TODO: Implement support to others roles: Now this class only supports operations with Patients objects */
@@ -40,19 +61,19 @@ public class ProfileManager {
      */
     public Profile getPatientProfile(AccountManager account) {
 
-        logger.info("getProfile(Person): Instantiating Managers.");
-        PatientManager patientManager = new PatientManager();
-
         logger.info("getPatientProfile(String): Getting the Patient .");
         Patient patient = patientManager.get(account.getPatientId());
 
-        logger.info("getPatientProfile(String): Calling Profile.setPatient().");
-        profile.setPatient(patient);
+        if (patient != null) {
+            logger.info("getPatientProfile(String): Calling Profile.setPatient().");
+            profile.setPatient(patient);
 
-        logger.info("getPatientProfile(String): Calling Profile.setAddress().");
-        if (!patient.getAddresses().isEmpty()) {
-            profile.setAddress(patient.getAddresses().stream().findFirst().get());
+            logger.info("getPatientProfile(String): Calling Profile.setAddress().");
+            if (patient.getAddresses() != null && !patient.getAddresses().isEmpty()) {
+                profile.setAddress(patient.getAddresses().stream().findFirst().get());
+            }
         }
+
 
         logger.info("getPatientProfile(Person): Returning the Profile.");
         return profile;
@@ -79,8 +100,7 @@ public class ProfileManager {
 
 
         logger.info("savePatientProfile(): Instantiating Managers.");
-        AddressManager addressManager = new AddressManager();
-        PatientManager patientManager = new PatientManager();
+
         AddressType addressType = new AddressType();
         Patient patient = patientManager.get(account.getPatientId());
 
@@ -89,12 +109,12 @@ public class ProfileManager {
         if (!patient.getAddresses().isEmpty()) {
             address = patient.getAddresses().stream().findFirst().get();
         } else {
-            addressType = new AddressTypeManager().get(3);
+            addressType = (AddressType) ManagerFactory.getManager(AddressType.class).get(3);
             address.setAddressType(addressType);
             patient.addAddress(address);
         }
 
-        State state = new StateManager().get(stateId);
+        State state = (State) ManagerFactory.getManager(State.class).get(stateId);
 
         patient.setFirstName(firstName);
         patient.setLastName(lastName);
@@ -114,9 +134,42 @@ public class ProfileManager {
 
         logger.info("getPatientProfile(String): Calling Profile.setPatient().");
         profile.setPatient(patient);
+
         logger.info("getPatientProfile(String): Calling Profile.setAddress().");
         profile.setAddress(address);
 
+        message = new Message(MessageType.INFO, "Profile successfully updated.");
+
         return profile;
     }
+
+    /**
+     * Saves Patient's Insurance Information.
+     *
+     * @param account    the account
+     * @param companyId  the insurance company id
+     * @param subscriberCode the subscriber id
+     * @return the profile
+     */
+    public Profile savePatientInsurance(AccountManager account, int companyId, String subscriberCode) {
+
+
+        logger.info("savePatientInsurance(): Instantiating Managers.");
+
+        Patient patient = patientManager.get(account.getPatientId());
+
+        Organization company = (Organization) ManagerFactory.getManager(Organization.class).get(companyId);
+
+        patient.setOrganization(company);
+        patient.setSubscriberCode(subscriberCode);
+        patientManager.update(patient);
+
+        logger.info("getPatientProfile(String): Calling Profile.setPatient().");
+        profile.setPatient(patient);
+
+        message = new Message(MessageType.INFO, "Insurance Information successfully updated.");
+
+        return profile;
+    }
+
 }

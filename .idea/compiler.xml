@@ -6,10 +6,12 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="alert-message-tag" />
         <module name="quiron" />
         <module name="quiron-webapp" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="alert-message-tag" target="1.8" />
+    </bytecodeTargetLevel>
   </component>
 </project>

@@ -1,7 +1,7 @@
 package co.net.quiron.application.person;
 
+import co.net.quiron.application.factory.ManagerFactory;
 import co.net.quiron.application.shared.EntityManager;
-import co.net.quiron.domain.person.BusinessEntity;
 import co.net.quiron.domain.person.Person;
 import co.net.quiron.domain.person.PersonType;
 import co.net.quiron.test.util.DatabaseManager;
@@ -17,8 +17,8 @@ import static org.junit.jupiter.api.Assertions.*;
  */
 class PersonManagerTest {
 
-    PersonManager personManager;
-    PersonTypeManager personTypeManager;
+    EntityManager<Person> personManager;
+    EntityManager<PersonType> personTypeManager;
 
     /**
      * Initializes managers and data for the test.
@@ -26,8 +26,8 @@ class PersonManagerTest {
     @BeforeEach
     void setUp() {
 
-        personManager = new PersonManager();
-        personTypeManager = new PersonTypeManager();
+        personManager = ManagerFactory.getManager(Person.class);
+        personTypeManager = ManagerFactory.getManager(PersonType.class);
 
         DatabaseManager dbm = DatabaseManager.getInstance();
         dbm.runSQL("cleandb.sql");
@@ -38,7 +38,7 @@ class PersonManagerTest {
      */
     @Test
     void testGetPersonById() {
-        Person person = personManager.get(1);
+        Person person = personManager.get(3);
         String firstName = person.getFirstName();
         assertEquals("Yesid", firstName);
     }
@@ -55,7 +55,6 @@ class PersonManagerTest {
     /**
      * Test create person.
      */
-
     @Test
     void testCreatePerson() {
 
@@ -67,11 +66,8 @@ class PersonManagerTest {
         Person insertedPerson = personManager.create(person);
 
         assertNotNull(insertedPerson);
-        assertEquals(3, insertedPerson.getId());
+        assertEquals(5, insertedPerson.getId());
         assertEquals("John", insertedPerson.getFirstName());
         assertEquals("Smith", insertedPerson.getLastName());
-
     }
-
-
 }

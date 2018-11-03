@@ -6,19 +6,18 @@ mysql -uquiron -pquiron -D quirondb <<EOF
 
 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
-SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
+SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL,ALLOW_INVALID_DATES';
 
 -- -----------------------------------------------------
 -- Schema quirondb
 -- -----------------------------------------------------
-DROP SCHEMA IF EXISTS quirondb;
+DROP SCHEMA IF EXISTS quirondb ;
 
 -- -----------------------------------------------------
 -- Schema quirondb
 -- -----------------------------------------------------
 CREATE SCHEMA IF NOT EXISTS quirondb DEFAULT CHARACTER SET utf8 ;
 USE quirondb ;
-
 
 -- -----------------------------------------------------
 -- Table ENTITIES
@@ -31,6 +30,7 @@ CREATE TABLE IF NOT EXISTS ENTITIES (
   PRIMARY KEY (EntityID))
 ENGINE = InnoDB
 COMMENT = 'Source of the ID that connects providers and patients with address and contact information.';
+
 
 -- -----------------------------------------------------
 -- Table PERSON_TYPES
@@ -106,6 +106,47 @@ CREATE INDEX fk_PROVIDERS_PERSONS1_idx ON PROVIDERS (ProviderID ASC);
 
 
 -- -----------------------------------------------------
+-- Table ORGANIZATION_TYPES
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS ORGANIZATION_TYPES ;
+
+CREATE TABLE IF NOT EXISTS ORGANIZATION_TYPES (
+  OrganizationTypeID INT NOT NULL AUTO_INCREMENT,
+  Name NVARCHAR(45) NOT NULL,
+  CreatedDate DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  ModifiedDate DATETIME NULL,
+  PRIMARY KEY (OrganizationTypeID))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table ORGANIZATIONS
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS ORGANIZATIONS ;
+
+CREATE TABLE IF NOT EXISTS ORGANIZATIONS (
+  OrganizationID INT NOT NULL,
+  OrganizationTypeID INT NOT NULL,
+  Name NVARCHAR(45) NULL,
+  CreatedDate DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  ModifiedDate DATETIME NULL,
+  PRIMARY KEY (OrganizationID),
+  CONSTRAINT fk_ORGANIZATIONS_ENTITIES1
+    FOREIGN KEY (OrganizationID)
+    REFERENCES ENTITIES (EntityID)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
+  CONSTRAINT fk_ORGANIZATIONS_ORGANIZATION_TYPES1
+    FOREIGN KEY (OrganizationTypeID)
+    REFERENCES ORGANIZATION_TYPES (OrganizationTypeID)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+CREATE INDEX fk_ORGANIZATIONS_ORGANIZATION_TYPES1_idx ON ORGANIZATIONS (OrganizationTypeID ASC);
+
+
+-- -----------------------------------------------------
 -- Table PATIENTS
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS PATIENTS ;
@@ -124,7 +165,28 @@ CREATE TABLE IF NOT EXISTS PATIENTS (
     FOREIGN KEY (PatientID)
     REFERENCES PERSONS (PersonID)
     ON DELETE CASCADE
-    ON UPDATE CASCADE)
+    ON UPDATE CASCADE,
+  CONSTRAINT fk_PATIENTS_ORGANIZATIONS1
+    FOREIGN KEY (CompanyID)
+    REFERENCES ORGANIZATIONS (OrganizationID)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+CREATE INDEX fk_PATIENTS_ORGANIZATIONS1_idx ON PATIENTS (CompanyID ASC);
+
+
+-- -----------------------------------------------------
+-- Table SERVICES
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS SERVICES ;
+
+CREATE TABLE IF NOT EXISTS SERVICES (
+  ServiceID INT NOT NULL AUTO_INCREMENT,
+  Name VARCHAR(45) NOT NULL,
+  CreatedDate DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  ModifiedDate DATETIME NULL,
+  PRIMARY KEY (ServiceID))
 ENGINE = InnoDB;
 
 
@@ -263,7 +325,7 @@ CREATE TABLE IF NOT EXISTS PROVIDERS_LOCATIONS (
   EndTime TIME NULL,
   CreatedDate DATETIME NULL DEFAULT CURRENT_TIMESTAMP,
   ModifiedDate DATETIME NULL,
-  PRIMARY KEY (ProviderID),
+  PRIMARY KEY (ProviderID, OrganizationID, AddressID),
   CONSTRAINT fk_CARE_SITES_has_PROVIDERS_PROVIDERS1
     FOREIGN KEY (ProviderID)
     REFERENCES PROVIDERS (ProviderID)
@@ -290,6 +352,7 @@ CREATE TABLE IF NOT EXISTS VISITS (
   VisitID INT NOT NULL AUTO_INCREMENT,
   PatientID INT NOT NULL,
   ProviderID INT NOT NULL,
+  OrganizationID INT NOT NULL,
   LocationID INT NOT NULL,
   ServiceID INT NOT NULL,
   ScheduledStartDate DATETIME NULL,
@@ -313,16 +376,23 @@ CREATE TABLE IF NOT EXISTS VISITS (
     REFERENCES PATIENTS (PatientID)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
+  CONSTRAINT fk_VISITS_SERVICES1
+    FOREIGN KEY (ServiceID)
+    REFERENCES SERVICES (ServiceID)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
   CONSTRAINT fk_VISITS_PROVIDERS_LOCATIONS1
-    FOREIGN KEY (ProviderID)
-    REFERENCES PROVIDERS_LOCATIONS (ProviderID)
+    FOREIGN KEY (ProviderID , OrganizationID , LocationID)
+    REFERENCES PROVIDERS_LOCATIONS (ProviderID , OrganizationID , AddressID)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 CREATE INDEX fk_VISITS_PATIENTS1_idx ON VISITS (PatientID ASC);
 
-CREATE INDEX fk_VISITS_PROVIDERS_LOCATIONS1_idx ON VISITS (ProviderID ASC, LocationID ASC);
+CREATE INDEX fk_VISITS_SERVICES1_idx ON VISITS (ServiceID ASC);
+
+CREATE INDEX fk_VISITS_PROVIDERS_LOCATIONS1_idx ON VISITS (ProviderID ASC, OrganizationID ASC, LocationID ASC);
 
 
 -- -----------------------------------------------------
@@ -555,25 +625,6 @@ CREATE INDEX fk_PERSON_CREDITCARDS_PERSONS1_idx ON CREDITCARDS (PersonID ASC);
 CREATE INDEX fk_PERSON_CREDITCARDS_CARD_TYPES1_idx ON CREDITCARDS (CardTypeID ASC);
 
 CREATE INDEX fk_PERSON_CREDITCARDS_BANKS1_idx ON CREDITCARDS (BankID ASC);
-
-
--- -----------------------------------------------------
--- Table ORGANIZATIONS
--- -----------------------------------------------------
-DROP TABLE IF EXISTS ORGANIZATIONS ;
-
-CREATE TABLE IF NOT EXISTS ORGANIZATIONS (
-  OrganizationID INT NOT NULL AUTO_INCREMENT,
-  Name NVARCHAR(45) NULL,
-  CreatedDate DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  ModifiedDate DATETIME NULL,
-  PRIMARY KEY (OrganizationID),
-  CONSTRAINT fk_ORGANIZATIONS_ENTITIES1
-    FOREIGN KEY (OrganizationID)
-    REFERENCES ENTITIES (EntityID)
-    ON DELETE CASCADE
-    ON UPDATE CASCADE)
-ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
@@ -815,8 +866,8 @@ CREATE TABLE IF NOT EXISTS V_USERS_ROLES (Username INT, RoleName INT);
 -- -----------------------------------------------------
 -- View V_USERS_ROLES
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS V_USERS_ROLES;
 DROP VIEW IF EXISTS V_USERS_ROLES ;
+DROP TABLE IF EXISTS V_USERS_ROLES;
 USE quirondb;
 CREATE OR REPLACE VIEW V_USERS_ROLES AS
     SELECT
@@ -832,19 +883,36 @@ SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
 
--- GRANT SELECT ON USERS to 'tomcat'@'localhost';
--- GRANT SELECT ON ROLES to 'tomcat'@'localhost';
--- GRANT SELECT ON USERS_ROLES to 'tomcat'@'localhost';
--- GRANT SELECT ON V_USERS_ROLES to 'tomcat'@'localhost';
-
-DELETE FROM PERSON_USERS;
 DELETE FROM USERS_ROLES;
+DELETE FROM PERSON_USERS;
+DELETE FROM TREATMENTS_PRESCRIPTIONS;
+DELETE FROM ENTITY_ADDRESSES;
+DELETE FROM PROVIDERS_LOCATIONS;
+DELETE FROM TREATMENTS;
+ALTER TABLE TREATMENTS AUTO_INCREMENT = 1;
+DELETE FROM PRESCRIPTIONS;
+ALTER TABLE PRESCRIPTIONS AUTO_INCREMENT = 1;
+DELETE FROM MEDICATIONS;
+ALTER TABLE MEDICATIONS AUTO_INCREMENT = 1;
+DELETE FROM DIAGNOSTICS;
+ALTER TABLE DIAGNOSTICS AUTO_INCREMENT = 1;
+DELETE FROM DIAGNOSTIC_CAUSES;
+ALTER TABLE DIAGNOSTIC_CAUSES AUTO_INCREMENT = 1;
+DELETE FROM VISITS;
+ALTER TABLE VISITS AUTO_INCREMENT = 1;
+DELETE FROM SERVICES;
+ALTER TABLE SERVICES AUTO_INCREMENT = 1;
+DELETE FROM PATIENTS;
+DELETE FROM PROVIDERS;
 DELETE FROM PERSONS;
+DELETE FROM ORGANIZATIONS;
 ALTER TABLE PERSONS AUTO_INCREMENT = 1;
 DELETE FROM ENTITIES;
 ALTER TABLE ENTITIES AUTO_INCREMENT = 1;
 DELETE FROM PERSON_TYPES;
 ALTER TABLE PERSON_TYPES AUTO_INCREMENT = 1;
+DELETE FROM ADDRESSES;
+ALTER TABLE ADDRESSES AUTO_INCREMENT = 1;
 DELETE FROM STATE_PROVINCES;
 ALTER TABLE STATE_PROVINCES AUTO_INCREMENT = 1;
 DELETE FROM COUNTRIES;
@@ -857,19 +925,9 @@ DELETE FROM ROLES;
 ALTER TABLE ROLES AUTO_INCREMENT = 1;
 INSERT INTO ROLES (RoleName, Description) VALUES('Administrator', 'System administrator');
 INSERT INTO ROLES (RoleName, Description) VALUES('User', 'System user');
-INSERT INTO USERS(Username, Email, Password ) VALUES ('yesper', 'yesper@aol.com', '1234');
-INSERT INTO USERS(Username, Email, Password ) VALUES ('clacar', 'clacar@aol.com', '1234');
-INSERT INTO USERS_ROLES(UserID, RoleID) VALUES (1,1);
-INSERT INTO USERS_ROLES(UserID, RoleID) VALUES (2,2);
-INSERT INTO ENTITIES (CreatedDate) VALUES (CURRENT_TIMESTAMP);
-INSERT INTO ENTITIES (CreatedDate) VALUES (CURRENT_TIMESTAMP);
 INSERT INTO PERSON_TYPES(PersonTypeName) VALUES("Employee");
 INSERT INTO PERSON_TYPES(PersonTypeName) VALUES("Provider");
 INSERT INTO PERSON_TYPES(PersonTypeName) VALUES("Patient");
-INSERT INTO PERSONS (PersonID, PersonTypeID, Title, FirstName, MiddleName, LastName, LastName2, Suffix) VALUES(1, 1, null, 'Yesid', null, 'Perea', 'Martinez', null);
-INSERT INTO PERSONS (PersonID, PersonTypeID, Title, FirstName, MiddleName, LastName, LastName2, Suffix) VALUES(2, 3, null, 'Claudia', 'Patricia', 'Carabali', 'Chacon', null);
-INSERT INTO PERSON_USERS (PersonID, PersonTypeID, UserID) VALUES (1, 1, 1);
-INSERT INTO PERSON_USERS (PersonID, PersonTypeID, UserID) VALUES (2, 3, 2);
 INSERT INTO COUNTRIES(CountryCode, Name) VALUES ('US', 'United States');
 INSERT INTO COUNTRIES(CountryCode, Name) VALUES ('CO', 'Colombia');
 INSERT INTO COUNTRIES(CountryCode, Name) VALUES ('CA', 'Canada');
@@ -878,7 +936,7 @@ INSERT INTO COUNTRIES(CountryCode, Name) VALUES ('FR', 'France');
 INSERT INTO STATE_PROVINCES (StateProvinceCode, Name, CountryID) VALUES ('AK', 'Alaska', 1);
 INSERT INTO STATE_PROVINCES (StateProvinceCode, Name, CountryID) VALUES ('AL', 'Alabama', 1);
 INSERT INTO STATE_PROVINCES (StateProvinceCode, Name, CountryID) VALUES ('AR', 'Arkansas', 1);
-INSERT INTO STATE_PROVINCES (StateProvinceCode, Name, CountryID) VALUES ('AZ', 'Arizona', 1);
+INSERT INTO STATE_PROVINCES (StateProvinceCode, Name, CountryID) VALUES ('IL', 'Illinois', 1);
 INSERT INTO STATE_PROVINCES (StateProvinceCode, Name, CountryID) VALUES ('CA', 'California', 1);
 INSERT INTO STATE_PROVINCES (StateProvinceCode, Name, CountryID) VALUES ('WI', 'Wisconsin', 1);
 INSERT INTO STATE_PROVINCES (StateProvinceCode, Name, CountryID) VALUES ('AB', 'Alberta', 3);
@@ -889,7 +947,50 @@ INSERT INTO STATE_PROVINCES (StateProvinceCode, Name, CountryID) VALUES ('NB', '
 INSERT INTO ADDRESS_TYPES(Name) VALUES ('Home');
 INSERT INTO ADDRESS_TYPES(Name) VALUES ('Billing');
 INSERT INTO ADDRESS_TYPES(Name) VALUES ('Office');
-INSERT INTO ADDRESS_TYPES(Name) VALUES ('Primary');
 INSERT INTO ADDRESS_TYPES(Name) VALUES ('Shipping');
+INSERT INTO ADDRESS_TYPES(Name) VALUES ('Medical Center');
+INSERT INTO ORGANIZATION_TYPES(Name) VALUES ('Insurance');
+INSERT INTO ORGANIZATION_TYPES(Name) VALUES ('Clinic');
+INSERT INTO ORGANIZATION_TYPES(Name) VALUES ('Hospital');
+INSERT INTO ENTITIES (CreatedDate) VALUES (CURRENT_TIMESTAMP);
+INSERT INTO ORGANIZATIONS(OrganizationID, Name, OrganizationTypeID) VALUE (1, 'Group Health Cooperative', 1);
+INSERT INTO ADDRESSES(AddressLine1, AddressLine2, City, StateProvinceID, AddressTypeID, PostalCode, Name) VALUES ('675 W. Washington Ave.', null, 'Madison', 6, 5, 53703, 'Capitol Clinic');
+INSERT INTO ENTITY_ADDRESSES(EntityID, AddressID) VALUE (1,1);
+INSERT INTO ADDRESSES(AddressLine1, AddressLine2, City, StateProvinceID, AddressTypeID, PostalCode, Name) VALUES ('3051 Cahill Main', null, 'Fitchburg', 6, 5, 53711, 'Hatchery Hill Clinic');
+INSERT INTO ENTITY_ADDRESSES(EntityID, AddressID) VALUE (1,2);
+INSERT INTO ADDRESSES(AddressLine1, AddressLine2, City, StateProvinceID, AddressTypeID, PostalCode, Name) VALUES ('5249 E. Terrace Dr.', null, 'Madison', 6, 5, 53718, 'East Clinic');
+INSERT INTO ENTITY_ADDRESSES(EntityID, AddressID) VALUE (1,3);
+INSERT INTO ADDRESSES(AddressLine1, AddressLine2, City, StateProvinceID, AddressTypeID, PostalCode, Name) VALUES ('1705 Hoffman St.', null, 'Madison', 6, 5, 53704, 'Madison College Community Clinic');
+INSERT INTO ENTITY_ADDRESSES(EntityID, AddressID) VALUE (1,4);
+INSERT INTO ADDRESSES(AddressLine1, AddressLine2, City, StateProvinceID, AddressTypeID, PostalCode, Name) VALUES ('8054 Watts Rd.', null, 'Madison', 6, 5, 53719, 'Princeton Club West PT/OT Clinic');
+INSERT INTO ENTITY_ADDRESSES(EntityID, AddressID) VALUE (1,5);
+INSERT INTO ADDRESSES(AddressLine1, AddressLine2, City, StateProvinceID, AddressTypeID, PostalCode, Name) VALUES ('8202 Excelsior Dr.', null, 'Madison', 6, 5, 53717, 'Sauk Trails Clinic');
+INSERT INTO ENTITY_ADDRESSES(EntityID, AddressID) VALUE (1,6);
+INSERT INTO ENTITIES (CreatedDate) VALUES (CURRENT_TIMESTAMP);
+INSERT INTO ORGANIZATIONS(OrganizationID, Name, OrganizationTypeID) VALUE (2, 'United Health Care', 1);
+INSERT INTO ADDRESSES(AddressLine1, AddressLine2, City, StateProvinceID, AddressTypeID, PostalCode, Name) VALUES ('2135 Silvernail Rd', null, 'Pewaukee', 6, 5, 53072, 'Minuteclinic Walk In Clinic Cvs Pharm');
+INSERT INTO ENTITY_ADDRESSES(EntityID, AddressID) VALUE (2,7);
+INSERT INTO ADDRESSES(AddressLine1, AddressLine2, City, StateProvinceID, AddressTypeID, PostalCode, Name) VALUES ('221 E Sunset Dr', null, 'Waukesha', 6, 5, 53189, 'Walgreens Healthcare Clinic');
+INSERT INTO ENTITY_ADDRESSES(EntityID, AddressID) VALUE (2,8);
+INSERT INTO ADDRESSES(AddressLine1, AddressLine2, City, StateProvinceID, AddressTypeID, PostalCode, Name) VALUES ('1305 Randall Rd', null, 'Crystal Lake', 4, 5, 60014, 'Minuteclinic Illinois');
+INSERT INTO ENTITY_ADDRESSES(EntityID, AddressID) VALUE (2,9);
+INSERT INTO ENTITIES (CreatedDate) VALUES (CURRENT_TIMESTAMP);
+INSERT INTO PERSONS (PersonID, PersonTypeID, Title, FirstName, MiddleName, LastName, LastName2, Suffix) VALUES(3, 2, null, 'Yesid', null, 'Perea', 'Martinez', null);
+INSERT INTO PATIENTS(PatientID, BirthDate, Gender, CompanyID, SubscriberCode, IsPrimarySubscriber) VALUES(3, "1977-6-15", "M", 1, "111111", 0);
+INSERT INTO ADDRESSES(AddressLine1, AddressLine2, City, StateProvinceID, AddressTypeID, PostalCode) VALUES ('1701 Wright Street', 'Floor 3', 'Madison', 6, 1, 53704);
+INSERT INTO ENTITY_ADDRESSES(EntityID, AddressID) VALUE (3,10);
+INSERT INTO ENTITIES (CreatedDate) VALUES (CURRENT_TIMESTAMP);
+INSERT INTO PERSONS (PersonID, PersonTypeID, Title, FirstName, MiddleName, LastName, LastName2, Suffix) VALUES(4, 3, null, 'Claudia', 'Patricia', 'Carabali', 'Chacon', null);
+INSERT INTO PATIENTS(PatientID, BirthDate, Gender, CompanyID, SubscriberCode, IsPrimarySubscriber) VALUES(4, "1974-3-18", "F", 1, "222222", 1);
+INSERT INTO ADDRESSES(AddressLine1, AddressLine2, City, StateProvinceID, AddressTypeID, PostalCode) VALUES ('3591 Anderson Street', null, 'Madison', 6, 1, 53704);
+INSERT INTO ENTITY_ADDRESSES(EntityID, AddressID) VALUE (4,11);
+INSERT INTO USERS(Username, Email, Password ) VALUES ('admin', 'admin@aol.com', '1234');
+INSERT INTO USERS(Username, Email, Password ) VALUES ('yesper', 'yesper@aol.com', '1234');
+INSERT INTO USERS(Username, Email, Password ) VALUES ('clacar', 'clacar@aol.com', '1234');
+INSERT INTO USERS_ROLES(UserID, RoleID) VALUES (1,1);
+INSERT INTO USERS_ROLES(UserID, RoleID) VALUES (2,2);
+INSERT INTO USERS_ROLES(UserID, RoleID) VALUES (3,2);
+INSERT INTO PERSON_USERS (PersonID, PersonTypeID, UserID) VALUES (3, 2, 2);
+INSERT INTO PERSON_USERS (PersonID, PersonTypeID, UserID) VALUES (4, 3, 3);
 
 EOF

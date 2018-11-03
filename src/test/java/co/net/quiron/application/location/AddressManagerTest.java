@@ -1,8 +1,6 @@
 package co.net.quiron.application.location;
 
-import co.net.quiron.application.admin.AddressTypeManager;
-import co.net.quiron.application.admin.StateManager;
-import co.net.quiron.application.person.AddressManager;
+import co.net.quiron.application.factory.ManagerFactory;
 import co.net.quiron.application.shared.EntityManager;
 import co.net.quiron.domain.location.AddressType;
 import co.net.quiron.domain.location.State;
@@ -29,9 +27,9 @@ class AddressManagerTest {
      */
     @BeforeEach
     void setUp() {
-        addressManager = new AddressManager();
-        stateManager = new StateManager();
-        addressTypeManager = new AddressTypeManager();
+        addressManager = ManagerFactory.getManager(Address.class);
+        stateManager = ManagerFactory.getManager(State.class);
+        addressTypeManager = ManagerFactory.getManager(AddressType.class);
 
         DatabaseManager dbm = DatabaseManager.getInstance();
         dbm.runSQL("cleandb.sql");
@@ -45,7 +43,7 @@ class AddressManagerTest {
         Address address = addressManager.get(1);
 
         assertNotNull(address);
-        assertEquals("1701 Wright Street", address.getAddressLine1());
+        assertEquals("675 W. Washington Ave.", address.getAddressLine1());
     }
 
     /**
@@ -54,7 +52,7 @@ class AddressManagerTest {
     @Test
     void testGetAllAddresses() {
         List<Address> addressList = addressManager.getList();
-        assertEquals(2,addressList.size());
+        assertEquals(11,addressList.size());
     }
 
     /**

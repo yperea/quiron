@@ -64,8 +64,8 @@
     </c:if>
 --%>
 
-    <yp:alert type="${account.message.type}" url="${account.message.redirect}">${account.message.description}</yp:alert>
-    <c:remove var="account" scope="session" />
+    <yp:alert type="${message.type}" url="${message.redirect}">${message.description}</yp:alert>
+    <c:remove var="message" scope="session" />
 
     <label for="username" class="sr-only">Email address</label>
     <input type="text" id="username" name="j_username" class="form-control" placeholder="Username" required autofocus>

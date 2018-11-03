@@ -16,7 +16,7 @@ import java.util.*;
 @Data
 @NoArgsConstructor
 @Inheritance(strategy = InheritanceType.JOINED)
-public class BusinessEntity {
+public abstract class BusinessEntity {
 
     @Id
     @Column(name = "EntityID")

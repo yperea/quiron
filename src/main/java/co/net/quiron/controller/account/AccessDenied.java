@@ -54,6 +54,7 @@ public class AccessDenied extends HttpServlet {
         message.setDescription("Incorrect username or password.");
         accountManager.setMessage(message);
         session.setAttribute("account", accountManager);
+        session.setAttribute("message", message);
 
         request.setAttribute("title", title);
 

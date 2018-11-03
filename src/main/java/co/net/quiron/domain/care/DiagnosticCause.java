@@ -1,4 +1,4 @@
-package co.net.quiron.domain.location;
+package co.net.quiron.domain.care;
 
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
@@ -10,19 +10,20 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
-
 /**
- * This class represents the Address type domain for the application.
+ * This class represents Diagnostic Cause domain for the application.
+ *
+ * @autor yperea
  */
-@Entity(name = "AddressType")
-@Table(name = "ADDRESS_TYPES")
+@Entity(name = "DiagnosticCause")
+@Table(name = "DIAGNOSTIC_CAUSES")
+@Data
 @NoArgsConstructor
 @RequiredArgsConstructor
-@Data
-public class AddressType {
+public class DiagnosticCause {
 
     @Id
-    @Column(name = "AddressTypeID")
+    @Column(name = "DiagnosticCauseID")
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
     @GenericGenerator(name = "native", strategy = "native")
     private int id;
@@ -31,22 +32,18 @@ public class AddressType {
     @Column(name = "Name")
     private String name;
 
-    /*
-    @EqualsAndHashCode.Exclude
-    @ToString.Exclude
-    @ManyToMany(mappedBy = "addresstypes")
-    private Set<BusinessEntity> entities = new HashSet<>();
-    */
+    @Column(name = "CommonName")
+    private String commonName;
 
-/*
-    @OneToMany(mappedBy = "entityAddressId.addressType", cascade = {CascadeType.ALL}, fetch = FetchType.EAGER)
-    private Set<EntityAddress> entityAddresses = new HashSet<>();
-*/
+    @Column(name = "Description")
+    private String description;
 
-    @EqualsAndHashCode.Exclude
-    @ToString.Exclude
-    @OneToMany(mappedBy = "addressType", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<Address> addresses = new HashSet<>();
+    @Column(name = "GeneralInstructions")
+    private String instructions;
+
+
+    @OneToMany(mappedBy = "cause", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+    private Set<Diagnostic> diagnostics = new HashSet<>();
 
     @CreationTimestamp
     @Temporal(TemporalType.TIMESTAMP)
@@ -58,4 +55,5 @@ public class AddressType {
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "ModifiedDate")
     private Date modifiedDate;
+
 }

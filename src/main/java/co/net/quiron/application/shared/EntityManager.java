@@ -12,7 +12,7 @@ import java.util.List;
  *
  * @param <T> the type parameter
  */
-public abstract class EntityManager<T> {
+public class EntityManager<T> {
 
     private final Logger logger = LogManager.getLogger(this.getClass());
     private IAppRepository<T> entityRepository;
@@ -26,6 +26,10 @@ public abstract class EntityManager<T> {
         entityRepository = new AppRepository<>(entityType);
         logger.info("EntityManager(Class<T>): Instantiating EntityManager class.");
     }
+
+
+    //public EntityManager(EntityManager entityType) {
+    //}
 
     /**
      * Gets the list of all of the Entities.

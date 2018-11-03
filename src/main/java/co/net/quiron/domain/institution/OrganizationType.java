@@ -1,4 +1,4 @@
-package co.net.quiron.domain.location;
+package co.net.quiron.domain.institution;
 
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
@@ -10,19 +10,19 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
-
 /**
- * This class represents the Address type domain for the application.
+ * This class represents the Organization domain for the application.
+ *
+ * @autor yperea
  */
-@Entity(name = "AddressType")
-@Table(name = "ADDRESS_TYPES")
+@Entity(name = "OrganizationType")
+@Table(name = "ORGANIZATION_TYPES")
 @NoArgsConstructor
 @RequiredArgsConstructor
 @Data
-public class AddressType {
-
+public class OrganizationType {
     @Id
-    @Column(name = "AddressTypeID")
+    @Column(name = "OrganizationTypeID")
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
     @GenericGenerator(name = "native", strategy = "native")
     private int id;
@@ -31,22 +31,10 @@ public class AddressType {
     @Column(name = "Name")
     private String name;
 
-    /*
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
-    @ManyToMany(mappedBy = "addresstypes")
-    private Set<BusinessEntity> entities = new HashSet<>();
-    */
-
-/*
-    @OneToMany(mappedBy = "entityAddressId.addressType", cascade = {CascadeType.ALL}, fetch = FetchType.EAGER)
-    private Set<EntityAddress> entityAddresses = new HashSet<>();
-*/
-
-    @EqualsAndHashCode.Exclude
-    @ToString.Exclude
-    @OneToMany(mappedBy = "addressType", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<Address> addresses = new HashSet<>();
+    @OneToMany(mappedBy = "organizationType", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<Organization> organizations = new HashSet<>();
 
     @CreationTimestamp
     @Temporal(TemporalType.TIMESTAMP)
@@ -58,4 +46,5 @@ public class AddressType {
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "ModifiedDate")
     private Date modifiedDate;
+
 }

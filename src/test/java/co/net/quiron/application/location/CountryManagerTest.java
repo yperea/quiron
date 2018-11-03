@@ -1,6 +1,7 @@
 package co.net.quiron.application.location;
 
-import co.net.quiron.application.admin.CountryManager;
+import co.net.quiron.application.factory.ManagerFactory;
+import co.net.quiron.application.shared.EntityManager;
 import co.net.quiron.domain.location.Country;
 import co.net.quiron.domain.location.State;
 import co.net.quiron.test.util.DatabaseManager;
@@ -17,14 +18,14 @@ import static org.junit.jupiter.api.Assertions.*;
  */
 class CountryManagerTest {
 
-    CountryManager countryManager;
+    EntityManager<Country> countryManager;
 
     /**
      * Sets up.
      */
     @BeforeEach
     void setUp() {
-        countryManager = new CountryManager();
+        countryManager = ManagerFactory.getManager(Country.class);
         DatabaseManager dbm = DatabaseManager.getInstance();
         dbm.runSQL("cleandb.sql");
     }
@@ -78,13 +79,11 @@ class CountryManagerTest {
         int countryId = 4;
         Date currentModifiedDate = null;
 
-        //Country countryToUpdate = countryManager.getCountry(countryId);
         Country countryToUpdate = countryManager.get(countryId);
         countryToUpdate.setName(newCountryName);
         currentModifiedDate = countryToUpdate.getModifiedDate();
 
         countryManager.update(countryToUpdate);
-        //Country countryUpdated = countryManager.getCountry(countryId);
         Country countryUpdated = countryManager.get(countryId);
 
         assertEquals(countryToUpdate, countryUpdated);
@@ -101,13 +100,8 @@ class CountryManagerTest {
     void testDeleteCountry() {
 
         int countryIdToDelete = 3;
-/*
-        countryManager.delete(countryManager.getCountry(countryIdToDelete));
-        assertNull(countryManager.getCountry(countryIdToDelete));
-*/
         countryManager.delete(countryManager.get(countryIdToDelete));
         assertNull(countryManager.get(countryIdToDelete));
-
     }
 
     /**
@@ -125,7 +119,5 @@ class CountryManagerTest {
         assertEquals(newCountry.getCode(), createdCountry.getCode());
         assertEquals(newCountry.getName(), createdCountry.getName());
         assertEquals(1, createdCountry.getStates().size());
-
     }
-
 }

@@ -1,18 +1,13 @@
 package co.net.quiron.application.account;
 
-import co.net.quiron.application.account.RoleManager;
-import co.net.quiron.application.account.UserManager;
-import co.net.quiron.application.person.BusinessEntityManager;
-import co.net.quiron.application.person.PersonManager;
+import co.net.quiron.application.factory.ManagerFactory;
 import co.net.quiron.application.shared.EntityManager;
 import co.net.quiron.domain.account.Role;
 import co.net.quiron.domain.account.User;
-import co.net.quiron.domain.person.BusinessEntity;
 import co.net.quiron.domain.person.Person;
 import co.net.quiron.test.util.DatabaseManager;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -26,19 +21,16 @@ class UserManagerTest {
 
     EntityManager<User> userManager;
     EntityManager<Role> roleManager;
-    EntityManager<BusinessEntity> entityManager;
     EntityManager<Person> personManager;
-
 
     /**
      * Sets up.
      */
     @BeforeEach
     void setUp() {
-        userManager = new UserManager();
-        roleManager = new RoleManager();
-        personManager = new PersonManager();
-        entityManager = new BusinessEntityManager();
+        userManager = ManagerFactory.getManager(User.class);
+        roleManager = ManagerFactory.getManager(Role.class);
+        personManager = ManagerFactory.getManager(Person.class);
 
         DatabaseManager dbm = DatabaseManager.getInstance();
         dbm.runSQL("cleandb.sql");
@@ -51,9 +43,8 @@ class UserManagerTest {
     void testGetUserById() {
         User user = userManager.get(1);
         String username = user.getUsername();
-        assertEquals("yesper", username );
+        assertEquals("admin", username );
     }
-
 
     /**
      * Test the get all users.
@@ -61,7 +52,7 @@ class UserManagerTest {
     @Test
     void testGetAllUsers() {
         List<User> userList = userManager.getList();
-        assertEquals(2, userList.size());
+        assertEquals(3, userList.size());
     }
 
     /**
@@ -70,7 +61,7 @@ class UserManagerTest {
     @Test
     void testGetUsersEquals() {
 
-        String username = "yesper";
+        String username = "admin";
         List<User> userList = userManager.getListEquals("username", username);
         assertEquals(1, userList.size());
     }
@@ -131,7 +122,7 @@ class UserManagerTest {
     @Test
     void testDeleteUser() {
 
-        int userIdToDelete = 2;
+        int userIdToDelete = 1;
 
         /*TODO: Check DB Constraints scenario when a user is deleted, the person related to it is deleted too. */
 
@@ -221,57 +212,4 @@ class UserManagerTest {
         assertEquals(1,rolesAssigned);
         assertEquals(userRole, newRole);
     }
-
-    /**
-     * Test create user with a Person information.
-     */
-/*
-    @Test
-    void testCreateUserWithAPerson() {
-        String newUserName = "jsmith";
-        String newEmail = "jsmith@aol.com";
-        String newPassword = "1234";
-
-        int userRoleId = 2; //User Role
-        int rolesAssigned = 0;
-
-        int personId = 1;
-        int personAssigned = 0;
-
-        User newUser = new User(newUserName, newEmail, newPassword);
-
-        Role userRole = roleManager.get(userRoleId);
-        newUser.addRole(userRole);
-
-        User insertedUser = userManager.create(newUser);
-
-        rolesAssigned = insertedUser.getRoles().size();
-        Role newRole = insertedUser.getRoles().stream().findFirst().get();
-
-        Person person = new Person(3, "John", "Smith");
-        person.setEntity(entityManager.create(new BusinessEntity()));
-
-        Person newPerson = personManager.create(person);
-
-        newUser.addPerson(newPerson);
-        userManager.update(newUser);
-        personAssigned = userManager.get(newPerson.getId()).getPersons().size();
-
-        assertNotNull(insertedUser);
-        assertEquals("jsmith", insertedUser.getUsername());
-        assertEquals("jsmith@aol.com", insertedUser.getEmail());
-        assertEquals("1234", insertedUser.getPassword());
-        assertNotNull(insertedUser.getCreatedDate());
-        assertEquals(1,rolesAssigned);
-        assertEquals(1,personAssigned);
-        assertEquals(userRole, newRole);
-        assertNotNull(newPerson);
-        assertEquals(3, newPerson.getId());
-        assertEquals("John", newPerson.getFirstName());
-        assertEquals("Smith", newPerson.getLastName());
-
-    }
-*/
-
-
 }

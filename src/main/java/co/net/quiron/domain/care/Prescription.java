@@ -1,4 +1,4 @@
-package co.net.quiron.domain.location;
+package co.net.quiron.domain.care;
 
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
@@ -10,43 +10,41 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
-
 /**
- * This class represents the Address type domain for the application.
+ * This class represents Prescription domain for the application.
+ *
+ * @autor yperea
  */
-@Entity(name = "AddressType")
-@Table(name = "ADDRESS_TYPES")
+@Entity(name = "Prescription")
+@Table(name = "PRESCRIPTIONS")
 @NoArgsConstructor
 @RequiredArgsConstructor
 @Data
-public class AddressType {
+public class Prescription {
 
     @Id
-    @Column(name = "AddressTypeID")
+    @Column(name = "PrescriptionID")
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
     @GenericGenerator(name = "native", strategy = "native")
     private int id;
 
     @NonNull
-    @Column(name = "Name")
-    private String name;
+    @Column(name = "Instructions")
+    private String instructions;
 
-    /*
+    @NonNull
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
-    @ManyToMany(mappedBy = "addresstypes")
-    private Set<BusinessEntity> entities = new HashSet<>();
-    */
+    @ManyToOne
+    @JoinColumn(name = "DiagnosticID")
+    private Diagnostic diagnostic;
 
-/*
-    @OneToMany(mappedBy = "entityAddressId.addressType", cascade = {CascadeType.ALL}, fetch = FetchType.EAGER)
-    private Set<EntityAddress> entityAddresses = new HashSet<>();
-*/
-
+    @NonNull
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
-    @OneToMany(mappedBy = "addressType", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<Address> addresses = new HashSet<>();
+    @ManyToOne
+    @JoinColumn(name = "MedicationID")
+    private Medication medication;
 
     @CreationTimestamp
     @Temporal(TemporalType.TIMESTAMP)
@@ -58,4 +56,5 @@ public class AddressType {
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "ModifiedDate")
     private Date modifiedDate;
+
 }

@@ -1,12 +1,9 @@
 package co.net.quiron.application.account;
 
-import co.net.quiron.application.patient.PatientManager;
-import co.net.quiron.application.person.BusinessEntityManager;
-import co.net.quiron.application.person.PersonManager;
-import co.net.quiron.application.person.PersonTypeManager;
+import co.net.quiron.application.factory.ManagerFactory;
 import co.net.quiron.application.shared.EntityManager;
+import co.net.quiron.domain.account.Role;
 import co.net.quiron.domain.account.User;
-import co.net.quiron.domain.person.BusinessEntity;
 import co.net.quiron.domain.person.Patient;
 import co.net.quiron.domain.person.Person;
 import co.net.quiron.domain.person.PersonType;
@@ -34,6 +31,21 @@ public class AccountManager {
     private String lastName;
     private String email;
     private Message message;
+    private EntityManager<User> userManager;
+    private EntityManager<Role> roleManager;
+    private EntityManager<Patient> patientManager;
+    private EntityManager<PersonType> personTypeManager;
+
+    /**
+     * Instantiates a new Account manager.
+     */
+    public AccountManager(){
+        patientManager = ManagerFactory.getManager(Patient.class);
+        personTypeManager = ManagerFactory.getManager(PersonType.class);
+        userManager = ManagerFactory.getManager(User.class);
+        roleManager = ManagerFactory.getManager(Role.class);
+    }
+
 
     /**
      * Hanldes the Application Sign Up.
@@ -59,12 +71,6 @@ public class AccountManager {
 
 
         boolean isSignedUp = false;
-
-        UserManager userManager = new UserManager();
-        RoleManager roleManager = new RoleManager();
-        PersonTypeManager personTypeManager = new PersonTypeManager();
-        PersonManager personManager = new PersonManager();
-        PatientManager patientManager = new PatientManager();
 
         PersonType personType = personTypeManager.get(personTypeId);
 
@@ -104,9 +110,6 @@ public class AccountManager {
      */
     public void loadUserAccount(String username) {
 
-        UserManager userManager = new UserManager();
-        PatientManager patientManager = new PatientManager();
-
         logger.info("loadUserAccount(String): Start loading account.");
 
         User user = userManager.getListEquals("username", username).get(0);
@@ -125,9 +128,13 @@ public class AccountManager {
         logger.info("loadUserAccount(String): End loading account.");
     }
 
+    /**
+     * Save credentials.
+     *
+     * @param password     the password
+     * @param confirmation the confirmation
+     */
     public void saveCredentials (String password, String confirmation) {
-
-        UserManager userManager = new UserManager();
 
         logger.info("saveCredentials(): User.");
         User user = userManager.get(userId);

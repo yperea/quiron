@@ -5,13 +5,13 @@
             <div class="sidebar-sticky">
                 <ul class="nav flex-column">
                     <li class="nav-item">
-                        <a class="nav-link active" href="#">
+                        <a class="nav-link" href="#">
                             <span data-feather="home"></span>
-                            Home <span class="sr-only">(current)</span>
+                            Home <!--<span class="sr-only">(current)</span>-->
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="${root}/patient/profile">
+                        <a class="nav-link <c:if test="${currentPage == 'My Profile'}">active</c:if>" href="${root}/patient/profile">
                             <span data-feather="user"></span>
                             My Profile
                         </a>

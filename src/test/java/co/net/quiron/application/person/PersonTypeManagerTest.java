@@ -1,5 +1,7 @@
 package co.net.quiron.application.person;
 
+import co.net.quiron.application.factory.ManagerFactory;
+import co.net.quiron.application.shared.EntityManager;
 import co.net.quiron.domain.person.PersonType;
 import co.net.quiron.test.util.DatabaseManager;
 import org.junit.jupiter.api.BeforeEach;
@@ -11,11 +13,11 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class PersonTypeManagerTest {
 
-    PersonTypeManager personTypeManager;
+    EntityManager<PersonType> personTypeManager;
 
     @BeforeEach
     void setUp() {
-        personTypeManager = new PersonTypeManager();
+        personTypeManager = ManagerFactory.getManager(PersonType.class);
         DatabaseManager dbm = DatabaseManager.getInstance();
         dbm.runSQL("cleandb.sql");
     }

@@ -1,7 +1,6 @@
 package co.net.quiron.application.account;
 
-import co.net.quiron.application.account.RoleManager;
-import co.net.quiron.application.account.UserManager;
+import co.net.quiron.application.factory.ManagerFactory;
 import co.net.quiron.application.shared.EntityManager;
 import co.net.quiron.domain.account.Role;
 import co.net.quiron.domain.account.User;
@@ -18,13 +17,7 @@ import static org.junit.jupiter.api.Assertions.*;
  */
 class RoleManagerTest {
 
-    /**
-     * The Role manager.
-     */
     EntityManager<Role> roleManager;
-    /**
-     * The User manager.
-     */
     EntityManager<User> userManager;
 
     /**
@@ -32,8 +25,8 @@ class RoleManagerTest {
      */
     @BeforeEach
     void setUp() {
-        roleManager = new RoleManager();
-        userManager = new UserManager();
+        roleManager = ManagerFactory.getManager(Role.class);
+        userManager = ManagerFactory.getManager(User.class);
         DatabaseManager dbm = DatabaseManager.getInstance();
         dbm.runSQL("cleandb.sql");
     }
@@ -106,36 +99,4 @@ class RoleManagerTest {
         roleManager.delete(roleManager.get(roleIdToDelete));
         assertNull(roleManager.get(roleIdToDelete));
     }
-
-    /**
-     * Test adding set of users to existent role.
-     */
-    /*
-    @Test
-    void testAddingSetOfUsersToExistentRole() {
-        int firstUserId = 1;
-        int secondUserId = 2;
-
-        int roleId = 2;
-        int usersAssigned = 0;
-
-        Set<User> users = new HashSet<>();
-
-        Role roleToUpdate = roleManager.get(roleId);
-        User firstUser = userManager.get(firstUserId);
-        User secondUser = userManager.get(secondUserId);
-
-        users.add(firstUser);
-        users.add(secondUser);
-
-        roleToUpdate.setUsers(users);
-        roleManager.update(roleToUpdate);
-
-        Role roleUpdated = roleManager.get(roleId);
-
-        usersAssigned = roleUpdated.getUsers().size();
-
-        assertEquals(2,usersAssigned);
-    }
-    */
 }

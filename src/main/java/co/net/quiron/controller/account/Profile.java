@@ -2,7 +2,9 @@ package co.net.quiron.controller.account;
 
 import co.net.quiron.application.account.AccountManager;
 import co.net.quiron.application.account.ProfileManager;
-import co.net.quiron.application.admin.CountryManager;
+import co.net.quiron.application.factory.ManagerFactory;
+import co.net.quiron.application.shared.EntityManager;
+import co.net.quiron.domain.location.Country;
 import co.net.quiron.domain.location.State;
 
 import javax.servlet.RequestDispatcher;
@@ -48,8 +50,9 @@ public class Profile extends HttpServlet {
         session.setAttribute("username", username);
         session.setAttribute("account", accountManager);
         session.setAttribute("profile", profileManager.getPatientProfile(accountManager));
+        session.setAttribute("currentPage", "My Profile");
 
-        CountryManager countryManager = new CountryManager();
+        EntityManager<Country> countryManager = ManagerFactory.getManager(Country.class);
         Set<State> states = countryManager.get(1).getStates();
         session.setAttribute("states", states);
 
@@ -103,6 +106,7 @@ public class Profile extends HttpServlet {
 
             session.setAttribute("profile", profileManager.savePatientProfile(accountManager, firstName, lastName,
                                  address1, address2, city, stateId, postalCode, birthDate, gender));
+            session.setAttribute("message", profileManager.getMessage());
         }
 
         response.sendRedirect(url);

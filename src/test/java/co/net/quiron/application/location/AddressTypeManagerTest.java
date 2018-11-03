@@ -1,6 +1,7 @@
 package co.net.quiron.application.location;
 
-import co.net.quiron.application.admin.AddressTypeManager;
+import co.net.quiron.application.factory.ManagerFactory;
+import co.net.quiron.application.shared.EntityManager;
 import co.net.quiron.domain.location.AddressType;
 import co.net.quiron.test.util.DatabaseManager;
 import org.junit.jupiter.api.BeforeEach;
@@ -12,11 +13,11 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class AddressTypeManagerTest {
 
-    AddressTypeManager addressTypeManager;
+    EntityManager<AddressType> addressTypeManager;
 
     @BeforeEach
     void setUp() {
-        addressTypeManager = new AddressTypeManager();
+        addressTypeManager = ManagerFactory.getManager(AddressType.class);
         DatabaseManager dbm = DatabaseManager.getInstance();
         dbm.runSQL("cleandb.sql");
     }
@@ -36,7 +37,7 @@ class AddressTypeManagerTest {
     @Test
     void testGetAllAddressTypes() {
         List<AddressType> addressTypeList = addressTypeManager.getList();
-        assertEquals(4, addressTypeList.size());
+        assertEquals(5, addressTypeList.size());
     }
 
 
@@ -80,8 +81,7 @@ class AddressTypeManagerTest {
      */
     @Test
     void testDeleteAddressType() {
-
-        int addressTypeIdToDelete = 5;
+        int addressTypeIdToDelete = 6;
         String newAddressTypeName = "Main";
         AddressType newAddressType = new AddressType(newAddressTypeName);
         AddressType insertedAddressType = addressTypeManager.create(newAddressType);

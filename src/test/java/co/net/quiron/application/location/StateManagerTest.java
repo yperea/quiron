@@ -1,7 +1,7 @@
 package co.net.quiron.application.location;
 
-import co.net.quiron.application.admin.CountryManager;
-import co.net.quiron.application.admin.StateManager;
+import co.net.quiron.application.factory.ManagerFactory;
+import co.net.quiron.application.shared.EntityManager;
 import co.net.quiron.domain.location.Country;
 import co.net.quiron.domain.location.State;
 import co.net.quiron.test.util.DatabaseManager;
@@ -20,16 +20,16 @@ class StateManagerTest {
     /**
      * The States manager.
      */
-    StateManager stateManager;
-    CountryManager countryManager;
+    EntityManager<State> stateManager;
+    EntityManager<Country> countryManager;
 
     /**
      * Sets up.
      */
     @BeforeEach
     void setUp() {
-        stateManager = new StateManager();
-        countryManager = new CountryManager();
+        stateManager = ManagerFactory.getManager(State.class);
+        countryManager = ManagerFactory.getManager(Country.class);
 
         DatabaseManager dbm = DatabaseManager.getInstance();
         dbm.runSQL("cleandb.sql");

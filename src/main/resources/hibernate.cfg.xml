@@ -16,15 +16,29 @@
         <property name="hibernate.c3p0.max_statements">50</property>
         <property name="hibernate.c3p0.idle_test_period">3000</property>
 
+        <mapping class="co.net.quiron.domain.account.Role" />
+        <mapping class="co.net.quiron.domain.account.User" />
+
+        <mapping class="co.net.quiron.domain.care.Diagnostic" />
+        <mapping class="co.net.quiron.domain.care.DiagnosticCause" />
+        <mapping class="co.net.quiron.domain.care.Medication" />
+        <mapping class="co.net.quiron.domain.care.Prescription" />
+        <mapping class="co.net.quiron.domain.care.Service" />
+        <mapping class="co.net.quiron.domain.care.Visit" />
+
+        <mapping class="co.net.quiron.domain.institution.Organization" />
+        <mapping class="co.net.quiron.domain.institution.OrganizationType" />
+
+        <mapping class="co.net.quiron.domain.location.Address" />
+        <mapping class="co.net.quiron.domain.location.AddressType"/>
         <mapping class="co.net.quiron.domain.location.Country"/>
         <mapping class="co.net.quiron.domain.location.State" />
-        <mapping class="co.net.quiron.domain.location.AddressType"/>
-        <mapping class="co.net.quiron.domain.account.User" />
-        <mapping class="co.net.quiron.domain.account.Role" />
+
         <mapping class="co.net.quiron.domain.person.BusinessEntity" />
-        <mapping class="co.net.quiron.domain.person.Person" />
         <mapping class="co.net.quiron.domain.person.Patient" />
-        <mapping class="co.net.quiron.domain.location.Address" />
+        <mapping class="co.net.quiron.domain.person.Person" />
         <mapping class="co.net.quiron.domain.person.PersonType"/>
+        <mapping class="co.net.quiron.domain.person.Provider"/>
+
     </session-factory>
 </hibernate-configuration>

@@ -1,5 +1,6 @@
 package co.net.quiron.domain.person;
 
+import co.net.quiron.domain.institution.Organization;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -7,7 +8,6 @@ import org.hibernate.annotations.UpdateTimestamp;
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.Date;
-
 
 @NoArgsConstructor
 @RequiredArgsConstructor
@@ -39,8 +39,18 @@ public class Patient extends Person {
     @Column(name = "Gender")
     private String gender;
 
+
+    /*
     @Column(name = "CompanyID")
     private int companyId;
+    */
+
+    @NonNull
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
+    @ManyToOne
+    @JoinColumn(name = "CompanyID")
+    private Organization organization;
 
     @Column(name = "SubscriberCode")
     private String subscriberCode;

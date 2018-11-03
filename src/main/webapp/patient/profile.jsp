@@ -1,5 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="yp" uri="http://yperea.co/ctags" %>
 <%@ taglib prefix="tags" tagdir="/WEB-INF/tags" %>
 
 <!DOCTYPE html>
@@ -16,23 +17,33 @@
     <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
         <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
             <h1 class="h2">My Profile</h1>
-            <!--
+
             <div class="btn-toolbar mb-2 mb-md-0">
                 <div class="btn-group mr-2">
-                    <button class="btn btn-sm btn-outline-secondary">Share</button>
-                    <button class="btn btn-sm btn-outline-secondary">Export</button>
+                    <a class="btn btn-sm btn-outline-danger" href="${root}/patient/insurance" role="button">Health Insurance</a>
+                    &nbsp;
+                    <a class="btn btn-sm btn-outline-warning" href="#" role="button">Pharmacies</a>
+                    &nbsp;
+                    <a class="btn btn-sm btn-outline-success" href="#" role="button">Payment Info</a>
+                    &nbsp;
                 </div>
+                <!--
                 <button class="btn btn-sm btn-outline-secondary dropdown-toggle">
                     <span data-feather="calendar"></span>
                     This week
                 </button>
+                -->
             </div>
-            -->
+
         </div>
         <br/>
         <div class="row justify-content-center">
             <div class="col-md-9">
                 <!--<h4 class="mb-3">Your person</h4>-->
+
+                <yp:alert type="${message.type}" url="${message.redirect}">${message.description}</yp:alert>
+                <c:remove var="message" scope="session" />
+
                 <form class="needs-validation"
                       action="${root}/patient/profile"
                       method="POST"
