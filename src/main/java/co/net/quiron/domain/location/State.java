@@ -1,5 +1,6 @@
 package co.net.quiron.domain.location;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -46,6 +47,7 @@ public class State {
     @ToString.Exclude
     @ManyToOne
     @JoinColumn(name = "CountryID")
+    //@JsonBackReference
     private Country country;
 
     /*TODO: Solve error when is FetchType.LAZY. org.hibernate.LazyInitializationException: failed to lazily initialize a collection of role... could not initialize proxy - no Session*/

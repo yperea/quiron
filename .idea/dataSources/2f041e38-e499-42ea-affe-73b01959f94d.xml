@@ -2313,7 +2313,10 @@ AddressID</RefColNames>
     </column>
     <column id="488" parent="257" name="Status">
       <Position>6</Position>
+      <Comment>A=Active, D=Deleted</Comment>
       <DataType>char(1)|0s</DataType>
+      <NotNull>1</NotNull>
+      <DefaultExpression>&apos;A&apos;</DefaultExpression>
       <ColumnKind>normal</ColumnKind>
     </column>
     <column id="489" parent="257" name="CreatedDate">
@@ -2344,15 +2347,15 @@ AddressID</RefColNames>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="494" parent="258" name="StartDateTime">
+    <column id="494" parent="258" name="StartTime">
       <Position>3</Position>
-      <DataType>datetime|0s</DataType>
+      <DataType>time|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="495" parent="258" name="EndDateTime">
+    <column id="495" parent="258" name="EndTime">
       <Position>4</Position>
-      <DataType>datetime|0s</DataType>
+      <DataType>time|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>

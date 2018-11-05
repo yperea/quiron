@@ -1,14 +1,17 @@
 package co.net.quiron.domain.location;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
+//import javax.xml.bind.annotation.XmlRootElement;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
+//import com.fasterxml.jackson.annotation;
 
 /**
  * This class represents the Country domain for the application.
@@ -37,6 +40,7 @@ public class Country {
     private String name;
 
     @OneToMany(mappedBy = "country", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+    //@JsonManagedReference
     private Set<State> states = new HashSet<>();
 
     /* Using Database Default value with a LocalDate type for createdDate
