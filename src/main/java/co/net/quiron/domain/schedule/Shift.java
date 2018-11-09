@@ -1,11 +1,9 @@
 package co.net.quiron.domain.schedule;
 
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -28,7 +26,10 @@ public class Shift {
     @GenericGenerator(name = "native", strategy = "native")
     private int id;
 
-    @OneToMany(mappedBy = "shift", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "shift",
+               cascade = CascadeType.ALL,
+               orphanRemoval = true,
+               fetch = FetchType.EAGER)
     private Set<ShiftSchedule> shiftSchedules = new HashSet<>();
 
     @NonNull
@@ -52,9 +53,16 @@ public class Shift {
     private String status;
 
     @CreationTimestamp
+    @EqualsAndHashCode.Exclude
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "CreatedDate")
     private Date createdDate;
+
+    @UpdateTimestamp
+    @EqualsAndHashCode.Exclude
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "ModifiedDate")
+    private Date modifiedDate;
 
 /*
     @CreationTimestamp
