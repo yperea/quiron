@@ -3,6 +3,8 @@ package co.net.quiron.domain.location;
 import co.net.quiron.domain.location.AddressType;
 import co.net.quiron.domain.location.State;
 import co.net.quiron.domain.person.BusinessEntity;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.GenericGenerator;
@@ -42,6 +44,7 @@ public class Address {
     @Column(name = "City")
     private String city;
 
+    @JsonBackReference
     @NonNull
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
@@ -49,13 +52,13 @@ public class Address {
     @JoinColumn(name = "StateProvinceID")
     private State state;
 
+    @JsonBackReference
     @NonNull
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
     @ManyToOne
     @JoinColumn(name = "AddressTypeID")
     private AddressType addressType;
-
 
     @NonNull
     @Column(name = "PostalCode")
@@ -69,7 +72,8 @@ public class Address {
 
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
-    @ManyToMany(mappedBy = "addresses")
+    @ManyToMany(mappedBy = "addresses", fetch = FetchType.EAGER)
+    @Getter(AccessLevel.NONE)
     private Set<BusinessEntity> entities = new HashSet<>();
 
     /*

@@ -274,7 +274,7 @@ DROP TABLE IF EXISTS STATE_PROVINCES ;
 CREATE TABLE IF NOT EXISTS STATE_PROVINCES (
 StateProvinceID INT NOT NULL AUTO_INCREMENT COMMENT 'Primary key for State_Provinces records.',
 StateProvinceCode NVARCHAR(3) NOT NULL COMMENT 'ISO standard state or province code.',
-Name NVARCHAR(45) NOT NULL COMMENT 'State or province description.',
+Name NVARCHAR(45) NOT NULL COMMENT 'States or province description.',
 CountryID INT NOT NULL,
 CreatedDate DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Date and time the record was created.',
 ModifiedDate DATETIME NULL COMMENT 'Date and time the record was last updated.',
@@ -285,7 +285,7 @@ CONSTRAINT fk_STATE_PROVINCES_COUNTRIES1
   ON DELETE NO ACTION
   ON UPDATE NO ACTION)
 ENGINE = InnoDB
-COMMENT = 'State and province lookup table.';
+COMMENT = 'States and province lookup table.';
 
 CREATE INDEX fk_STATE_PROVINCES_COUNTRIES1_idx ON STATE_PROVINCES (CountryID ASC);
 

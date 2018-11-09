@@ -1,5 +1,6 @@
 package co.net.quiron.domain.location;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.GenericGenerator;
@@ -43,9 +44,10 @@ public class AddressType {
     private Set<EntityAddress> entityAddresses = new HashSet<>();
 */
 
+    @JsonManagedReference
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
-    @OneToMany(mappedBy = "addressType", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "addressType", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     private Set<Address> addresses = new HashSet<>();
 
     @CreationTimestamp

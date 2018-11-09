@@ -14,7 +14,7 @@ public class Service extends Application {
     @Override
     public Set<Class<?>> getClasses() {
         HashSet h = new HashSet<Class<?>>();
-        h.add(State.class );
+        h.add(States.class );
         return h;
     }
 }

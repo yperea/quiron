@@ -1,5 +1,6 @@
 package co.net.quiron.domain.location;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
@@ -8,6 +9,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 //import javax.xml.bind.annotation.XmlRootElement;
+import java.io.Serializable;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -23,7 +25,7 @@ import java.util.Set;
 @Data
 @NoArgsConstructor
 @RequiredArgsConstructor
-public class Country {
+public class Country implements Serializable{
 
     @Id
     @Column(name = "CountryID")
@@ -40,7 +42,7 @@ public class Country {
     private String name;
 
     @OneToMany(mappedBy = "country", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
-    //@JsonManagedReference
+    @JsonManagedReference
     private Set<State> states = new HashSet<>();
 
     /* Using Database Default value with a LocalDate type for createdDate
@@ -73,7 +75,7 @@ public class Country {
         states.add(state);
         state.setCountry(this);
 
-        //logger.trace("addState(State): Adding the State to the collection.");
+        //logger.trace("addState(States): Adding the States to the collection.");
     }
 
     /**
@@ -85,7 +87,7 @@ public class Country {
         states.remove(state);
         state.setCountry(null);
 
-        //logger.trace("removeState(State): Removing the State from the collection.");
+        //logger.trace("removeState(States): Removing the States from the collection.");
     }
 }
 
