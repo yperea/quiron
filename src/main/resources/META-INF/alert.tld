@@ -1,0 +1,27 @@
+<taglib>
+    <tlib-version>1.0</tlib-version>
+    <jsp-version>2.0</jsp-version>
+    <short-name>Alert Message tag</short-name>
+    <!--
+    uri can be whatever you choose, it does not have to point to a real url
+    the uri will be used in the jsps that use the tag lib.
+    -->
+    <uri>http://quiron.net.co/tag</uri>
+    <tag>
+        <description>
+            Outputs a bootstrap alert message.
+        </description>
+        <name>alert</name>
+        <tag-class>co.net.quiron.util.tag.Alert</tag-class>
+        <body-content>scriptless</body-content>
+        <!--<body-content>empty</body-content>-->
+        <attribute>
+            <name>type</name>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <attribute>
+            <name>url</name>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+    </tag>
+</taglib>

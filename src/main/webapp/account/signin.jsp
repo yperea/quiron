@@ -1,6 +1,4 @@
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="yp" uri="http://yperea.co/ctags" %>
-
+<%@include file="../shared/tag-libs.jsp"%>
 <c:set var="root" value="/quiron" scope="session" />
 
 <%--

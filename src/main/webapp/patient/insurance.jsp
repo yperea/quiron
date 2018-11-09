@@ -1,8 +1,10 @@
+<%@include file="../shared/tag-libs.jsp"%>
+<%--
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="yp" uri="http://quiron.net.co/tag" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<%@ taglib prefix="yp" uri="http://yperea.co/ctags" %>
 <%@ taglib prefix="tags" tagdir="/WEB-INF/tags" %>
-
+--%>
 <!DOCTYPE html>
 <html lang="en">
 <%@include file="../shared/head.jsp"%>
