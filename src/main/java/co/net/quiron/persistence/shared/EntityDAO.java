@@ -1,11 +1,15 @@
 package co.net.quiron.persistence.shared;
 
+import co.net.quiron.domain.schedule.ShiftSchedule;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import javax.persistence.criteria.*;
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * An entity DAO based on Generic DAO Class provided by Paula Waite.
@@ -29,6 +33,44 @@ public class EntityDAO<T> {
     }
 
     /**
+     * Gets an entity by id
+     *
+     * @param id entity id to search by
+     * @return entity by id
+     */
+    public T getById(int id) {
+
+        session = getSession();
+        T entity = session.get(type, id);
+        session.close();
+
+        logger.trace("getById(int): Returning entity " + entity);
+        return entity;
+    }
+
+    /**
+     * Gets an entity by its composite key
+     *
+     * @param compositeKey entity key to search by
+     * @return entity by composite key
+     */
+    public T getById(Map<String, Integer> compositeKey) {
+
+        session = getSession();
+        CriteriaBuilder builder = session.getCriteriaBuilder();
+        CriteriaQuery<T> query = builder.createQuery(type);
+        Root<T> root = query.from(type);
+        Predicate[] predicates  = getPredicates(compositeKey, builder, root);
+        query.select(root).where(builder.and(predicates));
+
+        T entity = session.createQuery(query).getResultList().stream().findFirst().get();
+        session.close();
+
+        logger.trace("getById(): Returning entity " + entity);
+        return entity;
+    }
+
+    /**
      * Gets all the records
      *
      * @return the all entities
@@ -46,8 +88,41 @@ public class EntityDAO<T> {
     }
 
     /**
+     * Get objects by params (exact match)
+     *
+     * @param params the key value parameter Map
+     * @return the list of entities that meet params criteria
+     */
+    public List<T> getByPropertyEqual(Map<String, Object> params) {
+        session = getSession();
+
+        CriteriaBuilder builder = session.getCriteriaBuilder();
+        CriteriaQuery<T> query = builder.createQuery(type);
+        Root<T> root = query.from(type);
+
+        List<Predicate> predicateList = new ArrayList<>();
+        Predicate[] predicates;
+        for (Map.Entry<String, Object> set : params.entrySet()) {
+            predicateList.add(builder.equal(root.get(set.getKey()), set.getValue() ));
+        }
+        predicates  = predicateList.toArray(new Predicate[predicateList.size()]);
+
+        query.select(root).where(predicates);
+
+        List<T> list = session.createQuery( query ).getResultList();
+        session.close();
+
+        logger.debug("Searching for {} with {} = {}", type.getName(), params);
+        return list;
+    }
+
+    /**
      * Get objects by property (exact match)
      * sample usage: getByPropertyEqual("lastname", "Curry")
+     *
+     * @param propertyName the property name
+     * @param value        the value
+     * @return the by property equal
      */
     public List<T> getByPropertyEqual(String propertyName, String value) {
         session = getSession();
@@ -66,6 +141,10 @@ public class EntityDAO<T> {
     /**
      * Get objects by property (like)
      * sample usage: getByPropertyLike("lastname", "C")
+     *
+     * @param propertyName the property name
+     * @param value        the value
+     * @return the by property like
      */
     public List<T> getByPropertyLike(String propertyName, String value) {
         session = getSession();
@@ -83,33 +162,6 @@ public class EntityDAO<T> {
         return list;
     }
 
-
-    /**
-     * Gets an entity by id
-     *
-     * @param id  entity id to search by
-     * @return entity by id
-     */
-    public T getById(int id) {
-
-        session = getSession();
-        T entity = session.get(type, id);
-        session.close();
-
-        /*
-        session = getSession();
-        CriteriaBuilder builder = session.getCriteriaBuilder();
-        CriteriaQuery<T> query = builder.createQuery(type);
-        Root<T> root = query.from(type);
-        query.select(root).where(builder.equal(root.get("id"),id));
-        T entity = session.createQuery(query).getSingleResult();
-        session.close();
-        */
-
-        logger.trace("getById(int): Returning the <T> BusinessEntity.");
-        return entity;
-    }
-
     /**
      * Insert an BusinessEntity
      *
@@ -121,12 +173,34 @@ public class EntityDAO<T> {
         session = getSession();
         transaction = session.beginTransaction();
         id = (int)session.save(entity);
+        logger.trace("insert(T): Inserting the <T> BusinessEntity.");
+        return id;
+    }
+
+    /**
+     * Insert 2 string.
+     *
+     * @param entity the entity
+     * @return the string
+     */
+    public String insert2(T entity) {
+
+        String id = null;
+        session = getSession();
+        transaction = session.beginTransaction();
+        id = (String)session.save(entity);
 
         logger.trace("insert(T): Inserting the <T> BusinessEntity.");
         return id;
     }
 
-    public T insert2(T entity) {
+    /**
+     * Insert 3 t.
+     *
+     * @param entity the entity
+     * @return the t
+     */
+    public T insert3(T entity) {
 
         session = getSession();
         transaction = session.beginTransaction();
@@ -177,5 +251,24 @@ public class EntityDAO<T> {
         transaction.commit();
         session.close();
         logger.trace("saveChanges(): Closing Hibernate Session.");
+    }
+
+    /**
+     * Builds a predicates array for a QueryBuilder based on a key value parameters Map
+     *
+     * @param params parameters
+     * @param builder CriteriaBuilder object
+     * @param root ROOT<T> object
+     * @return Array of Predicates
+     */
+    private Predicate[] getPredicates (Map<String, Integer> params, CriteriaBuilder builder, Root<T> root) {
+
+        List<Predicate> predicateList = new ArrayList<>();
+        Predicate[] predicates;
+        for (Map.Entry<String, Integer> set : params.entrySet()) {
+            predicateList.add(builder.equal(root.get(set.getKey()), set.getValue() ));
+        }
+        predicates  = predicateList.toArray(new Predicate[predicateList.size()]);
+        return predicates;
     }
 }

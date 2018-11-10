@@ -1,6 +1,7 @@
 package co.net.quiron.persistence.interfaces;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * The interface for controllers accept a reference to any object that implements it.
@@ -24,6 +25,12 @@ public interface IAppRepository<T> {
     List<T> getByPropertyEqual(String propertyName, String value);
 
     /**
+     * Get a collection of entities by property (exact match)
+     * sample usage: getByPropertyEqual("lastname", "Curry")
+     */
+    List<T> getByPropertyEqual(Map<String, Object> params);
+
+    /**
      * Get a collection of entities by property (like)
      * sample usage: getByPropertyLike("lastname", "C")
      */
@@ -36,6 +43,14 @@ public interface IAppRepository<T> {
      * @return the t
      */
     T get(int id);
+
+    /**
+     * Gets an entity by its composite key
+     *
+     * @param compositeKey entity key to search by
+     * @return entity by composite key
+     */
+    T get(Map<String, Integer> compositeKey);
 
     /**
      * Creates an entity.
@@ -51,7 +66,15 @@ public interface IAppRepository<T> {
      * @param entity the entity
      * @return the int
      */
-    T create2(T entity);
+    /*T create2(T entity);*/
+
+    /**
+     * Creates an entity.
+     *
+     * @param entity the entity
+     * @return the int
+     */
+    T create3(T entity);
 
 
     /**

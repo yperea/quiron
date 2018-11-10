@@ -1,12 +1,10 @@
 package co.net.quiron.domain.schedule;
 
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Date;
 
@@ -15,18 +13,22 @@ import java.util.Date;
 @RequiredArgsConstructor
 @Entity(name = "ShiftSchedule")
 @Table(name = "SHIFTS_SCHEDULES")
-public class ShiftSchedule {
+public class ShiftSchedule implements Serializable {
 
     @Id
     @NonNull
+    //@ToString.Exclude
+    //@EqualsAndHashCode.Exclude
     @ManyToOne
     @JoinColumn(name = "ShiftID")
     private Shift shift;
 
     @Id
     @NonNull
+    //@ToString.Exclude
+    //@EqualsAndHashCode.Exclude
     @ManyToOne
-    @JoinColumn(name = "WeekDayCode")
+    @JoinColumn(name = "WeekDayID")
     private WeekDay weekDay;
 
     @NonNull

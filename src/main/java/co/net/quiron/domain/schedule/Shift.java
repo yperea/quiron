@@ -1,11 +1,12 @@
 package co.net.quiron.domain.schedule;
 
 import lombok.*;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.GenericGenerator;
-import org.hibernate.annotations.UpdateTimestamp;
+import org.hibernate.annotations.*;
 
 import javax.persistence.*;
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Date;
@@ -26,10 +27,10 @@ public class Shift {
     @GenericGenerator(name = "native", strategy = "native")
     private int id;
 
-    @OneToMany(mappedBy = "shift",
-               cascade = CascadeType.ALL,
-               orphanRemoval = true,
-               fetch = FetchType.EAGER)
+    //TODO: Research how to fix StackOverFlowError when FetchType.EAGER
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
+    @OneToMany(mappedBy = "shift", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private Set<ShiftSchedule> shiftSchedules = new HashSet<>();
 
     @NonNull

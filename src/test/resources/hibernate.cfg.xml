@@ -40,5 +40,10 @@
         <mapping class="co.net.quiron.domain.person.PersonType"/>
         <mapping class="co.net.quiron.domain.person.Provider"/>
 
+        <mapping class="co.net.quiron.domain.schedule.Shift"/>
+        <mapping class="co.net.quiron.domain.schedule.ShiftSchedule"/>
+        <mapping class="co.net.quiron.domain.schedule.WeekDay"/>
+        <mapping class="co.net.quiron.domain.schedule.ProviderSchedule"/>
+
     </session-factory>
 </hibernate-configuration>

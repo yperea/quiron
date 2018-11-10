@@ -6,6 +6,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * The type Entity manager.
@@ -41,6 +42,21 @@ public class EntityManager<T> {
 
         logger.debug("getList(): Returning list of Entities.");
         logger.trace("getList(): Returning " + entities);
+
+        return entities;
+    }
+
+    /**
+     * Get objects by params (exact match)
+     *
+     * @param params the key value parameter Map
+     * @return the list of entities that meet params criteria
+     */
+    public List<T> getListEquals(Map<String, Object> params){
+        List<T> entities = entityRepository.getByPropertyEqual(params);
+
+        logger.debug("getListEquals(): Returning list of Entities.");
+        logger.trace("getListEquals(): Returning " + entities);
 
         return entities;
     }
@@ -92,6 +108,15 @@ public class EntityManager<T> {
         return entity;
     }
 
+    public T get(Map<String, Integer> compositeKey) {
+        T entity = entityRepository.get(compositeKey);
+
+        logger.debug("get(int): Returning Entity.");
+        logger.trace("get(int): Returning " + entity);
+
+        return entity;
+    }
+
     /**
      * Creates a new Entity.
      *
@@ -105,21 +130,6 @@ public class EntityManager<T> {
 
         return entityRepository.create(entity);
     }
-
-    /**
-     * Creates a new Entity.
-     *
-     * @param entity the entity to be created
-     * @return the entity just created
-     */
-    public T create2 (T entity) {
-
-        logger.debug("create2(T): Creating Entity.");
-        logger.trace("create2(T): Creating " + entity);
-
-        return entityRepository.create2(entity);
-    }
-
 
     /**
      * Updates a specific Entity.
@@ -146,5 +156,6 @@ public class EntityManager<T> {
 
         entityRepository.delete(entity);
     }
-    
+
+
 }
