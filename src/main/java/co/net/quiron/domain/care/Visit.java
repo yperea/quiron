@@ -59,6 +59,10 @@ public class Visit {
     @JoinColumn(name = "ServiceID")
     private Service service;
 
+    @NonNull
+    @Column(name = "Status")
+    private String status;
+
     @Column(name = "ScheduledStartDate")
     private LocalDate scheduledStartDate;
 
