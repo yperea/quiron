@@ -1,6 +1,8 @@
 package co.net.quiron.domain.care;
 
 import co.net.quiron.domain.person.Patient;
+import co.net.quiron.domain.schedule.ProviderSchedule;
+import co.net.quiron.domain.schedule.ShiftSchedule;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.GenericGenerator;
@@ -31,37 +33,24 @@ public class Visit {
     private int id;
 
     @NonNull
-    @Column(name = "ScheduledStartDate")
-    private LocalDate scheduledStartDate;
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
+    @ManyToOne
+    @JoinColumn(name = "PatientID")
+    private Patient patient;
 
     @NonNull
-    @Column(name = "ScheduledEndDate")
-    private LocalDate scheduledEndDate;
-
-
-    @Column(name = "ActualStartDate")
-    private LocalDate actualStartDate;
-
-    @Column(name = "ActualEndDate")
-    private LocalDate actualEndDate;
-
-    @Column(name = "PatientBloodPressure")
-    private Double bloodPressure;
-
-    @Column(name = "PatientWeight")
-    private Double weight;
-
-    @Column(name = "PatientPulse")
-    private Double pulse;
-
-    @Column(name = "PatientSymptoms")
-    private Double symptoms;
-
-    @Column(name = "PatientComments")
-    private Double patientComments;
-
-    @Column(name = "ProviderComments")
-    private Double providerComments;
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
+    @ManyToOne
+    @JoinColumns({
+            @JoinColumn(name="ProviderID", referencedColumnName = "ProviderID"),
+            @JoinColumn(name="ShiftID", referencedColumnName = "ShiftID"),
+            @JoinColumn(name="WeekDayID", referencedColumnName = "WeekDayID"),
+            @JoinColumn(name="OrganizationID", referencedColumnName = "OrganizationID"),
+            @JoinColumn(name="LocationID", referencedColumnName = "LocationID")
+    })
+    private ProviderSchedule providerSchedule;
 
     @NonNull
     @EqualsAndHashCode.Exclude
@@ -70,45 +59,57 @@ public class Visit {
     @JoinColumn(name = "ServiceID")
     private Service service;
 
-    @NonNull
-    @EqualsAndHashCode.Exclude
-    @ToString.Exclude
-    @ManyToOne
-    @JoinColumn(name = "PatientID")
-    private Patient patient;
+    @Column(name = "ScheduledStartDate")
+    private LocalDate scheduledStartDate;
 
+    @Column(name = "ScheduledEndDate")
+    private LocalDate scheduledEndDate;
 
-    @NonNull
-    @Column(name = "PostalCode")
-    private String postalCode;
+    @Column(name = "ActualStartDate")
+    private LocalDate actualStartDate;
 
-    @Column(name = "Name")
-    private String name;
+    @Column(name = "ActualEndDate")
+    private LocalDate actualEndDate;
 
-    @Column(name = "Description")
-    private String description;
+    @Column(name = "PatientBloodPressure")
+    private double patientBloodPressure;
+
+    @Column(name = "PatientWeight")
+    private double patientWeight;
+
+    @Column(name = "PatientTemperature")
+    private double patientTemperature;
+
+    @Column(name = "PatientRespiration")
+    private double patientRespiration;
+
+    @Column(name = "PatientBMI")
+    private double patientBmi;
+
+    @Column(name = "PatientHeight")
+    private double patientHeight;
+
+    @Column(name = "PatientPulse")
+    private double patientPulse;
+
+    @Column(name = "PatientSymptoms")
+    private String patientSymptoms;
+
+    @Column(name = "ProviderComments")
+    private String providerComments;
 
     /*TODO: Solve error when is FetchType.LAZY. org.hibernate.LazyInitializationException: failed to lazily initialize a collection of role... could not initialize proxy - no Session*/
     @OneToMany(mappedBy = "visit", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     private Set<Diagnostic> diagnostics = new HashSet<>();
 
-    /*
-    @EqualsAndHashCode.Exclude
-    @ToString.Exclude
-    @OneToMany(mappedBy = "address", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<EntityAddress> entityAddresses = new HashSet<>();
-    */
-
     @CreationTimestamp
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "CreatedDate")
-    private Date createdDate; //@CreationTimestamp annotation only works with Date or Calendar types
+    private Date createdDate;
 
     @UpdateTimestamp
     @EqualsAndHashCode.Exclude
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "ModifiedDate")
     private Date modifiedDate;
-
-
 }
