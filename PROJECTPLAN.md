@@ -45,7 +45,7 @@
 - [ ] Prepare Professional Development Presentation.
 
 ### Week 8 AWS CI Presentation
-- [ ] Build Visit and treatment tracking jsps for Patients and Providers views.
+- [ ] Build MyVisit and treatment tracking jsps for Patients and Providers views.
 - [ ] Prepare for Checkpoint 3: Deployed to AWS, at least one JSP that displays data from the database is implemented.
 - [ ] Implement Hibernate Validator (?)
 

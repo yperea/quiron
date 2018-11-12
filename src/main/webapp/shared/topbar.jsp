@@ -47,14 +47,14 @@
                     <c:when test="${account.signed != null}" >
                         <li class="dropdown user-menu">
                             <a class="nav-link" href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                <img alt="Profile Picture" class="user-image" src="${root}/style/img/male.jpg" />
+                                <img alt="Profile Picture" class="user-image" src="${root}/style/img/QuironIcon75x75.png" />
                                 &nbsp;<span class="hidden-xs"></span>
                             </a>
                             <ul class="dropdown-menu">
                                 <li class="my-user-header">
                                     <img alt="Profile Picture"
                                          class="img-circle"
-                                         src="${root}/style/img/male.jpg" />
+                                         src="${root}/style/img/QuironIcon75x75.png" />
                                     <p>
                                         ${account.firstName} ${account.lastName}
                                         <br/><small>(${account.username})</small>
@@ -79,7 +79,8 @@
 
                     <c:otherwise>
                         <li class="nav-item"><a class="nav-link" href="${root}/account/signup">Sign&nbsp;Up</a></li>
-                        <li class="nav-item"><a class="nav-link" href="${root}/patient/profile">Log&nbsp;In</a></li>
+                        <%--<li class="nav-item"><a class="nav-link" href="${root}/patient/profile">Log&nbsp;In</a></li>--%>
+                        <li class="nav-item"><a class="nav-link" href="${root}/account/router?tp=patient">Log&nbsp;In</a></li>
                     </c:otherwise>
                 </c:choose>
 

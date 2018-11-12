@@ -30,13 +30,14 @@ public class Insurance extends HttpServlet {
         String url = "/patient/insurance.jsp";
         String title = "My Profile";
         String username = request.getUserPrincipal().getName();
+        String personType = (String) session.getAttribute("personType");
 
         request.setAttribute("title", title);
 
         AccountManager accountManager =  new AccountManager();
         ProfileManager profileManager = new ProfileManager();
 
-        accountManager.loadUserAccount(username);
+        accountManager.loadUserAccount(username, personType);
         session.setAttribute("username", username);
         //session.setAttribute("account", accountManager);
         //session.setAttribute("profile", profileManager.getPatientProfile(accountManager));

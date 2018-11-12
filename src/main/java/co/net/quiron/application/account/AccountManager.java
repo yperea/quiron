@@ -14,6 +14,9 @@ import org.apache.logging.log4j.Logger;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * The type Account manager.
@@ -26,6 +29,8 @@ public class AccountManager {
     private boolean isSigned;
     private int userId;
     private int patientId;
+    private int id;
+    private String type;
     private String username;
     private String firstName;
     private String lastName;
@@ -97,6 +102,8 @@ public class AccountManager {
             this.firstName = patient.getFirstName();
             this.lastName = patient.getLastName();
             this.patientId = patient.getId();
+            this.id = patient.getId();
+            this.type = patient.getPersonType().getName().toLowerCase();
         }
 
         logger.info("signup(): End Signup.");
@@ -108,21 +115,29 @@ public class AccountManager {
      *
      * @param username the username
      */
-    public void loadUserAccount(String username) {
+    public void loadUserAccount(String username, String personType) {
 
         logger.info("loadUserAccount(String): Start loading account.");
+        //String finalPersonType = personType;
 
         User user = userManager.getListEquals("username", username).get(0);
-        Person person = user.getPersons().stream().findFirst().get();
+        Person person = user.getPersons()
+                .stream()
+                .filter(p -> personType.equals(p.getPersonType().getName().toLowerCase()))
+                .findAny()
+                .orElse(null);
 
-        if(user != null){
+        if(person != null){
             this.isSigned = true;
             this.userId = user.getId();
             this.username = user.getUsername();
             this.email = user.getEmail();
             this.firstName = person.getFirstName();
             this.lastName = person.getLastName();
-            this.patientId = person.getId();
+            //this.patientId = person.getId();
+            this.id = person.getId();
+            this.type = person.getPersonType().getName().toLowerCase();
+
         }
 
         logger.info("loadUserAccount(String): End loading account.");

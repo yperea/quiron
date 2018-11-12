@@ -69,6 +69,10 @@ public class Signup extends HttpServlet {
             accountManager =  new AccountManager();
             successfullSignup = accountManager.signup(userTypeId, roleId, firstName, lastName, userName, email, birthDate, gender, password, confirmation);
             session.setAttribute("account", accountManager);
+            String personType = "patient";
+            session.setAttribute("personType", personType);
+            //String username = request.getUserPrincipal().getName();
+            //accountManager.loadUserAccount(username, personType);
 
         }
 

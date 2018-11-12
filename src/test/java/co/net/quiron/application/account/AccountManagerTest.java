@@ -75,7 +75,9 @@ class AccountManagerTest {
     void loadUserAccount() {
         String userName = "yesper";
         String firstName = "Yesid";
-        accountManager.loadUserAccount(userName);
+        String personType = "patient";
+
+        accountManager.loadUserAccount(userName, personType);
 
         User user = userManager.get(1);
         Person person = personManager.get(1);

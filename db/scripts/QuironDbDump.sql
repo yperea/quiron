@@ -1023,10 +1023,10 @@ INSERT INTO ADDRESSES(AddressLine1, AddressLine2, City, StateProvinceID, Address
 INSERT INTO ENTITY_ADDRESSES(EntityID, AddressID) VALUE (3,10);
 INSERT INTO ENTITIES (CreatedDate) VALUES (CURRENT_TIMESTAMP);
 INSERT INTO PERSONS (PersonID, PersonTypeID, Title, FirstName, MiddleName, LastName, LastName2, Suffix) VALUES(4, 2, null, 'Claudia', 'Patricia', 'Carabali', 'Chacon', null);
-INSERT INTO PATIENTS(PatientID, BirthDate, Gender, CompanyID, SubscriberCode, IsPrimarySubscriber) VALUES(4, '1974-3-18', 5, 1, "222222", 1);
+INSERT INTO PATIENTS(PatientID, BirthDate, Gender, CompanyID, SubscriberCode, IsPrimarySubscriber) VALUES(4, '1974-3-18', 'F', 1, "222222", 1);
 INSERT INTO ENTITIES (CreatedDate) VALUES (CURRENT_TIMESTAMP);
 INSERT INTO PERSONS (PersonID, PersonTypeID, Title, FirstName, MiddleName, LastName, LastName2, Suffix) VALUES(5, 3, null, 'John', null, 'Constantine', null, null);
-INSERT INTO PATIENTS(PatientID, BirthDate, Gender, CompanyID, SubscriberCode, IsPrimarySubscriber) VALUES(5, '1966-6-6', 1, 1, "666666", 1);
+INSERT INTO PATIENTS(PatientID, BirthDate, Gender, CompanyID, SubscriberCode, IsPrimarySubscriber) VALUES(5, '1966-6-6', 'M', 1, "666666", 1);
 INSERT INTO PROVIDERS(ProviderID, NPI) VALUES(4, '111111');
 INSERT INTO ADDRESSES(AddressLine1, AddressLine2, City, StateProvinceID, AddressTypeID, PostalCode) VALUES ('3591 Anderson Street', null, 'Madison', 6, 1, 53704);
 INSERT INTO ENTITY_ADDRESSES(EntityID, AddressID) VALUE (4,11);

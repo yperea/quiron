@@ -47,7 +47,7 @@
 <body class="text-center">
 
 
-<form class="form-signin" action="j_security_check" method="POST">
+<form class="form-signin" action="j_security_check?test=1" method="POST">
     <img class="mb-4" src="../style/img/QuironIcon75x75.png" alt="" width="72" height="72">
     <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
 
@@ -69,16 +69,28 @@
     <input type="text" id="username" name="j_username" class="form-control" placeholder="Username" required autofocus>
     <label for="password" class="sr-only">Password</label>
     <input type="password" id="password" name="j_password" class="form-control" placeholder="Password" required>
-    <!--
+
     <div class="checkbox mb-3">
+<%--
         <label>
             <input type="checkbox" value="remember-me"> Remember me
         </label>
+--%>
+        <div class="custom-control custom-radio custom-control-inline">
+            <input type="radio" id="login-type1" name="login-type" value="patient" class="custom-control-input" checked required />
+            <label class="custom-control-label" for="login-type1">Patient</label>
+        </div>
+        <div class="custom-control custom-radio custom-control-inline">
+            <input type="radio" id="login-type2" name="login-type" value="provider" class="custom-control-input" required />
+            <label class="custom-control-label" for="login-type2">Provider</label>
+        </div>
+
     </div>
-    -->
+
     <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
     <p class="mt-5 mb-3 text-muted">Don't have an account?
-        <a href="${root}/account/signup">Sign Up</a> | <a href="${root}">Home</a>
+        <a href="${root}/account/signup">Sign Up</a> | <a href="${root}">Home</a> <br/>
+        <a href="${root}/account/router?tp=provider">Are you provider?</a>
     </p>
 </form>
 

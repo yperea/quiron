@@ -54,7 +54,7 @@
                                     required />
                             <option value="">Choose...</option>
                             <c:forEach var="company" items="${companies}">
-                                <option value="${company.id}" <c:if test="${profile.patient.organization.id == company.id}">selected</c:if> >${company.name}</option>
+                                <option value="${company.id}" <c:if test="${profile.person.organization.id == company.id}">selected</c:if> >${company.name}</option>
                             </c:forEach>
                             </select>
                             <div class="invalid-feedback">
@@ -69,7 +69,7 @@
                                    id="subscriber"
                                    name="subscriber"
                                    placeholder=""
-                                   value="${profile.patient.subscriberCode}"
+                                   value="${profile.person.subscriberCode}"
                                    required />
                             <div class="invalid-feedback">
                                 Please enter a valid date of birth.

@@ -17,7 +17,7 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">
+                        <a class="nav-link <c:if test="${currentPage == 'My Visits'}">active</c:if>" href="${root}/patient/visits">
                             <span data-feather="clipboard"></span>
                             My Visits
                         </a>

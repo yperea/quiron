@@ -15,7 +15,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * This class represents Visit domain for the application.
+ * This class represents MyVisit domain for the application.
  *
  * @autor yperea
  */

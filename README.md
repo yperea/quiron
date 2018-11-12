@@ -1,7 +1,7 @@
 # Project Quiron
 
 ### Problem Statement
-Although health sector is traditionally a conservative and slow-adapting industry, there is an increasing volume of new tools providing new alternatives to provide medical care to patients in very innovative ways, such as web platforms where video-on-demand Visit can be made with a variety of physicians, therapists, specialists and health professionals in general. For instance, websites like [amwell.com](https://www.amwell.com) or [livehealthonline.com](https://www.livehealthonline.com).
+Although health sector is traditionally a conservative and slow-adapting industry, there is an increasing volume of new tools providing new alternatives to provide medical care to patients in very innovative ways, such as web platforms where video-on-demand MyVisit can be made with a variety of physicians, therapists, specialists and health professionals in general. For instance, websites like [amwell.com](https://www.amwell.com) or [livehealthonline.com](https://www.livehealthonline.com).
 
 However, if these types of tools serve as an excellent way to provide wider access to medical care, sometimes we would like to know what happens next ... after the visit is over.
 
@@ -20,7 +20,7 @@ I would like to build a platform that allows for better control of medical treat
 * Database
     * MySQL
     * Store patients and providers
-    * Store all data of Visit and treatments
+    * Store all data of MyVisit and treatments
 * ORM Framework
     * Hibernate 5
 * Dependency Management

@@ -43,6 +43,15 @@ public class AccessDenied extends HttpServlet {
 
         HttpSession session = request.getSession();
 
+        /*
+        if (session.getAttribute("account") == null) {
+            // Session is expired
+            session.setAttribute("expireSessionMessage","Your session has expired. Try again.");
+            response.sendRedirect("/quiron/account/logout");
+            return;
+        }
+        */
+
         String url = "/quiron/account/signin";
         String title = "Sign In";
 

@@ -27,12 +27,13 @@ public class Credential extends HttpServlet {
         String url = "/account/credentials.jsp";
         String title = "Account Credentials";
         String username = request.getUserPrincipal().getName();
+        String personType = (String) session.getAttribute("personType");
 
         request.setAttribute("title", title);
 
         AccountManager accountManager = new AccountManager();
-        accountManager.loadUserAccount(username);
-        accountManager.setSigned(true);
+        accountManager.loadUserAccount(username, personType);
+        //accountManager.setSigned(true);
         session.setAttribute("account",accountManager);
 
         RequestDispatcher dispatcher = request.getRequestDispatcher(url);
