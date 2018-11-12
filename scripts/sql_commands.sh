@@ -668,7 +668,7 @@ CREATE TABLE IF NOT EXISTS CREDITCARDS (
   CreditCardID INT NOT NULL AUTO_INCREMENT COMMENT 'Primary key for CreditCard records.',
   PersonID INT NOT NULL,
   CardTypeID INT NULL COMMENT 'Credit card brand.',
-  CardNumber NVARCHAR(25) GENERATED ALWAYS AS () VIRTUAL COMMENT 'Credit card number',
+  CardNumber NVARCHAR(25) NULL COMMENT 'Credit card number',
   BankID INT NULL COMMENT 'Credit card issuer bank.',
   ExpMonth TINYINT NULL COMMENT 'Credit card expiration month.',
   ExpYear SMALLINT NULL COMMENT 'Credit card expiration year.',
