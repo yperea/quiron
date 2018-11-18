@@ -1,6 +1,7 @@
 package co.net.quiron.domain.care;
 
 import co.net.quiron.domain.account.Role;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 
@@ -30,6 +31,14 @@ public class Treatment {
             joinColumns = {@JoinColumn(name = "TreatmentID")},
             inverseJoinColumns = {@JoinColumn(name = "PrescriptionID")})
     private Set<Prescription> prescriptions = new HashSet<>();
+
+    @JsonBackReference
+    @NonNull
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
+    @ManyToOne
+    @JoinColumn(name = "VisitID")
+    private Visit visit;
 
     @NonNull
     @Column(name = "SymptomID")
@@ -64,4 +73,23 @@ public class Treatment {
 
     @Column(name = "Evaluation")
     private int evaluation;
+
+    /**
+     * Add a prescription to the collection.
+     *
+     * @param prescription the prescription
+     */
+    public void addPrescription(Prescription prescription) {
+        prescriptions.add(prescription);
+    }
+
+    /**
+     * Remove a prescription from the collection.
+     *
+     * @param prescription the prescription
+     */
+    public void removePrescription(Prescription prescription) {
+        prescriptions.remove(prescription);
+    }
+
 }
