@@ -1,5 +1,6 @@
 package co.net.quiron.domain.care;
 
+import co.net.quiron.domain.account.User;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.GenericGenerator;
@@ -32,12 +33,10 @@ public class Prescription {
     @Column(name = "Instructions")
     private String instructions;
 
-    @NonNull
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
-    @ManyToOne
-    @JoinColumn(name = "DiagnosticID")
-    private Diagnostic diagnostic;
+    @ManyToMany(mappedBy = "treatments")
+    private Set<Treatment> treatments = new HashSet<>();
 
     @NonNull
     @EqualsAndHashCode.Exclude
