@@ -103,8 +103,10 @@ public class Visit {
     private String providerComments;
 
     /*TODO: Solve error when is FetchType.LAZY. org.hibernate.LazyInitializationException: failed to lazily initialize a collection of role... could not initialize proxy - no Session*/
+    /*
     @OneToMany(mappedBy = "visit", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     private Set<Diagnostic> diagnostics = new HashSet<>();
+    */
 
     @CreationTimestamp
     @Temporal(TemporalType.TIMESTAMP)

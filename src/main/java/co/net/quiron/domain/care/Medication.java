@@ -49,6 +49,7 @@ public class Medication {
     private Date createdDate;
 
     @UpdateTimestamp
+    @ToString.Exclude
     @EqualsAndHashCode.Exclude
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "ModifiedDate")

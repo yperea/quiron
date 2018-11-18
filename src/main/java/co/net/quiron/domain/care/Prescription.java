@@ -35,7 +35,7 @@ public class Prescription {
 
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
-    @ManyToMany(mappedBy = "treatments")
+    @ManyToMany(mappedBy = "prescriptions")
     private Set<Treatment> treatments = new HashSet<>();
 
     @NonNull

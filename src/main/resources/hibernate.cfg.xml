@@ -19,11 +19,14 @@
         <mapping class="co.net.quiron.domain.account.Role" />
         <mapping class="co.net.quiron.domain.account.User" />
 
+<!--
         <mapping class="co.net.quiron.domain.care.Diagnostic" />
         <mapping class="co.net.quiron.domain.care.DiagnosticCause" />
+-->
         <mapping class="co.net.quiron.domain.care.Medication" />
         <mapping class="co.net.quiron.domain.care.Prescription" />
         <mapping class="co.net.quiron.domain.care.Service" />
+        <mapping class="co.net.quiron.domain.care.Treatment" />
         <mapping class="co.net.quiron.domain.care.Visit" />
 
         <mapping class="co.net.quiron.domain.institution.Organization" />
