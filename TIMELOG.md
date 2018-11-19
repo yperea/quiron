@@ -37,5 +37,29 @@
 | 10/12/18| Working on Week 7 exercise | 1 | |
 | 10/12/18| Working on Individual Project: Implementing Account Signup.| 6 | |
 | 10/13/18| Working on Individual Project: Implementing Account Signup| 4 | |
-
-
+| 10/20/18| Preparing AWS CodePipeline Presentation| 6 | |
+| 10/21/18| Preparing AWS CodePipeline Presentation| 7 | |
+| 10/22/18| Preparing AWS CodePipeline Presentation| 2 | |
+| 10/22/18| Working on Individual Project| 3 | |
+| 10/23/18| Preparing AWS CodePipeline Presentation| 5 | |
+| 10/26/18| Working on Individual Project: Implementing Patient Profile CRUD| 10 | |
+| 10/27/18| Working on Individual Project: Implementing Patient Profile CRUD| 8 | |
+| 10/28/18| Working on Individual Project Refactoring: Implementing inheritance with hibernate to reduce complexity in code for future implementations| 9 | |
+| 10/29/18| Working on Week 8 Exercise| 5 | |
+| 10/30/18| Watching Week 9 Videos| 2 | |
+| 10/30/18| Working on Individual Project: Choosing and testing Web Service for the project.| 2 | |
+| 11/02/18| Working on Individual Project: Implementing custom tag for error messages on the jsp pages and POJOs for the rest of tables of the model| 8 | |
+| 11/03/18| Working on Individual Project: Implementing Factory Pattern for Managers of Domain Classes| 10 | |
+| 11/04/18| Working on Individual Project: Implementing a service for week 10 exercise| 4 | Getting Infinite loop error on json output.|
+| 11/05/18| Working on Individual Project: Implementing a service for week 10 exercise| 2 | Biderectional relationship needs refactoring to avoid infinite looping.|
+| 11/06/18| Working on Week 10 exercise| 7 | |
+| 11/06/18| Working on Project Team: Creating Project Skeleton, GitHub Repository and AWS CodePipeline integration.| 5 | |
+| 11/08/18| Working on Project Team: Implementing Estimate History Java Bean and Test.| 4 | |
+| 11/09/18| Working on Project Team: Implementing model and operations to allow local service communicate with external API.| 3 | |
+| 11/09/18| Working on Individual Project: Integrating custom tag to the project to avoid error in AWS Pipeline and Implementing Visit Model and List View.| 6 | |
+| 11/10/18| Working on Individual Project: Refactoring Entity Dao to search by composite params.| 7 | |
+| 11/11/18| Working on Individual Project: Implementing Visit Model and List View.| 8 | |
+| 11/12/18| Watching Week 11 videos.| 8 | |
+| 11/13/18| Working on Individual Project: Integrating external API from https://apimedic.com/. Implementing communication with Authentication service https://sandbox-authservice.priaid.ch. Implementing Symptoms service query operation.| 10 | |
+| 11/17/18| Working on Week 11 exercise.| 5 | |
+| 11/18/18| Working on Individual Project: Implementing CRUD Test Cases for Medication, Prescription and Treatment entities.| 3 | |
