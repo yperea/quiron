@@ -1,11 +1,10 @@
-package co.net.quiron.controller.patient;
+package co.net.quiron.controller.care;
 
 import co.net.quiron.application.account.AccountManager;
-import co.net.quiron.application.account.ProfileManager;
 import co.net.quiron.application.factory.ManagerFactory;
 import co.net.quiron.application.shared.EntityManager;
+import co.net.quiron.domain.care.Treatment;
 import co.net.quiron.domain.care.Visit;
-import co.net.quiron.domain.institution.Organization;
 import co.net.quiron.util.Message;
 import co.net.quiron.util.MessageType;
 
@@ -22,62 +21,38 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @WebServlet(
-        name = "patient-visits",
-        urlPatterns = {"/patient/visits", "/provider/visits"}
+        name = "treatments",
+        urlPatterns = {"/patient/treatments", "/provider/treatments"}
 )
-public class VisitList extends HttpServlet {
-
+public class TreatmentList extends HttpServlet {
     @Override
     public void doGet (HttpServletRequest request,
                        HttpServletResponse response) throws ServletException, IOException {
 
         HttpSession session = request.getSession();
 
-        String url = "/patient/visits.jsp";
-        String title = "My Visits";
+        String url = "/care/treatments.jsp";
+        String title = "My Treatments";
         String personType = (String) session.getAttribute("personType");
 
         request.setAttribute("title", title);
-        session.setAttribute("currentPage", "My Visits");
+        session.setAttribute("currentPage", "My Treatments");
 
         String username = request.getUserPrincipal().getName();
+
         AccountManager accountManager =  new AccountManager();
-        ProfileManager profileManager = new ProfileManager();
-        EntityManager<Visit> visitManager = ManagerFactory.getManager(Visit.class);
+        EntityManager<Treatment> treatmentManager = ManagerFactory.getManager(Treatment.class);
 
         accountManager.loadUserAccount(username, personType);
         session.setAttribute("username", username);
 
-        List<Visit> visits = new ArrayList<>();
+        List<Treatment> treatments = treatmentManager.getList()
+                                    .stream()
+                                    .collect(Collectors.toList());
 
-        String state = "A";
+        request.setAttribute("treatments", treatments);
 
-        if ((request.getParameter("state") != null
-                && !request.getParameter("state").isEmpty())){
-
-            switch (request.getParameter("state")) {
-                case "completed":
-                    state = "C";
-                    break;
-
-                case "canceled":
-                    state = "D";
-                    break;
-            }
-            //state = request.getParameter("state");
-        }
-
-        String finalState = state;
-
-        visits = visitManager.getList()
-                .stream()
-                .filter(v -> finalState.equals(v.getStatus()))
-                .collect(Collectors.toList());
-
-        request.setAttribute("visits", visits);
-        request.setAttribute("state", state);
-
-        if (visits.size() == 0) {
+        if (treatments.size() == 0) {
             Message message = new Message();
             message.setType(MessageType.WARNING);
             message.setDescription("Records not found");
