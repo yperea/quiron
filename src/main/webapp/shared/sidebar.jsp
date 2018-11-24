@@ -23,7 +23,7 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">
+                        <a class="nav-link <c:if test="${currentPage == 'My Treatments'}">active</c:if>" href="${root}/patient/treatments">
                             <span data-feather="activity"></span>
                             My Treatments
                         </a>

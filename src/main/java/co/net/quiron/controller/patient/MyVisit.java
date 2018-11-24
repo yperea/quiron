@@ -32,7 +32,7 @@ public class MyVisit extends HttpServlet {
 
         HttpSession session = request.getSession();
 
-        String url = "/patient/visit.jsp";
+        String url = "/care/visit.jsp";
         String title = "My MyVisit";
         request.setAttribute("title", title);
         session.setAttribute("currentPage", "My Visits");

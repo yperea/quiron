@@ -42,19 +42,19 @@ public class Treatment {
 
     @NonNull
     @Column(name = "SymptomID")
-    private int SymptomId;
+    private int symptomId;
 
     @NonNull
     @Column(name = "SymptomName")
-    private String SymptomName;
+    private String symptomName;
 
     @NonNull
     @Column(name = "DiagnosticID")
-    private int DiagnosticId;
+    private int diagnosticId;
 
     @NonNull
     @Column(name = "DiagnosticName")
-    private String DiagnosticName;
+    private String diagnosticName;
 
     @Column(name = "StartDate")
     private LocalDate startDate;

@@ -120,10 +120,16 @@ public class AccountManager {
         logger.info("loadUserAccount(String): Start loading account.");
         //String finalPersonType = personType;
 
+
+        if(personType == null) {
+            personType = "patient";
+        }
+
         User user = userManager.getListEquals("username", username).get(0);
+        String finalPersonType = personType;
         Person person = user.getPersons()
                 .stream()
-                .filter(p -> personType.equals(p.getPersonType().getName().toLowerCase()))
+                .filter(p -> finalPersonType.equals(p.getPersonType().getName().toLowerCase()))
                 .findAny()
                 .orElse(null);
 

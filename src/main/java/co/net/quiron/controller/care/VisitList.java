@@ -1,14 +1,7 @@
-package co.net.quiron.controller.patient;
+package co.net.quiron.controller.care;
 
-import co.net.quiron.application.account.AccountManager;
-import co.net.quiron.application.account.ProfileManager;
-import co.net.quiron.application.factory.ManagerFactory;
-import co.net.quiron.application.shared.EntityManager;
+import co.net.quiron.application.care.VisitManager;
 import co.net.quiron.domain.care.Visit;
-import co.net.quiron.domain.institution.Organization;
-import co.net.quiron.util.Message;
-import co.net.quiron.util.MessageType;
-
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -17,16 +10,54 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @WebServlet(
-        name = "patient-visits",
+        name = "visits",
         urlPatterns = {"/patient/visits", "/provider/visits"}
 )
 public class VisitList extends HttpServlet {
 
+    @Override
+    public void doGet (HttpServletRequest request,
+                       HttpServletResponse response) throws ServletException, IOException {
+
+        HttpSession session = request.getSession();
+
+        String url = "/care/visits.jsp";
+        String title = "My Visits";
+        String personType = (String) session.getAttribute("personType");
+        String username = request.getUserPrincipal().getName();
+
+        request.setAttribute("title", title);
+        session.setAttribute("currentPage", "My Visits");
+
+        String state = "A";
+
+        if ((request.getParameter("state") != null && !request.getParameter("state").isEmpty())){
+            switch (request.getParameter("state")) {
+                case "completed":
+                    state = "C";
+                    break;
+                case "canceled":
+                    state = "D";
+                    break;
+            }
+        }
+
+        VisitManager visitManager = new VisitManager(username, personType);
+        List<Visit> visits = visitManager.getPatientVisitsList(state);
+
+        request.setAttribute("visits", visits);
+        request.setAttribute("state", state);
+        session.setAttribute("message", visitManager.getMessage());
+
+        RequestDispatcher dispatcher = request.getRequestDispatcher(url);
+        dispatcher.forward(request, response);
+    }
+
+
+/*
     @Override
     public void doGet (HttpServletRequest request,
                        HttpServletResponse response) throws ServletException, IOException {
@@ -42,11 +73,11 @@ public class VisitList extends HttpServlet {
 
         String username = request.getUserPrincipal().getName();
         AccountManager accountManager =  new AccountManager();
-        ProfileManager profileManager = new ProfileManager();
+        //ProfileManager profileManager = new ProfileManager();
         EntityManager<Visit> visitManager = ManagerFactory.getManager(Visit.class);
 
-        accountManager.loadUserAccount(username, personType);
-        session.setAttribute("username", username);
+        //accountManager.loadUserAccount(username, personType);
+        //session.setAttribute("username", username);
 
         List<Visit> visits = new ArrayList<>();
 
@@ -88,4 +119,5 @@ public class VisitList extends HttpServlet {
         RequestDispatcher dispatcher = request.getRequestDispatcher(url);
         dispatcher.forward(request, response);
     }
+*/
 }

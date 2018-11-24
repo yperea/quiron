@@ -76,7 +76,6 @@ public class Insurance extends HttpServlet {
 
             profileManager =  new ProfileManager();
 
-
             session.setAttribute("profile", profileManager.savePatientInsurance(accountManager, companyId, subscriberCode));
             session.setAttribute("message", profileManager.getMessage());
         }
