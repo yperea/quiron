@@ -73,8 +73,8 @@ class AccountManagerTest {
      */
     @Test
     void loadUserAccount() {
-        String userName = "yesper";
-        String firstName = "Yesid";
+        String userName = "jconstantine";
+        String firstName = "John";
         String personType = "patient";
 
         accountManager.loadUserAccount(userName, personType);

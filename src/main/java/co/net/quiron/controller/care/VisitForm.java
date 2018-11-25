@@ -1,7 +1,8 @@
-package co.net.quiron.controller.patient;
+package co.net.quiron.controller.care;
 
 import co.net.quiron.application.account.AccountManager;
 import co.net.quiron.application.account.ProfileManager;
+import co.net.quiron.application.care.VisitManager;
 import co.net.quiron.application.factory.ManagerFactory;
 import co.net.quiron.application.shared.EntityManager;
 import co.net.quiron.domain.care.Visit;
@@ -21,10 +22,10 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @WebServlet(
-        name = "patient-visit",
-        urlPatterns = "/patient/visit"
+        name = "visit",
+        urlPatterns = {"/patient/visit", "/provider/visit"}
 )
-public class MyVisit extends HttpServlet {
+public class VisitForm extends HttpServlet {
 
     @Override
     public void doGet (HttpServletRequest request,
@@ -33,19 +34,21 @@ public class MyVisit extends HttpServlet {
         HttpSession session = request.getSession();
 
         String url = "/care/visit.jsp";
-        String title = "My MyVisit";
-        request.setAttribute("title", title);
-        session.setAttribute("currentPage", "My Visits");
-
+        String title = "My Visit";
+        String personType = (String) session.getAttribute("personType");
         String username = request.getUserPrincipal().getName();
+
+        request.setAttribute("title", title);
+        session.setAttribute("currentPage", "My Visit");
+
         AccountManager accountManager =  new AccountManager();
         ProfileManager profileManager = new ProfileManager();
-        EntityManager<Visit> visitManager = ManagerFactory.getManager(Visit.class);
-        String personType = (String) session.getAttribute("personType");
 
-        accountManager.loadUserAccount(username,personType);
+        //EntityManager<Visit> visitManager = ManagerFactory.getManager(Visit.class);
 
-        session.setAttribute("username", username);
+        VisitManager visitManager = new VisitManager(username, personType);
+
+        //accountManager.loadUserAccount(username,personType);
 
         Visit visit = new Visit();
 
@@ -53,18 +56,11 @@ public class MyVisit extends HttpServlet {
                 && !request.getParameter("id").isEmpty())){
 
             int visitId = Integer.parseInt(request.getParameter("id"));
-            visit = visitManager.get(visitId);
-        }
+            visit = visitManager.getPatientVisit(visitId);
 
+        }
         request.setAttribute("visit", visit);
-
-        if (visit == null) {
-            Message message = new Message();
-            message.setType(MessageType.ERROR);
-            message.setDescription("Record not found");
-            accountManager.setMessage(message);
-            session.setAttribute("message", message);
-        }
+        session.setAttribute("message", visitManager.getMessage());
 
         RequestDispatcher dispatcher = request.getRequestDispatcher(url);
         dispatcher.forward(request, response);

@@ -112,7 +112,7 @@ class UserManagerTest {
         userManager.update(userToUpdate);
         User userUpdated = userManager.get(userId);
 
-        assertEquals(userToUpdate, userUpdated);
+        assertEquals(newUserName, userUpdated.getUsername());
         assertNotNull(userUpdated.getModifiedDate());
     }
 
@@ -179,7 +179,7 @@ class UserManagerTest {
         Role newRole = userUpdated.getRoles().stream().findFirst().get();
 
         assertEquals(1,rolesAssigned);
-        assertEquals(adminRole, newRole);
+        assertEquals(adminRole.getName(), newRole.getName());
     }
 
     /**
@@ -210,6 +210,6 @@ class UserManagerTest {
         assertEquals("1234", insertedUser.getPassword());
         assertNotNull(insertedUser.getCreatedDate());
         assertEquals(1,rolesAssigned);
-        assertEquals(userRole, newRole);
+        assertEquals(userRole.getName(), newRole.getName());
     }
 }

@@ -15,7 +15,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * This class represents MyVisit domain for the application.
+ * This class represents VisitForm domain for the application.
  *
  * @autor yperea
  */
@@ -69,6 +69,22 @@ public class Visit {
     @Column(name = "ScheduledEndDate")
     private LocalDate scheduledEndDate;
 
+    @NonNull
+    @Column(name = "SymptomID")
+    private int symptomId;
+
+    @NonNull
+    @Column(name = "SymptomName")
+    private String symptomName;
+
+    @NonNull
+    @Column(name = "DiagnosticID")
+    private int diagnosticId;
+
+    @NonNull
+    @Column(name = "DiagnosticName")
+    private String diagnosticName;
+
     @Column(name = "ActualStartDate")
     private LocalDate actualStartDate;
 
@@ -88,7 +104,7 @@ public class Visit {
     private double patientRespiration;
 
     @Column(name = "PatientBMI")
-    private double patientBmi;
+    private double patientBMI;
 
     @Column(name = "PatientHeight")
     private double patientHeight;

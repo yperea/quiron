@@ -40,6 +40,7 @@ public class Treatment {
     @JoinColumn(name = "VisitID")
     private Visit visit;
 
+/*
     @NonNull
     @Column(name = "SymptomID")
     private int symptomId;
@@ -55,6 +56,7 @@ public class Treatment {
     @NonNull
     @Column(name = "DiagnosticName")
     private String diagnosticName;
+*/
 
     @Column(name = "StartDate")
     private LocalDate startDate;

@@ -51,66 +51,135 @@
                       action="${root}/patient/profile"
                       method="POST"
                       novalidate>
+
                     <div class="row">
                         <div class="col-md-6 mb-3">
-                            <label for="firstName">First name</label>
+                            <label for="organization">Organization</label>
                             <input type="text"
                                    class="form-control"
-                                   id="firstName"
-                                   name="firstName"
+                                   id="organization"
+                                   name="organization"
                                    placeholder=""
-                                   value="${profile.patient.firstName}"
+                                   value="${visit.providerSchedule.organization.name}"
                                    required />
                             <div class="invalid-feedback">
-                                Valid first name is required.
+                                Organization required.
                             </div>
                         </div>
                         <div class="col-md-6 mb-3">
-                            <label for="lastName">Last name</label>
+                            <label for="provider">Provider</label>
                             <input type="text"
                                    class="form-control"
-                                   id="lastName"
-                                   name="lastName"
+                                   id="provider"
+                                   name="provider"
                                    placeholder=""
-                                   value="${profile.patient.lastName}"
+                                   value="${visit.providerSchedule.provider.lastName} , ${visit.providerSchedule.provider.firstName}"
                                    required />
                             <div class="invalid-feedback">
-                                Valid last name is required.
+                                Provider required.
                             </div>
                         </div>
                     </div>
 
                     <div class="row">
                         <div class="col-md-6 mb-3">
-                            <label for="birthDate">Date of Birth</label>
+                            <label for="scheduledStartDate">Scheduled Date</label>
                             <input type="text"
                                    class="form-control"
-                                   id="birthDate"
-                                   name="birthDate"
+                                   id="scheduledStartDate"
+                                   name="scheduledStartDate"
                                    placeholder="mm/dd/yyyy"
-                                   value="<tags:localDate date="${profile.patient.birthDate}" pattern="MM/d/yyyy"/>"
+                                   value="<tags:localDate date="${visit.scheduledStartDate}" pattern="MM/d/yyyy"/>"
                                    required />
                             <div class="invalid-feedback">
-                                Please enter a valid date of birth.
+                                Please enter a valid date.
                             </div>
                         </div>
                         <div class="col-md-6 mb-3">
-                            <label for="gender">Gender</label>
+                            <label for="status">Status</label>
                             <select class="custom-select d-block w-100"
-                                    id="gender"
-                                    name="gender"
+                                    id="status"
+                                    name="status"
                                     required />
                                 <option value="">Choose...</option>
-                                <option value="M" <c:if test="${profile.patient.gender == 'M'}">selected</c:if> >Male</option>
-                                <option value="F" <c:if test="${profile.patient.gender == 'F'}">selected</c:if> >Female</option>
+                                <option value="A" <c:if test="${visit.status == 'A'}">selected</c:if>>Active</option>
+                                <option value="C" <c:if test="${visit.status == 'C'}">selected</c:if> >Completed</option>
+                                <option value="D" <c:if test="${visit.status == 'D'}">selected</c:if> >Canceled</option>
                             </select>
                             <div class="invalid-feedback">
-                                Please provide a gender.
+                                Please provide a status.
                             </div>
                         </div>
                     </div>
 
-                    <div class="mb-3">
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="startDate">Start Date</label>
+                            <input type="text"
+                                   class="form-control"
+                                   id="startDate"
+                                   name="startDate"
+                                   placeholder="mm/dd/yyyy"
+                                   value="<tags:localDate date="${visit.actualStartDate}" pattern="MM/d/yyyy"/>"
+                                   required />
+                            <div class="invalid-feedback">
+                                Please enter a valid date.
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="endDate">End Date</label>
+                            <input type="text"
+                                   class="form-control"
+                                   id="endDate"
+                                   name="endDate"
+                                   placeholder="mm/dd/yyyy"
+                                   value="<tags:localDate date="${visit.actualStartDate}" pattern="MM/d/yyyy"/>"
+                                   required />
+                            <div class="invalid-feedback">
+                                Please enter a valid date.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="symptom">Symptom</label>
+                            <select class="custom-select d-block w-100"
+                                    id="symptom"
+                                    name="symptom"
+                                    required />
+                            <option value="">Choose...</option>
+<%--
+                            <c:forEach var="symptom" items="${symptoms}">
+                                <option value="${symptom.id}" <c:if test="${visit.symptomId == symptom.id}">selected</c:if> >${symptom.name}</option>
+                            </c:forEach>
+--%>
+                            </select>
+                            <div class="invalid-feedback">
+                                Please provide a valid symptom.
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <label for="diagnostic">Diagnostic</label>
+                            <select class="custom-select d-block w-100"
+                                    id="diagnostic"
+                                    name="diagnostic"
+                                    required />
+                            <option value="">Choose...</option>
+<%--
+                            <c:forEach var="diagnostic" items="${diagnostics}">
+                                <option value="${diagnostic.id}" <c:if test="${visit.diagnosticId == diagnostic.id}">selected</c:if> >${diagnostic.name}</option>
+                            </c:forEach>
+--%>
+                            </select>
+                            <div class="invalid-feedback">
+                                Please select a valid diagnostic.
+                            </div>
+                        </div>
+                    </div>
+
+<%--                    <div class="mb-3">
                         <label for="address1">Address</label>
                         <input type="text"
                                class="form-control"
@@ -132,48 +201,102 @@
                                name="address2"
                                value="${profile.address.addressLine2}"
                                placeholder="" />
-                    </div>
+                    </div>--%>
 
                     <div class="row">
-                        <div class="col-md-5 mb-3">
-                            <label for="city">City</label>
+                        <div class="col-md-3 mb-3">
+                            <label for="bloodPressure">Blood Pressure</label>
                             <input type="text"
                                    class="form-control"
-                                   id="city"
-                                   name="city"
+                                   id="bloodPressure"
+                                   name="bloodPressure"
                                    placeholder=""
-                                   value="${profile.address.city}"
+                                   value="${visit.patientBloodPressure}"
                                    required />
                             <div class="invalid-feedback">
-                                City required.
-                            </div>
-                        </div>
-                        <div class="col-md-4 mb-3">
-                            <label for="state">State ${profile.address.state.id}</label>
-                            <select class="custom-select d-block w-100"
-                                    id="state"
-                                    name="state"
-                                    required />
-                                <option value="">Choose...</option>
-                                <c:forEach var="state" items="${states}">
-                                <option value="${state.id}" <c:if test="${profile.address.state.id == state.id}">selected</c:if> >${state.code} - ${state.name}</option>
-                                </c:forEach>
-                            </select>
-                            <div class="invalid-feedback">
-                                Please provide a valid state.
+                                Blood pressure required.
                             </div>
                         </div>
                         <div class="col-md-3 mb-3">
-                            <label for="zip">Zip</label>
+                            <label for="weight">Weight</label>
                             <input type="text"
                                    class="form-control"
-                                   id="zip"
-                                   name="zip"
-                                   value="${profile.address.postalCode}"
+                                   id="weight"
+                                   name="weight"
                                    placeholder=""
+                                   value="${visit.patientWeight}"
                                    required />
                             <div class="invalid-feedback">
-                                Zip code required.
+                                Enter patient weight.
+                            </div>
+                        </div>
+                        <div class="col-md-3 mb-3">
+                            <label for="height">Height</label>
+                            <input type="text"
+                                   class="form-control"
+                                   id="height"
+                                   name="height"
+                                   placeholder=""
+                                   value="${visit.patientHeight}"
+                                   required />
+                            <div class="invalid-feedback">
+                                Enter patient height.
+                            </div>
+                        </div>
+                        <div class="col-md-3 mb-3">
+                            <label for="pulse">Pulse</label>
+                            <input type="text"
+                                   class="form-control"
+                                   id="pulse"
+                                   name="pulse"
+                                   placeholder=""
+                                   value="${visit.patientPulse}"
+                                   required />
+                            <div class="invalid-feedback">
+                                Enter patient pulse.
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="row">
+                        <div class="col-md-4 mb-3">
+                            <label for="respiration">Respiration</label>
+                            <input type="text"
+                                   class="form-control"
+                                   id="respiration"
+                                   name="respiration"
+                                   placeholder=""
+                                   value="${visit.patientRespiration}"
+                                   required />
+                            <div class="invalid-feedback">
+                                Enter patient respiration.
+                            </div>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <label for="bmi">BMI</label>
+                            <input type="text"
+                                   class="form-control"
+                                   id="bmi"
+                                   name="bmi"
+                                   placeholder=""
+                                   value="${visit.patientBMI}"
+                                   required />
+                            <div class="invalid-feedback">
+                                Enter patient BMI.
+                            </div>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <label for="temperature">Temperature</label>
+                            <input type="text"
+                                   class="form-control"
+                                   id="temperature"
+                                   name="temperature"
+                                   placeholder=""
+                                   value="${visit.patientTemperature}"
+                                   required />
+                            <div class="invalid-feedback">
+                                Enter patient height.
                             </div>
                         </div>
                     </div>

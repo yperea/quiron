@@ -33,7 +33,6 @@ public class VisitList extends HttpServlet {
         session.setAttribute("currentPage", "My Visits");
 
         String state = "A";
-
         if ((request.getParameter("state") != null && !request.getParameter("state").isEmpty())){
             switch (request.getParameter("state")) {
                 case "completed":

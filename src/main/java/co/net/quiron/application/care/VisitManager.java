@@ -81,4 +81,23 @@ public class VisitManager {
         return visits;
     }
 
+    public Visit getPatientVisit(int visitId) {
+
+        EntityManager<Patient> patientAgent = ManagerFactory.getManager(Patient.class);
+        Map<String, Object> params = new TreeMap<>();
+        int patientId = accountManager.getId();
+        Patient patient = patientAgent.get(patientId);
+        params.put("patient", patient);
+
+        Visit visit = visitAgent.get(visitId);
+
+        if (visit == null) {
+            message.setType(MessageType.WARNING);
+            message.setDescription("Record not found");
+        }
+
+        return visit;
+    }
+
+
 }

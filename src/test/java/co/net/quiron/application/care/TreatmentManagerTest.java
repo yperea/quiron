@@ -42,8 +42,8 @@ public class TreatmentManagerTest {
     @Test
     void testGetTreatmentById() {
         Treatment treatment = treatmentManager.get(1);
-        String symptom = treatment.getSymptomName();
-        assertEquals("Sore throat", symptom);
+        String comments = treatment.getPatientComments();
+        assertEquals("I feel better now", comments);
     }
 
     /**
@@ -85,7 +85,7 @@ public class TreatmentManagerTest {
 
         Visit visit = visitManager.get(3);
 
-        Treatment newTreatment = new Treatment(visit, symptomId, symptomName, diagnosticId, diagnosticName);
+        Treatment newTreatment = new Treatment(visit);
         newTreatment.setStartDate(startDate);
         newTreatment.setEndDate(endDate);
         newTreatment.setPatientComments(patientComments);
@@ -96,8 +96,8 @@ public class TreatmentManagerTest {
         Treatment insertedTreatment = treatmentManager.create(newTreatment);
 
         assertNotNull(insertedTreatment);
-        assertEquals(symptomName, insertedTreatment.getSymptomName());
-        assertEquals(diagnosticName, insertedTreatment.getDiagnosticName());
+        assertEquals(status, insertedTreatment.getStatus());
+        assertEquals(providerComments, insertedTreatment.getProviderComments());
     }
 
     /**
@@ -107,17 +107,19 @@ public class TreatmentManagerTest {
     void testUpdateTreatment() {
 
         int treatmentId = 1;
-        int newSymptomId = 20;
+        int newEvaluation = 3;
+        String newStatus = "D";
         String newSymptomName = "Symptom 20";
 
         Treatment treatmentToUpdate = treatmentManager.get(treatmentId);
-        treatmentToUpdate.setSymptomId(newSymptomId);
-        treatmentToUpdate.setSymptomName(newSymptomName);
+        treatmentToUpdate.setStatus(newStatus);
+        treatmentToUpdate.setEvaluation(newEvaluation);
 
         treatmentManager.update(treatmentToUpdate);
         Treatment treatmentUpdated = treatmentManager.get(treatmentId);
 
-        assertEquals(newSymptomName, treatmentUpdated.getSymptomName());
+        assertEquals(newEvaluation, treatmentUpdated.getEvaluation());
+        assertEquals(newStatus, treatmentUpdated.getStatus());
     }
 
     /**
@@ -128,14 +130,16 @@ public class TreatmentManagerTest {
 
         int treatmentIdToDelete = 3;
 
+/*
         int symptomId = 1;
         String symptomName = "Sore throat";
         int diagnosticId = 1;
         String diagnosticName = "Diagnsotic 1";
+*/
 
         Visit visit = visitManager.get(3);
 
-        Treatment newTreatment = new Treatment(visit, symptomId, symptomName, diagnosticId, diagnosticName);
+        Treatment newTreatment = new Treatment(visit);
         Treatment insertedTreatment = treatmentManager.create(newTreatment);
 
         treatmentManager.delete(treatmentManager.get(treatmentIdToDelete));
@@ -151,10 +155,12 @@ public class TreatmentManagerTest {
         int prescriptionId = 2;
         String intructions = "100 mg every 12 hours, not to exceed 200 mg in 24 hours.";
 
+/*
         int symptomId = 1;
         String symptomName = "Sore throat";
         int diagnosticId = 1;
         String diagnosticName = "Diagnsotic 1";
+*/
         LocalDate startDate = LocalDate.parse("2018-02-01");
         LocalDate endDate = LocalDate.parse("2018-02-08");
         String patientComments = "";
@@ -164,7 +170,7 @@ public class TreatmentManagerTest {
 
         Visit visit = visitManager.get(3);
 
-        Treatment newTreatment = new Treatment(visit, symptomId, symptomName, diagnosticId, diagnosticName);
+        Treatment newTreatment = new Treatment(visit);
         newTreatment.setStartDate(startDate);
         newTreatment.setEndDate(endDate);
         newTreatment.setPatientComments(patientComments);
@@ -182,8 +188,10 @@ public class TreatmentManagerTest {
         Prescription newPrescription = insertedTreatment.getPrescriptions().stream().findFirst().get();
 
         assertNotNull(insertedTreatment);
+/*
         assertEquals(symptomName, insertedTreatment.getSymptomName());
         assertEquals(diagnosticName, insertedTreatment.getDiagnosticName());
+*/
         assertEquals(1,prescriptionsAssigned);
         assertEquals(intructions, newPrescription.getInstructions());
     }

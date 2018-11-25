@@ -83,7 +83,7 @@ class RoleManagerTest {
         roleManager.update(roleToUpdate);
         Role roleUpdated = roleManager.get(roleId);
 
-        assertEquals(roleToUpdate, roleUpdated);
+        assertEquals(newRoleName, roleUpdated.getName());
         assertNotNull(roleUpdated.getModifiedDate());
     }
 
