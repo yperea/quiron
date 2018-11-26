@@ -23,11 +23,13 @@
 
             <div class="btn-toolbar mb-2 mb-md-0">
                 <div class="btn-group mr-2">
+<%--
                     <a class="btn btn-sm btn-outline-danger" href="${root}/patient/insurance" role="button">Health Insurance</a>
                     &nbsp;
                     <a class="btn btn-sm btn-outline-warning" href="#" role="button">Pharmacies</a>
                     &nbsp;
-                    <a class="btn btn-sm btn-outline-success" href="#" role="button">Payment Info</a>
+--%>
+                    <a class="btn btn-sm btn-outline-success" href="${root}/patient/treatment" role="button">Prescription</a>
                     &nbsp;
                 </div>
                 <!--
@@ -40,7 +42,10 @@
 
         </div>
         <br/>
+
         <div class="row justify-content-center">
+
+<!---------------------------------------------------------------------------->
             <div class="col-md-9">
                 <!--<h4 class="mb-3">Your person</h4>-->
 
@@ -48,7 +53,7 @@
                 <c:remove var="message" scope="session" />
 
                 <form class="needs-validation"
-                      action="${root}/patient/profile"
+                      action="${root}/patient/visit"
                       method="POST"
                       novalidate>
 
@@ -114,7 +119,7 @@
 
                     <div class="row">
                         <div class="col-md-6 mb-3">
-                            <label for="startDate">Start Date</label>
+                            <label for="startDate">Actual Date</label>
                             <input type="text"
                                    class="form-control"
                                    id="startDate"
@@ -126,17 +131,34 @@
                                 Please enter a valid date.
                             </div>
                         </div>
-                        <div class="col-md-6 mb-3">
-                            <label for="endDate">End Date</label>
-                            <input type="text"
+
+                        <div class="col-md-3 mb-3">
+                            <label for="startTime">Start Time</label>
+                            <input type="time"
                                    class="form-control"
-                                   id="endDate"
-                                   name="endDate"
-                                   placeholder="mm/dd/yyyy"
-                                   value="<tags:localDate date="${visit.actualStartDate}" pattern="MM/d/yyyy"/>"
+                                   id="startTime"
+                                   name="startTime"
+                                   placeholder=""
+                                   value="13:30"
+                                   <%--size="4"--%>
                                    required />
                             <div class="invalid-feedback">
-                                Please enter a valid date.
+                                Please enter the starting time of visit.
+                            </div>
+                        </div>
+
+                        <div class="col-md-3 mb-3">
+                            <label for="endTime">End Time</label>
+                            <input type="time"
+                                   class="form-control"
+                                   id="endTime"
+                                   name="endTime"
+                                   placeholder=""
+                                   value="13:30"
+                            <%--size="4"--%>
+                                   required />
+                            <div class="invalid-feedback">
+                                Please enter the ending time of visit.
                             </div>
                         </div>
                     </div>
@@ -149,11 +171,11 @@
                                     name="symptom"
                                     required />
                             <option value="">Choose...</option>
-<%--
+
                             <c:forEach var="symptom" items="${symptoms}">
-                                <option value="${symptom.id}" <c:if test="${visit.symptomId == symptom.id}">selected</c:if> >${symptom.name}</option>
+                                <option value="${symptom.ID}" <c:if test="${visit.symptomId == symptom.ID}">selected</c:if> >${symptom.name}</option>
                             </c:forEach>
---%>
+
                             </select>
                             <div class="invalid-feedback">
                                 Please provide a valid symptom.
@@ -204,20 +226,7 @@
                     </div>--%>
 
                     <div class="row">
-                        <div class="col-md-3 mb-3">
-                            <label for="bloodPressure">Blood Pressure</label>
-                            <input type="text"
-                                   class="form-control"
-                                   id="bloodPressure"
-                                   name="bloodPressure"
-                                   placeholder=""
-                                   value="${visit.patientBloodPressure}"
-                                   required />
-                            <div class="invalid-feedback">
-                                Blood pressure required.
-                            </div>
-                        </div>
-                        <div class="col-md-3 mb-3">
+                        <div class="col-md-4 mb-3">
                             <label for="weight">Weight</label>
                             <input type="text"
                                    class="form-control"
@@ -230,7 +239,7 @@
                                 Enter patient weight.
                             </div>
                         </div>
-                        <div class="col-md-3 mb-3">
+                        <div class="col-md-4 mb-3">
                             <label for="height">Height</label>
                             <input type="text"
                                    class="form-control"
@@ -243,7 +252,7 @@
                                 Enter patient height.
                             </div>
                         </div>
-                        <div class="col-md-3 mb-3">
+                        <div class="col-md-4 mb-3">
                             <label for="pulse">Pulse</label>
                             <input type="text"
                                    class="form-control"
@@ -301,6 +310,16 @@
                         </div>
                     </div>
 
+                    <div class="mb-3">
+                        <label for="providerComment">Provider Comments</label>
+                        <textarea class="form-control"
+                                  id="providerComment"
+                                  name="providerComment"
+                                  required >${visit.providerComments}</textarea>
+                        <div class="invalid-feedback">
+                            Please enter your comments.
+                        </div>
+                    </div>
                     <hr class="mb-4">
 
                     <button class="btn btn-success btn-lg btn-block" type="submit">Save</button>
@@ -449,6 +468,9 @@
 
     <%@include file="../shared/cdn-jss.jsp"%>
     <%@include file="../shared/footer.jsp"%>
+
+    <!-- Reference to local JS library -->
+    <script type="text/javascript" charset="utf-8" src="../style/js/visit.js" ></script>
 
 </body>
 </html>

@@ -5,9 +5,11 @@ import co.net.quiron.application.account.ProfileManager;
 import co.net.quiron.application.care.VisitManager;
 import co.net.quiron.application.factory.ManagerFactory;
 import co.net.quiron.application.shared.EntityManager;
+import co.net.quiron.application.vendor.ApiMedicManager;
 import co.net.quiron.domain.care.Visit;
 import co.net.quiron.util.Message;
 import co.net.quiron.util.MessageType;
+import co.net.quiron.vendor.com.apimedic.Symptom;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -44,7 +46,8 @@ public class VisitForm extends HttpServlet {
         AccountManager accountManager =  new AccountManager();
         ProfileManager profileManager = new ProfileManager();
 
-        //EntityManager<Visit> visitManager = ManagerFactory.getManager(Visit.class);
+        ApiMedicManager apiMedicManager = new ApiMedicManager("/apimedic.properties");
+        List<Symptom> symptoms = apiMedicManager.getSymptomsList();
 
         VisitManager visitManager = new VisitManager(username, personType);
 
@@ -60,6 +63,7 @@ public class VisitForm extends HttpServlet {
 
         }
         request.setAttribute("visit", visit);
+        request.setAttribute("symptoms", symptoms);
         session.setAttribute("message", visitManager.getMessage());
 
         RequestDispatcher dispatcher = request.getRequestDispatcher(url);

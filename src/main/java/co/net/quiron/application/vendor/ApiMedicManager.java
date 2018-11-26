@@ -49,12 +49,8 @@ public class ApiMedicManager implements PropertiesLoader {
      * Instantiates a new Geo life manager.
      *
      * @param propertiesFileName the properties file name
-     * @throws UnsupportedEncodingException the unsupported encoding exception
-     * @throws NoSuchAlgorithmException     the no such algorithm exception
-     * @throws InvalidKeyException          the invalid key exception
      */
-    public ApiMedicManager (String propertiesFileName)
-            throws UnsupportedEncodingException, NoSuchAlgorithmException, InvalidKeyException {
+    public ApiMedicManager (String propertiesFileName){
         logger.info("ApiMedicManager(String): Instantiating ApiMedicManager class.");
         properties = loadProperties(propertiesFileName);
         format = "json";
@@ -68,18 +64,36 @@ public class ApiMedicManager implements PropertiesLoader {
      *
      */
     private void acquireAuthToken()
-            throws UnsupportedEncodingException, NoSuchAlgorithmException, InvalidKeyException {
+            /*throws UnsupportedEncodingException, NoSuchAlgorithmException, InvalidKeyException*/
+    {
 
         String authenticationUrl = properties.getProperty("apimedic.auth.endpoint");
         String apiKey = properties.getProperty("apimedic.apikey.username");
         String secretKey = properties.getProperty("apimedic.apikey.password");
 
-        byte[] secretBytes = secretKey.getBytes("UTF-8");
-        byte[] dataBytes = authenticationUrl.getBytes("UTF-8");
+        byte[] secretBytes = new byte[0];
+        byte[] dataBytes = new byte[0];
+
+        try {
+            secretBytes = secretKey.getBytes("UTF-8");
+            dataBytes = authenticationUrl.getBytes("UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            logger.error("acquireAuthToken: UnsupportedEncodingException. " + e);
+        }
 
         SecretKeySpec keySpec = new SecretKeySpec(secretBytes, "HmacMD5");
-        Mac mac = Mac.getInstance("HmacMD5");
-        mac.init(keySpec);
+        Mac mac = null;
+        try {
+            mac = Mac.getInstance("HmacMD5");
+        } catch (NoSuchAlgorithmException e) {
+            logger.error("acquireAuthToken: NoSuchAlgorithmException. " + e);
+        }
+
+        try {
+            mac.init(keySpec);
+        } catch (InvalidKeyException e) {
+            logger.error("acquireAuthToken: NoSuchAlgorithmException. " + e);
+        }
 
         byte[] computedHash = mac.doFinal(dataBytes);
         BASE64Encoder encoder = new BASE64Encoder();

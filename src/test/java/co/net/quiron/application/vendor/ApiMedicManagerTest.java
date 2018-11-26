@@ -20,7 +20,7 @@ class ApiMedicManagerTest {
     private ApiMedicManager apiMedicManager;
 
     @BeforeEach
-    void setUp() throws UnsupportedEncodingException, NoSuchAlgorithmException, InvalidKeyException {
+    void setUp(){
         apiMedicManager = new ApiMedicManager("/apimedic.properties");
     }
 

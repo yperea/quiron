@@ -79,7 +79,7 @@ public class Symptom {
 			"Symptom{" +
 			"synonyms = '" + synonyms + '\'' + 
 			",profName = '" + profName + '\'' + 
-			",iD = '" + iD + '\'' + 
+			",iD = '" + iD + '\'' +
 			",hasRedFlag = '" + hasRedFlag + '\'' + 
 			",name = '" + name + '\'' + 
 			",healthSymptomLocationIDs = '" + healthSymptomLocationIDs + '\'' + 
