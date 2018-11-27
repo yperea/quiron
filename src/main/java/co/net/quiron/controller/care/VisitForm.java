@@ -49,18 +49,12 @@ public class VisitForm extends HttpServlet {
         ApiMedicManager apiMedicManager = new ApiMedicManager("/apimedic.properties");
         List<Symptom> symptoms = apiMedicManager.getSymptomsList();
 
+        Visit visit = null;
         VisitManager visitManager = new VisitManager(username, personType);
-
-        //accountManager.loadUserAccount(username,personType);
-
-        Visit visit = new Visit();
-
         if ((request.getParameter("id") != null
-                && !request.getParameter("id").isEmpty())){
-
+            && !request.getParameter("id").isEmpty())){
             int visitId = Integer.parseInt(request.getParameter("id"));
             visit = visitManager.getPatientVisit(visitId);
-
         }
         request.setAttribute("visit", visit);
         request.setAttribute("symptoms", symptoms);

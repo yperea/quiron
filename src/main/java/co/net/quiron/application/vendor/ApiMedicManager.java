@@ -4,9 +4,11 @@ import co.net.quiron.util.PropertiesLoader;
 import co.net.quiron.vendor.com.apimedic.Gender;
 import co.net.quiron.vendor.com.apimedic.SelectorStatus;
 import co.net.quiron.vendor.com.apimedic.Symptom;
+import co.net.quiron.vendor.com.apimedic.Diagnosis;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.AccessLevel;
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 import org.apache.logging.log4j.LogManager;
@@ -34,6 +36,7 @@ import java.util.Properties;
 /**
  * The type Api medic manager.
  */
+@Data
 public class ApiMedicManager implements PropertiesLoader {
 
     @Getter(AccessLevel.NONE)
@@ -121,52 +124,134 @@ public class ApiMedicManager implements PropertiesLoader {
     }
 
 
-        /**
-         * Gets a well-formed URL to consume the GeoLife services.
-         *
-         * @param token the address
-         * @param language the country
-         * @param format the value based on the population count or in percentages
-         * @param symptoms Serialized array of selected symptom ids in json format. example symptoms=[234,235,236]
-         * @return well-formed symptoms URL including the given arguments
-         */
-        private static String getSymptomsUrl(String token,
-                String language,
-                String format,
-                String symptoms,
-                Gender gender,
-                int birthYear,
-                int locationId,
-                SelectorStatus selectorStatus) {
+    /**
+     * Gets a well-formed URL to consume the GeoLife services.
+     *
+     * @param token security token received from https://authservice.priaid.ch/login
+     * @param language de-ch, en-gb, fr-fr, es-es, tr-tr
+     * @param format json, xml
+     * @param symptoms Serialized array of selected symptom ids in json format. example symptoms=[234,235,236]
+     * @param gender male, female
+     * @param birthYear year of birth
+     * @param locationId see Body location id. If locationId = 0, then you get all symptoms
+     * @param selectorStatus man, woman, boy, girl
+     * @return well-formed symptoms URL including the given arguments
+     */
+    private static String getSymptomsUrl(String token,
+            String language,
+            String format,
+            String symptoms,
+            Gender gender,
+            int birthYear,
+            int locationId,
+            SelectorStatus selectorStatus) {
 
-            String apiUrl = "/symptoms";
+        String apiUrl = "/symptoms";
 
-            String location = Integer.valueOf(locationId).toString();
-            String yearOfBirth = Integer.valueOf(birthYear).toString();
+        String location = Integer.valueOf(locationId).toString();
+        String yearOfBirth = Integer.valueOf(birthYear).toString();
 
-            if (location != null && location != ""
-                    && selectorStatus != null && selectorStatus.toString() != "") {
-                apiUrl += "/" + location + "/" + selectorStatus.toString();
-            }
-
-            apiUrl += "?token=" + token + "&language=" + language;
-
-            if (format != null && format != "") {
-                apiUrl += "&format=" + format;
-            }
-            if (symptoms != null && symptoms != "") {
-                apiUrl += "&symptoms=" + symptoms;
-            }
-            if (gender != null && gender.toString() != "") {
-                apiUrl += "&gender=" + gender.toString();
-            }
-            if (yearOfBirth != null && yearOfBirth != "" && birthYear != 0) {
-                apiUrl += "&year_of_birth=" + birthYear;
-            }
-
-            return apiUrl;
+        if (location != null && location != ""
+                && selectorStatus != null && selectorStatus.toString() != "") {
+            apiUrl += "/" + location + "/" + selectorStatus.toString();
         }
 
+        apiUrl += "?token=" + token + "&language=" + language;
+
+        if (format != null && format != "") {
+            apiUrl += "&format=" + format;
+        }
+        if (symptoms != null && symptoms != "") {
+            apiUrl += "&symptoms=" + symptoms;
+        }
+        if (gender != null && gender.toString() != "") {
+            apiUrl += "&gender=" + gender.toString();
+        }
+        if (yearOfBirth != null && yearOfBirth != "" && birthYear != 0) {
+            apiUrl += "&year_of_birth=" + birthYear;
+        }
+
+        return apiUrl;
+    }
+
+    /**
+     * Gets a well-formed URL to consume the GeoLife services.
+     *
+     * @param serviceName the service to consume
+     * @param token security token received from https://authservice.priaid.ch/login
+     * @param language de-ch, en-gb, fr-fr, es-es, tr-tr
+     * @param format json, xml
+     * @param symptoms Serialized array of selected symptom ids in json format. example symptoms=[234,235,236]
+     * @param gender male, female
+     * @param birthYear year of birth
+     * @param locationId see Body location id. If locationId = 0, then you get all symptoms
+     * @param selectorStatus man, woman, boy, girl
+     * @return well-formed symptoms URL including the given arguments
+     */
+    private static String getUrl(String serviceName,
+                                 String token,
+                                 String language,
+                                 String format,
+                                 String symptoms,
+                                 Gender gender,
+                                 int birthYear,
+                                 int locationId,
+                                 SelectorStatus selectorStatus) {
+
+        String apiUrl = "/" + serviceName;
+
+        String location = Integer.valueOf(locationId).toString();
+        String yearOfBirth = Integer.valueOf(birthYear).toString();
+
+        if (location != null && location != ""
+                && selectorStatus != null && selectorStatus.toString() != "") {
+            apiUrl += "/" + location + "/" + selectorStatus.toString();
+        }
+
+        apiUrl += "?token=" + token + "&language=" + language;
+
+        if (format != null && format != "") {
+            apiUrl += "&format=" + format;
+        }
+        if (symptoms != null && symptoms != "") {
+            apiUrl += "&symptoms=" + symptoms;
+        }
+        if (gender != null && gender.toString() != "") {
+            apiUrl += "&gender=" + gender.toString();
+        }
+        if (yearOfBirth != null && yearOfBirth != "" && birthYear != 0) {
+            apiUrl += "&year_of_birth=" + birthYear;
+        }
+
+        return apiUrl;
+    }
+
+
+    /**
+     * Gets a well-formed URL to consume the GeoLife services.
+     *
+     * @param serviceName the service to consume
+     * @param token security token received from https://authservice.priaid.ch/login
+     * @param language de-ch, en-gb, fr-fr, es-es, tr-tr
+     * @param format json, xml
+     * @param symptoms Serialized array of selected symptom ids in json format. example symptoms=[234,235,236]
+     * @param gender male, female
+     * @param birthYear year of birth
+     * @return well-formed symptoms URL including the given arguments
+     */
+    private static String getUrl(String serviceName,
+                                 String token,
+                                 String language,
+                                 String format,
+                                 String symptoms,
+                                 Gender gender,
+                                 int birthYear) {
+
+        String apiUrl = getUrl(serviceName, token, language, format, symptoms, gender, birthYear,
+                        0, null);
+
+        return apiUrl;
+    }
 
     /**
      * Gets symptoms list.
@@ -177,17 +262,16 @@ public class ApiMedicManager implements PropertiesLoader {
      * @param locationId     the location id
      * @param selectorStatus the selector status
      * @return the symptoms list
-     * @throws IOException the io exception
      */
     public List<Symptom> getSymptomsList (String inputSymptoms,
                                           Gender gender,
                                           int birthYear,
                                           int locationId,
-                                          SelectorStatus selectorStatus) throws IOException {
+                                          SelectorStatus selectorStatus) {
 
 
 
-        String apiUrl = getSymptomsUrl(accessToken, language, format,
+        String apiUrl = getUrl("symptoms", accessToken, language, format,
                                        inputSymptoms, gender, birthYear,
                                        locationId, selectorStatus);
 
@@ -201,25 +285,56 @@ public class ApiMedicManager implements PropertiesLoader {
 
         ObjectMapper mapper = new ObjectMapper();
 
-        List<Symptom> symptoms = mapper.readValue(response, new TypeReference<List<Symptom>>(){});
-        //Symptom symptom = symptoms.stream().filter(s -> s.getID() == 9 ).findFirst().get();
-        return symptoms;
+        List<Symptom> symptomslist = null;
+        try {
+            symptomslist = mapper.readValue(response, new TypeReference<List<Symptom>>(){});
+        } catch (IOException e) {
+            logger.error(e.getStackTrace());
+        }
+
+        return symptomslist;
     }
 
     /**
      * Gets symptoms list.
      *
      * @return the symptoms list
-     * @throws IOException the io exception
      */
-    public List<Symptom> getSymptomsList () throws IOException {
+    public List<Symptom> getSymptomsList () {
+        List<Symptom> symptomList = getSymptomsList(null, null, 0,0, null);
+        return symptomList;
+    }
 
-        String inputSymptoms = null;
-        Gender gender = null;
-        int birthYear = 0;
-        int locationId = 0;
-        SelectorStatus selectorStatus = null;
+    /**
+     * Gets diagnosis list.
+     *
+     * @param symptoms  the symptoms
+     * @param gender    the gender
+     * @param birthYear the birth year
+     * @return the diagnosis list
+     */
+    public List<Diagnosis> getDiagnosisList(String symptoms, Gender gender, int birthYear) {
 
-        return getSymptomsList(inputSymptoms, gender, birthYear,locationId, selectorStatus);
+        String apiUrl = getUrl("diagnosis", accessToken, language, format,
+                                symptoms, gender, birthYear);
+
+        String url = properties.getProperty("apimedic.service.endpoint") + apiUrl;
+        Client client = ClientBuilder.newClient();
+        WebTarget target = client.target(url);
+        String response = target.request(MediaType.APPLICATION_JSON)
+                .get(String.class)
+                .trim()
+                .replaceFirst("\ufeff", "");
+
+        ObjectMapper mapper = new ObjectMapper();
+        List<Diagnosis> diagnosisList = null;
+
+        try {
+            diagnosisList = mapper.readValue(response, new TypeReference<List<Diagnosis>>(){});
+        } catch (IOException e) {
+            logger.error(e.getStackTrace());
+        }
+
+        return diagnosisList;
     }
 }
