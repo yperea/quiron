@@ -51,11 +51,17 @@
 
                 <yp:alert type="${message.type}" url="${message.redirect}">${message.description}</yp:alert>
                 <c:remove var="message" scope="session" />
+                <c:set var="now" value="<%= new java.util.Date()%>" />
 
                 <form class="needs-validation"
                       action="${root}/patient/visit"
                       method="POST"
                       novalidate>
+
+                    <input type="hidden" id="gender" name="gender"
+                           value="${account.gender}"/>
+                    <input type="hidden" id="birthYear" name="birthYear"
+                           value="<tags:localDate date="${account.birthDate}" pattern="yyyy"/>" />
 
                     <div class="row">
                         <div class="col-md-6 mb-3">
@@ -125,7 +131,12 @@
                                    id="startDate"
                                    name="startDate"
                                    placeholder="mm/dd/yyyy"
-                                   value="<tags:localDate date="${visit.actualStartDate}" pattern="MM/d/yyyy"/>"
+                                   <c:if test="${visit.actualStartDate == null}">
+                                       value="<fmt:formatDate value="${now}" pattern="MM/d/yyyy" />"
+                                   </c:if>
+                                    <c:if test="${visit.actualStartDate != null}">
+                                        value="<tags:localDate date="${LocalDateTime.now}" pattern="MM/d/yyyy"/>"
+                                    </c:if>
                                    required />
                             <div class="invalid-feedback">
                                 Please enter a valid date.
@@ -164,7 +175,8 @@
                     </div>
 
                     <div class="row">
-                        <div class="col-md-6 mb-3">
+
+                        <div class="col-md-3 mb-3">
                             <label for="symptom">Symptom</label>
                             <select class="custom-select d-block w-100"
                                     id="symptom"
@@ -181,24 +193,58 @@
                                 Please provide a valid symptom.
                             </div>
                         </div>
+                        <%--
+                        <div class="col-md-3 mb-3">
+                            <label for="symptom2">Symptom</label>
 
-                        <div class="col-md-6 mb-3">
+                            <input type="text"
+                                   class="form-control flexdatalist"
+                                   id="symptom2"
+                                   name="symptom2"
+                                   placeholder="Enter your symptom"
+                                   required
+                                    />
+                            <div class="invalid-feedback">
+                                Please enter a valid symptom.
+                            </div>
+                        </div>
+
+                        <div class="col-md-3 mb-3">
                             <label for="diagnostic">Diagnostic</label>
                             <select class="custom-select d-block w-100"
                                     id="diagnostic"
                                     name="diagnostic"
                                     required />
                             <option value="">Choose...</option>
-<%--
+
                             <c:forEach var="diagnostic" items="${diagnostics}">
                                 <option value="${diagnostic.id}" <c:if test="${visit.diagnosticId == diagnostic.id}">selected</c:if> >${diagnostic.name}</option>
                             </c:forEach>
---%>
+
                             </select>
                             <div class="invalid-feedback">
                                 Please select a valid diagnostic.
                             </div>
                         </div>
+                        --%>
+
+                        <div class="col-md-9 mb-3">
+                            <label for="diagnosis">Diagnosis</label>
+
+                            <input type="text"
+                                   class="form-control flexdatalist"
+                                   <%--data-relatives='#symptom'--%>
+                                   id="diagnosis"
+                                   name="diagnosis"
+                                   placeholder=""
+                                   <%--value="${visit.diagnosticName}"--%>
+                                   required
+                            />
+                            <div class="invalid-feedback">
+                                Please enter a valid diagnostic.
+                            </div>
+                        </div>
+
                     </div>
 
 <%--                    <div class="mb-3">
@@ -226,7 +272,7 @@
                     </div>--%>
 
                     <div class="row">
-                        <div class="col-md-4 mb-3">
+                        <div class="col-md-2 mb-3">
                             <label for="weight">Weight</label>
                             <input type="text"
                                    class="form-control"
@@ -239,7 +285,7 @@
                                 Enter patient weight.
                             </div>
                         </div>
-                        <div class="col-md-4 mb-3">
+                        <div class="col-md-2 mb-3">
                             <label for="height">Height</label>
                             <input type="text"
                                    class="form-control"
@@ -252,7 +298,7 @@
                                 Enter patient height.
                             </div>
                         </div>
-                        <div class="col-md-4 mb-3">
+                        <div class="col-md-2 mb-3">
                             <label for="pulse">Pulse</label>
                             <input type="text"
                                    class="form-control"
@@ -265,11 +311,8 @@
                                 Enter patient pulse.
                             </div>
                         </div>
-                    </div>
 
-
-                    <div class="row">
-                        <div class="col-md-4 mb-3">
+                        <div class="col-md-2 mb-3">
                             <label for="respiration">Respiration</label>
                             <input type="text"
                                    class="form-control"
@@ -282,7 +325,7 @@
                                 Enter patient respiration.
                             </div>
                         </div>
-                        <div class="col-md-4 mb-3">
+                        <div class="col-md-2 mb-3">
                             <label for="bmi">BMI</label>
                             <input type="text"
                                    class="form-control"
@@ -295,7 +338,7 @@
                                 Enter patient BMI.
                             </div>
                         </div>
-                        <div class="col-md-4 mb-3">
+                        <div class="col-md-2 mb-3">
                             <label for="temperature">Temperature</label>
                             <input type="text"
                                    class="form-control"
@@ -468,6 +511,9 @@
 
     <%@include file="../shared/cdn-jss.jsp"%>
     <%@include file="../shared/footer.jsp"%>
+
+    <!-- Reference to local FlexDataList Javascript -->
+    <script src="../vendor/flexdatalist/js/jquery.flexdatalist.min.js" type="text/javascript" charset="utf-8"></script>
 
     <!-- Reference to local JS library -->
     <script type="text/javascript" charset="utf-8" src="../style/js/visit.js" ></script>

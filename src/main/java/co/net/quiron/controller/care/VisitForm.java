@@ -44,6 +44,7 @@ public class VisitForm extends HttpServlet {
         session.setAttribute("currentPage", "My Visit");
 
         AccountManager accountManager =  new AccountManager();
+        accountManager.loadUserAccount(username, personType);
         ProfileManager profileManager = new ProfileManager();
 
         ApiMedicManager apiMedicManager = new ApiMedicManager("/apimedic.properties");
@@ -58,6 +59,7 @@ public class VisitForm extends HttpServlet {
         }
         request.setAttribute("visit", visit);
         request.setAttribute("symptoms", symptoms);
+        session.setAttribute("account", accountManager);
         session.setAttribute("message", visitManager.getMessage());
 
         RequestDispatcher dispatcher = request.getRequestDispatcher(url);

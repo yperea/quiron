@@ -16,6 +16,9 @@
 <!-- Bootstrap Dashboard CSS -->
 <link href="${root}/style/css/dashboard.css" rel="stylesheet" />
 
+<!-- Reference to local FlexDataList CSS -->
+<link rel="stylesheet" href="${root}/vendor/flexdatalist/css/jquery.flexdatalist.css" />
+
 <!-- Project Quiron Style Sheet -->
 <link rel="stylesheet" href="${root}/style/css/main.css" />
 

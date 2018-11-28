@@ -35,6 +35,8 @@ public class AccountManager {
     private String firstName;
     private String lastName;
     private String email;
+    private LocalDate birthDate;
+    private String gender;
     private Message message;
     private EntityManager<User> userManager;
     private EntityManager<Role> roleManager;
@@ -101,9 +103,10 @@ public class AccountManager {
             this.email = user.getEmail();
             this.firstName = patient.getFirstName();
             this.lastName = patient.getLastName();
-            this.patientId = patient.getId();
             this.id = patient.getId();
             this.type = patient.getPersonType().getName().toLowerCase();
+            this.birthDate = patient.getBirthDate();
+            this.gender = patient.getGender();
         }
 
         logger.info("signup(): End Signup.");
@@ -133,6 +136,7 @@ public class AccountManager {
                 .findAny()
                 .orElse(null);
 
+
         if(person != null){
             this.isSigned = true;
             this.userId = user.getId();
@@ -140,10 +144,14 @@ public class AccountManager {
             this.email = user.getEmail();
             this.firstName = person.getFirstName();
             this.lastName = person.getLastName();
-            //this.patientId = person.getId();
             this.id = person.getId();
             this.type = person.getPersonType().getName().toLowerCase();
 
+            if(personType.equals("patient")) {
+                Patient patient = (Patient) ManagerFactory.getManager(Patient.class).get(person.getId());
+                this.birthDate = patient.getBirthDate();
+                this.gender = patient.getGender();
+            }
         }
 
         logger.info("loadUserAccount(String): End loading account.");
