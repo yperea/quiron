@@ -100,4 +100,12 @@ public class VisitManager {
     }
 
 
+    public Visit updateVisit(int visitId) {
+
+        Visit visit = visitAgent.get(visitId);
+
+
+        return visit;
+    }
+
 }

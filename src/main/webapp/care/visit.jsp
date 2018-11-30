@@ -58,8 +58,12 @@
                       method="POST"
                       novalidate>
 
+                    <input type="hidden" id="visitId" name="visitId"
+                           value="${visitId}"/>
+
                     <input type="hidden" id="gender" name="gender"
                            value="${account.gender}"/>
+
                     <input type="hidden" id="birthYear" name="birthYear"
                            value="<tags:localDate date="${account.birthDate}" pattern="yyyy"/>" />
 

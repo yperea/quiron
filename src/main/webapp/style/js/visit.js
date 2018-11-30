@@ -52,12 +52,12 @@
             valueProperty: 'id',
             minLength: 0,
             focusFirstResult: true,
-            selectionRequired: true,
+            selectionRequired: false,
             visibleProperties: ["id","Name"],
             searchIn: ["Name"],
             chainedRelatives: true,
             relatives: '#symptom',
-            url: 'http://localhost:8080/quiron/service/apimedic/json/diagnosis?birthYear='+ birthYear.val() +'&gender='+ gender.val()
+            url: '/quiron/service/apimedic/json/diagnosis?birthYear='+ birthYear.val() +'&gender='+ gender.val()
         });
 
 
