@@ -1,10 +1,7 @@
 package co.net.quiron.application.vendor;
 
 import co.net.quiron.util.PropertiesLoader;
-import co.net.quiron.vendor.com.apimedic.Gender;
-import co.net.quiron.vendor.com.apimedic.SelectorStatus;
-import co.net.quiron.vendor.com.apimedic.Symptom;
-import co.net.quiron.vendor.com.apimedic.Diagnosis;
+import co.net.quiron.vendor.com.apimedic.*;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.AccessLevel;
@@ -30,6 +27,8 @@ import java.io.StringReader;
 import java.io.UnsupportedEncodingException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
@@ -336,5 +335,23 @@ public class ApiMedicManager implements PropertiesLoader {
         }
 
         return diagnosisList;
+    }
+
+    public List<Issue> getIssuesListBySymptom(int symptomId, String genderCode, int birthYear) {
+
+        String symptoms =  "[" + Integer.valueOf(symptomId).toString().trim() + "]";
+        Gender gender = Gender.male;
+        if (!genderCode.equals("M")){
+            gender = Gender.female;
+        }
+
+        List<Issue> issuesList = new ArrayList<>();
+        List<Diagnosis> diagnosisList = getDiagnosisList(symptoms, gender, birthYear);
+
+        for (Diagnosis diagnosis: diagnosisList) {
+            issuesList.add(diagnosis.getIssue());
+        }
+
+        return issuesList;
     }
 }

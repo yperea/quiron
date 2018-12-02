@@ -29,8 +29,8 @@ public class ApiMedic {
 
         List<Diagnosis> diagnosisList = null;
         ApiMedicManager apiMedicManager = new ApiMedicManager("/apimedic.properties");
-        //String requestSymptoms = request.getParameter("symptoms");
-        String requestSymptoms = request.getParameter("relatives[symptom]");
+        String requestSymptoms = request.getParameter("symptom");
+        //String requestSymptoms = request.getParameter("relatives[symptom]");
         String requestBirthYear = request.getParameter("birthYear");
         String requestGender = request.getParameter("gender");
         int responseStatusCode = 400;
@@ -41,18 +41,11 @@ public class ApiMedic {
             && (requestBirthYear != null && !requestBirthYear.isEmpty())
             && (requestGender != null && !requestGender.isEmpty())) {
 
-            String symptoms =  "[" + requestSymptoms.trim() + "]";
-            Gender gender = Gender.male;
-            int birthYear = Integer.valueOf(requestBirthYear);
+            int symptom =  Integer.parseInt(requestSymptoms);
+            String genderCode = requestGender.toString();
+            int birthYear = Integer.parseInt(requestBirthYear);
 
-            if (!requestGender.equals("M")){
-                gender = Gender.female;
-            }
-            diagnosisList = apiMedicManager.getDiagnosisList(symptoms, gender, birthYear);
-
-            for (Diagnosis diagnosis: diagnosisList) {
-                issuesList.add(diagnosis.getIssue());
-            }
+            issuesList = apiMedicManager.getIssuesListBySymptom(symptom, genderCode, birthYear);
 
             responseStatusCode = 200;
         }

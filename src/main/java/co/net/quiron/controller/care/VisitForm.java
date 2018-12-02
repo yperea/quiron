@@ -9,6 +9,7 @@ import co.net.quiron.application.vendor.ApiMedicManager;
 import co.net.quiron.domain.care.Visit;
 import co.net.quiron.util.Message;
 import co.net.quiron.util.MessageType;
+import co.net.quiron.vendor.com.apimedic.Issue;
 import co.net.quiron.vendor.com.apimedic.Symptom;
 
 import javax.servlet.RequestDispatcher;
@@ -48,9 +49,6 @@ public class VisitForm extends HttpServlet {
         accountManager.loadUserAccount(username, personType);
         ProfileManager profileManager = new ProfileManager();
 
-        ApiMedicManager apiMedicManager = new ApiMedicManager("/apimedic.properties");
-        List<Symptom> symptoms = apiMedicManager.getSymptomsList();
-
         Visit visit = null;
         VisitManager visitManager = new VisitManager(username, personType);
         if ((request.getParameter("id") != null
@@ -58,8 +56,17 @@ public class VisitForm extends HttpServlet {
             int visitId = Integer.parseInt(request.getParameter("id"));
             visit = visitManager.getPatientVisit(visitId);
         }
+
+        ApiMedicManager apiMedicManager = new ApiMedicManager("/apimedic.properties");
+        List<Symptom> symptoms = apiMedicManager.getSymptomsList();
+        List<Issue> issues = apiMedicManager.getIssuesListBySymptom(visit.getSymptomId(),
+                                                           accountManager.getGender(),
+                                                           accountManager.getBirthDate().getYear());
+
+
         request.setAttribute("visit", visit);
         request.setAttribute("symptoms", symptoms);
+        request.setAttribute("issues", issues);
         session.setAttribute("account", accountManager);
         session.setAttribute("message", visitManager.getMessage());
 
