@@ -27,22 +27,22 @@ public class AppRepository<T> implements IAppRepository<T> {
     }
 
     @Override
-    public List<T> getAll() {
-        return entityDAO.getAll();
+    public List<T> getList() {
+        return entityDAO.getList();
     }
 
     @Override
-    public List<T> getByPropertyEqual(Map<String, Object> params){
+    public List<T> getListEquals(Map<String, Object> params){
         return entityDAO.getByPropertyEqual(params);
     }
 
     @Override
-    public List<T> getByPropertyEqual(String propertyName, String value) {
+    public List<T> getListEquals(String propertyName, String value) {
         return entityDAO.getByPropertyEqual(propertyName, value);
     }
 
     @Override
-    public List<T> getByPropertyLike(String propertyName, String value) {
+    public List<T> getListContains(String propertyName, String value) {
         return entityDAO.getByPropertyLike(propertyName, value);
     }
 
@@ -56,22 +56,6 @@ public class AppRepository<T> implements IAppRepository<T> {
         return entityDAO.getById(compositeKey);
     }
 
-    /**
-     * Creates an BusinessEntity in the database
-     *
-     * @param entity entity to be inserted or updated
-     * @return id of the inserted record
-     */
-    /*@Override
-    public int create(T entity) {
-
-        int i = entityDAO.insert(entity);
-        entityDAO.saveChanges();
-
-        return i;
-    }*/
-
-    //TODO: Refactoring create methods
     @Override
     public T create(T entity) {
         int i = entityDAO.insert(entity);
@@ -81,21 +65,12 @@ public class AppRepository<T> implements IAppRepository<T> {
 
 /*
     @Override
-    public T create2(T entity) {
-        //int i = entityDAO.insert(entity);
-        String i = entityDAO.insert2(entity);
-        entityDAO.saveChanges();
-        return get(i);
-    }
-*/
-
-    @Override
     public T create3(T entity) {
         T newEntity = entityDAO.insert3(entity);
         entityDAO.saveChanges();
         return newEntity;
     }
-
+*/
 
     @Override
     public void update(T entity) {

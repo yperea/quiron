@@ -1,8 +1,8 @@
-package co.net.quiron.application.location;
+package co.net.quiron.persistence.location;
 
-import co.net.quiron.application.factory.ManagerFactory;
-import co.net.quiron.application.shared.EntityManager;
+import co.net.quiron.application.factory.RepositoryFactory;
 import co.net.quiron.domain.location.AddressType;
+import co.net.quiron.persistence.interfaces.IAppRepository;
 import co.net.quiron.test.util.DatabaseManager;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -11,13 +11,13 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class AddressTypeManagerTest {
+class AddressTypeRepositoryTest {
 
-    EntityManager<AddressType> addressTypeManager;
+    IAppRepository<AddressType> addressTypeRepository;
 
     @BeforeEach
     void setUp() {
-        addressTypeManager = ManagerFactory.getManager(AddressType.class);
+        addressTypeRepository = RepositoryFactory.getDBContext(AddressType.class);
         DatabaseManager dbm = DatabaseManager.getInstance();
         dbm.runSQL("cleandb.sql");
     }
@@ -27,7 +27,7 @@ class AddressTypeManagerTest {
      */
     @Test
     void testGetAddressTypeById() {
-        AddressType addressType = addressTypeManager.get(1);
+        AddressType addressType = addressTypeRepository.get(1);
         assertEquals("Home", addressType.getName());
     }
 
@@ -36,7 +36,7 @@ class AddressTypeManagerTest {
      */
     @Test
     void testGetAllAddressTypes() {
-        List<AddressType> addressTypeList = addressTypeManager.getList();
+        List<AddressType> addressTypeList = addressTypeRepository.getList();
         assertEquals(5, addressTypeList.size());
     }
 
@@ -49,7 +49,7 @@ class AddressTypeManagerTest {
 
         String newAddressTypeName = "Main";
         AddressType newAddressType = new AddressType(newAddressTypeName);
-        AddressType insertedAddressType = addressTypeManager.create(newAddressType);
+        AddressType insertedAddressType = addressTypeRepository.create(newAddressType);
 
         assertNotNull(insertedAddressType);
         assertEquals("Main", insertedAddressType.getName());
@@ -65,13 +65,13 @@ class AddressTypeManagerTest {
         String newAddressTypeName = "Main";
         int addressTypeId = 3;
 
-        AddressType addressTypeToUpdate = addressTypeManager.get(addressTypeId);
+        AddressType addressTypeToUpdate = addressTypeRepository.get(addressTypeId);
         addressTypeToUpdate.setName(newAddressTypeName);
 
-        addressTypeManager.update(addressTypeToUpdate);
-        AddressType addressTypeUpdated = addressTypeManager.get(addressTypeId);
+        addressTypeRepository.update(addressTypeToUpdate);
+        AddressType addressTypeUpdated = addressTypeRepository.get(addressTypeId);
 
-        assertEquals(addressTypeToUpdate, addressTypeUpdated);
+        assertEquals(newAddressTypeName, addressTypeUpdated.getName());
         assertNotNull(addressTypeUpdated.getModifiedDate());
     }
 
@@ -84,8 +84,8 @@ class AddressTypeManagerTest {
         int addressTypeIdToDelete = 6;
         String newAddressTypeName = "Main";
         AddressType newAddressType = new AddressType(newAddressTypeName);
-        AddressType insertedAddressType = addressTypeManager.create(newAddressType);
-        addressTypeManager.delete(insertedAddressType);
-        assertNull(addressTypeManager.get(addressTypeIdToDelete));
+        AddressType insertedAddressType = addressTypeRepository.create(newAddressType);
+        addressTypeRepository.delete(insertedAddressType);
+        assertNull(addressTypeRepository.get(addressTypeIdToDelete));
     }
 }

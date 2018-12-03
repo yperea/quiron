@@ -1,31 +1,28 @@
-package co.net.quiron.application.care;
+package co.net.quiron.persistence.care;
 
-import co.net.quiron.application.factory.ManagerFactory;
-import co.net.quiron.application.shared.EntityManager;
+import co.net.quiron.application.factory.RepositoryFactory;
 import co.net.quiron.domain.care.Medication;
 import co.net.quiron.domain.care.Prescription;
+import co.net.quiron.persistence.interfaces.IAppRepository;
 import co.net.quiron.test.util.DatabaseManager;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import java.time.LocalDate;
 import java.util.List;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
-public class PrescriptionManagerTest {
-    EntityManager<Prescription> prescriptionManager;
-    EntityManager<Medication> medicationManager;
+public class PrescriptionRepositoryTest {
+    IAppRepository<Prescription> prescriptionRepository;
+    IAppRepository<Medication> medicationRepository;
 
     /**
      * Sets up.
      */
     @BeforeEach
     void setUp() {
-        prescriptionManager = ManagerFactory.getManager(Prescription.class);
-        medicationManager = ManagerFactory.getManager(Medication.class);
+        prescriptionRepository = RepositoryFactory.getDBContext(Prescription.class);
+        medicationRepository = RepositoryFactory.getDBContext(Medication.class);
 
         DatabaseManager dbm = DatabaseManager.getInstance();
         dbm.runSQL("cleandb.sql");
@@ -36,7 +33,7 @@ public class PrescriptionManagerTest {
      */
     @Test
     void testGetPrescriptionById() {
-        Prescription prescription = prescriptionManager.get(1);
+        Prescription prescription = prescriptionRepository.get(1);
         String instructions = prescription.getInstructions();
         assertEquals("10 mL every 12 hours, not to exceed 20 mL in 24 hours.", instructions);
     }
@@ -46,7 +43,7 @@ public class PrescriptionManagerTest {
      */
     @Test
     void testGetAllPrescriptions() {
-        List<Prescription> prescriptionList = prescriptionManager.getList();
+        List<Prescription> prescriptionList = prescriptionRepository.getList();
         assertEquals(2, prescriptionList.size());
     }
 
@@ -58,10 +55,10 @@ public class PrescriptionManagerTest {
 
         String instructions = "One pill every hour";
 
-        Medication medication = medicationManager.get(1);
+        Medication medication = medicationRepository.get(1);
 
         Prescription newPrescription = new Prescription(instructions, medication);
-        Prescription insertedPrescription = prescriptionManager.create(newPrescription);
+        Prescription insertedPrescription = prescriptionRepository.create(newPrescription);
 
         assertNotNull(insertedPrescription);
         assertEquals(instructions, insertedPrescription.getInstructions());
@@ -76,10 +73,10 @@ public class PrescriptionManagerTest {
         int prescriptionId = 1;
         String newInstructions = "One pill every hour";
 
-        Prescription prescriptionToUpdate = prescriptionManager.get(prescriptionId);
+        Prescription prescriptionToUpdate = prescriptionRepository.get(prescriptionId);
         prescriptionToUpdate.setInstructions(newInstructions);
-        prescriptionManager.update(prescriptionToUpdate);
-        Prescription prescriptionUpdated = prescriptionManager.get(prescriptionId);
+        prescriptionRepository.update(prescriptionToUpdate);
+        Prescription prescriptionUpdated = prescriptionRepository.get(prescriptionId);
 
         assertEquals(newInstructions, prescriptionUpdated.getInstructions());
     }
@@ -94,12 +91,12 @@ public class PrescriptionManagerTest {
 
         String instructions = "One pill every hour";
 
-        Medication medication = medicationManager.get(1);
+        Medication medication = medicationRepository.get(1);
 
         Prescription newPrescription = new Prescription(instructions, medication);
-        Prescription insertedPrescription = prescriptionManager.create(newPrescription);
+        Prescription insertedPrescription = prescriptionRepository.create(newPrescription);
 
-        prescriptionManager.delete(prescriptionManager.get(prescriptionIdToDelete));
-        assertNull(prescriptionManager.get(prescriptionIdToDelete));
+        prescriptionRepository.delete(prescriptionRepository.get(prescriptionIdToDelete));
+        assertNull(prescriptionRepository.get(prescriptionIdToDelete));
     }
 }

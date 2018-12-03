@@ -30,11 +30,7 @@ public class AccessDenied extends HttpServlet {
         String title = "Sign In";
 
         request.setAttribute("title", title);
-
         response.sendRedirect(url);
-
-        //RequestDispatcher dispatcher = request.getRequestDispatcher(url);
-        //dispatcher.forward(request, response);
     }
 
     @Override

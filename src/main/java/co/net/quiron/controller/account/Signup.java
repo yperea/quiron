@@ -25,27 +25,22 @@ public class Signup extends HttpServlet {
         String title = "Sign Up";
 
         request.setAttribute("title", title);
-
         RequestDispatcher dispatcher = request.getRequestDispatcher(url);
         dispatcher.forward(request, response);
-
     }
 
     @Override
     protected void doPost(HttpServletRequest request,
                           HttpServletResponse response) throws ServletException, IOException {
 
+        HttpSession session = request.getSession();
         String url = "/account/signup";
         String title = "Sign Up";
 
-        boolean successfullSignup = false;
-        int userTypeId = 3; //Patient
+        boolean signupSuccess = false;
         int roleId = 2; //User
 
         AccountManager accountManager;
-
-        HttpSession session = request.getSession();
-        request.setAttribute("title", title);
 
         if ((request.getParameter("firstName") != null || !request.getParameter("firstName").isEmpty())
             && (request.getParameter("lastName") != null || !request.getParameter("lastName").isEmpty())
@@ -56,6 +51,7 @@ public class Signup extends HttpServlet {
             && (request.getParameter("password") != null || !request.getParameter("password").isEmpty())
             && (request.getParameter("confirmation") != null || !request.getParameter("confirmation").isEmpty())) {
 
+            String personType = request.getParameter("personType");
 
             String firstName = request.getParameter("firstName");
             String lastName = request.getParameter("lastName");
@@ -67,30 +63,23 @@ public class Signup extends HttpServlet {
             String confirmation = request.getParameter("confirmation");
 
             accountManager =  new AccountManager();
-            successfullSignup = accountManager.signup(userTypeId, roleId, firstName, lastName, userName, email, birthDate, gender, password, confirmation);
+            signupSuccess = accountManager.signup(personType, roleId, firstName, lastName, userName, email,
+                                                  birthDate, gender, password, confirmation);
             session.setAttribute("account", accountManager);
-            String personType = "patient";
+            session.setAttribute("profile", accountManager.getProfile());
             session.setAttribute("personType", personType);
-            //String username = request.getUserPrincipal().getName();
-            //accountManager.loadUserAccount(username, personType);
-
         }
 
-        if (successfullSignup) {
-            response.sendRedirect("/quiron/patient/profile");
+        if (signupSuccess) {
+            url = "/quiron/patient/profile";
         } else {
             request.setAttribute("firstName", request.getParameter("firstName"));
             request.setAttribute("lastName", request.getParameter("lastName"));
             request.setAttribute("userName", request.getParameter("userName"));
             request.setAttribute("email", request.getParameter("email"));
-
-/*
-            RequestDispatcher dispatcher = request.getRequestDispatcher("/public/signup.jsp");
-            dispatcher.forward(request, response);
-*/
-
-            response.sendRedirect("/account/signup");
-
         }
+
+        request.setAttribute("title", title);
+        response.sendRedirect(url);
     }
 }

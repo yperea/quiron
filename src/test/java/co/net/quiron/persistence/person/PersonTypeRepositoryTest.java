@@ -1,8 +1,8 @@
-package co.net.quiron.application.person;
+package co.net.quiron.persistence.person;
 
-import co.net.quiron.application.factory.ManagerFactory;
-import co.net.quiron.application.shared.EntityManager;
+import co.net.quiron.application.factory.RepositoryFactory;
 import co.net.quiron.domain.person.PersonType;
+import co.net.quiron.persistence.interfaces.IAppRepository;
 import co.net.quiron.test.util.DatabaseManager;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -11,13 +11,13 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class PersonTypeManagerTest {
+class PersonTypeRepositoryTest {
 
-    EntityManager<PersonType> personTypeManager;
+    IAppRepository<PersonType> personTypeRepository;
 
     @BeforeEach
     void setUp() {
-        personTypeManager = ManagerFactory.getManager(PersonType.class);
+        personTypeRepository = RepositoryFactory.getDBContext(PersonType.class);
         DatabaseManager dbm = DatabaseManager.getInstance();
         dbm.runSQL("cleandb.sql");
     }
@@ -27,7 +27,7 @@ class PersonTypeManagerTest {
      */
     @Test
     void testGetPersonTypeById() {
-        PersonType personType = personTypeManager.get(1);
+        PersonType personType = personTypeRepository.get(1);
         assertEquals("Employee", personType.getName());
     }
 
@@ -36,7 +36,7 @@ class PersonTypeManagerTest {
      */
     @Test
     void testGetAllPersonTypes() {
-        List<PersonType> personTypeList = personTypeManager.getList();
+        List<PersonType> personTypeList = personTypeRepository.getList();
         assertEquals(3, personTypeList.size());
     }
 
@@ -49,7 +49,7 @@ class PersonTypeManagerTest {
 
         String newPersonTypeName = "Doctor";
         PersonType newPersonType = new PersonType(newPersonTypeName);
-        PersonType insertedPersonType = personTypeManager.create(newPersonType);
+        PersonType insertedPersonType = personTypeRepository.create(newPersonType);
 
         assertNotNull(insertedPersonType);
         assertEquals("Doctor", insertedPersonType.getName());
@@ -65,13 +65,13 @@ class PersonTypeManagerTest {
         String newPersonTypeName = "Physician";
         int personTypeId = 2;
 
-        PersonType personTypeToUpdate = personTypeManager.get(personTypeId);
+        PersonType personTypeToUpdate = personTypeRepository.get(personTypeId);
         personTypeToUpdate.setName(newPersonTypeName);
 
-        personTypeManager.update(personTypeToUpdate);
-        PersonType personTypeUpdated = personTypeManager.get(personTypeId);
+        personTypeRepository.update(personTypeToUpdate);
+        PersonType personTypeUpdated = personTypeRepository.get(personTypeId);
 
-        assertEquals(personTypeToUpdate, personTypeUpdated);
+        assertEquals(newPersonTypeName, personTypeUpdated.getName());
         assertNotNull(personTypeUpdated.getModifiedDate());
     }
 
@@ -86,9 +86,9 @@ class PersonTypeManagerTest {
 
         String newPersonTypeName = "Doctor";
         PersonType newPersonType = new PersonType(newPersonTypeName);
-        PersonType insertedPersonType = personTypeManager.create(newPersonType);
+        PersonType insertedPersonType = personTypeRepository.create(newPersonType);
 
-        //personTypeManager.delete(personTypeManager.get(personTypeIdToDelete));
-        personTypeManager.delete(insertedPersonType);
-        assertNull(personTypeManager.get(personTypeIdToDelete));
+        //personTypeRepository.delete(personTypeRepository.get(personTypeIdToDelete));
+        personTypeRepository.delete(insertedPersonType);
+        assertNull(personTypeRepository.get(personTypeIdToDelete));
     }}

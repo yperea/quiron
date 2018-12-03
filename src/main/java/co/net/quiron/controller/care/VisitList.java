@@ -1,5 +1,6 @@
 package co.net.quiron.controller.care;
 
+import co.net.quiron.application.account.AccountManager;
 import co.net.quiron.application.care.VisitManager;
 import co.net.quiron.domain.care.Visit;
 import javax.servlet.RequestDispatcher;
@@ -29,8 +30,13 @@ public class VisitList extends HttpServlet {
         String personType = (String) session.getAttribute("personType");
         String username = request.getUserPrincipal().getName();
 
-        request.setAttribute("title", title);
-        session.setAttribute("currentPage", "My Visits");
+        AccountManager accountManager = (AccountManager) session.getAttribute("account");
+        if (accountManager == null){
+            accountManager = new AccountManager(username, personType);
+            session.setAttribute("account", accountManager);
+            session.setAttribute("profile", accountManager.getProfile());
+            session.setAttribute("personType", accountManager.getProfile().getPersonType());
+        }
 
         String state = "A";
         if ((request.getParameter("state") != null && !request.getParameter("state").isEmpty())){
@@ -44,9 +50,10 @@ public class VisitList extends HttpServlet {
             }
         }
 
-        VisitManager visitManager = new VisitManager(username, personType);
+        VisitManager visitManager = new VisitManager(accountManager);
         List<Visit> visits = visitManager.getPatientVisitsList(state);
 
+        request.setAttribute("title", title);
         request.setAttribute("visits", visits);
         request.setAttribute("state", state);
         session.setAttribute("message", visitManager.getMessage());
@@ -55,68 +62,14 @@ public class VisitList extends HttpServlet {
         dispatcher.forward(request, response);
     }
 
-
-/*
-    @Override
-    public void doGet (HttpServletRequest request,
-                       HttpServletResponse response) throws ServletException, IOException {
-
-        HttpSession session = request.getSession();
-
-        String url = "/patient/visits.jsp";
-        String title = "My Visits";
-        String personType = (String) session.getAttribute("personType");
-
-        request.setAttribute("title", title);
-        session.setAttribute("currentPage", "My Visits");
-
-        String username = request.getUserPrincipal().getName();
-        AccountManager accountManager =  new AccountManager();
-        //ProfileManager profileManager = new ProfileManager();
-        EntityManager<Visit> visitManager = ManagerFactory.getManager(Visit.class);
-
-        //accountManager.loadUserAccount(username, personType);
-        //session.setAttribute("username", username);
-
-        List<Visit> visits = new ArrayList<>();
-
-        String state = "A";
-
-        if ((request.getParameter("state") != null
-                && !request.getParameter("state").isEmpty())){
-
-            switch (request.getParameter("state")) {
-                case "completed":
-                    state = "C";
-                    break;
-
-                case "canceled":
-                    state = "D";
-                    break;
-            }
-            //state = request.getParameter("state");
+/*    static AccountManager getAccountManager(HttpSession session, String personType, String username, AccountManager accountManager) {
+        if (accountManager == null){
+            accountManager = new AccountManager(username, personType);
+            session.setAttribute("account", accountManager);
+            session.setAttribute("profile", accountManager.getProfile());
+            session.setAttribute("personType", accountManager.getProfile().getPersonType());
         }
+        return accountManager;
+    }*/
 
-        String finalState = state;
-
-        visits = visitManager.getList()
-                .stream()
-                .filter(v -> finalState.equals(v.getStatus()))
-                .collect(Collectors.toList());
-
-        request.setAttribute("visits", visits);
-        request.setAttribute("state", state);
-
-        if (visits.size() == 0) {
-            Message message = new Message();
-            message.setType(MessageType.WARNING);
-            message.setDescription("Records not found");
-            accountManager.setMessage(message);
-            session.setAttribute("message", message);
-        }
-
-        RequestDispatcher dispatcher = request.getRequestDispatcher(url);
-        dispatcher.forward(request, response);
-    }
-*/
 }

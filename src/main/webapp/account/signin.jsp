@@ -90,7 +90,7 @@
     <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
     <p class="mt-5 mb-3 text-muted">Don't have an account?
         <a href="${root}/account/signup">Sign Up</a> | <a href="${root}">Home</a> <br/>
-        <a href="${root}/account/router?tp=provider">Are you provider?</a>
+        <a href="${root}/account/router?tp=provider">Are you a provider?</a>
     </p>
 </form>
 

@@ -1,35 +1,33 @@
-package co.net.quiron.application.location;
+package co.net.quiron.persistence.location;
 
-import co.net.quiron.application.factory.ManagerFactory;
-import co.net.quiron.application.shared.EntityManager;
+import co.net.quiron.application.factory.RepositoryFactory;
 import co.net.quiron.domain.location.Country;
 import co.net.quiron.domain.location.State;
+import co.net.quiron.persistence.interfaces.IAppRepository;
 import co.net.quiron.test.util.DatabaseManager;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
 import java.util.List;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
- * The type States manager test.
+ * The type States repository test.
  */
-class StateManagerTest {
+class StateRepositoryTest {
 
     /**
-     * The States manager.
+     * The States repository.
      */
-    EntityManager<State> stateManager;
-    EntityManager<Country> countryManager;
+    IAppRepository<State> stateRepository;
+    IAppRepository<Country> countryRepository;
 
     /**
      * Sets up.
      */
     @BeforeEach
     void setUp() {
-        stateManager = ManagerFactory.getManager(State.class);
-        countryManager = ManagerFactory.getManager(Country.class);
+        stateRepository = RepositoryFactory.getDBContext(State.class);
+        countryRepository = RepositoryFactory.getDBContext(Country.class);
 
         DatabaseManager dbm = DatabaseManager.getInstance();
         dbm.runSQL("cleandb.sql");
@@ -40,8 +38,8 @@ class StateManagerTest {
      */
     @Test
     void testGetAllStates() {
-        List<State> stateList = stateManager.getList();
-        assertEquals(11, stateList.size());
+        List<State> stateList = stateRepository.getList();
+        assertEquals(66, stateList.size());
     }
 
     /**
@@ -49,9 +47,9 @@ class StateManagerTest {
      */
     @Test
     void testGetById() {
-        State state = stateManager.get(1);
+        State state = stateRepository.get(1);
         assertNotNull(state);
-        assertEquals("Alaska", state.getName());
+        assertEquals("Alberta", state.getName());
     }
 
     /**
@@ -59,11 +57,11 @@ class StateManagerTest {
      */
     @Test
     void testCreateState() {
-        //Country country = countryManager.getCountry(1);
-        Country country = countryManager.get(1);
+        //Country country = countryRepository.getCountry(1);
+        Country country = countryRepository.get(1);
         State newState = new State("WI", "Wisconsin", country);
         country.addState(newState);
-        State createdState = stateManager.create(newState);
+        State createdState = stateRepository.create(newState);
 
         assertNotNull(createdState);
         assertEquals(newState.getCode(), createdState.getCode());
@@ -76,18 +74,18 @@ class StateManagerTest {
      */
     @Test
     void testUpdateState() {
-        State stateToUpdate = stateManager.get(1);
-        //Country newCountry = countryManager.getCountry(2);
-        Country newCountry = countryManager.get(2);
+        State stateToUpdate = stateRepository.get(1);
+        //Country newCountry = countryRepository.getCountry(2);
+        Country newCountry = countryRepository.get(2);
 
         stateToUpdate.setCode("NS");
         stateToUpdate.setName("Nova Scotia");
         stateToUpdate.setCountry(newCountry);
 
-        stateManager.update(stateToUpdate);
-        State stateUpdated = stateManager.get(1);
+        stateRepository.update(stateToUpdate);
+        State stateUpdated = stateRepository.get(1);
 
-        assertEquals(stateToUpdate, stateUpdated);
+        assertEquals("Nova Scotia", stateUpdated.getName());
     }
 
     /**
@@ -95,7 +93,7 @@ class StateManagerTest {
      */
     @Test
     void testDeleteState() {
-        stateManager.delete(stateManager.get(1));
-        assertNull(stateManager.get(1));
+        stateRepository.delete(stateRepository.get(1));
+        assertNull(stateRepository.get(1));
     }
 }

@@ -1,33 +1,31 @@
-package co.net.quiron.application.person;
+package co.net.quiron.persistence.person;
 
-import co.net.quiron.application.factory.ManagerFactory;
-import co.net.quiron.application.shared.EntityManager;
+import co.net.quiron.application.factory.RepositoryFactory;
 import co.net.quiron.domain.person.Person;
 import co.net.quiron.domain.person.PersonType;
+import co.net.quiron.persistence.interfaces.IAppRepository;
 import co.net.quiron.test.util.DatabaseManager;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
 import java.util.List;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
- * Person manager tester.
+ * Person repository tester.
  */
-class PersonManagerTest {
+class PersonRepositoryTest {
 
-    EntityManager<Person> personManager;
-    EntityManager<PersonType> personTypeManager;
+    IAppRepository<Person> personRepository;
+    IAppRepository<PersonType> personTypeRepository;
 
     /**
-     * Initializes managers and data for the test.
+     * Initializes repositorys and data for the test.
      */
     @BeforeEach
     void setUp() {
 
-        personManager = ManagerFactory.getManager(Person.class);
-        personTypeManager = ManagerFactory.getManager(PersonType.class);
+        personRepository = RepositoryFactory.getDBContext(Person.class);
+        personTypeRepository = RepositoryFactory.getDBContext(PersonType.class);
 
         DatabaseManager dbm = DatabaseManager.getInstance();
         dbm.runSQL("cleandb.sql");
@@ -38,7 +36,7 @@ class PersonManagerTest {
      */
     @Test
     void testGetPersonById() {
-        Person person = personManager.get(3);
+        Person person = personRepository.get(3);
         String firstName = person.getFirstName();
         assertEquals("Yesid", firstName);
     }
@@ -48,7 +46,7 @@ class PersonManagerTest {
      */
     @Test
     void testGetAllPersons() {
-        List<Person> personList = personManager.getList();
+        List<Person> personList = personRepository.getList();
         assertEquals(3, personList.size());
     }
 
@@ -60,10 +58,10 @@ class PersonManagerTest {
 
         String firstName = "John";
         String lastName = "Smith";
-        PersonType personType =  personTypeManager.get(3);
+        PersonType personType =  personTypeRepository.get(3);
 
         Person person = new Person(personType, firstName, lastName);
-        Person insertedPerson = personManager.create(person);
+        Person insertedPerson = personRepository.create(person);
 
         assertNotNull(insertedPerson);
         assertEquals(6, insertedPerson.getId());

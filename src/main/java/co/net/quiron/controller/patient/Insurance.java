@@ -1,8 +1,7 @@
 package co.net.quiron.controller.patient;
 
 import co.net.quiron.application.account.AccountManager;
-import co.net.quiron.application.account.ProfileManager;
-import co.net.quiron.application.factory.ManagerFactory;
+import co.net.quiron.application.institution.OrganizationManager;
 import co.net.quiron.domain.institution.Organization;
 
 import javax.servlet.RequestDispatcher;
@@ -32,24 +31,16 @@ public class Insurance extends HttpServlet {
         String username = request.getUserPrincipal().getName();
         String personType = (String) session.getAttribute("personType");
 
-        request.setAttribute("title", title);
+        AccountManager accountManager = (AccountManager) session.getAttribute("account");
+        if (accountManager == null){
+            accountManager = new AccountManager(username, personType);
+        }
 
-        AccountManager accountManager =  new AccountManager();
-        ProfileManager profileManager = new ProfileManager();
-
-        accountManager.loadUserAccount(username, personType);
-        session.setAttribute("username", username);
-        //session.setAttribute("account", accountManager);
-        //session.setAttribute("profile", profileManager.getPatientProfile(accountManager));
-        session.setAttribute("currentPage", "My Profile");
-
-/*
         OrganizationManager organizationManager = new OrganizationManager();
-        List<Organization> companies = organizationManager.getList();
-*/
-        List<Organization> companies = ManagerFactory.getManager(Organization.class).getList();
-        session.setAttribute("companies", companies);
+        List<Organization> companies = organizationManager.getInsuranceCompanies();
 
+        session.setAttribute("companies", companies);
+        request.setAttribute("title", title);
         RequestDispatcher dispatcher = request.getRequestDispatcher(url);
         dispatcher.forward(request, response);
     }
@@ -64,9 +55,13 @@ public class Insurance extends HttpServlet {
         String url = "/quiron/patient/insurance";
         String title = "My Profile";
         request.setAttribute("title", title);
+        String username = request.getUserPrincipal().getName();
+        String personType = (String) session.getAttribute("personType");
 
-        ProfileManager profileManager;
-        AccountManager accountManager =  (AccountManager) session.getAttribute("account");
+        AccountManager accountManager = (AccountManager) session.getAttribute("account");
+        if (accountManager == null){
+            accountManager = new AccountManager(username, personType);
+        }
 
         if ((request.getParameter("company") != null || !request.getParameter("company").isEmpty() )
                 && (request.getParameter("subscriber") != null || !request.getParameter("subscriber").isEmpty())) {
@@ -74,28 +69,10 @@ public class Insurance extends HttpServlet {
             int companyId = Integer.parseInt(request.getParameter("company"));
             String subscriberCode = request.getParameter("subscriber");
 
-            profileManager =  new ProfileManager();
-
-            session.setAttribute("profile", profileManager.savePatientInsurance(accountManager, companyId, subscriberCode));
-            session.setAttribute("message", profileManager.getMessage());
+            session.setAttribute("profile", accountManager
+                    .savePatientInsurance(accountManager, companyId, subscriberCode));
+            session.setAttribute("message", accountManager.getMessage());
         }
-
         response.sendRedirect(url);
-
-        /*
-        if (successfullUpdate) {
-            response.sendRedirect("/quiron/patient/Profile");
-        } else {
-            request.setAttribute("firstName", request.getParameter("firstName"));
-            request.setAttribute("lastName", request.getParameter("lastName"));
-            request.setAttribute("address1", request.getParameter("address1"));
-            request.setAttribute("address2", request.getParameter("address2"));
-            request.setAttribute("countryId", request.getParameter("countryId"));
-            request.setAttribute("stateId", request.getParameter("stateId"));
-            request.setAttribute("postalCode", request.getParameter("postalCode"));
-
-            response.sendRedirect(url);
-        }
-        */
     }
 }

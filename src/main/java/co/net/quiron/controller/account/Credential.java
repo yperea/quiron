@@ -29,13 +29,20 @@ public class Credential extends HttpServlet {
         String username = request.getUserPrincipal().getName();
         String personType = (String) session.getAttribute("personType");
 
+        AccountManager accountManager = (AccountManager) session.getAttribute("account");
+        if (accountManager == null){
+            accountManager = new AccountManager(username, personType);
+        }
+
         request.setAttribute("title", title);
 
+/*
         AccountManager accountManager = new AccountManager();
-        accountManager.loadUserAccount(username, personType);
+        ProfileManager profileManager = new ProfileManager();
+        profileManager.loadUserAccount(username, personType);
+*/
         //accountManager.setSigned(true);
         session.setAttribute("account",accountManager);
-
         RequestDispatcher dispatcher = request.getRequestDispatcher(url);
         dispatcher.forward(request, response);
 
@@ -46,11 +53,15 @@ public class Credential extends HttpServlet {
                           HttpServletResponse response) throws ServletException, IOException {
 
         HttpSession session = request.getSession();
-        AccountManager accountManager;
-
         String url = "/quiron/account/credentials";
         String title = "Account Credentials";
-        request.setAttribute("title", title);
+        String username = request.getUserPrincipal().getName();
+        String personType = (String) session.getAttribute("personType");
+        AccountManager accountManager = (AccountManager) session.getAttribute("account");
+        if (accountManager == null){
+            accountManager = new AccountManager(username, personType);
+        }
+
 
         if ((request.getParameter("password") != null || !request.getParameter("password").isEmpty())
                 && (request.getParameter("confirmation") != null || !request.getParameter("confirmation").isEmpty())) {
@@ -58,12 +69,17 @@ public class Credential extends HttpServlet {
             String password = request.getParameter("password");
             String confirmation = request.getParameter("confirmation");
 
+/*
             accountManager =  (AccountManager) session.getAttribute("account");
+            ProfileManager profileManager = new ProfileManager();
+*/
+
             accountManager.saveCredentials(password, confirmation);
             session.setAttribute("account", accountManager);
 
         }
 
+        request.setAttribute("title", title);
         response.sendRedirect(url);
     }
 }

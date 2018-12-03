@@ -1,28 +1,25 @@
-package co.net.quiron.application.schedule;
+package co.net.quiron.persistence.schedule;
 
-import co.net.quiron.application.factory.ManagerFactory;
-import co.net.quiron.application.shared.EntityManager;
+import co.net.quiron.application.factory.RepositoryFactory;
 import co.net.quiron.domain.schedule.WeekDay;
+import co.net.quiron.persistence.interfaces.IAppRepository;
 import co.net.quiron.test.util.DatabaseManager;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
 import javax.persistence.PersistenceException;
-import java.time.LocalDate;
 import java.util.List;
-
 import static org.junit.jupiter.api.Assertions.*;
 
-public class WeekDayManagerTest {
+public class WeekDayRepositoryTest {
 
-    EntityManager<WeekDay> weekDayManager;
+    IAppRepository<WeekDay> weekDayRepository;
 
     /**
      * Sets up.
      */
     @BeforeEach
     void setUp() {
-        weekDayManager = ManagerFactory.getManager(WeekDay.class);
+        weekDayRepository = RepositoryFactory.getDBContext(WeekDay.class);
         DatabaseManager dbm = DatabaseManager.getInstance();
         dbm.runSQL("cleandb.sql");
     }
@@ -32,7 +29,7 @@ public class WeekDayManagerTest {
      */
     @Test
     void testGetWeekDayById() {
-        WeekDay weekDay = weekDayManager.get(5);
+        WeekDay weekDay = weekDayRepository.get(5);
         String weekDayName = weekDay.getName();
         assertEquals("Friday", weekDayName);
         //assertEquals("???", weekDay.getWeekDaySchedules().stream().findFirst().get());
@@ -43,7 +40,7 @@ public class WeekDayManagerTest {
      */
     @Test
     void testGetAllWeekDays() {
-        List<WeekDay> weekDayList = weekDayManager.getList();
+        List<WeekDay> weekDayList = weekDayRepository.getList();
         assertEquals(7, weekDayList.size());
     }
 
@@ -57,7 +54,7 @@ public class WeekDayManagerTest {
         String weekDayName = "Lunes";
 
         WeekDay newWeekDay = new WeekDay(weekDayCode, weekDayName);
-        WeekDay insertedWeekDay = weekDayManager.create(newWeekDay);
+        WeekDay insertedWeekDay = weekDayRepository.create(newWeekDay);
 
         assertNotNull(insertedWeekDay);
         assertEquals(weekDayName, insertedWeekDay.getName());
@@ -73,11 +70,11 @@ public class WeekDayManagerTest {
         int weekDayId = 5;
         String newWeekDayName = "Viernes";
 
-        WeekDay weekDayToUpdate = weekDayManager.get(weekDayId);
+        WeekDay weekDayToUpdate = weekDayRepository.get(weekDayId);
         weekDayToUpdate.setName(newWeekDayName);
 
-        weekDayManager.update(weekDayToUpdate);
-        WeekDay weekDayUpdated = weekDayManager.get(weekDayId);
+        weekDayRepository.update(weekDayToUpdate);
+        WeekDay weekDayUpdated = weekDayRepository.get(weekDayId);
 
         assertEquals(weekDayToUpdate, weekDayUpdated);
     }
@@ -91,7 +88,7 @@ public class WeekDayManagerTest {
         int weekDayIdToDelete = 5;
 
         Throwable exception = assertThrows(PersistenceException.class,
-                () -> weekDayManager.delete(weekDayManager.get(weekDayIdToDelete)));
+                () -> weekDayRepository.delete(weekDayRepository.get(weekDayIdToDelete)));
         assertEquals(PersistenceException.class, exception.getClass());
     }
 
@@ -105,9 +102,9 @@ public class WeekDayManagerTest {
         String weekDayName = "Lunes";
 
         WeekDay newWeekDay = new WeekDay(weekDayCode, weekDayName);
-        WeekDay insertedWeekDay = weekDayManager.create(newWeekDay);
+        WeekDay insertedWeekDay = weekDayRepository.create(newWeekDay);
 
-        weekDayManager.delete(weekDayManager.get(insertedWeekDay.getId()));
-        assertNull(weekDayManager.get(insertedWeekDay.getId()));
+        weekDayRepository.delete(weekDayRepository.get(insertedWeekDay.getId()));
+        assertNull(weekDayRepository.get(insertedWeekDay.getId()));
     }
 }

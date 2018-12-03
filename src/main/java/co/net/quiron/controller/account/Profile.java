@@ -1,13 +1,8 @@
 package co.net.quiron.controller.account;
 
 import co.net.quiron.application.account.AccountManager;
-import co.net.quiron.application.account.ProfileManager;
-import co.net.quiron.application.factory.ManagerFactory;
-import co.net.quiron.application.shared.EntityManager;
-import co.net.quiron.domain.location.Country;
+import co.net.quiron.application.location.LocationManager;
 import co.net.quiron.domain.location.State;
-import co.net.quiron.util.Message;
-import co.net.quiron.util.MessageType;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -36,20 +31,21 @@ public class Profile extends HttpServlet {
         String username = request.getUserPrincipal().getName();
         String personType = (String) session.getAttribute("personType");
 
+        AccountManager accountManager = (AccountManager) session.getAttribute("account");
+        if (accountManager == null){
+            accountManager = new AccountManager(username, personType);
+        }
+
         request.setAttribute("title", title);
-        AccountManager accountManager =  new AccountManager();
-        ProfileManager profileManager = new ProfileManager();
-        accountManager.loadUserAccount(username, personType);
 
         if (accountManager.isSigned()) {
             session.setAttribute("username", username);
             session.setAttribute("account", accountManager);
-            //session.setAttribute("profile", profileManager.getPatientProfile(accountManager));
-            session.setAttribute("profile", profileManager.getProfile(accountManager, personType));
-            session.setAttribute("currentPage", "My Profile");
+            session.setAttribute("profile", accountManager.getProfile());
+            session.setAttribute("personType", accountManager.getProfile().getPersonType());
 
-            EntityManager<Country> countryManager = ManagerFactory.getManager(Country.class);
-            Set<State> states = countryManager.get(1).getStates();
+            LocationManager locationManager = new LocationManager();
+            Set<State> states = locationManager.getStates("US");
             session.setAttribute("states", states);
 
             RequestDispatcher dispatcher = request.getRequestDispatcher(url);
@@ -58,15 +54,6 @@ public class Profile extends HttpServlet {
         } else {
             url = "/quiron/account/router?tp=" + personType ;
             session.invalidate();
-/*
-            Message message =  new Message();
-            message.setType(MessageType.ERROR);
-            message.setDescription("Account doesn't exist as " + personType);
-            accountManager.setMessage(message);
-            session.setAttribute("account", accountManager);
-            session.setAttribute("message", message);
-*/
-
             response.sendRedirect(url);
         }
     }
@@ -80,11 +67,12 @@ public class Profile extends HttpServlet {
 
         String url = "/quiron/patient/profile";
         String title = "My Profile";
+        String username = request.getUserPrincipal().getName();
         String personType = (String) session.getAttribute("personType");
-
-        request.setAttribute("title", title);
-        ProfileManager profileManager;
-        AccountManager accountManager =  (AccountManager) session.getAttribute("account");
+        AccountManager accountManager = (AccountManager) session.getAttribute("account");
+        if (accountManager == null){
+            accountManager = new AccountManager(username, personType);
+        }
 
         if ((request.getParameter("firstName") != null || !request.getParameter("firstName").isEmpty() )
                 && (request.getParameter("lastName") != null || !request.getParameter("lastName").isEmpty())
@@ -94,8 +82,6 @@ public class Profile extends HttpServlet {
                 && (request.getParameter("zip") != null || !request.getParameter("zip").isEmpty())
 
         ) {
-            profileManager =  new ProfileManager();
-
             String firstName = request.getParameter("firstName");
             String lastName = request.getParameter("lastName");
             String address1 = request.getParameter("address1");
@@ -113,8 +99,10 @@ public class Profile extends HttpServlet {
                 String gender = request.getParameter("gender");
                 String birthDate = request.getParameter("birthDate");
 
-                session.setAttribute("profile", profileManager.saveProfile(accountManager, firstName, lastName,
-                        address1, address2, city, stateId, postalCode, birthDate, gender));
+                co.net.quiron.domain.account.Profile profile = accountManager.saveProfile(accountManager, firstName, lastName,
+                        address1, address2, city, stateId, postalCode, birthDate, gender);
+
+                session.setAttribute("profile", profile);
 
 
             } else if(personType == "provider"
@@ -122,19 +110,13 @@ public class Profile extends HttpServlet {
             ){
                 String npi = request.getParameter("npi");
                 url = "/quiron/provider/profile";
-                session.setAttribute("profile", profileManager.saveProfile(accountManager, firstName, lastName,
+                session.setAttribute("profile", accountManager.saveProfile(accountManager, firstName, lastName,
                         address1, address2, city, stateId, postalCode, npi));
 
             }
-
-/*
-            session.setAttribute("profile", profileManager.savePatientProfile(accountManager, firstName, lastName,
-                                 address1, address2, city, stateId, postalCode, birthDate, gender));
-*/
-            session.setAttribute("message", profileManager.getMessage());
+            request.setAttribute("title", title);
+            session.setAttribute("message", accountManager.getMessage());
         }
-
         response.sendRedirect(url);
-
     }
 }

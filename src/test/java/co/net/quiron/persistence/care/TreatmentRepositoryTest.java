@@ -1,36 +1,32 @@
-package co.net.quiron.application.care;
+package co.net.quiron.persistence.care;
 
-import co.net.quiron.application.factory.ManagerFactory;
-import co.net.quiron.application.shared.EntityManager;
+import co.net.quiron.application.factory.RepositoryFactory;
 import co.net.quiron.domain.care.Prescription;
 import co.net.quiron.domain.care.Treatment;
 import co.net.quiron.domain.care.Visit;
+import co.net.quiron.persistence.interfaces.IAppRepository;
 import co.net.quiron.test.util.DatabaseManager;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
 import java.time.LocalDate;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
-public class TreatmentManagerTest {
-    EntityManager<Treatment> treatmentManager;
-    EntityManager<Prescription> prescriptionManager;
-    EntityManager<Visit> visitManager;
+public class TreatmentRepositoryTest {
+    IAppRepository<Treatment> treatmentRepository;
+    IAppRepository<Prescription> prescriptionRepository;
+    IAppRepository<Visit> visitRepository;
 
     /**
      * Sets up.
      */
     @BeforeEach
     void setUp() {
-        treatmentManager = ManagerFactory.getManager(Treatment.class);
-        prescriptionManager = ManagerFactory.getManager(Prescription.class);
-        visitManager = ManagerFactory.getManager(Visit.class);
+        treatmentRepository = RepositoryFactory.getDBContext(Treatment.class);
+        prescriptionRepository = RepositoryFactory.getDBContext(Prescription.class);
+        visitRepository = RepositoryFactory.getDBContext(Visit.class);
 
         DatabaseManager dbm = DatabaseManager.getInstance();
         dbm.runSQL("cleandb.sql");
@@ -41,7 +37,7 @@ public class TreatmentManagerTest {
      */
     @Test
     void testGetTreatmentById() {
-        Treatment treatment = treatmentManager.get(1);
+        Treatment treatment = treatmentRepository.get(1);
         String comments = treatment.getPatientComments();
         assertEquals("I feel better now", comments);
     }
@@ -51,7 +47,7 @@ public class TreatmentManagerTest {
      */
     @Test
     void testGetAllTreatments() {
-        List<Treatment> treatmentList = treatmentManager.getList();
+        List<Treatment> treatmentList = treatmentRepository.getList();
         assertEquals(2, treatmentList.size());
     }
 
@@ -62,7 +58,7 @@ public class TreatmentManagerTest {
     void testGetTreatmentsEquals() {
 
         String status = "C";
-        List<Treatment> treatmentList = treatmentManager.getListEquals("status", status);
+        List<Treatment> treatmentList = treatmentRepository.getListEquals("status", status);
         assertEquals(2, treatmentList.size());
     }
 
@@ -83,7 +79,7 @@ public class TreatmentManagerTest {
         String status = "A";
         int evaluation = 0;
 
-        Visit visit = visitManager.get(3);
+        Visit visit = visitRepository.get(3);
 
         Treatment newTreatment = new Treatment(visit);
         newTreatment.setStartDate(startDate);
@@ -93,7 +89,7 @@ public class TreatmentManagerTest {
         newTreatment.setStatus(status);
         newTreatment.setEvaluation(evaluation);
 
-        Treatment insertedTreatment = treatmentManager.create(newTreatment);
+        Treatment insertedTreatment = treatmentRepository.create(newTreatment);
 
         assertNotNull(insertedTreatment);
         assertEquals(status, insertedTreatment.getStatus());
@@ -111,12 +107,12 @@ public class TreatmentManagerTest {
         String newStatus = "D";
         String newSymptomName = "Symptom 20";
 
-        Treatment treatmentToUpdate = treatmentManager.get(treatmentId);
+        Treatment treatmentToUpdate = treatmentRepository.get(treatmentId);
         treatmentToUpdate.setStatus(newStatus);
         treatmentToUpdate.setEvaluation(newEvaluation);
 
-        treatmentManager.update(treatmentToUpdate);
-        Treatment treatmentUpdated = treatmentManager.get(treatmentId);
+        treatmentRepository.update(treatmentToUpdate);
+        Treatment treatmentUpdated = treatmentRepository.get(treatmentId);
 
         assertEquals(newEvaluation, treatmentUpdated.getEvaluation());
         assertEquals(newStatus, treatmentUpdated.getStatus());
@@ -137,13 +133,13 @@ public class TreatmentManagerTest {
         String diagnosticName = "Diagnsotic 1";
 */
 
-        Visit visit = visitManager.get(3);
+        Visit visit = visitRepository.get(3);
 
         Treatment newTreatment = new Treatment(visit);
-        Treatment insertedTreatment = treatmentManager.create(newTreatment);
+        Treatment insertedTreatment = treatmentRepository.create(newTreatment);
 
-        treatmentManager.delete(treatmentManager.get(treatmentIdToDelete));
-        assertNull(treatmentManager.get(treatmentIdToDelete));
+        treatmentRepository.delete(treatmentRepository.get(treatmentIdToDelete));
+        assertNull(treatmentRepository.get(treatmentIdToDelete));
     }
 
     /**
@@ -168,7 +164,7 @@ public class TreatmentManagerTest {
         String status = "A";
         int evaluation = 0;
 
-        Visit visit = visitManager.get(3);
+        Visit visit = visitRepository.get(3);
 
         Treatment newTreatment = new Treatment(visit);
         newTreatment.setStartDate(startDate);
@@ -179,10 +175,10 @@ public class TreatmentManagerTest {
         newTreatment.setEvaluation(evaluation);
 
 
-        Prescription prescription = prescriptionManager.get(prescriptionId);
+        Prescription prescription = prescriptionRepository.get(prescriptionId);
         newTreatment.addPrescription(prescription);
 
-        Treatment insertedTreatment = treatmentManager.create(newTreatment);
+        Treatment insertedTreatment = treatmentRepository.create(newTreatment);
 
         int prescriptionsAssigned = insertedTreatment.getPrescriptions().size();
         Prescription newPrescription = insertedTreatment.getPrescriptions().stream().findFirst().get();

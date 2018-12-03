@@ -1,50 +1,36 @@
-package co.net.quiron.application.person;
+package co.net.quiron.persistence.person;
 
-import co.net.quiron.application.factory.ManagerFactory;
-import co.net.quiron.application.shared.EntityManager;
+import co.net.quiron.application.factory.RepositoryFactory;
 import co.net.quiron.domain.institution.Organization;
 import co.net.quiron.domain.location.Address;
 import co.net.quiron.domain.person.*;
+import co.net.quiron.persistence.interfaces.IAppRepository;
 import co.net.quiron.test.util.DatabaseManager;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
 import java.time.LocalDate;
 import java.util.List;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
- * Patient manager tester.
+ * Patient repository tester.
  */
-class PatientManagerTest {
+class PatientRepositoryTest {
+
+    IAppRepository<Patient> patientRepository;
+    IAppRepository<Address> addressRepository;
+    IAppRepository<PersonType> personTypeRepository;
+    IAppRepository<Organization> organizationRepository;
 
     /**
-     * The Patient manager.
-     */
-    EntityManager<Patient> patientManager;
-    /**
-     * The Address manager.
-     */
-    EntityManager<Address> addressManager;
-    /**
-     * The Person type manager.
-     */
-    EntityManager<PersonType> personTypeManager;
-    /**
-     * The Organization manager.
-     */
-    EntityManager<Organization> organizationManager;
-
-    /**
-     * Initializes managers and data for the test.
+     * Initializes repositorys and data for the test.
      */
     @BeforeEach
     void setUp() {
-        patientManager = ManagerFactory.getManager(Patient.class);
-        addressManager = ManagerFactory.getManager(Address.class);
-        personTypeManager = ManagerFactory.getManager(PersonType.class);
-        organizationManager = ManagerFactory.getManager(Organization.class);
+        patientRepository = RepositoryFactory.getDBContext(Patient.class);
+        addressRepository = RepositoryFactory.getDBContext(Address.class);
+        personTypeRepository = RepositoryFactory.getDBContext(PersonType.class);
+        organizationRepository = RepositoryFactory.getDBContext(Organization.class);
 
         DatabaseManager dbm = DatabaseManager.getInstance();
         dbm.runSQL("cleandb.sql");
@@ -55,7 +41,7 @@ class PatientManagerTest {
      */
     @Test
     void testGetPatientById() {
-        Patient patient = patientManager.get(4);
+        Patient patient = patientRepository.get(4);
         String firstName = patient.getFirstName();
         assertEquals("Claudia", firstName);
     }
@@ -66,7 +52,7 @@ class PatientManagerTest {
      */
     @Test
     void testGetAllPatients() {
-        List<Patient> patientList = patientManager.getList();
+        List<Patient> patientList = patientRepository.getList();
         assertEquals(2, patientList.size());
     }
 
@@ -81,13 +67,13 @@ class PatientManagerTest {
         String firstName = "John";
         String lastName = "Smith";
         String subscriberCode = "123465";
-        PersonType personType = personTypeManager.get(3);
-        Organization organization = organizationManager.get(1);
+        PersonType personType = personTypeRepository.get(3);
+        Organization organization = organizationRepository.get(1);
 
         Patient patient = new Patient(personType, firstName, lastName, birthDate, gender);
         patient.setOrganization(organization);
         patient.setSubscriberCode(subscriberCode);
-        Patient insertedPatient = patientManager.create(patient);
+        Patient insertedPatient = patientRepository.create(patient);
 
         assertNotNull(insertedPatient);
         assertEquals("John", insertedPatient.getFirstName());

@@ -1,7 +1,6 @@
-package co.net.quiron.application.care;
+package co.net.quiron.persistence.care;
 
-import co.net.quiron.application.factory.ManagerFactory;
-import co.net.quiron.application.shared.EntityManager;
+import co.net.quiron.application.factory.RepositoryFactory;
 import co.net.quiron.domain.care.Visit;
 import co.net.quiron.domain.institution.Organization;
 import co.net.quiron.domain.location.Address;
@@ -9,40 +8,39 @@ import co.net.quiron.domain.person.Patient;
 import co.net.quiron.domain.person.Provider;
 import co.net.quiron.domain.schedule.ProviderSchedule;
 import co.net.quiron.domain.schedule.ShiftSchedule;
+import co.net.quiron.persistence.interfaces.IAppRepository;
 import co.net.quiron.test.util.DatabaseManager;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 import java.util.stream.Collectors;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class VisitManagerTest {
+public class VisitRepositoryTest {
 
-    EntityManager<Visit> visitManager;
+    IAppRepository<Visit> visitRepository;
 
-    EntityManager<Patient> patientManager;
-    EntityManager<ProviderSchedule> providerScheduleManager;
-    EntityManager<ShiftSchedule> shiftScheduleManager;
-    EntityManager<Provider> providerManager;
-    EntityManager<Organization> organizationManager;
-    EntityManager<Address> locationManager;
+    IAppRepository<Patient> patientRepository;
+    IAppRepository<ProviderSchedule> providerScheduleRepository;
+    IAppRepository<ShiftSchedule> shiftScheduleRepository;
+    IAppRepository<Provider> providerRepository;
+    IAppRepository<Organization> organizationRepository;
+    IAppRepository<Address> locationRepository;
     /**
      * Sets up.
      */
     @BeforeEach
     void setUp() {
-        visitManager = ManagerFactory.getManager(Visit.class);
-        patientManager = ManagerFactory.getManager(Patient.class);
+        visitRepository = RepositoryFactory.getDBContext(Visit.class);
+        patientRepository = RepositoryFactory.getDBContext(Patient.class);
 
-        providerScheduleManager = ManagerFactory.getManager(ProviderSchedule.class);
-        shiftScheduleManager = ManagerFactory.getManager(ShiftSchedule.class);
-        providerManager = ManagerFactory.getManager(Provider.class);
-        organizationManager = ManagerFactory.getManager(Organization.class);
-        locationManager = ManagerFactory.getManager(Address.class);
+        providerScheduleRepository = RepositoryFactory.getDBContext(ProviderSchedule.class);
+        shiftScheduleRepository = RepositoryFactory.getDBContext(ShiftSchedule.class);
+        providerRepository = RepositoryFactory.getDBContext(Provider.class);
+        organizationRepository = RepositoryFactory.getDBContext(Organization.class);
+        locationRepository = RepositoryFactory.getDBContext(Address.class);
 
         DatabaseManager dbm = DatabaseManager.getInstance();
         dbm.runSQL("cleandb.sql");
@@ -55,7 +53,7 @@ public class VisitManagerTest {
     @Test
     void testGetVisitById() {
 
-        Visit visit = visitManager.get(1);
+        Visit visit = visitRepository.get(1);
         assertEquals("Yesid", visit.getProviderSchedule().getProvider().getFirstName());
 
     }
@@ -65,7 +63,7 @@ public class VisitManagerTest {
      */
     @Test
     void testGetAllVisits() {
-        List<Visit> visitList = visitManager.getList();
+        List<Visit> visitList = visitRepository.getList();
         assertEquals(9, visitList.size());
     }
 
@@ -75,13 +73,13 @@ public class VisitManagerTest {
     @Test
     void testGetVisitsByPatient() {
 
-        Patient patient = patientManager.get(5);
-        Provider provider = providerManager.get(3);
+        Patient patient = patientRepository.get(5);
+        Provider provider = providerRepository.get(3);
 
         Map<String, Object> params = new TreeMap<>();
         params.put("patient", patient);
 
-        List<Visit> myVisitList = visitManager.getListEquals(params);
+        List<Visit> myVisitList = visitRepository.getListEquals(params);
         assertEquals(9, myVisitList.size());
         assertEquals(4, myVisitList
                                 .stream()

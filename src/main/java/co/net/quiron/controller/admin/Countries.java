@@ -1,6 +1,6 @@
 package co.net.quiron.controller.admin;
 
-import co.net.quiron.application.factory.ManagerFactory;
+import co.net.quiron.application.factory.RepositoryFactory;
 import co.net.quiron.domain.location.Country;
 
 import javax.servlet.RequestDispatcher;
@@ -29,7 +29,7 @@ public class Countries extends HttpServlet {
         //CountryManager countryManager = new CountryManager();
 
         //req.setAttribute("countries", countryManager.getList());
-        req.setAttribute("countries", ManagerFactory.getManager(Country.class).getList());
+        req.setAttribute("countries", RepositoryFactory.getDBContext(Country.class).getList());
         req.setAttribute("title", title);
 
         RequestDispatcher dispatcher = req.getRequestDispatcher(url);

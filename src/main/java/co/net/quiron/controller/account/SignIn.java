@@ -1,7 +1,6 @@
 package co.net.quiron.controller.account;
 
 import co.net.quiron.application.account.AccountManager;
-import co.net.quiron.application.account.ProfileManager;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -39,10 +38,6 @@ public class SignIn extends HttpServlet {
 
         String url = "/account/signin";
         String title = "Sign In";
-
         AccountManager accountManager =  new AccountManager();
-        ProfileManager profileManager = new ProfileManager();
-
-        //accountManager.loadUserAccount(username);
     }
 }

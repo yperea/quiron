@@ -23,6 +23,12 @@
                       action="${root}/account/signup"
                       method="POST"
                       novalidate>
+
+                    <input type="hidden"
+                           id="personType"
+                           name="personType"
+                           value="patient"/>
+
                     <div class="row">
                         <div class="col-md-6 mb-3">
                             <label for="firstName">First name</label>
@@ -159,6 +165,9 @@
     </div>
     <%@include file="../shared/cdn-jss.jsp"%>
     <%@include file="../shared/footer.jsp"%>
+    <!-- Reference to local JS library -->
+    <script type="text/javascript" charset="utf-8" src="../style/js/signup.js" ></script>
+
 </body>
 </html>
 

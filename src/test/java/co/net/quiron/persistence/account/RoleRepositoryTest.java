@@ -1,9 +1,9 @@
-package co.net.quiron.application.account;
+package co.net.quiron.persistence.account;
 
-import co.net.quiron.application.factory.ManagerFactory;
-import co.net.quiron.application.shared.EntityManager;
+import co.net.quiron.application.factory.RepositoryFactory;
 import co.net.quiron.domain.account.Role;
 import co.net.quiron.domain.account.User;
+import co.net.quiron.persistence.interfaces.IAppRepository;
 import co.net.quiron.test.util.DatabaseManager;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -15,18 +15,18 @@ import static org.junit.jupiter.api.Assertions.*;
 /**
  * The type Role manager test.
  */
-class RoleManagerTest {
+class RoleRepositoryTest {
 
-    EntityManager<Role> roleManager;
-    EntityManager<User> userManager;
+    IAppRepository<Role> roleRepository;
+    IAppRepository<User> userRepository;
 
     /**
      * Sets up.
      */
     @BeforeEach
     void setUp() {
-        roleManager = ManagerFactory.getManager(Role.class);
-        userManager = ManagerFactory.getManager(User.class);
+        roleRepository = RepositoryFactory.getDBContext(Role.class);
+        userRepository = RepositoryFactory.getDBContext(User.class);
         DatabaseManager dbm = DatabaseManager.getInstance();
         dbm.runSQL("cleandb.sql");
     }
@@ -36,7 +36,7 @@ class RoleManagerTest {
      */
     @Test
     void testGetRoleById() {
-        Role role = roleManager.get(1);
+        Role role = roleRepository.get(1);
         assertEquals("Administrator", role.getName());
     }
 
@@ -46,7 +46,7 @@ class RoleManagerTest {
      */
     @Test
     void testGetAllRoles() {
-        List<Role> roleList = roleManager.getList();
+        List<Role> roleList = roleRepository.getList();
         assertEquals(2, roleList.size());
     }
 
@@ -60,7 +60,7 @@ class RoleManagerTest {
         String newRoleName = "Patient";
         String newDescription = "Patient role";
         Role newRole = new Role(newRoleName, newDescription);
-        Role insertedRole = roleManager.create(newRole);
+        Role insertedRole = roleRepository.create(newRole);
 
         assertNotNull(insertedRole);
         assertEquals("Patient", insertedRole.getName());
@@ -77,11 +77,11 @@ class RoleManagerTest {
         int roleId = 1;
         String newRoleName = "Admin";
 
-        Role roleToUpdate = roleManager.get(roleId);
+        Role roleToUpdate = roleRepository.get(roleId);
         roleToUpdate.setName(newRoleName);
 
-        roleManager.update(roleToUpdate);
-        Role roleUpdated = roleManager.get(roleId);
+        roleRepository.update(roleToUpdate);
+        Role roleUpdated = roleRepository.get(roleId);
 
         assertEquals(newRoleName, roleUpdated.getName());
         assertNotNull(roleUpdated.getModifiedDate());
@@ -96,7 +96,7 @@ class RoleManagerTest {
 
         int roleIdToDelete = 2;
 
-        roleManager.delete(roleManager.get(roleIdToDelete));
-        assertNull(roleManager.get(roleIdToDelete));
+        roleRepository.delete(roleRepository.get(roleIdToDelete));
+        assertNull(roleRepository.get(roleIdToDelete));
     }
 }

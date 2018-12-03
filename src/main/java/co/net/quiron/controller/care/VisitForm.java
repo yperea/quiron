@@ -1,14 +1,9 @@
 package co.net.quiron.controller.care;
 
 import co.net.quiron.application.account.AccountManager;
-import co.net.quiron.application.account.ProfileManager;
 import co.net.quiron.application.care.VisitManager;
-import co.net.quiron.application.factory.ManagerFactory;
-import co.net.quiron.application.shared.EntityManager;
 import co.net.quiron.application.vendor.ApiMedicManager;
 import co.net.quiron.domain.care.Visit;
-import co.net.quiron.util.Message;
-import co.net.quiron.util.MessageType;
 import co.net.quiron.vendor.com.apimedic.Issue;
 import co.net.quiron.vendor.com.apimedic.Symptom;
 
@@ -20,9 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @WebServlet(
         name = "visit",
@@ -42,15 +35,15 @@ public class VisitForm extends HttpServlet {
         String username = request.getUserPrincipal().getName();
 
         request.setAttribute("title", title);
-        session.setAttribute("currentPage", "My Visit");
         request.setAttribute("visitId", request.getParameter("id"));
 
-        AccountManager accountManager =  new AccountManager();
-        accountManager.loadUserAccount(username, personType);
-        ProfileManager profileManager = new ProfileManager();
+        AccountManager accountManager = (AccountManager) session.getAttribute("account");
+        if (accountManager == null){
+            accountManager = new AccountManager(username, personType);
+        }
 
         Visit visit = null;
-        VisitManager visitManager = new VisitManager(username, personType);
+        VisitManager visitManager = new VisitManager(accountManager);
         if ((request.getParameter("id") != null
             && !request.getParameter("id").isEmpty())){
             int visitId = Integer.parseInt(request.getParameter("id"));
@@ -59,9 +52,13 @@ public class VisitForm extends HttpServlet {
 
         ApiMedicManager apiMedicManager = new ApiMedicManager("/apimedic.properties");
         List<Symptom> symptoms = apiMedicManager.getSymptomsList();
-        List<Issue> issues = apiMedicManager.getIssuesListBySymptom(visit.getSymptomId(),
-                                                           accountManager.getGender(),
-                                                           accountManager.getBirthDate().getYear());
+        List<Issue> issues = null;
+
+        if(visit.getSymptomId() != 0 && accountManager.getGender() != null){
+            issues = apiMedicManager.getIssuesListBySymptom(visit.getSymptomId(),
+                    accountManager.getGender(),
+                    accountManager.getBirthDate().getYear());
+        }
 
 
         request.setAttribute("visit", visit);
@@ -86,14 +83,18 @@ public class VisitForm extends HttpServlet {
         String personType = (String) session.getAttribute("personType");
         String username = request.getUserPrincipal().getName();
 
-        request.setAttribute("title", title);
-        ProfileManager profileManager;
-        AccountManager accountManager =  (AccountManager) session.getAttribute("account");
-        VisitManager visitManager = new VisitManager(username, personType);
+        AccountManager accountManager = (AccountManager) session.getAttribute("account");
+        if (accountManager == null){
+            accountManager = new AccountManager(username, personType);
+            session.setAttribute("account", accountManager);
+            session.setAttribute("profile", accountManager.getProfile());
+            session.setAttribute("personType", accountManager.getProfile().getPersonType());
+        }
+
+        VisitManager visitManager = new VisitManager(accountManager);
 
         String symptom = request.getParameter("symptom");
         String diagnosis = request.getParameter("diagnosis");
-
 
         if ((request.getParameter("visitId") != null || !request.getParameter("visitId").isEmpty() )
                 && (request.getParameter("startDate") != null || !request.getParameter("startDate").isEmpty())
@@ -109,7 +110,7 @@ public class VisitForm extends HttpServlet {
                 && (request.getParameter("temperature") != null || !request.getParameter("temperature").isEmpty())
                 && (request.getParameter("providerComment") != null || !request.getParameter("providerComment").isEmpty())
         ) {
-            profileManager =  new ProfileManager();
+           // profileManager =  new ProfileManager();
 
             int visitId = Integer.parseInt(request.getParameter("visitId"));;
             String startDate = request.getParameter("startDate");
@@ -128,11 +129,10 @@ public class VisitForm extends HttpServlet {
             String temperature =  request.getParameter("temperature");
             String providerComment =  request.getParameter("providerComment");
 
-
             session.setAttribute("visit", visitManager.updateVisit(visitId));
             session.setAttribute("message", visitManager.getMessage());
         }
-
+        request.setAttribute("title", title);
         response.sendRedirect(url);
 
     }

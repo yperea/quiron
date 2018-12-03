@@ -16,25 +16,25 @@ public interface IAppRepository<T> {
      *
      * @return the all
      */
-    List<T> getAll();
+    List<T> getList();
 
     /**
      * Get a collection of entities by property (exact match)
      * sample usage: getByPropertyEqual("lastname", "Curry")
      */
-    List<T> getByPropertyEqual(String propertyName, String value);
+    List<T> getListEquals(String propertyName, String value);
 
     /**
      * Get a collection of entities by property (exact match)
      * sample usage: getByPropertyEqual("lastname", "Curry")
      */
-    List<T> getByPropertyEqual(Map<String, Object> params);
+    List<T> getListEquals(Map<String, Object> params);
 
     /**
      * Get a collection of entities by property (like)
      * sample usage: getByPropertyLike("lastname", "C")
      */
-    List<T> getByPropertyLike(String propertyName, String value);
+    List<T> getListContains(String propertyName, String value);
 
     /**
      * Gets an entity.
@@ -59,23 +59,6 @@ public interface IAppRepository<T> {
      * @return the int
      */
     T create(T entity);
-
-    /**
-     * Creates an entity.
-     *
-     * @param entity the entity
-     * @return the int
-     */
-    /*T create2(T entity);*/
-
-    /**
-     * Creates an entity.
-     *
-     * @param entity the entity
-     * @return the int
-     */
-    T create3(T entity);
-
 
     /**
      * Deletes an entity.

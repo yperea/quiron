@@ -1,12 +1,10 @@
 package co.net.quiron.persistence.shared;
 
-import co.net.quiron.domain.schedule.ShiftSchedule;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import javax.persistence.criteria.*;
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -75,7 +73,7 @@ public class EntityDAO<T> {
      *
      * @return the all entities
      */
-    public List<T> getAll() {
+    public List<T> getList() {
         session = getSession();
         CriteriaBuilder builder = session.getCriteriaBuilder();
         CriteriaQuery<T> query = builder.createQuery(type);
@@ -176,40 +174,6 @@ public class EntityDAO<T> {
         logger.trace("insert(T): Inserting the <T> BusinessEntity.");
         return id;
     }
-
-    /**
-     * Insert 2 string.
-     *
-     * @param entity the entity
-     * @return the string
-     */
-    public String insert2(T entity) {
-
-        String id = null;
-        session = getSession();
-        transaction = session.beginTransaction();
-        id = (String)session.save(entity);
-
-        logger.trace("insert(T): Inserting the <T> BusinessEntity.");
-        return id;
-    }
-
-    /**
-     * Insert 3 t.
-     *
-     * @param entity the entity
-     * @return the t
-     */
-    public T insert3(T entity) {
-
-        session = getSession();
-        transaction = session.beginTransaction();
-        T newEntity = type.cast(session.save(entity));
-
-        logger.trace("insert(T): Inserting the <T> BusinessEntity.");
-        return newEntity;
-    }
-
 
     /**
      * Update an BusinessEntity

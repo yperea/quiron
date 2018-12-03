@@ -1,33 +1,29 @@
-package co.net.quiron.application.schedule;
+package co.net.quiron.persistence.schedule;
 
-import co.net.quiron.application.factory.ManagerFactory;
-import co.net.quiron.application.shared.EntityManager;
+import co.net.quiron.application.factory.RepositoryFactory;
 import co.net.quiron.domain.schedule.Shift;
+import co.net.quiron.persistence.interfaces.IAppRepository;
 import co.net.quiron.test.util.DatabaseManager;
-import com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import javax.accessibility.AccessibleStateSet;
 import javax.persistence.PersistenceException;
 import java.time.LocalDate;
 import java.util.List;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
- * Test out The Shifts manager.
+ * Test out The Shifts repository.
  */
-class ShiftManagerTest {
+class ShiftRepositoryTest {
 
-    EntityManager<Shift> shiftManager;
+    IAppRepository<Shift> shiftRepository;
 
     /**
      * Sets up.
      */
     @BeforeEach
     void setUp() {
-        shiftManager = ManagerFactory.getManager(Shift.class);
+        shiftRepository = RepositoryFactory.getDBContext(Shift.class);
         DatabaseManager dbm = DatabaseManager.getInstance();
         dbm.runSQL("cleandb.sql");
     }
@@ -37,7 +33,7 @@ class ShiftManagerTest {
      */
     @Test
     void testGetShiftById() {
-        Shift shift = shiftManager.get(1);
+        Shift shift = shiftRepository.get(1);
         String shiftName = shift.getName();
         assertEquals("Weekday Morning Spring 2018", shiftName);
         //assertEquals("???", shift.getShiftSchedules().stream().findFirst().get());
@@ -48,7 +44,7 @@ class ShiftManagerTest {
      */
     @Test
     void testGetAllShifts() {
-        List<Shift> shiftList = shiftManager.getList();
+        List<Shift> shiftList = shiftRepository.getList();
         assertEquals(12, shiftList.size());
     }
 
@@ -66,7 +62,7 @@ class ShiftManagerTest {
         String shiftStatus = "A";
 
         Shift newShift = new Shift(shiftName, shiftDescription, shiftStartDate, shiftEndDate, shiftStatus);
-        Shift insertedShift = shiftManager.create(newShift);
+        Shift insertedShift = shiftRepository.create(newShift);
 
         assertNotNull(insertedShift);
         assertEquals("Weekday Morning Spring 2019", insertedShift.getName());
@@ -82,11 +78,11 @@ class ShiftManagerTest {
         int shiftId = 1;
         String newShiftName = "Weekday Morning Spring 2019";
 
-        Shift shiftToUpdate = shiftManager.get(shiftId);
+        Shift shiftToUpdate = shiftRepository.get(shiftId);
         shiftToUpdate.setName(newShiftName);
 
-        shiftManager.update(shiftToUpdate);
-        Shift shiftUpdated = shiftManager.get(shiftId);
+        shiftRepository.update(shiftToUpdate);
+        Shift shiftUpdated = shiftRepository.get(shiftId);
 
         assertEquals(shiftToUpdate, shiftUpdated);
     }
@@ -99,10 +95,10 @@ class ShiftManagerTest {
 
         int shiftIdToDelete = 1;
 
-        //assertNull(shiftManager.get(shiftIdToDelete));
+        //assertNull(shiftRepository.get(shiftIdToDelete));
 
         Throwable exception = assertThrows(PersistenceException.class,
-                () -> shiftManager.delete(shiftManager.get(shiftIdToDelete)));
+                () -> shiftRepository.delete(shiftRepository.get(shiftIdToDelete)));
         assertEquals(PersistenceException.class, exception.getClass());
     }
 
@@ -119,9 +115,9 @@ class ShiftManagerTest {
         String shiftStatus = "A";
 
         Shift newShift = new Shift(shiftName, shiftDescription, shiftStartDate, shiftEndDate, shiftStatus);
-        Shift insertedShift = shiftManager.create(newShift);
+        Shift insertedShift = shiftRepository.create(newShift);
 
-        shiftManager.delete(shiftManager.get(insertedShift.getId()));
-        assertNull(shiftManager.get(insertedShift.getId()));
+        shiftRepository.delete(shiftRepository.get(insertedShift.getId()));
+        assertNull(shiftRepository.get(insertedShift.getId()));
     }
 }

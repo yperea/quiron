@@ -1,10 +1,10 @@
-package co.net.quiron.application.account;
+package co.net.quiron.persistence.account;
 
-import co.net.quiron.application.factory.ManagerFactory;
-import co.net.quiron.application.shared.EntityManager;
+import co.net.quiron.application.factory.RepositoryFactory;
 import co.net.quiron.domain.account.Role;
 import co.net.quiron.domain.account.User;
 import co.net.quiron.domain.person.Person;
+import co.net.quiron.persistence.interfaces.IAppRepository;
 import co.net.quiron.test.util.DatabaseManager;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -15,22 +15,22 @@ import java.util.Set;
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
- * User manager test class.
+ * User Repository test class.
  */
-class UserManagerTest {
+class UserRepositoryTest {
 
-    EntityManager<User> userManager;
-    EntityManager<Role> roleManager;
-    EntityManager<Person> personManager;
+    IAppRepository<User> userRepository;
+    IAppRepository<Role> roleRepository;
+    IAppRepository<Person> personRepository;
 
     /**
      * Sets up.
      */
     @BeforeEach
     void setUp() {
-        userManager = ManagerFactory.getManager(User.class);
-        roleManager = ManagerFactory.getManager(Role.class);
-        personManager = ManagerFactory.getManager(Person.class);
+        userRepository = RepositoryFactory.getDBContext(User.class);
+        roleRepository = RepositoryFactory.getDBContext(Role.class);
+        personRepository = RepositoryFactory.getDBContext(Person.class);
 
         DatabaseManager dbm = DatabaseManager.getInstance();
         dbm.runSQL("cleandb.sql");
@@ -41,7 +41,8 @@ class UserManagerTest {
      */
     @Test
     void testGetUserById() {
-        User user = userManager.get(1);
+        /*User user = userRepository.get(1);*/
+        User user = userRepository.get(1);
         String username = user.getUsername();
         assertEquals("admin", username );
     }
@@ -51,7 +52,7 @@ class UserManagerTest {
      */
     @Test
     void testGetAllUsers() {
-        List<User> userList = userManager.getList();
+        List<User> userList = userRepository.getList();
         assertEquals(4, userList.size());
     }
 
@@ -62,7 +63,7 @@ class UserManagerTest {
     void testGetUsersEquals() {
 
         String username = "admin";
-        List<User> userList = userManager.getListEquals("username", username);
+        List<User> userList = userRepository.getListEquals("username", username);
         assertEquals(1, userList.size());
     }
 
@@ -73,7 +74,7 @@ class UserManagerTest {
     void testGetUsersLike() {
 
         String username = "r";
-        List<User> userList = userManager.getListContains("username", username);
+        List<User> userList = userRepository.getListContains("username", username);
         assertEquals(2, userList.size());
     }
 
@@ -88,7 +89,7 @@ class UserManagerTest {
         String newEmail = "jsmith@aol.com";
         String newPassword = "1234";
         User newUser = new User(newUserName, newEmail, newPassword);
-        User insertedUser = userManager.create(newUser);
+        User insertedUser = userRepository.create(newUser);
 
         assertNotNull(insertedUser);
         assertEquals("jsmith", insertedUser.getUsername());
@@ -106,11 +107,11 @@ class UserManagerTest {
         String newUserName = "yperea";
         int userId = 1;
 
-        User userToUpdate = userManager.get(userId);
+        User userToUpdate = userRepository.get(userId);
         userToUpdate.setUsername(newUserName);
 
-        userManager.update(userToUpdate);
-        User userUpdated = userManager.get(userId);
+        userRepository.update(userToUpdate);
+        User userUpdated = userRepository.get(userId);
 
         assertEquals(newUserName, userUpdated.getUsername());
         assertNotNull(userUpdated.getModifiedDate());
@@ -126,8 +127,8 @@ class UserManagerTest {
 
         /*TODO: Check DB Constraints scenario when a user is deleted, the person related to it is deleted too. */
 
-        userManager.delete(userManager.get(userIdToDelete));
-        assertNull(userManager.get(userIdToDelete));
+        userRepository.delete(userRepository.get(userIdToDelete));
+        assertNull(userRepository.get(userIdToDelete));
     }
 
     /**
@@ -142,17 +143,17 @@ class UserManagerTest {
 
         Set<Role> roles = new HashSet<>();
 
-        User userToUpdate = userManager.get(userId);
-        Role adminRole = roleManager.get(adminRoleId);
-        Role userRole = roleManager.get(userRoleId);
+        User userToUpdate = userRepository.get(userId);
+        Role adminRole = roleRepository.get(adminRoleId);
+        Role userRole = roleRepository.get(userRoleId);
 
         roles.add(adminRole);
         roles.add(userRole);
 
         userToUpdate.setRoles(roles);
-        userManager.update(userToUpdate);
+        userRepository.update(userToUpdate);
 
-        User userUpdated = userManager.get(userId);
+        User userUpdated = userRepository.get(userId);
 
         rolesAssigned = userUpdated.getRoles().size();
 
@@ -168,13 +169,13 @@ class UserManagerTest {
         int adminRoleId = 1;
         int rolesAssigned = 0;
 
-        User userToUpdate = userManager.get(userId);
-        Role adminRole = roleManager.get(adminRoleId);
+        User userToUpdate = userRepository.get(userId);
+        Role adminRole = roleRepository.get(adminRoleId);
 
         userToUpdate.addRole(adminRole);
-        userManager.update(userToUpdate);
+        userRepository.update(userToUpdate);
 
-        User userUpdated = userManager.get(userId);
+        User userUpdated = userRepository.get(userId);
         rolesAssigned = userUpdated.getRoles().size();
         Role newRole = userUpdated.getRoles().stream().findFirst().get();
 
@@ -196,10 +197,10 @@ class UserManagerTest {
 
         User newUser = new User(newUserName, newEmail, newPassword);
 
-        Role userRole = roleManager.get(userRoleId);
+        Role userRole = roleRepository.get(userRoleId);
         newUser.addRole(userRole);
 
-        User insertedUser = userManager.create(newUser);
+        User insertedUser = userRepository.create(newUser);
 
         rolesAssigned = insertedUser.getRoles().size();
         Role newRole = insertedUser.getRoles().stream().findFirst().get();

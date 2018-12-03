@@ -1,10 +1,7 @@
 package co.net.quiron.service;
 
-import co.net.quiron.application.factory.ManagerFactory;
 import co.net.quiron.application.vendor.ApiMedicManager;
-import co.net.quiron.domain.location.State;
 import co.net.quiron.vendor.com.apimedic.Diagnosis;
-import co.net.quiron.vendor.com.apimedic.Gender;
 import co.net.quiron.vendor.com.apimedic.Issue;
 import co.net.quiron.vendor.com.apimedic.Symptom;
 import com.fasterxml.jackson.core.JsonProcessingException;

@@ -4,7 +4,10 @@ import co.net.quiron.domain.location.Address;
 import co.net.quiron.domain.person.Patient;
 import co.net.quiron.domain.person.Person;
 import co.net.quiron.domain.person.Provider;
+import co.net.quiron.vendor.com.apimedic.Gender;
 import lombok.Data;
+
+import java.time.LocalDate;
 
 @Data
 public class Profile  {
@@ -13,4 +16,12 @@ public class Profile  {
     private Provider provider;
     private Person person;
     private Address address;
+
+    private String firstName;
+    private String lastName;
+    private String personType;
+    private LocalDate birthDate;
+    private String gender;
+    private String npi;
+
 }

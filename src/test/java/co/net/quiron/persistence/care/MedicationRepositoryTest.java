@@ -1,30 +1,26 @@
-package co.net.quiron.application.care;
+package co.net.quiron.persistence.care;
 
-import co.net.quiron.application.factory.ManagerFactory;
-import co.net.quiron.application.shared.EntityManager;
+
+import co.net.quiron.application.factory.RepositoryFactory;
 import co.net.quiron.domain.care.Medication;
-import co.net.quiron.domain.location.AddressType;
-import co.net.quiron.domain.location.State;
+import co.net.quiron.persistence.interfaces.IAppRepository;
 import co.net.quiron.test.util.DatabaseManager;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import java.util.Date;
 import java.util.List;
-
 import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-public class MedicationManagerTest {
-    EntityManager<Medication> medicationManager;
+public class MedicationRepositoryTest {
+    IAppRepository<Medication> medicationRepository;
 
     /**
      * Sets up.
      */
     @BeforeEach
     void setUp() {
-        medicationManager = ManagerFactory.getManager(Medication.class);
+        medicationRepository = RepositoryFactory.getDBContext(Medication.class);
         DatabaseManager dbm = DatabaseManager.getInstance();
         dbm.runSQL("cleandb.sql");
     }
@@ -34,8 +30,8 @@ public class MedicationManagerTest {
      */
     @Test
     void testGetMedicationById() {
-//        Medication Medication = medicationManager.getMedication(1);
-        Medication Medication = medicationManager.get(1);
+//        Medication Medication = medicationRepository.getMedication(1);
+        Medication Medication = medicationRepository.get(1);
         assertEquals("Robitussin", Medication.getName());
     }
 
@@ -45,7 +41,7 @@ public class MedicationManagerTest {
      */
     @Test
     void testGetAllMedications() {
-        List<Medication> MedicationList = medicationManager.getList();
+        List<Medication> MedicationList = medicationRepository.getList();
         assertEquals(2, MedicationList.size());
     }
 
@@ -58,7 +54,7 @@ public class MedicationManagerTest {
 
         String newMedicationName = "Dolex";
         Medication newMedication = new Medication(newMedicationName);
-        Medication insertedMedication = medicationManager.create(newMedication);
+        Medication insertedMedication = medicationRepository.create(newMedication);
 
         assertNotNull(insertedMedication);
         assertEquals("Dolex", insertedMedication.getName());
@@ -74,11 +70,11 @@ public class MedicationManagerTest {
         String newMedicationName = "Dolex";
         int MedicationId = 2;
 
-        Medication MedicationToUpdate = medicationManager.get(MedicationId);
+        Medication MedicationToUpdate = medicationRepository.get(MedicationId);
         MedicationToUpdate.setName(newMedicationName);
 
-        medicationManager.update(MedicationToUpdate);
-        Medication MedicationUpdated = medicationManager.get(MedicationId);
+        medicationRepository.update(MedicationToUpdate);
+        Medication MedicationUpdated = medicationRepository.get(MedicationId);
 
         assertEquals(newMedicationName, MedicationUpdated.getName());
     }
@@ -92,9 +88,9 @@ public class MedicationManagerTest {
         int medicationIdToDelete = 3;
         String newMedicationName = "Dolex";
         Medication newMedication = new Medication(newMedicationName);
-        Medication insertedMedication = medicationManager.create(newMedication);
+        Medication insertedMedication = medicationRepository.create(newMedication);
 
-        medicationManager.delete(medicationManager.get(medicationIdToDelete));
-        assertNull(medicationManager.get(medicationIdToDelete));
+        medicationRepository.delete(medicationRepository.get(medicationIdToDelete));
+        assertNull(medicationRepository.get(medicationIdToDelete));
     }
 }

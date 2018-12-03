@@ -1,35 +1,33 @@
-package co.net.quiron.application.person;
+package co.net.quiron.persistence.person;
 
-import co.net.quiron.application.factory.ManagerFactory;
-import co.net.quiron.application.shared.EntityManager;
+import co.net.quiron.application.factory.RepositoryFactory;
 import co.net.quiron.domain.location.Address;
 import co.net.quiron.domain.person.PersonType;
 import co.net.quiron.domain.person.Provider;
+import co.net.quiron.persistence.interfaces.IAppRepository;
 import co.net.quiron.test.util.DatabaseManager;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
 import java.time.LocalDate;
 import java.util.List;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-public class ProviderManagerTest {
+public class ProviderRepositoryTest {
 
-    EntityManager<Provider> providerManager;
-    EntityManager<Address> addressManager;
-    EntityManager<PersonType> personTypeManager;
+    IAppRepository<Provider> providerRepository;
+    IAppRepository<Address> addressRepository;
+    IAppRepository<PersonType> personTypeRepository;
 
     /**
-     * Initializes managers and data for the test.
+     * Initializes repositorys and data for the test.
      */
     @BeforeEach
     void setUp() {
 
-        providerManager = ManagerFactory.getManager(Provider.class);
-        addressManager = ManagerFactory.getManager(Address.class);
-        personTypeManager = ManagerFactory.getManager(PersonType.class);
+        providerRepository = RepositoryFactory.getDBContext(Provider.class);
+        addressRepository = RepositoryFactory.getDBContext(Address.class);
+        personTypeRepository = RepositoryFactory.getDBContext(PersonType.class);
 
         DatabaseManager dbm = DatabaseManager.getInstance();
         dbm.runSQL("cleandb.sql");
@@ -41,7 +39,7 @@ public class ProviderManagerTest {
      */
     @Test
     void testGetProviderById() {
-        Provider provider = providerManager.get(3);
+        Provider provider = providerRepository.get(3);
         String firstName = provider.getFirstName();
         assertEquals("Yesid", firstName);
     }
@@ -51,7 +49,7 @@ public class ProviderManagerTest {
      */
     @Test
     void testGetAllProviders() {
-        List<Provider> providerList = providerManager.getList();
+        List<Provider> providerList = providerRepository.getList();
         assertEquals(2, providerList.size());
     }
 
@@ -66,11 +64,11 @@ public class ProviderManagerTest {
         String firstName = "John";
         String lastName = "Smith";
         String npi = "123465";
-        PersonType personType = personTypeManager.get(2);
+        PersonType personType = personTypeRepository.get(2);
 
 
         Provider provider = new Provider(personType, firstName, lastName, npi);
-        Provider insertedProvider = providerManager.create(provider);
+        Provider insertedProvider = providerRepository.create(provider);
 
         assertNotNull(insertedProvider);
         assertEquals("John", insertedProvider.getFirstName());
@@ -88,13 +86,13 @@ public class ProviderManagerTest {
     void testGetProviderProfile() {
 
         String userName = "yesper";
-        Profile profile = providerManager.getProviderProfile(userName);
+        Profile profile = providerRepository.getProviderProfile(userName);
 
 
 */
 /*
-        Person person = personManager.get(1);
-        Address address = addressManager.get(1);
+        Person person = personRepository.get(1);
+        Address address = addressRepository.get(1);
 
         Person personProfile = profile.getPerson();
         Address addressProfile = profile.getAddress();

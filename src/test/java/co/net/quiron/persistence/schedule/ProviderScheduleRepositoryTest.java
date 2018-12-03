@@ -1,40 +1,36 @@
-package co.net.quiron.application.schedule;
+package co.net.quiron.persistence.schedule;
 
-import co.net.quiron.application.factory.ManagerFactory;
-import co.net.quiron.application.shared.EntityManager;
+import co.net.quiron.application.factory.RepositoryFactory;
 import co.net.quiron.domain.institution.Organization;
 import co.net.quiron.domain.location.Address;
 import co.net.quiron.domain.person.Provider;
 import co.net.quiron.domain.schedule.*;
+import co.net.quiron.persistence.interfaces.IAppRepository;
 import co.net.quiron.test.util.DatabaseManager;
-import com.sun.org.apache.xpath.internal.operations.Or;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-public class ProviderScheduleManagerTest {
-    EntityManager<ProviderSchedule> providerScheduleManager;
-    EntityManager<ShiftSchedule> shiftScheduleManager;
-    EntityManager<Provider> providerManager;
-    EntityManager<Organization> organizationManager;
-    EntityManager<Address> locationManager;
+public class ProviderScheduleRepositoryTest {
+    IAppRepository<ProviderSchedule> providerScheduleRepository;
+    IAppRepository<ShiftSchedule> shiftScheduleRepository;
+    IAppRepository<Provider> providerRepository;
+    IAppRepository<Organization> organizationRepository;
+    IAppRepository<Address> locationRepository;
     /**
      * Sets up.
      */
     @BeforeEach
     void setUp() {
-        providerScheduleManager = ManagerFactory.getManager(ProviderSchedule.class);
-        shiftScheduleManager = ManagerFactory.getManager(ShiftSchedule.class);
-        providerManager = ManagerFactory.getManager(Provider.class);
-        organizationManager = ManagerFactory.getManager(Organization.class);
-        locationManager = ManagerFactory.getManager(Address.class);
+        providerScheduleRepository = RepositoryFactory.getDBContext(ProviderSchedule.class);
+        shiftScheduleRepository = RepositoryFactory.getDBContext(ShiftSchedule.class);
+        providerRepository = RepositoryFactory.getDBContext(Provider.class);
+        organizationRepository = RepositoryFactory.getDBContext(Organization.class);
+        locationRepository = RepositoryFactory.getDBContext(Address.class);
 
         DatabaseManager dbm = DatabaseManager.getInstance();
         dbm.runSQL("cleandb.sql");
@@ -51,10 +47,10 @@ public class ProviderScheduleManagerTest {
         shiftScheduleId.put("shift", 10);
         shiftScheduleId.put("weekDay", 5);
 
-        ShiftSchedule shiftSchedule = shiftScheduleManager.get(shiftScheduleId);
-        Provider provider = providerManager.get(3);
-        Organization organization = organizationManager.get(1);
-        Address location = locationManager.get(5);
+        ShiftSchedule shiftSchedule = shiftScheduleRepository.get(shiftScheduleId);
+        Provider provider = providerRepository.get(3);
+        Organization organization = organizationRepository.get(1);
+        Address location = locationRepository.get(5);
 
         Map<String, Object> params = new TreeMap<>();
         params.put("shiftSchedule", shiftSchedule);
@@ -62,9 +58,9 @@ public class ProviderScheduleManagerTest {
         params.put("organization", organization);
         params.put("address", location);
 
-        List<ProviderSchedule> providerSchedule = providerScheduleManager.getListEquals(params);
+        List<ProviderSchedule> providerSchedule = providerScheduleRepository.getListEquals(params);
 
-        assertEquals("Weekday Morning Spring 2018", providerSchedule);
+        assertEquals("Weekday Morning Winter 2018", providerSchedule.stream().findFirst().get().getShiftSchedule().getShift().getName());
         //assertEquals("???", shift.getShiftSchedules().stream().findFirst().get());
     }
 
@@ -73,7 +69,7 @@ public class ProviderScheduleManagerTest {
      */
     @Test
     void testGetAllProviderSchedules() {
-        List<ProviderSchedule> shiftList = providerScheduleManager.getList();
+        List<ProviderSchedule> shiftList = providerScheduleRepository.getList();
         assertEquals(44, shiftList.size());
     }
 
@@ -83,10 +79,10 @@ public class ProviderScheduleManagerTest {
     @Test
     void testCreateProviderSchedule() {
 
-        Provider provider = (Provider) ManagerFactory.getManager(Provider.class).get(4);
-        Shift shift = (Shift) ManagerFactory.getManager(Shift.class).get(11);
-        WeekDay weekDay = (WeekDay) ManagerFactory.getManager(WeekDay.class).get(3);
-        Organization organization = (Organization) ManagerFactory.getManager(Organization.class).get(2);
+        Provider provider = (Provider) RepositoryFactory.getDBContext(Provider.class).get(4);
+        Shift shift = (Shift) RepositoryFactory.getDBContext(Shift.class).get(11);
+        WeekDay weekDay = (WeekDay) RepositoryFactory.getDBContext(WeekDay.class).get(3);
+        Organization organization = (Organization) RepositoryFactory.getDBContext(Organization.class).get(2);
 
 
         String shiftName = "Weekday Morning Spring 2019";
@@ -96,7 +92,7 @@ public class ProviderScheduleManagerTest {
         String shiftStatus = "A";
 
         Shift newShift = new Shift(shiftName, shiftDescription, shiftStartDate, shiftEndDate, shiftStatus);
-        //Shift insertedShift = shiftManager.create(newShift);
+        //Shift insertedShift = shiftRepository.create(newShift);
 
 /*
         assertNotNull(insertedShift);

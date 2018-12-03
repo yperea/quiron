@@ -1,50 +1,63 @@
 package co.net.quiron.application.care;
 
 import co.net.quiron.application.account.AccountManager;
-import co.net.quiron.application.factory.ManagerFactory;
-import co.net.quiron.application.shared.EntityManager;
+import co.net.quiron.application.factory.RepositoryFactory;
 import co.net.quiron.domain.care.Visit;
 import co.net.quiron.domain.person.Patient;
 import co.net.quiron.domain.person.Provider;
+import co.net.quiron.persistence.interfaces.IAppRepository;
 import co.net.quiron.util.Message;
 import co.net.quiron.util.MessageType;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 import java.util.stream.Collectors;
 
+/**
+ * The type Visit manager.
+ */
 @Data
-//@NoArgsConstructor
 public class VisitManager {
 
     AccountManager accountManager;
     Message message;
-    EntityManager<Visit> visitAgent;
+    IAppRepository<Visit> visitRepository;
 
+    /**
+     * Instantiates a new Visit manager.
+     */
     public VisitManager() {
-        accountManager =  new AccountManager();
         message = new Message();
-        visitAgent = ManagerFactory.getManager(Visit.class);
+        visitRepository = RepositoryFactory.getDBContext(Visit.class);
     }
 
-    public VisitManager(String username, String personType) {
+    /**
+     * Instantiates a new Visit manager.
+     *
+     * @param accountManager the account manager
+     */
+    public VisitManager(AccountManager accountManager) {
         this();
-        accountManager.loadUserAccount(username, personType);
+        this.accountManager =  accountManager;
     }
 
-
+    /**
+     * Gets patient visits list.
+     *
+     * @param state the state
+     * @return the patient visits list
+     */
     public List<Visit> getPatientVisitsList(String state) {
 
-        EntityManager<Patient> patientAgent = ManagerFactory.getManager(Patient.class);
+        IAppRepository<Patient> patientRepository = RepositoryFactory.getDBContext(Patient.class);
         Map<String, Object> params = new TreeMap<>();
         int patientId = accountManager.getId();
-        Patient patient = patientAgent.get(patientId);
+        Patient patient = patientRepository.get(patientId);
         params.put("patient", patient);
 
-        List<Visit> visits = visitAgent.getListEquals(params)
+        List<Visit> visits = visitRepository.getListEquals(params)
                 .stream()
                 .filter(v -> state.equals(v.getStatus()))
                 .collect(Collectors.toList());
@@ -57,15 +70,21 @@ public class VisitManager {
         return visits;
     }
 
+    /**
+     * Gets provider visits list.
+     *
+     * @param state the state
+     * @return the provider visits list
+     */
     public List<Visit> getProviderVisitsList(String state) {
 
-        EntityManager<Provider> providerAgent = ManagerFactory.getManager(Provider.class);
+        IAppRepository<Provider> providerRepository = RepositoryFactory.getDBContext(Provider.class);
         Map<String, Object> params = new TreeMap<>();
         int providerId = accountManager.getId();
-        Provider provider = providerAgent.get(providerId);
+        Provider provider = providerRepository.get(providerId);
         params.put("provider", provider);
 
-        List<Visit> visits = visitAgent.getList()
+        List<Visit> visits = visitRepository.getList()
                 .stream()
                 .filter(v -> state.equals(v.getStatus()))
                 .filter(ps -> ps.getProviderSchedule()
@@ -81,15 +100,21 @@ public class VisitManager {
         return visits;
     }
 
+    /**
+     * Gets patient visit.
+     *
+     * @param visitId the visit id
+     * @return the patient visit
+     */
     public Visit getPatientVisit(int visitId) {
 
-        EntityManager<Patient> patientAgent = ManagerFactory.getManager(Patient.class);
+        IAppRepository<Patient> patientRepository = RepositoryFactory.getDBContext(Patient.class);
         Map<String, Object> params = new TreeMap<>();
         int patientId = accountManager.getId();
-        Patient patient = patientAgent.get(patientId);
+        Patient patient = patientRepository.get(patientId);
         params.put("patient", patient);
 
-        Visit visit = visitAgent.get(visitId);
+        Visit visit = visitRepository.get(visitId);
 
         if (visit == null) {
             message.setType(MessageType.WARNING);
@@ -99,13 +124,14 @@ public class VisitManager {
         return visit;
     }
 
-
+    /**
+     * Update visit visit.
+     *
+     * @param visitId the visit id
+     * @return the visit
+     */
     public Visit updateVisit(int visitId) {
-
-        Visit visit = visitAgent.get(visitId);
-
-
+        Visit visit = visitRepository.get(visitId);
         return visit;
     }
-
 }

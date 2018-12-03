@@ -1,23 +1,20 @@
-package co.net.quiron.application.schedule;
+package co.net.quiron.persistence.schedule;
 
-import co.net.quiron.application.factory.ManagerFactory;
-import co.net.quiron.application.shared.EntityManager;
-import co.net.quiron.domain.schedule.Shift;
+import co.net.quiron.application.factory.RepositoryFactory;
 import co.net.quiron.domain.schedule.ShiftSchedule;
+import co.net.quiron.persistence.interfaces.IAppRepository;
 import co.net.quiron.test.util.DatabaseManager;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Map;
 import java.util.TreeMap;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class ShiftScheduleManagerTest {
+public class ShiftScheduleRepositoryTest {
 
-    EntityManager<ShiftSchedule> shiftScheduleManager;
+    IAppRepository<ShiftSchedule> shiftScheduleRepository;
     DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("hh:mm a");
 
     /**
@@ -25,7 +22,7 @@ public class ShiftScheduleManagerTest {
      */
     @BeforeEach
     void setUp() {
-        shiftScheduleManager = ManagerFactory.getManager(ShiftSchedule.class);
+        shiftScheduleRepository = RepositoryFactory.getDBContext(ShiftSchedule.class);
         DatabaseManager dbm = DatabaseManager.getInstance();
         dbm.runSQL("cleandb.sql");
     }
@@ -40,9 +37,9 @@ public class ShiftScheduleManagerTest {
         shiftScheduleId.put("shift", 11);
         shiftScheduleId.put("weekDay", 5);
 
-        ShiftSchedule shiftSchedule = shiftScheduleManager.get(shiftScheduleId);
+        ShiftSchedule shiftSchedule = shiftScheduleRepository.get(shiftScheduleId);
         LocalDateTime shiftStartTime = shiftSchedule.getStartTime();
-        assertEquals("01:00 PM", shiftStartTime.format(timeFormatter));
+        assertEquals("07:00 AM", shiftStartTime.format(timeFormatter));
     }
 
 }
