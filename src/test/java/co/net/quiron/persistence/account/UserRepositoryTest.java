@@ -85,15 +85,15 @@ class UserRepositoryTest {
     @Test
     void testCreateUser() {
 
-        String newUserName = "jsmith";
-        String newEmail = "jsmith@aol.com";
+        String newUserName = "jasmith";
+        String newEmail = "jasmith@aol.com";
         String newPassword = "1234";
         User newUser = new User(newUserName, newEmail, newPassword);
         User insertedUser = userRepository.create(newUser);
 
         assertNotNull(insertedUser);
-        assertEquals("jsmith", insertedUser.getUsername());
-        assertEquals("jsmith@aol.com", insertedUser.getEmail());
+        assertEquals("jasmith", insertedUser.getUsername());
+        assertEquals("jasmith@aol.com", insertedUser.getEmail());
         assertEquals("1234", insertedUser.getPassword());
         assertNotNull(insertedUser.getCreatedDate());
     }
@@ -188,8 +188,8 @@ class UserRepositoryTest {
      */
     @Test
     void testCreateUserWithOneRole() {
-        String newUserName = "jsmith";
-        String newEmail = "jsmith@aol.com";
+        String newUserName = "jasmith";
+        String newEmail = "jasmith@aol.com";
         String newPassword = "1234";
 
         int userRoleId = 2; //User Role
@@ -206,8 +206,8 @@ class UserRepositoryTest {
         Role newRole = insertedUser.getRoles().stream().findFirst().get();
 
         assertNotNull(insertedUser);
-        assertEquals("jsmith", insertedUser.getUsername());
-        assertEquals("jsmith@aol.com", insertedUser.getEmail());
+        assertEquals("jasmith", insertedUser.getUsername());
+        assertEquals("jasmith@aol.com", insertedUser.getEmail());
         assertEquals("1234", insertedUser.getPassword());
         assertNotNull(insertedUser.getCreatedDate());
         assertEquals(1,rolesAssigned);

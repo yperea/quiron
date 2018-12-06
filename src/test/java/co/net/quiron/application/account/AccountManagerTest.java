@@ -76,10 +76,10 @@ class AccountManagerTest {
     @Test
     void testSignup() {
 
-        String firstName = "John";
+        String firstName = "Jane";
         String lastName = "Smith";
-        String userName = "jsmith";
-        String email = "jsmith@msn.com";
+        String userName = "jnsmith";
+        String email = "jnsmith@msn.com";
         String password = "1234";
         String confirmation = "1234";
         String birthDate = "06/15/1977";
@@ -98,7 +98,7 @@ class AccountManagerTest {
         assertTrue(isSignedUp);
         assertEquals(userName, user.getUsername());
         assertEquals(firstName, patient.getFirstName());
-        assertEquals(firstName, accountManager.getFirstName());
+        assertEquals(firstName, accountManager.getProfile().getFirstName());
         assertEquals(true, accountManager.isSigned());
         assertEquals(role, userRole);
     }
@@ -108,7 +108,7 @@ class AccountManagerTest {
      */
     @Test
     void loadUserAccount() {
-        String userName = "jconstantine";
+        String userName = "jsmith";
         String firstName = "John";
         String personType = "patient";
 
@@ -118,7 +118,7 @@ class AccountManagerTest {
         Person person = personRepository.get(1);
 
         assertEquals(userName, accountManager.getUsername());
-        assertEquals(firstName, accountManager.getFirstName());
+        assertEquals(firstName, accountManager.getProfile().getFirstName());
         assertEquals(true, accountManager.isSigned());
     }
 }
