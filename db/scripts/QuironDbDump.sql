@@ -978,7 +978,7 @@ INSERT INTO ENTITY_ADDRESSES(EntityID, AddressID) VALUE (4,11);
 INSERT INTO USERS(Username, Email, Password ) VALUES ('admin', 'admin@aol.com', '1234');
 INSERT INTO USERS(Username, Email, Password ) VALUES ('yesper', 'yesper@aol.com', '1234');
 INSERT INTO USERS(Username, Email, Password ) VALUES ('clacar', 'clacar@aol.com', '1234');
-INSERT INTO USERS(Username, Email, Password ) VALUES ('jconstantine', 'jconstantine@aol.com', '1234');
+INSERT INTO USERS(Username, Email, Password ) VALUES ('jsmith', 'jsmith@aol.com', '1234');
 INSERT INTO USERS_ROLES(UserID, RoleID) VALUES (1,1);
 INSERT INTO USERS_ROLES(UserID, RoleID) VALUES (2,2);
 INSERT INTO USERS_ROLES(UserID, RoleID) VALUES (3,2);

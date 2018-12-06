@@ -90,7 +90,7 @@ public class Profile extends HttpServlet {
             int stateId = Integer.parseInt(request.getParameter("state"));
             String postalCode = request.getParameter("zip");
 
-            if(personType == "patient"
+            if(personType.equals("patient")
                     && (request.getParameter("birthDate") != null || !request.getParameter("birthDate").isEmpty())
                     && (request.getParameter("gender") != null || !request.getParameter("gender").isEmpty())
 
@@ -105,7 +105,7 @@ public class Profile extends HttpServlet {
                 session.setAttribute("profile", profile);
 
 
-            } else if(personType == "provider"
+            } else if(personType.equals("provider")
                     && (request.getParameter("npi") != null || !request.getParameter("npi").isEmpty())
             ){
                 String npi = request.getParameter("npi");

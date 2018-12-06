@@ -199,6 +199,8 @@
 
     <%@include file="../shared/cdn-jss.jsp"%>
     <%@include file="../shared/footer.jsp"%>
+    <!-- Reference to local JS library -->
+    <script type="text/javascript" charset="utf-8" src="../style/js/signup.js" ></script>
 
 </body>
 </html>

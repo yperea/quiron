@@ -55,7 +55,7 @@
                 <yp:alert type="${message.type}" url="${message.redirect}">${message.description}</yp:alert>
                 <c:remove var="message" scope="session" />
                 <c:set var="now" value="<%= new java.util.Date()%>" />
-                <%--<c:set var="personType" value="provider" />--%>
+                <c:set var="personType" value="provider" />
 
                 <form class="needs-validation"
                       action="${root}/patient/visit"
@@ -72,10 +72,10 @@
                            value="${visit.diagnosticName}"/>
 
                     <input type="hidden" id="gender" name="gender"
-                           value="${account.gender}"/>
+                           value="${account.profile.gender}"/>
 
                     <input type="hidden" id="birthYear" name="birthYear"
-                           value="<tags:localDate date="${account.birthDate}" pattern="yyyy"/>" />
+                           value="<tags:localDate date="${account.profile.birthDate}" pattern="yyyy"/>" />
 
                     <div class="row">
                         <div class="col-md-6 mb-3">
@@ -206,8 +206,7 @@
                     </div>
 
                     <div class="row">
-
-                        <div class="col-md-6 mb-3">
+                        <div <c:if test="${visit.status == 'C'}">class="col-md-6 mb-3"</c:if><c:if test="${visit.status != 'C'}">class="col-md-12 mb-3"</c:if>>
                             <label for="symptom">Symptom</label>
                             <select class="custom-select d-block w-100"
                                     id="symptom"
@@ -228,6 +227,7 @@
                             </div>
                         </div>
 
+                        <c:if test="${visit.status == 'C'}">
                         <div class="col-md-6 mb-3">
                             <label for="diagnosis">Diagnosis</label>
 
@@ -251,6 +251,7 @@
                                 Please provide a valid diagnostic.
                             </div>
                         </div>
+                        </c:if>
                     </div>
 
                     <div class="row">
