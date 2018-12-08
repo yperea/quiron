@@ -77,11 +77,11 @@
         </label>
 --%>
         <div class="custom-control custom-radio custom-control-inline">
-            <input type="radio" id="login-type1" name="login-type" value="patient" class="custom-control-input" checked required />
+            <input type="radio" id="login-type1" name="login-type" value="${root}/account/router?tp=patient" class="custom-control-input" required />
             <label class="custom-control-label" for="login-type1">Patient</label>
         </div>
         <div class="custom-control custom-radio custom-control-inline">
-            <input type="radio" id="login-type2" name="login-type" value="provider" class="custom-control-input" required />
+            <input type="radio" id="login-type2" name="login-type" value="${root}/account/router?tp=provider" class="custom-control-input" required />
             <label class="custom-control-label" for="login-type2">Provider</label>
         </div>
 
@@ -121,7 +121,8 @@
         }, false);
     })();
 </script>
-
+<!-- Reference to local JS library -->
+<script type="text/javascript" charset="utf-8" src="../style/js/signin.js" ></script>
 </body>
 </html>
 

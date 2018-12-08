@@ -51,7 +51,12 @@ public class VisitList extends HttpServlet {
         }
 
         VisitManager visitManager = new VisitManager(accountManager);
-        List<Visit> visits = visitManager.getPatientVisitsList(state);
+        List<Visit> visits = null;
+        if (personType.equals("provider")) {
+            visits = visitManager.getProviderVisitsList(state);
+        } else {
+            visits = visitManager.getPatientVisitsList(state);
+        }
 
         request.setAttribute("title", title);
         request.setAttribute("visits", visits);

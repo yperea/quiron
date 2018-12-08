@@ -55,7 +55,7 @@
                 <yp:alert type="${message.type}" url="${message.redirect}">${message.description}</yp:alert>
                 <c:remove var="message" scope="session" />
                 <c:set var="now" value="<%= new java.util.Date()%>" />
-                <c:set var="personType" value="provider" />
+                <%--<c:set var="personType" value="provider" />--%>
 
                 <form class="needs-validation"
                       action="${root}/patient/visit"
