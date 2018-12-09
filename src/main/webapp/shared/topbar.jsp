@@ -57,6 +57,7 @@
                                          src="${root}/style/img/QuironIcon75x75.png" />
                                     <p>
                                         ${account.profile.firstName} ${account.profile.lastName}
+                                        <br/><small>${account.profile.personType}</small>
                                         <br/><small>(${account.username})</small>
                                     </p>
                                 </li>

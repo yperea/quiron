@@ -7,6 +7,7 @@ import co.net.quiron.domain.care.Visit;
 import co.net.quiron.vendor.com.apimedic.Issue;
 import co.net.quiron.vendor.com.apimedic.Symptom;
 
+import javax.ejb.Local;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -15,11 +16,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @WebServlet(
         name = "visit",
-        urlPatterns = {"/patient/visit", "/provider/visit"}
+        urlPatterns = {"/patient/visit", "/provider/visit", "/visit"}
 )
 public class VisitForm extends HttpServlet {
 
@@ -55,17 +59,29 @@ public class VisitForm extends HttpServlet {
         List<Symptom> symptoms = apiMedicManager.getSymptomsList();
         List<Issue> issues = null;
 
-        if(visit.getSymptomId() != 0 && accountManager.getGender() != null){
+        if(visit.getSymptomId() != 0
+                && visit.getPatient().getGender() != null
+                && visit.getPatient().getBirthDate() != null){
             issues = apiMedicManager.getIssuesListBySymptom(visit.getSymptomId(),
-                    accountManager.getGender(),
-                    accountManager.getBirthDate().getYear());
+                    visit.getPatient().getGender(),
+                    visit.getPatient().getBirthDate().getYear());
         }
 
+        //TODO: Fix timezone when returning visit actual datetime
+        DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm");
+        String actualStartTime = LocalDateTime.now().minusMinutes(30).format(timeFormatter);
+        String actualEndTime = LocalDateTime.now().plusMinutes(30).format(timeFormatter);
 
-        request.setAttribute("visit", visit);
+        if(visit.getActualStartDate() != null) {
+            actualStartTime = visit.getActualStartDate().format(timeFormatter);
+            actualEndTime = visit.getActualEndDate().format(timeFormatter);
+        }
+
+        session.setAttribute("visit", visit);
+        request.setAttribute("startTime", actualStartTime);
+        request.setAttribute("endTime", actualEndTime);
         request.setAttribute("symptoms", symptoms);
         request.setAttribute("issues", issues);
-        session.setAttribute("message", visitManager.getMessage());
 
         RequestDispatcher dispatcher = request.getRequestDispatcher(url);
         dispatcher.forward(request, response);
@@ -78,63 +94,76 @@ public class VisitForm extends HttpServlet {
 
         HttpSession session = request.getSession();
 
-        String url = "/quiron/patient/visit";
+        String url = "/quiron/visits";
         String title = "My Visit";
         String personType = (String) session.getAttribute("personType");
         String username = request.getUserPrincipal().getName();
 
+        Visit visit = (Visit) session.getAttribute("visit");
         AccountManager accountManager = (AccountManager) session.getAttribute("account");
         if (accountManager == null){
             accountManager = new AccountManager(username, personType);
             session.setAttribute("account", accountManager);
-            session.setAttribute("profile", accountManager.getProfile());
-            session.setAttribute("personType", accountManager.getProfile().getPersonType());
         }
 
         VisitManager visitManager = new VisitManager(accountManager);
 
-        String symptom = request.getParameter("symptom");
-        String diagnosis = request.getParameter("diagnosis");
-
-        if ((request.getParameter("visitId") != null || !request.getParameter("visitId").isEmpty() )
-                && (request.getParameter("startDate") != null || !request.getParameter("startDate").isEmpty())
-                && (request.getParameter("startTime") != null || !request.getParameter("startTime").isEmpty())
-                && (request.getParameter("endTime") != null || !request.getParameter("endTime").isEmpty())
-                && (request.getParameter("symptom") != null || !request.getParameter("symptom").isEmpty())
-                && (request.getParameter("diagnosis") != null || !request.getParameter("diagnosis").isEmpty())
-                && (request.getParameter("weight") != null || !request.getParameter("weight").isEmpty())
-                && (request.getParameter("height") != null || !request.getParameter("height").isEmpty())
-                && (request.getParameter("pulse") != null || !request.getParameter("pulse").isEmpty())
-                && (request.getParameter("respiration") != null || !request.getParameter("respiration").isEmpty())
-                && (request.getParameter("bmi") != null || !request.getParameter("bmi").isEmpty())
-                && (request.getParameter("temperature") != null || !request.getParameter("temperature").isEmpty())
-                && (request.getParameter("providerComment") != null || !request.getParameter("providerComment").isEmpty())
+        if ((request.getParameter("visitId") != null && !request.getParameter("visitId").isEmpty() )
+                &&
+                (personType.equals("provider")
+                && (request.getParameter("startDate") != null && !request.getParameter("startDate").isEmpty())
+                && (request.getParameter("startTime") != null && !request.getParameter("startTime").isEmpty())
+                && (request.getParameter("endTime") != null && !request.getParameter("endTime").isEmpty())
+                && (request.getParameter("symptom") != null && !request.getParameter("symptom").isEmpty())
+                && (request.getParameter("statusCode") != null && !request.getParameter("statusCode").isEmpty())
+                && (request.getParameter("weight") != null && !request.getParameter("weight").isEmpty())
+                && (request.getParameter("height") != null && !request.getParameter("height").isEmpty())
+                && (request.getParameter("pulse") != null && !request.getParameter("pulse").isEmpty())
+                && (request.getParameter("respiration") != null && !request.getParameter("respiration").isEmpty())
+                && (request.getParameter("bmi") != null && !request.getParameter("bmi").isEmpty())
+                && (request.getParameter("temperature") != null && !request.getParameter("temperature").isEmpty())
+                && (request.getParameter("providerComment") != null && !request.getParameter("providerComment").isEmpty())
+                    )
+                ||
+                (personType.equals("patient")
+                        && (request.getParameter("symptom") != null && !request.getParameter("symptom").isEmpty())
+                )
         ) {
-           // profileManager =  new ProfileManager();
 
-            int visitId = Integer.parseInt(request.getParameter("visitId"));;
-            String startDate = request.getParameter("startDate");
-            String startTime = request.getParameter("startTime");
-            String endTime = request.getParameter("endTime");
-/*
-            String symptom = request.getParameter("symptom");
-            String diagnosis = request.getParameter("diagnosis");
-*/
+            url = "/quiron/visit?id=" + request.getParameter("visitId");
 
-            String weight =  request.getParameter("weight");
-            String height =  request.getParameter("height");
-            String pulse =  request.getParameter("pulse");
-            String respiration =  request.getParameter("respiration");
-            String bmi =  request.getParameter("bmi");
-            String temperature =  request.getParameter("temperature");
-            String providerComment =  request.getParameter("providerComment");
+            String actualStartDate = request.getParameter("startDate") + " "
+                                   + request.getParameter("startTime");
+            String actualEndDate = request.getParameter("startDate") + " "
+                                 + request.getParameter("endTime");
 
-            session.setAttribute("visit", visitManager.updateVisit(visitId));
+            visit.setActualStartDate(LocalDateTime.parse(actualStartDate,
+                    DateTimeFormatter.ofPattern("MM/d/yyyy HH:mm")));
+
+            visit.setActualEndDate(LocalDateTime.parse(actualEndDate,
+                    DateTimeFormatter.ofPattern("MM/d/yyyy HH:mm")));
+
+            visit.setStatus(request.getParameter("statusCode"));
+            visit.setSymptomId(Integer.parseInt(request.getParameter("symptom")));
+            //visit.setSymptomName(request.getParameter("symptomName"));
+            visit.setDiagnosticId(Integer.parseInt(request.getParameter("diagnosis")));
+            //visit.setDiagnosticName(request.getParameter("diagnosisName"));
+
+            visit.setPatientWeight(Double.parseDouble(request.getParameter("weight")));
+            visit.setPatientHeight(Double.parseDouble(request.getParameter("height")));
+            visit.setPatientPulse(Double.parseDouble(request.getParameter("pulse")));
+            visit.setPatientRespiration(Double.parseDouble(request.getParameter("respiration")));
+            visit.setPatientBMI(Double.parseDouble(request.getParameter("bmi")));
+            visit.setPatientTemperature(Double.parseDouble(request.getParameter("temperature")));
+            visit.setProviderComments(request.getParameter("providerComment"));
+
+            if (visitManager.saveVisit(visit)) {
+                session.setAttribute("visit", visit);
+            }
+
             session.setAttribute("message", visitManager.getMessage());
+            request.setAttribute("title", title);
         }
-        request.setAttribute("title", title);
         response.sendRedirect(url);
-
     }
-
 }

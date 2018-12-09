@@ -9,6 +9,8 @@ import co.net.quiron.persistence.interfaces.IAppRepository;
 import co.net.quiron.util.Message;
 import co.net.quiron.util.MessageType;
 import lombok.Data;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.List;
 import java.util.Map;
@@ -21,8 +23,18 @@ import java.util.stream.Collectors;
 @Data
 public class VisitManager {
 
+    private final Logger logger = LogManager.getLogger(this.getClass());
+    /**
+     * The Account manager.
+     */
     AccountManager accountManager;
+    /**
+     * The Message.
+     */
     Message message;
+    /**
+     * The Visit repository.
+     */
     IAppRepository<Visit> visitRepository;
 
     /**
@@ -125,13 +137,22 @@ public class VisitManager {
     }
 
     /**
-     * Update visit visit.
+     * Save visit boolean.
      *
-     * @param visitId the visit id
-     * @return the visit
+     * @param visit the visit
+     * @return the boolean
      */
-    public Visit updateVisit(int visitId) {
-        Visit visit = visitRepository.get(visitId);
-        return visit;
+    public boolean saveVisit (Visit visit) {
+
+        logger.info("saveVisit(): Start.");
+        boolean success =  false;
+
+        visitRepository.update(visit);
+
+        logger.info("saveVisit(): End.");
+        message = new Message(MessageType.INFO, "Visit Information successfully updated.");
+
+        success = true;
+        return success;
     }
 }

@@ -48,7 +48,6 @@
 
         <div class="row justify-content-center">
 
-<!---------------------------------------------------------------------------->
             <div class="col-md-9">
                 <!--<h4 class="mb-3">Your person</h4>-->
 
@@ -166,7 +165,7 @@
                                    id="scheduledStartDate"
                                    name="scheduledStartDate"
                                    placeholder="mm/dd/yyyy"
-                                   value="<tags:localDate date="${visit.scheduledStartDate}" pattern="MM/d/yyyy"/>"
+                                   value="<tags:localDateTime date="${visit.scheduledStartDate}" pattern="MM/d/yyyy"/>"
                                    disabled
                                    required />
                             <div class="invalid-feedback">
@@ -175,23 +174,38 @@
                         </div>
                         <div class="col-md-6 mb-3">
                             <label for="status">Status</label>
+                            <c:if test="${account.profile.personType == 'patient'}">
+                                <input type="hidden" id="statusCode" name="statusCode"
+                                       value="${visit.status}"/>
+                            <input type="text"
+                                   class="form-control"
+                                   id="status"
+                                   name="status"
+                                   placeholder=""
+                                   <c:if test="${visit.status == 'A'}">value="Active"</c:if>
+                                   <c:if test="${visit.status == 'C'}">value="Completed"</c:if>
+                                   <c:if test="${visit.status == 'D'}">value="Canceled"</c:if>
+                                   readonly
+                                   required />
+                            </c:if>
+                            <c:if test="${account.profile.personType == 'provider'}">
                             <select class="custom-select d-block w-100"
-                                    id="status"
-                                    name="status"
-                                    disabled
+                                    id="statusCode"
+                                    name="statusCode"
                                     required />
                                 <option value="">Choose...</option>
                                 <option value="A" <c:if test="${visit.status == 'A'}">selected</c:if>>Active</option>
-                                <option value="C" <c:if test="${visit.status == 'C'}">selected</c:if> >Completed</option>
-                                <option value="D" <c:if test="${visit.status == 'D'}">selected</c:if> >Canceled</option>
+                                <option value="C" <c:if test="${visit.status == 'C'}">selected</c:if>>Completed</option>
+                                <option value="D" <c:if test="${visit.status == 'D'}">selected</c:if>>Canceled</option>
                             </select>
+                            </c:if>
                             <div class="invalid-feedback">
                                 Please provide a status.
                             </div>
                         </div>
                     </div>
 
-                    <c:if test="${visit.status == 'A' || account.profile.personType == 'provider'}">
+                    <c:if test="${(account.profile.personType == 'patient' && visit.status != 'A') || account.profile.personType == 'provider'}">
                     <div class="row">
                         <div class="col-md-6 mb-3">
                             <label for="startDate">Actual Date</label>
@@ -204,7 +218,7 @@
                                        value="<fmt:formatDate value="${now}" pattern="MM/d/yyyy" />"
                                    </c:if>
                                     <c:if test="${visit.actualStartDate != null}">
-                                        value="<tags:localDate date="${LocalDateTime.now}" pattern="MM/d/yyyy"/>"
+                                        value="<tags:localDateTime date="${visit.actualStartDate}" pattern="MM/d/yyyy"/>"
                                     </c:if>
 
                                     <c:if test="${personType == null || personType == 'patient' }">
@@ -224,7 +238,7 @@
                                    id="startTime"
                                    name="startTime"
                                    placeholder=""
-                                   value="13:30"
+                                   value="${startTime}"
                                    <c:if test="${personType == null || personType == 'patient' }">
                                    disabled
                                    </c:if>
@@ -242,8 +256,8 @@
                                    id="endTime"
                                    name="endTime"
                                    placeholder=""
-                                   value="13:30"
-                                   <c:if test="${personType == null || personType == 'patient' }">
+                                   value="${endTime}"
+                                    <c:if test="${personType == null || personType == 'patient' }">
                                    disabled
                                    </c:if>
 
@@ -254,6 +268,7 @@
                             </div>
                         </div>
                     </div>
+                    </c:if>
 
                     <div class="row">
                         <div <c:if test="${account.profile.personType == 'provider'}">class="col-md-6 mb-3"</c:if><c:if test="${account.profile.personType == 'patient'}">class="col-md-12 mb-3"</c:if>>
@@ -261,7 +276,7 @@
                             <select class="custom-select d-block w-100"
                                     id="symptom"
                                     name="symptom"
-                                    <c:if test="${personType == null || personType == 'patient' }">
+                                    <c:if test="${account.profile.personType == 'patient' && visit.status != 'A'}">
                                     disabled
                                     </c:if>
                                     required />
@@ -301,10 +316,12 @@
                         </c:if>
                     </div>
 
+                    <c:if test="${(account.profile.personType == 'patient' && visit.status != 'A') || account.profile.personType == 'provider'}">
                     <div class="row">
                         <div class="col-md-2 mb-3">
                             <label for="weight">Weight</label>
-                            <input type="text"
+                            <input type="number"
+                                   step="0.01"
                                    class="form-control"
                                    id="weight"
                                    name="weight"
@@ -320,7 +337,8 @@
                         </div>
                         <div class="col-md-2 mb-3">
                             <label for="height">Height</label>
-                            <input type="text"
+                            <input type="number"
+                                   step="0.01"
                                    class="form-control"
                                    id="height"
                                    name="height"
@@ -336,7 +354,8 @@
                         </div>
                         <div class="col-md-2 mb-3">
                             <label for="pulse">Pulse</label>
-                            <input type="text"
+                            <input type="number"
+                                   step="0.01"
                                    class="form-control"
                                    id="pulse"
                                    name="pulse"
@@ -353,7 +372,8 @@
 
                         <div class="col-md-2 mb-3">
                             <label for="respiration">Respiration</label>
-                            <input type="text"
+                            <input type="number"
+                                   step="0.01"
                                    class="form-control"
                                    id="respiration"
                                    name="respiration"
@@ -369,7 +389,8 @@
                         </div>
                         <div class="col-md-2 mb-3">
                             <label for="bmi">BMI</label>
-                            <input type="text"
+                            <input type="number"
+                                   step="0.01"
                                    class="form-control"
                                    id="bmi"
                                    name="bmi"
@@ -385,7 +406,8 @@
                         </div>
                         <div class="col-md-2 mb-3">
                             <label for="temperature">Temperature</label>
-                            <input type="text"
+                            <input type="number"
+                                   step="0.01"
                                    class="form-control"
                                    id="temperature"
                                    name="temperature"
@@ -400,13 +422,13 @@
                             </div>
                         </div>
                     </div>
-                    </c:if>
 
                     <div class="mb-3">
                         <label for="providerComment">Provider Comments</label>
                         <textarea class="form-control"
                                   id="providerComment"
                                   name="providerComment"
+                                  size="512"
                                 <c:if test="${personType == null || personType == 'patient' }">
                                     disabled
                                 </c:if>
@@ -415,10 +437,9 @@
                             Please enter your comments.
                         </div>
                     </div>
-                    <hr class="mb-4">
-                    <c:if test="${personType == 'provider' }">
-                        <button class="btn btn-success btn-lg btn-block" type="submit">Save</button>
                     </c:if>
+                    <hr class="mb-4">
+                    <button class="btn btn-success btn-lg btn-block" type="submit">Save</button>
                 </form>
             </div>
         </div>

@@ -12,6 +12,10 @@ import co.net.quiron.persistence.interfaces.IAppRepository;
 import co.net.quiron.test.util.DatabaseManager;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
@@ -90,4 +94,26 @@ public class VisitRepositoryTest {
                                 .size());
 
     }
+
+    /**
+     * Test the Medication update.
+     */
+    @Test
+    void testUpdateVisit() {
+
+        String startDate = "12/9/2018 13:30";
+        int visitId = 7;
+
+        LocalDateTime actualStartDate = LocalDateTime.parse(startDate,
+                DateTimeFormatter.ofPattern("MM/d/yyyy HH:mm"));
+
+        Visit visitToUpdate = visitRepository.get(visitId);
+        visitToUpdate.setActualStartDate(actualStartDate);
+
+        visitRepository.update(visitToUpdate);
+        Visit visitUpdated = visitRepository.get(visitId);
+
+        assertEquals(actualStartDate, visitUpdated.getActualStartDate().plusHours(6));
+    }
+
 }

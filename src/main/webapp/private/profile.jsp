@@ -159,7 +159,7 @@
                             </div>
                         </div>
                         <div class="col-md-4 mb-3">
-                            <label for="state">State ${account.profile.address.state.id}</label>
+                            <label for="state">State</label>
                             <select class="custom-select d-block w-100"
                                     id="state"
                                     name="state"

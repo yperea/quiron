@@ -5,8 +5,15 @@
 
         $('#symptom').change(function() {
            console.log('Symptom Id: ' + $(this).val());
+           console.log('Symptom : ' + $("#symptom option:selected").text);
            loadDiagnosisList($(this).val());
         });
+
+        $('#diagnosis').change(function() {
+            console.log('Diagnosis Id: ' + $(this).val());
+            console.log('Diagnosis : ' + $(this).text);
+        });
+
 
         $("#btnSave").click(function(){
             console.log("Save");

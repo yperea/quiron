@@ -10,6 +10,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -64,10 +65,10 @@ public class Visit {
     private String status;
 
     @Column(name = "ScheduledStartDate")
-    private LocalDate scheduledStartDate;
+    private LocalDateTime scheduledStartDate;
 
     @Column(name = "ScheduledEndDate")
-    private LocalDate scheduledEndDate;
+    private LocalDateTime scheduledEndDate;
 
     @NonNull
     @Column(name = "SymptomID")
@@ -86,10 +87,10 @@ public class Visit {
     private String diagnosticName;
 
     @Column(name = "ActualStartDate")
-    private LocalDate actualStartDate;
+    private LocalDateTime actualStartDate;
 
     @Column(name = "ActualEndDate")
-    private LocalDate actualEndDate;
+    private LocalDateTime actualEndDate;
 
     @Column(name = "PatientBloodPressure")
     private double patientBloodPressure;

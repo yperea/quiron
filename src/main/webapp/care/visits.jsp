@@ -69,10 +69,12 @@
                         <tr>
                             <td><a class="" href="${root}/patient/visit?id=${visit.id}" role="button">${visit.id}</a></td>
                             <c:if test="${visit.actualStartDate == null}">
-                                <td>${visit.scheduledStartDate}</td>
+                                <%--<td>${visit.scheduledStartDate}</td>--%>
+                                <td><tags:localDateTime date="${visit.scheduledStartDate}" pattern="MM/d/yyyy"/></td>
                             </c:if>
                             <c:if test="${visit.actualStartDate != null}">
-                                <td>${visit.actualStartDate}</td>
+                                <%--<td>${visit.actualStartDate}</td>--%>
+                                <td><tags:localDateTime date="${visit.actualStartDate}" pattern="MM/d/yyyy HH:mm"/></td>
                             </c:if>
                             <td>
                                 <c:if test="${account.profile.personType == 'patient'}">
