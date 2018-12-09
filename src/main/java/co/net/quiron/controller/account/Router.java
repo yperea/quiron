@@ -9,7 +9,7 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 @WebServlet(
-        name="account-router",
+        name="router",
         urlPatterns = {"/account/router"}
 )
 public class Router extends HttpServlet {
@@ -19,14 +19,14 @@ public class Router extends HttpServlet {
                          HttpServletResponse response) throws ServletException, IOException {
 
         HttpSession session = request.getSession();
-        String url = "/quiron/patient/profile";
+        String url = "/quiron/account";
         String personType = "patient";
 
         if ((request.getParameter("tp") != null && !request.getParameter("tp").isEmpty())){
             switch (request.getParameter("tp")) {
                 case "provider":
                     personType = "provider";
-                    url = "/quiron/provider/profile";
+                    //url = "/quiron/provider/account";
                     break;
             }
         }

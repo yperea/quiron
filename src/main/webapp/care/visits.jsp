@@ -52,7 +52,14 @@
                         <tr>
                             <th>#</th>
                             <th>Date</th>
-                            <th>Provider</th>
+                            <th>
+                            <c:if test="${account.profile.personType == 'patient'}">
+                                Provider
+                            </c:if>
+                            <c:if test="${account.profile.personType == 'provider'}">
+                                Patient
+                            </c:if>
+                            </th>
                             <th>Service</th>
                             <th>Location</th>
                         </tr>
@@ -67,7 +74,14 @@
                             <c:if test="${visit.actualStartDate != null}">
                                 <td>${visit.actualStartDate}</td>
                             </c:if>
-                            <td>${visit.providerSchedule.provider.firstName} ${visit.providerSchedule.provider.lastName}</td>
+                            <td>
+                                <c:if test="${account.profile.personType == 'patient'}">
+                                    ${visit.providerSchedule.provider.firstName} ${visit.providerSchedule.provider.lastName}
+                                </c:if>
+                                <c:if test="${account.profile.personType == 'provider'}">
+                                    ${visit.patient.firstName} ${visit.patient.lastName}
+                                </c:if>
+                            </td>
                             <td>${visit.service.name}</td>
                             <td>${visit.providerSchedule.organization.name} ${visit.providerSchedule.address.name}</td>
                         </tr>

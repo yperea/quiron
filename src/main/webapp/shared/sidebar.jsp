@@ -12,9 +12,9 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link <c:if test="${title == 'My Profile'}">active</c:if>" href="${root}/patient/profile">
+                        <a class="nav-link <c:if test="${title == 'My Account'}">active</c:if>" href="${root}/account">
                             <span data-feather="user"></span>
-                            My Profile
+                            My Account
                         </a>
                     </li>
                     <li class="nav-item">

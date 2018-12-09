@@ -32,20 +32,12 @@ public class Credential extends HttpServlet {
         AccountManager accountManager = (AccountManager) session.getAttribute("account");
         if (accountManager == null){
             accountManager = new AccountManager(username, personType);
+            session.setAttribute("account",accountManager);
         }
 
         request.setAttribute("title", title);
-
-/*
-        AccountManager accountManager = new AccountManager();
-        ProfileManager profileManager = new ProfileManager();
-        profileManager.loadUserAccount(username, personType);
-*/
-        //accountManager.setSigned(true);
-        session.setAttribute("account",accountManager);
         RequestDispatcher dispatcher = request.getRequestDispatcher(url);
         dispatcher.forward(request, response);
-
     }
 
     @Override
@@ -57,11 +49,12 @@ public class Credential extends HttpServlet {
         String title = "Account Credentials";
         String username = request.getUserPrincipal().getName();
         String personType = (String) session.getAttribute("personType");
+
         AccountManager accountManager = (AccountManager) session.getAttribute("account");
         if (accountManager == null){
             accountManager = new AccountManager(username, personType);
+            session.setAttribute("account", accountManager);
         }
-
 
         if ((request.getParameter("password") != null || !request.getParameter("password").isEmpty())
                 && (request.getParameter("confirmation") != null || !request.getParameter("confirmation").isEmpty())) {
@@ -69,16 +62,12 @@ public class Credential extends HttpServlet {
             String password = request.getParameter("password");
             String confirmation = request.getParameter("confirmation");
 
-/*
-            accountManager =  (AccountManager) session.getAttribute("account");
-            ProfileManager profileManager = new ProfileManager();
-*/
-
-            accountManager.saveCredentials(password, confirmation);
-            session.setAttribute("account", accountManager);
-
+            if (accountManager.saveCredentials(password, confirmation)) {
+                session.setAttribute("account", accountManager);
+            }
         }
 
+        session.setAttribute("message", accountManager.getMessage());
         request.setAttribute("title", title);
         response.sendRedirect(url);
     }

@@ -72,41 +72,91 @@
                            value="${visit.diagnosticName}"/>
 
                     <input type="hidden" id="gender" name="gender"
-                           value="${account.profile.gender}"/>
+                           value="${visit.patient.gender}"/>
 
                     <input type="hidden" id="birthYear" name="birthYear"
-                           value="<tags:localDate date="${account.profile.birthDate}" pattern="yyyy"/>" />
+                           value="<tags:localDate date="${visit.patient.birthDate}" pattern="yyyy"/>" />
 
-                    <div class="row">
-                        <div class="col-md-6 mb-3">
-                            <label for="organization">Organization</label>
-                            <input type="text"
-                                   class="form-control"
-                                   id="organization"
-                                   name="organization"
-                                   placeholder=""
-                                   value="${visit.providerSchedule.organization.name}"
-                                   disabled
-                                   required />
-                            <div class="invalid-feedback">
-                                Organization required.
+                    <c:if test="${account.profile.personType == 'patient'}">
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="organization">Organization</label>
+                                <input type="text"
+                                       class="form-control"
+                                       id="organization"
+                                       name="organization"
+                                       placeholder=""
+                                       value="${visit.providerSchedule.organization.name}"
+                                       disabled
+                                       required />
+                                <div class="invalid-feedback">
+                                    Organization required.
+                                </div>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="provider">Provider</label>
+                                <input type="text"
+                                       class="form-control"
+                                       id="provider"
+                                       name="provider"
+                                       placeholder=""
+                                       value="${visit.providerSchedule.provider.lastName} , ${visit.providerSchedule.provider.firstName}"
+                                       disabled
+                                       required />
+                                <div class="invalid-feedback">
+                                    Provider required.
+                                </div>
                             </div>
                         </div>
-                        <div class="col-md-6 mb-3">
-                            <label for="provider">Provider</label>
-                            <input type="text"
-                                   class="form-control"
-                                   id="provider"
-                                   name="provider"
-                                   placeholder=""
-                                   value="${visit.providerSchedule.provider.lastName} , ${visit.providerSchedule.provider.firstName}"
-                                   disabled
-                                   required />
-                            <div class="invalid-feedback">
-                                Provider required.
+                    </c:if>
+                    <c:if test="${account.profile.personType == 'provider'}">
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="insuranceCompany">Insurance Company</label>
+                                <input type="text"
+                                       class="form-control"
+                                       id="insuranceCompany"
+                                       name="insuranceCompany"
+                                       placeholder=""
+                                       value="${visit.patient.organization.name}"
+                                       disabled
+                                       required />
+                                <div class="invalid-feedback">
+                                    Insurance Company required.
+                                </div>
+                            </div>
+                            <div class="col-md-3 mb-3">
+                                <label for="subscriber">Subscriber Id</label>
+                                <input type="text"
+                                       class="form-control"
+                                       id="subscriber"
+                                       name="subscriber"
+                                       placeholder=""
+                                       value="${visit.patient.subscriberCode}"
+                                       disabled
+                                       required />
+                                <div class="invalid-feedback">
+                                    Subscriber Id required.
+                                </div>
+                            </div>
+                            <div class="col-md-3 mb-3">
+                                <label for="patient">Patient</label>
+                                <input type="text"
+                                       class="form-control"
+                                       id="patient"
+                                       name="patient"
+                                       placeholder=""
+                                       value="${visit.patient.lastName} , ${visit.patient.firstName}"
+                                       disabled
+                                       required />
+                                <div class="invalid-feedback">
+                                    Patient required.
+                                </div>
                             </div>
                         </div>
-                    </div>
+                    </c:if>
+
+
 
                     <div class="row">
                         <div class="col-md-6 mb-3">
@@ -141,7 +191,7 @@
                         </div>
                     </div>
 
-                    <c:if test="${visit.status == 'C'}">
+                    <c:if test="${visit.status == 'A' || account.profile.personType == 'provider'}">
                     <div class="row">
                         <div class="col-md-6 mb-3">
                             <label for="startDate">Actual Date</label>
@@ -206,7 +256,7 @@
                     </div>
 
                     <div class="row">
-                        <div <c:if test="${visit.status == 'C'}">class="col-md-6 mb-3"</c:if><c:if test="${visit.status != 'C'}">class="col-md-12 mb-3"</c:if>>
+                        <div <c:if test="${account.profile.personType == 'provider'}">class="col-md-6 mb-3"</c:if><c:if test="${account.profile.personType == 'patient'}">class="col-md-12 mb-3"</c:if>>
                             <label for="symptom">Symptom</label>
                             <select class="custom-select d-block w-100"
                                     id="symptom"
@@ -227,25 +277,22 @@
                             </div>
                         </div>
 
-                        <c:if test="${visit.status == 'C'}">
+                        <c:if test="${(visit.status == 'A' && personType == 'provider') || (visit.status == 'C')}">
                         <div class="col-md-6 mb-3">
                             <label for="diagnosis">Diagnosis</label>
 
                             <select class="custom-select d-block w-100"
                                     id="diagnosis"
                                     name="diagnosis"
-                                    <c:if test="${personType == null || personType == 'patient' }">
+                                    <c:if test="${personType == 'patient' }">
                                     disabled
-                                    </c:if>
-                                    required />
+                                    </c:if> />
                                 <option value="">Choose...</option>
-
-                            <c:forEach var="issue" items="${issues}">
-                                <option value="${issue.ID}"
-                                        <c:if test="${visit.diagnosticId == issue.ID}">selected</c:if> >
-                                        ${issue.name}</option>
-                            </c:forEach>
-
+                                <c:forEach var="issue" items="${issues}">
+                                    <option value="${issue.ID}"
+                                            <c:if test="${visit.diagnosticId == issue.ID}">selected</c:if> >
+                                            ${issue.name}</option>
+                                </c:forEach>
                             </select>
                             <div class="invalid-feedback">
                                 Please provide a valid diagnostic.

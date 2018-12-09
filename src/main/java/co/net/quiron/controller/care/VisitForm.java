@@ -30,7 +30,7 @@ public class VisitForm extends HttpServlet {
         HttpSession session = request.getSession();
 
         String url = "/care/visit.jsp";
-        String title = "My Visit";
+        String title = "My Visits";
         String personType = (String) session.getAttribute("personType");
         String username = request.getUserPrincipal().getName();
 
@@ -40,6 +40,7 @@ public class VisitForm extends HttpServlet {
         AccountManager accountManager = (AccountManager) session.getAttribute("account");
         if (accountManager == null){
             accountManager = new AccountManager(username, personType);
+            session.setAttribute("account", accountManager);
         }
 
         Visit visit = null;
@@ -64,7 +65,6 @@ public class VisitForm extends HttpServlet {
         request.setAttribute("visit", visit);
         request.setAttribute("symptoms", symptoms);
         request.setAttribute("issues", issues);
-        session.setAttribute("account", accountManager);
         session.setAttribute("message", visitManager.getMessage());
 
         RequestDispatcher dispatcher = request.getRequestDispatcher(url);

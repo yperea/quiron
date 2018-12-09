@@ -27,7 +27,7 @@ public class Insurance extends HttpServlet {
         HttpSession session = request.getSession();
 
         String url = "/patient/insurance.jsp";
-        String title = "My Profile";
+        String title = "My Account";
         String username = request.getUserPrincipal().getName();
         String personType = (String) session.getAttribute("personType");
 
@@ -53,7 +53,7 @@ public class Insurance extends HttpServlet {
         HttpSession session = request.getSession();
 
         String url = "/quiron/patient/insurance";
-        String title = "My Profile";
+        String title = "My Account";
         request.setAttribute("title", title);
         String username = request.getUserPrincipal().getName();
         String personType = (String) session.getAttribute("personType");
@@ -69,8 +69,9 @@ public class Insurance extends HttpServlet {
             int companyId = Integer.parseInt(request.getParameter("company"));
             String subscriberCode = request.getParameter("subscriber");
 
-            session.setAttribute("profile", accountManager
-                    .savePatientInsurance(accountManager, companyId, subscriberCode));
+            if(accountManager.savePatientInsurance(companyId, subscriberCode)) {
+                session.setAttribute("profile", accountManager.getProfile());
+            }
             session.setAttribute("message", accountManager.getMessage());
         }
         response.sendRedirect(url);

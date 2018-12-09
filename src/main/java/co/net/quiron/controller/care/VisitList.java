@@ -15,7 +15,7 @@ import java.util.List;
 
 @WebServlet(
         name = "visits",
-        urlPatterns = {"/patient/visits", "/provider/visits"}
+        urlPatterns = {"/patient/visits", "/provider/visits", "/visits"}
 )
 public class VisitList extends HttpServlet {
 
@@ -34,8 +34,6 @@ public class VisitList extends HttpServlet {
         if (accountManager == null){
             accountManager = new AccountManager(username, personType);
             session.setAttribute("account", accountManager);
-            session.setAttribute("profile", accountManager.getProfile());
-            session.setAttribute("personType", accountManager.getProfile().getPersonType());
         }
 
         String state = "A";
@@ -66,15 +64,4 @@ public class VisitList extends HttpServlet {
         RequestDispatcher dispatcher = request.getRequestDispatcher(url);
         dispatcher.forward(request, response);
     }
-
-/*    static AccountManager getAccountManager(HttpSession session, String personType, String username, AccountManager accountManager) {
-        if (accountManager == null){
-            accountManager = new AccountManager(username, personType);
-            session.setAttribute("account", accountManager);
-            session.setAttribute("profile", accountManager.getProfile());
-            session.setAttribute("personType", accountManager.getProfile().getPersonType());
-        }
-        return accountManager;
-    }*/
-
 }

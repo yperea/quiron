@@ -1,6 +1,7 @@
 package co.net.quiron.application.location;
 
 import co.net.quiron.application.factory.RepositoryFactory;
+import co.net.quiron.domain.location.AddressType;
 import co.net.quiron.domain.location.Country;
 import co.net.quiron.domain.location.State;
 import co.net.quiron.persistence.interfaces.IAppRepository;
@@ -28,5 +29,25 @@ public class LocationManager {
                             .get(0)
                             .getStates();
         return states;
+    }
+
+    /**
+     * Gets state.
+     *
+     * @param stateId the state id
+     * @return the state
+     */
+    public State getState(int stateId) {
+
+        IAppRepository<State> stateRepository = RepositoryFactory.getDBContext(State.class);
+        State state = stateRepository.get(stateId);
+        return state;
+    }
+
+
+    public AddressType getAddressType(int addressTypeId) {
+        IAppRepository<AddressType> addressTypeRepository = RepositoryFactory.getDBContext(AddressType.class);
+        AddressType addressType = addressTypeRepository.get(addressTypeId);
+        return addressType;
     }
 }

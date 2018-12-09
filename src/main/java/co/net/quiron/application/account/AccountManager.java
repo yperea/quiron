@@ -22,7 +22,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 /**
- * This class represents the manager for the operations related to the Account and user Profile.
+ * This class represents the manager for the operations related to the Account and user Account.
  *
  * @Author Yesid Perea
  */
@@ -33,12 +33,13 @@ public class AccountManager {
     private Profile profile;
     private Message message;
 
+    private String personType;
+    private String username;
+
     private boolean isSigned;
     private int userId;
     private int patientId;
     private int id;
-    private String type;
-    private String username;
     private String firstName;
     private String lastName;
     private String email;
@@ -46,24 +47,28 @@ public class AccountManager {
     private String gender;
 
     private IAppRepository<User> userRepository;
-    private IAppRepository<Role> roleRepository;
-    private IAppRepository<Patient> patientRepository;
+
+/*    private IAppRepository<Patient> patientRepository;
     private IAppRepository<Provider> providerRepository;
+    private IAppRepository<Person> personRepository;
     private IAppRepository<PersonType> personTypeRepository;
     private IAppRepository<Address> addressRepository;
+*/
 
     /**
      * Instantiates a new Account manager.
      */
     public AccountManager(){
         profile = new Profile();
+        userRepository = RepositoryFactory.getDBContext(User.class);
 
+/*
+        personRepository = RepositoryFactory.getDBContext(Person.class);
         patientRepository = RepositoryFactory.getDBContext(Patient.class);
         providerRepository = RepositoryFactory.getDBContext(Provider.class);
         personTypeRepository = RepositoryFactory.getDBContext(PersonType.class);
-        userRepository = RepositoryFactory.getDBContext(User.class);
-        roleRepository = RepositoryFactory.getDBContext(Role.class);
         addressRepository = RepositoryFactory.getDBContext(Address.class);
+*/
     }
 
     /**
@@ -71,7 +76,9 @@ public class AccountManager {
      */
     public AccountManager(String username, String personType) {
         this();
-        load(username, personType);
+        this.username = username;
+        this.personType = personType;
+        loadProfile();
     }
 
     /**
@@ -96,17 +103,21 @@ public class AccountManager {
 
         logger.info("signup(): Start signup.");
 
-        boolean isSignedUp = false;
+        boolean success = false;
+        IAppRepository<Role> roleRepository = RepositoryFactory.getDBContext(Role.class);
 
         if (type == null) {
             type = "patient";
         }
 
-        PersonType personType = personTypeRepository.getListEquals("name", type).get(0);
+        PersonType personType = (PersonType)RepositoryFactory.getDBContext(PersonType.class)
+                                .getListEquals("name", type).get(0);
 
         logger.trace("signup(): Create Patient.");
-        Patient patient = patientRepository.create(new Patient(personType, firstName, lastName,
-                LocalDate.parse(birthDate, DateTimeFormatter.ofPattern("MM/d/yyyy")), gender));
+        Patient patient = (Patient)RepositoryFactory.getDBContext(Patient.class)
+                          .create(new Patient(personType, firstName, lastName,
+                                  LocalDate.parse(birthDate, DateTimeFormatter.ofPattern("MM/d/yyyy")),
+                                  gender));
 
         logger.trace("signup(): Create User.");
         User user = userRepository.create(new User(username, email, password));
@@ -115,11 +126,11 @@ public class AccountManager {
         user.addPerson(patient);
 
         logger.trace("signup(): Associating Role to User.");
-        user.addRole(roleRepository.get(roleId));
+        user.addRole((Role)RepositoryFactory.getDBContext(Role.class).get(roleId));
         userRepository.update(user);
 
         if(user != null){
-            isSignedUp = true;
+            success = true;
             this.id = patient.getId();
             this.isSigned = true;
             this.userId = user.getId();
@@ -134,17 +145,14 @@ public class AccountManager {
         }
 
         logger.info("signup(): End Signup.");
-        return isSignedUp;
+        return success;
     }
 
 
     /**
-     * Load the Profile.
-     *
-     * @param username the username
-     * @param personType the type of person
+     * Load the Account.
      */
-    public void load(String username, String personType) {
+    public void loadProfile() {
 
         logger.info("loadUserAccount(String): Start loading account.");
 
@@ -195,9 +203,11 @@ public class AccountManager {
      * @param password     the password
      * @param confirmation the confirmation
      */
-    public void saveCredentials (String password, String confirmation) {
+    public boolean saveCredentials (String password, String confirmation) {
 
-        logger.info("saveCredentials(): User.");
+        logger.info("saveCredentials(): Start.");
+        boolean success = false;
+
         User user = userRepository.get(userId);
 
         logger.trace("saveCredentials(): User. " + user);
@@ -205,209 +215,106 @@ public class AccountManager {
         user.setPassword(password);
         userRepository.update(user);
 
+        logger.info("saveCredentials(): Loading Account Information.");
+        loadProfile();
+
         logger.info("saveCredentials(): End.");
-    }
-
-    /*TODO: Implement support to others roles: Now this class only supports operations with Patients objects */
-
-    /**
-     * Gets patient Profile.
-     *
-     * @param account the username
-     * @return the patient Profile
-     */
-    public Profile getPatientProfile(AccountManager account) {
-
-        logger.info("getPatientProfile(String): Getting the Patient .");
-        Patient patient = patientRepository.get(account.getPatientId());
-
-        if (patient != null) {
-            logger.info("getPatientProfile(String): Calling Profile.setPatient().");
-            profile.setPatient(patient);
-
-            logger.info("getPatientProfile(String): Calling Profile.setAddress().");
-            if (patient.getAddresses() != null && !patient.getAddresses().isEmpty()) {
-                profile.setAddress(patient.getAddresses().stream().findFirst().get());
-            }
-        }
-        logger.info("getPatientProfile(Person): Returning the Profile.");
-        return profile;
+        message = new Message(MessageType.INFO, "Account credentials successfully updated.");
+        success = true;
+        return success;
     }
 
     /**
-     * Gets patient Profile.
+     * Saves User's profile.
      *
-     * @param account the username
-     * @return the patient Profile
+     * @param profile    the user profile
+     * @return the operation result
      */
-    public Profile getProfile(AccountManager account, String profileType) {
+    public boolean saveProfile(Profile profile) {
 
-        logger.info("getProfile(String): Getting the Profile.");
+        logger.info("saveProfile(): Start.");
+        boolean success = false;
+        Person person = null;
 
-        Person person = new Person();
-
-        if (profileType == "provider") {
-            Provider provider = providerRepository.get(account.getPatientId());
-            person = providerRepository.get(account.getId());
+        if(personType.equals("patient")) {
+             person = (Person) RepositoryFactory.getDBContext(Patient.class).get(id);
         } else {
-            Patient patient = patientRepository.get(account.getPatientId());
-            person = patientRepository.get(account.getId());
+             person = (Person) RepositoryFactory.getDBContext(Provider.class).get(id);
         }
 
-        if (person  != null) {
-            logger.info("getProfile(String): Calling Profile.setPatient().");
-            //profile.setPatient(patient);
-            profile.setPerson(person);
-
-            logger.info("getPatientProfile(String): Calling Profile.setAddress().");
-            if (person.getAddresses() != null && !person.getAddresses().isEmpty()) {
-                profile.setAddress(person.getAddresses().stream().findFirst().get());
-            }
-        }
-        logger.info("getPatientProfile(Person): Returning the Profile.");
-        return profile;
-    }
-
-    /**
-     * Saves Patient's profile.
-     *
-     * @param account    the account
-     * @param firstName  the first name
-     * @param lastName   the last name
-     * @param address1   the address 1
-     * @param address2   the address 2
-     * @param city       the city
-     * @param stateId    the state id
-     * @param postalCode the postal code
-     * @param birthDate  the birth date
-     * @param gender     the gender
-     * @return the profile
-     */
-    public Profile saveProfile(AccountManager account, String firstName, String lastName,
-                               String address1, String address2, String city, int stateId, String postalCode,
-                               String birthDate, String gender) {
-
-
-        logger.info("saveProfile(): Instantiating Managers.");
-
-        AddressType addressType = (AddressType) RepositoryFactory.getDBContext(AddressType.class).get(3);
-        State state = (State) RepositoryFactory.getDBContext(State.class).get(stateId);
-
-        Patient patient = patientRepository.get(account.getId());
-        Address address = patient.getAddresses().stream().findFirst().orElse(null);
-
+        Address address = person.getAddresses().stream().findFirst().orElse(null);
         if(address == null) {
             address =  new Address();
-            address.setAddressType(addressType);
-            patient.addAddress(address);
+            address.setAddressType(profile.getAddress().getAddressType());
+            //provider.addAddress(address);
+            person.addAddress(address);
+
         }
 
-        address.setAddressLine1(address1);
-        address.setAddressLine2(address2);
-        address.setCity(city);
-        address.setState(state);
-        address.setPostalCode(postalCode);
-        addressRepository.update(address);
+        person.setFirstName(profile.getFirstName());
+        person.setLastName(profile.getLastName());
 
-        patient.setFirstName(firstName);
-        patient.setLastName(lastName);
-        patient.setBirthDate(LocalDate.parse(birthDate, DateTimeFormatter.ofPattern("MM/d/yyyy")));
-        patient.setGender(gender);
-        patientRepository.update(patient);
-
-        logger.info("saveProfile(): Calling Profile.setPerson().");
-        profile.setPerson(patient);
-        logger.info("saveProfile(): Calling Profile.setAddress().");
-        profile.setAddress(address);
-
-        message = new Message(MessageType.INFO, "Profile successfully updated.");
-
-        return profile;
-    }
-
-    /**
-     * Saves Patient's profile.
-     *
-     * @param account    the account
-     * @param firstName  the first name
-     * @param lastName   the last name
-     * @param address1   the address 1
-     * @param address2   the address 2
-     * @param city       the city
-     * @param stateId    the state id
-     * @param postalCode the postal code
-     * @param npi        the provider NPI
-     * @return the profile
-     */
-    public Profile saveProfile(AccountManager account, String firstName, String lastName,
-                               String address1, String address2, String city, int stateId, String postalCode,
-                               String npi) {
-
-
-        logger.info("saveProfile(): Instantiating Managers.");
-
-        AddressType addressType = (AddressType) RepositoryFactory.getDBContext(AddressType.class).get(3);
-        State state = (State) RepositoryFactory.getDBContext(State.class).get(stateId);
-
-        Provider provider = providerRepository.get(account.getId());
-
-        Address address = provider.getAddresses().stream().findFirst().orElse(null);
-
-        if(address == null) {
-            address =  new Address();
-            address.setAddressType(addressType);
-            provider.addAddress(address);
+        if (profile.getNpi() != null) {
+            ((Provider)person).setNpi(profile.getNpi());
         }
 
-        provider.setFirstName(firstName);
-        provider.setLastName(lastName);
-        provider.setNpi(npi);
+        if (profile.getBirthDate() != null) {
+            ((Patient)person).setBirthDate(profile.getBirthDate());
+        }
 
-        address.setAddressLine1(address1);
-        address.setAddressLine2(address2);
-        address.setCity(city);
-        address.setState(state);
-        address.setPostalCode(postalCode);
+        if (profile.getGender() != null) {
+            ((Patient)person).setGender(profile.getGender());
+        }
 
-        addressRepository.update(address);
-        providerRepository.update(provider);
+        address.setAddressLine1(profile.getAddress().getAddressLine1());
+        address.setAddressLine2(profile.getAddress().getAddressLine2());
+        address.setCity(profile.getAddress().getCity());
+        address.setState(profile.getAddress().getState());
+        address.setPostalCode(profile.getAddress().getPostalCode());
 
-        logger.info("saveProfile(): Calling Profile.setPatient().");
-        profile.setProvider(provider);
-        profile.setPerson(provider);
+        logger.info("saveProfile(): Updating Address Information.");
+        RepositoryFactory.getDBContext(Address.class).update(address);
+        logger.info("saveProfile(): Updating Person Information.");
+        RepositoryFactory.getDBContext(Person.class).update(person);
+        logger.info("saveProfile(): Loading Account Information.");
+        loadProfile();
 
-        logger.info("saveProfile(): Calling Profile.setAddress().");
-        profile.setAddress(address);
-
-        message = new Message(MessageType.INFO, "Profile successfully updated.");
-
-        return profile;
+        logger.info("saveProfile(): End.");
+        message = new Message(MessageType.INFO, "Account successfully updated.");
+        success = true;
+        return success;
     }
+
 
     /**
      * Saves Patient's Insurance Information.
      *
-     * @param account    the account
      * @param companyId  the insurance company id
      * @param subscriberCode the subscriber id
      * @return the profile
      */
-    public Profile savePatientInsurance(AccountManager account, int companyId, String subscriberCode) {
+    public boolean savePatientInsurance(int companyId, String subscriberCode) {
 
-        logger.info("savePatientInsurance(): Instantiating Managers.");
+        logger.info("savePatientInsurance(): Start.");
+        boolean success = false;
 
-        Patient patient = patientRepository.get(account.getId());
-        Organization company = (Organization) RepositoryFactory.getDBContext(Organization.class).get(companyId);
+        Patient patient = (Patient)RepositoryFactory.getDBContext(Patient.class).get(id);
+        Organization company = (Organization)RepositoryFactory.getDBContext(Organization.class).get(companyId);
 
         patient.setOrganization(company);
         patient.setSubscriberCode(subscriberCode);
-        patientRepository.update(patient);
+        RepositoryFactory.getDBContext(Patient.class).update(patient);
 
-        logger.info("getPatientProfile(String): Calling Profile.setPatient().");
+        logger.info("getPatientProfile(String): Updating Profile Information.");
         profile.setPerson(patient);
 
+        logger.info("saveProfile(): Loading Account Information.");
+        loadProfile();
+
+        logger.info("saveProfile(): End.");
         message = new Message(MessageType.INFO, "Insurance Information successfully updated.");
-        return profile;
+        success = true;
+        return success;
     }
 
 }

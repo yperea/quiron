@@ -1,10 +1,4 @@
 <%@include file="../shared/tag-libs.jsp"%>
-<%--
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="yp" uri="http://quiron.net.co/tag" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<%@ taglib prefix="tags" tagdir="/WEB-INF/tags" %>
---%>
 <!DOCTYPE html>
 <html lang="en">
 <%@include file="../shared/head.jsp"%>
@@ -54,7 +48,7 @@
                                     required />
                             <option value="">Choose...</option>
                             <c:forEach var="company" items="${companies}">
-                                <option value="${company.id}" <c:if test="${profile.person.organization.id == company.id}">selected</c:if> >${company.name}</option>
+                                <option value="${company.id}" <c:if test="${account.profile.person.organization.id == company.id}">selected</c:if> >${company.name}</option>
                             </c:forEach>
                             </select>
                             <div class="invalid-feedback">
@@ -69,7 +63,7 @@
                                    id="subscriber"
                                    name="subscriber"
                                    placeholder=""
-                                   value="${profile.person.subscriberCode}"
+                                   value="${account.profile.person.subscriberCode}"
                                    required />
                             <div class="invalid-feedback">
                                 Please enter a valid date of birth.

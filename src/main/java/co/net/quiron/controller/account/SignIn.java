@@ -32,12 +32,12 @@ public class SignIn extends HttpServlet {
         dispatcher.forward(request, response);
     }
 
-    @Override
+/*    @Override
     protected void doPost(HttpServletRequest request,
                           HttpServletResponse response) throws ServletException, IOException {
 
         String url = "/account/signin";
         String title = "Sign In";
         AccountManager accountManager =  new AccountManager();
-    }
+    }*/
 }

@@ -71,7 +71,7 @@ public class Signup extends HttpServlet {
         }
 
         if (signupSuccess) {
-            url = "/quiron/patient/profile";
+            url = "/quiron/account";
         } else {
             request.setAttribute("firstName", request.getParameter("firstName"));
             request.setAttribute("lastName", request.getParameter("lastName"));

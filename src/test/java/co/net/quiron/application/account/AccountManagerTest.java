@@ -112,7 +112,8 @@ class AccountManagerTest {
         String firstName = "John";
         String personType = "patient";
 
-        accountManager.load(userName, personType);
+        accountManager = new AccountManager(userName, personType);
+        accountManager.loadProfile();
 
         User user = userRepository.get(1);
         Person person = personRepository.get(1);

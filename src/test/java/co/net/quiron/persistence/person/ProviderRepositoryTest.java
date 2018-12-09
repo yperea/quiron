@@ -86,7 +86,7 @@ public class ProviderRepositoryTest {
     void testGetProviderProfile() {
 
         String userName = "yesper";
-        Profile profile = providerRepository.getProviderProfile(userName);
+        Account profile = providerRepository.getProviderProfile(userName);
 
 
 */

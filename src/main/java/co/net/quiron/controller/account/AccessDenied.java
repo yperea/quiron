@@ -51,14 +51,14 @@ public class AccessDenied extends HttpServlet {
         String url = "/quiron/account/signin";
         String title = "Sign In";
 
-        AccountManager accountManager =  new AccountManager();
+        //AccountManager accountManager =  new AccountManager();
         Message message =  new Message();
 
 
         message.setType(MessageType.ERROR);
         message.setDescription("Incorrect username or password.");
-        accountManager.setMessage(message);
-        session.setAttribute("account", accountManager);
+        //accountManager.setMessage(message);
+        //session.setAttribute("account", accountManager);
         session.setAttribute("message", message);
 
         request.setAttribute("title", title);

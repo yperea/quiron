@@ -56,7 +56,7 @@
                                          class="img-circle"
                                          src="${root}/style/img/QuironIcon75x75.png" />
                                     <p>
-                                        ${profile.firstName} ${profile.lastName}
+                                        ${account.profile.firstName} ${account.profile.lastName}
                                         <br/><small>(${account.username})</small>
                                     </p>
                                 </li>
