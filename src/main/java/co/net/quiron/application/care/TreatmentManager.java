@@ -9,33 +9,52 @@ import co.net.quiron.persistence.interfaces.IAppRepository;
 import co.net.quiron.util.Message;
 import co.net.quiron.util.MessageType;
 import lombok.Data;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
+/**
+ * The type Treatment manager.
+ */
 @Data
 public class TreatmentManager {
-    AccountManager accountManager;
+
+    private final Logger logger = LogManager.getLogger(this.getClass());
+
     Message message;
+    AccountManager accountManager;
     IAppRepository<Visit> visitRepository;
     IAppRepository<Treatment> treatmentRepository;
 
+    /**
+     * Instantiates a new Treatment manager.
+     */
     public TreatmentManager() {
-        accountManager =  new AccountManager();
         message = new Message();
         visitRepository = RepositoryFactory.getDBContext(Visit.class);
         treatmentRepository = RepositoryFactory.getDBContext(Treatment.class);
     }
 
-    public TreatmentManager(String username, String personType) {
+    /**
+     * Instantiates a new Treatment manager.
+     *
+     * @param accountManager the account manager
+     */
+    public TreatmentManager(AccountManager accountManager) {
         this();
-        //ProfileManager profileManager = new ProfileManager();
-        //profileManager.loadUserAccount(username, personType);
+        this.accountManager =  accountManager;
     }
 
 
+    /**
+     * Gets patient treatments list.
+     *
+     * @return the patient treatments list
+     */
     public List<Treatment> getPatientTreatmentsList() {
 
         IAppRepository<Patient> patientRepository = RepositoryFactory.getDBContext(Patient.class);
@@ -61,6 +80,52 @@ public class TreatmentManager {
 
         return treatments;
     }
+
+    /**
+     * Gets patient treatment.
+     *
+     * @param treatmentId the treatment id
+     * @return the patient visit
+     */
+    public Treatment getPatientTreatment(int treatmentId) {
+
+        IAppRepository<Patient> patientRepository = RepositoryFactory.getDBContext(Patient.class);
+        Map<String, Object> params = new TreeMap<>();
+        int patientId = accountManager.getId();
+        Patient patient = patientRepository.get(patientId);
+        params.put("patient", patient);
+
+        Treatment treatment = treatmentRepository.get(treatmentId);
+
+        if (treatment == null) {
+            message.setType(MessageType.WARNING);
+            message.setDescription("Record not found");
+        }
+
+        return treatment;
+    }
+
+
+    /**
+     * Save treatment boolean.
+     *
+     * @param treatment the visit
+     * @return the boolean
+     */
+    public boolean saveTreatment (Treatment treatment) {
+
+        logger.info("saveTreatment(): Start.");
+        boolean success =  false;
+
+        treatmentRepository.update(treatment);
+
+        logger.info("saveTreatment(): End.");
+        message = new Message(MessageType.INFO, "Treatment Information successfully updated.");
+
+        success = true;
+        return success;
+    }
+
 
 /*
     public List<Treatment> getProviderTreatmentsList() {
