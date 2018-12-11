@@ -1,11 +1,4 @@
 <%@include file="../shared/tag-libs.jsp"%>
-<%--
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<%@ taglib prefix="yp" uri="http://quiron.net.co/tag" %>
-<%@ taglib prefix="tags" tagdir="/WEB-INF/tags" %>
---%>
-
 <!DOCTYPE html>
 <html lang="en">
 <%@include file="../shared/head.jsp"%>
@@ -35,12 +28,14 @@
                     </c:if>
 
                 </div>
-                <!--
-                <button class="btn btn-sm btn-outline-secondary dropdown-toggle">
+
+                <button class="btn btn-sm btn-outline-secondary dropdown-toggle"
+                        data-toggle="modal"
+                        data-target="#addPrescription">
                     <span data-feather="calendar"></span>
-                    This week
+                    Add Prescription
                 </button>
-                -->
+
             </div>
 
         </div>
@@ -445,6 +440,125 @@
         </div>
         <br/>
 
+        <!-- modal form -->
+        <!-- The Modal -->
+        <div class="modal fade" id="addPrescription">
+            <div class="modal-dialog">
+                <div class="modal-content">
+
+                    <!-- Modal Header -->
+                    <div class="modal-header">
+                        <h4 class="modal-title">Modal Heading</h4>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+
+                    <!-- Modal body -->
+                    <div class="modal-body">
+
+                        <form class="needs-validation"
+                              id="modalForm"
+                              action="${root}/patient/visit"
+                              method="POST"
+                              novalidate>
+
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="organization1">Organization</label>
+                                    <input type="text"
+                                           class="form-control"
+                                           id="organization1"
+                                           name="organization1"
+                                           placeholder=""
+                                           value="${visit.providerSchedule.organization.name}"
+                                           disabled
+                                           required />
+                                    <div class="invalid-feedback">
+                                        Organization required.
+                                    </div>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="provider1">Provider</label>
+                                    <input type="text"
+                                           class="form-control"
+                                           id="provider1"
+                                           name="provider1"
+                                           placeholder=""
+                                           value="${visit.providerSchedule.provider.lastName} , ${visit.providerSchedule.provider.firstName}"
+                                           disabled
+                                           required />
+                                    <div class="invalid-feedback">
+                                        Provider required.
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+
+                    <!-- Modal footer -->
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                        <input type="button" name="addgroupbtn" class="btn btn-primary" value="Save Prescription">
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <%--<div class="modal fade" id="addPrescription" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog modal-md" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="myModalLabel">Add Contact</h4>
+                    </div>
+                    <form action="addcontact.php" method="POST">
+                        <div class="modal-body">
+                            <div class="container-fluid">
+                                <div class="row">
+                                    <div class="col-md-6 col-sm-6 col-xs-6">
+                                        <div class="form-group">
+                                            <label for="contactfname">First Name</label>
+                                            <input type="text" class="form-control" id="contactfname" name="txt_fn" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="contactmname">Middle Name</label>
+                                            <input type="text" class="form-control" id="contactmname" name="txt_mn" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="contactlname">Last Name</label>
+                                            <input type="text" class="form-control" id="contactlname" name="txt_ln" required>
+                                        </div>
+
+
+                                    </div>
+                                    <div class="col-md-6 col-sm-6 col-xs-6">
+                                        <div class="form-group">
+                                            <label for="contactea">Email Address</label>
+                                            <input type="email" class="form-control" id="contactea" name="txt_ea" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="contactnum">Mobile Number</label>
+                                            <input type="text" class="form-control" id="contactnum" name="txt_num" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="contactgroup">Select Group</label>
+                                            <select name="txt_group" class="form-control" id="contactgroup" required>
+                                                <option value="">Choose group...</option>
+                                                <option value="1">One</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                        <input type="submit" name="addgroupbtn" class="btn btn-primary" value="Save Contact">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>--%>
         <!--
         <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
             <h4 class="h4">Details</h4>
