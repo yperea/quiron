@@ -1,11 +1,8 @@
 package co.net.quiron.domain.location;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -69,7 +66,6 @@ public class State implements Serializable {
     @Column(name = "ModifiedDate")
     private Date modifiedDate;
 
-
     /**
      * Add address.
      *
@@ -78,9 +74,7 @@ public class State implements Serializable {
     public void addAddress(Address address) {
         addresses.add(address);
         address.setState(this);
-        //logger.info("Adding address to addresses collection");
     }
-
 
     /**
      * Remove address.
@@ -90,7 +84,6 @@ public class State implements Serializable {
     public void removeAddress(Address address) {
         addresses.remove(address);
         address.setState(null);
-        //logger.info("Removing address from addresses collection");
     }
 }
 

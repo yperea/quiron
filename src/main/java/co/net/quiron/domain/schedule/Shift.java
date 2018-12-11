@@ -8,7 +8,6 @@ import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -20,14 +19,12 @@ import java.util.Set;
 @Data
 public class Shift {
 
-
     @Id
     @Column(name = "ShiftID")
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
     @GenericGenerator(name = "native", strategy = "native")
     private int id;
 
-    //TODO: Research how to fix StackOverFlowError when FetchType.EAGER
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
     @OneToMany(mappedBy = "shift", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
@@ -64,11 +61,4 @@ public class Shift {
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "ModifiedDate")
     private Date modifiedDate;
-
-/*
-    @CreationTimestamp
-    @Convert(converter = TimestampAttributeConverter.class)
-    private LocalDateTime createDate;
-*/
-
 }

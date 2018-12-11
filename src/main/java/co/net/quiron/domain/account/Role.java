@@ -10,6 +10,11 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
+/**
+ * This class represents the Role domain for the application.
+ *
+ * @autor yperea
+ */
 @Entity(name = "Role")
 @Table(name = "ROLES")
 @RequiredArgsConstructor

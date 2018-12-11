@@ -41,7 +41,6 @@ public class DiagnosticCause {
     @Column(name = "GeneralInstructions")
     private String instructions;
 
-
     @OneToMany(mappedBy = "cause", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     private Set<Diagnostic> diagnostics = new HashSet<>();
 

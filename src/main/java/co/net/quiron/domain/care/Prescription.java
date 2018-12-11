@@ -1,6 +1,5 @@
 package co.net.quiron.domain.care;
 
-import co.net.quiron.domain.account.User;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.GenericGenerator;

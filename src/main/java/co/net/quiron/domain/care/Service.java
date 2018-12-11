@@ -35,24 +35,14 @@ public class Service {
     @OneToMany(mappedBy = "service", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     private Set<Visit> visits = new HashSet<>();
 
-    /* Using Database Default value with a LocalDate type for createdDate
-    @CreationTimestamp
-    @Column(name = "CreatedDate", insertable = false)
-    private LocalDate createdDate;
-    */
     @CreationTimestamp
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "CreatedDate")
-    private Date createdDate; //@CreationTimestamp annotation only works with Date or Calendar types
+    private Date createdDate;
 
-    /*
-    @Column(name = "ModifiedDate")
-    private LocalDate modifiedDate;
-    */
     @UpdateTimestamp
     @EqualsAndHashCode.Exclude
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "ModifiedDate")
     private Date modifiedDate;
-
 }

@@ -47,27 +47,17 @@ public class Diagnostic {
     @JoinColumn(name = "DiagnosticCauseID")
     private DiagnosticCause cause;
 
-
-    /*TODO: Solve error when is FetchType.LAZY. org.hibernate.LazyInitializationException: failed to lazily initialize a collection of role... could not initialize proxy - no Session*/
     @OneToMany(mappedBy = "diagnostic", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     private Set<Prescription> prescriptions = new HashSet<>();
-
-    /*
-    @EqualsAndHashCode.Exclude
-    @ToString.Exclude
-    @OneToMany(mappedBy = "address", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<EntityAddress> entityAddresses = new HashSet<>();
-    */
 
     @CreationTimestamp
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "CreatedDate")
-    private Date createdDate; //@CreationTimestamp annotation only works with Date or Calendar types
+    private Date createdDate;
 
     @UpdateTimestamp
     @EqualsAndHashCode.Exclude
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "ModifiedDate")
     private Date modifiedDate;
-
 }

@@ -38,16 +38,6 @@ public abstract class BusinessEntity {
             inverseJoinColumns = {@JoinColumn(name = "AddressID")})
     protected Set<Address> addresses = new HashSet<>();
 
-    /*
-    @OneToMany(mappedBy = "entityAddressId.entity", cascade = {CascadeType.ALL}, fetch = FetchType.EAGER)
-    private Set<EntityAddress> entityAddresses = new HashSet<>();
-    */
-    /*
-    @EqualsAndHashCode.Exclude
-    @ToString.Exclude
-    @OneToMany(mappedBy = "entity", cascade = CascadeType.ALL, orphanRemoval = true)
-    protected Set<EntityAddress> entityAddresses = new HashSet<>();
-    */
     /**
      * Add an address to the collection.
      *
@@ -65,5 +55,4 @@ public abstract class BusinessEntity {
     public void removeaddress(Address address) {
         addresses.remove(address);
     }
-
 }

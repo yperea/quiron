@@ -60,15 +60,6 @@ public class User {
             inverseJoinColumns = {@JoinColumn(name = "PersonID")})
     private Set<Person> persons = new HashSet<>();
 
-
-/*
-    @EqualsAndHashCode.Exclude
-    @ToString.Exclude
-    @ManyToMany(mappedBy = "users")
-    private Set<Person> persons = new HashSet<>();
-*/
-
-
     @CreationTimestamp
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "CreatedDate")
@@ -80,7 +71,6 @@ public class User {
     @Column(name = "ModifiedDate")
     private Date modifiedDate;
 
-
     /**
      * Add a role to the collection.
      *
@@ -90,6 +80,7 @@ public class User {
         roles.add(role);
     }
 
+
     /**
      * Remove a role from the collection.
      *
@@ -98,6 +89,7 @@ public class User {
     public void removeRole(Role role) {
         roles.remove(role);
     }
+
 
     /**
      * Add a person to the collection.
@@ -116,5 +108,4 @@ public class User {
     public void removePerson(Person person) {
         persons.remove(person);
     }
-
 }

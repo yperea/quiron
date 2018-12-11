@@ -17,16 +17,12 @@ public class ShiftSchedule implements Serializable {
 
     @Id
     @NonNull
-    //@ToString.Exclude
-    //@EqualsAndHashCode.Exclude
     @ManyToOne
     @JoinColumn(name = "ShiftID")
     private Shift shift;
 
     @Id
     @NonNull
-    //@ToString.Exclude
-    //@EqualsAndHashCode.Exclude
     @ManyToOne
     @JoinColumn(name = "WeekDayID")
     private WeekDay weekDay;
@@ -43,5 +39,4 @@ public class ShiftSchedule implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "CreatedDate")
     private Date createdDate;
-
 }

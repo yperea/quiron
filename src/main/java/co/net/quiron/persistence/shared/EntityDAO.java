@@ -61,7 +61,7 @@ public class EntityDAO<T> {
         Predicate[] predicates  = getPredicates(compositeKey, builder, root);
         query.select(root).where(builder.and(predicates));
 
-        T entity = session.createQuery(query).getResultList().stream().findFirst().get();
+        T entity = session.createQuery(query).getResultList().stream().findFirst().orElse(null);
         session.close();
 
         logger.trace("getById(): Returning entity " + entity);

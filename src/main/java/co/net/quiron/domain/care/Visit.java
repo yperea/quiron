@@ -2,14 +2,12 @@ package co.net.quiron.domain.care;
 
 import co.net.quiron.domain.person.Patient;
 import co.net.quiron.domain.schedule.ProviderSchedule;
-import co.net.quiron.domain.schedule.ShiftSchedule;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.HashSet;
@@ -119,11 +117,8 @@ public class Visit {
     @Column(name = "ProviderComments")
     private String providerComments;
 
-    /*TODO: Solve error when is FetchType.LAZY. org.hibernate.LazyInitializationException: failed to lazily initialize a collection of role... could not initialize proxy - no Session*/
-
     @OneToMany(mappedBy = "visit", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     private Set<Treatment> treatments = new HashSet<>();
-
 
     @CreationTimestamp
     @Temporal(TemporalType.TIMESTAMP)

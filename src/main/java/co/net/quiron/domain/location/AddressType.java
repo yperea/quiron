@@ -32,18 +32,6 @@ public class AddressType {
     @Column(name = "Name")
     private String name;
 
-    /*
-    @EqualsAndHashCode.Exclude
-    @ToString.Exclude
-    @ManyToMany(mappedBy = "addresstypes")
-    private Set<BusinessEntity> entities = new HashSet<>();
-    */
-
-/*
-    @OneToMany(mappedBy = "entityAddressId.addressType", cascade = {CascadeType.ALL}, fetch = FetchType.EAGER)
-    private Set<EntityAddress> entityAddresses = new HashSet<>();
-*/
-
     @JsonManagedReference
     @EqualsAndHashCode.Exclude
     @ToString.Exclude

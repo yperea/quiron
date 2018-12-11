@@ -18,11 +18,6 @@ import java.util.Date;
 @Table(name = "PROVIDERS_SCHEDULES")
 public class ProviderSchedule implements Serializable {
 
-/*
-    @EmbeddedId
-    private ProviderScheduleKey id;
-*/
-
     @Id
     @NonNull
     @ToString.Exclude
@@ -63,5 +58,4 @@ public class ProviderSchedule implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "CreatedDate")
     private Date createdDate;
-
 }

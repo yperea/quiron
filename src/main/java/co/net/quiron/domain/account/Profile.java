@@ -4,11 +4,15 @@ import co.net.quiron.domain.location.Address;
 import co.net.quiron.domain.person.Patient;
 import co.net.quiron.domain.person.Person;
 import co.net.quiron.domain.person.Provider;
-import co.net.quiron.vendor.com.apimedic.Gender;
 import lombok.Data;
 
 import java.time.LocalDate;
 
+/**
+ * This class represents the User profile for the application.
+ *
+ * @autor yperea
+ */
 @Data
 public class Profile  {
 
@@ -23,5 +27,4 @@ public class Profile  {
     private LocalDate birthDate;
     private String gender;
     private String npi;
-
 }

@@ -2,7 +2,6 @@ package co.net.quiron.domain.person;
 
 import co.net.quiron.domain.account.User;
 import lombok.*;
-import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
@@ -25,44 +24,12 @@ import java.util.Set;
 @PrimaryKeyJoinColumn(name = "PersonID")
 public class Person extends BusinessEntity implements Serializable {
 
-
-/*
-    @Id
-    @Column(name = "PersonID")
-    protected int id;
-
-    @OneToOne(fetch = FetchType.EAGER)
-    @MapsId
-    @EqualsAndHashCode.Exclude
-    @ToString.Exclude
-    @JoinColumn(name = "PersonID")
-    protected BusinessEntity entity;
-*/
-
     @NonNull
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
     @ManyToOne
     @JoinColumn(name = "PersonTypeID")
     protected PersonType personType;
-
-
-/*
-    @NonNull
-    @Column(name = "PersonTypeID")
-    protected int type;
-*/
-
-    /*
-    @EqualsAndHashCode.Exclude
-    @ToString.Exclude
-    @ManyToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER)
-    @JoinTable(
-            name = "PERSON_USERS",
-            joinColumns = {@JoinColumn(name = "PersonID")},
-            inverseJoinColumns = {@JoinColumn(name = "UserID")})
-    protected Set<Person> users = new HashSet<>();
-    */
 
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
@@ -89,18 +56,9 @@ public class Person extends BusinessEntity implements Serializable {
     @Column(name = "Suffix")
     protected String suffix;
 
-
-/*
-    @CreationTimestamp
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "CreatedDate")
-    protected Date createdDate;
-*/
-
     @UpdateTimestamp
     @EqualsAndHashCode.Exclude
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "ModifiedDate")
     protected Date modifiedDate;
-
 }

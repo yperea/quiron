@@ -24,7 +24,7 @@ public class ApiMedic {
     @Path("/json/diagnosis")
     public Response getDiagnosis(@Context HttpServletRequest request) throws JsonProcessingException {
 
-        List<Diagnosis> diagnosisList = null;
+
         ApiMedicManager apiMedicManager = new ApiMedicManager("/apimedic.properties");
         String requestSymptoms = request.getParameter("symptom");
         //String requestSymptoms = request.getParameter("relatives[symptom]");
@@ -50,7 +50,6 @@ public class ApiMedic {
         ObjectMapper objectMapper = new ObjectMapper();
 
         String json = objectMapper.writeValueAsString(issuesList);
-        //String json = objectMapper.writeValueAsString(diagnosisList);
 
         return Response.status(responseStatusCode)
                 .entity(json)

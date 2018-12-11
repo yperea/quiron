@@ -1,6 +1,5 @@
 package co.net.quiron.domain.care;
 
-import co.net.quiron.domain.account.Role;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
@@ -40,24 +39,6 @@ public class Treatment {
     @JoinColumn(name = "VisitID")
     private Visit visit;
 
-/*
-    @NonNull
-    @Column(name = "SymptomID")
-    private int symptomId;
-
-    @NonNull
-    @Column(name = "SymptomName")
-    private String symptomName;
-
-    @NonNull
-    @Column(name = "DiagnosticID")
-    private int diagnosticId;
-
-    @NonNull
-    @Column(name = "DiagnosticName")
-    private String diagnosticName;
-*/
-
     @Column(name = "StartDate")
     private LocalDate startDate;
 
@@ -93,5 +74,4 @@ public class Treatment {
     public void removePrescription(Prescription prescription) {
         prescriptions.remove(prescription);
     }
-
 }

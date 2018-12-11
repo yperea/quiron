@@ -19,7 +19,6 @@ import java.util.Set;
 @Data
 public class WeekDay implements Serializable {
 
-
     @Id
     @Column(name = "WeekDayID")
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
@@ -50,5 +49,4 @@ public class WeekDay implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "ModifiedDate")
     private Date modifiedDate;
-
 }

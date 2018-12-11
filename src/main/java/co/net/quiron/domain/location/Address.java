@@ -4,7 +4,6 @@ import co.net.quiron.domain.location.AddressType;
 import co.net.quiron.domain.location.State;
 import co.net.quiron.domain.person.BusinessEntity;
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.GenericGenerator;
@@ -75,13 +74,6 @@ public class Address {
     @ManyToMany(mappedBy = "addresses", fetch = FetchType.EAGER)
     @Getter(AccessLevel.NONE)
     private Set<BusinessEntity> entities = new HashSet<>();
-
-    /*
-    @EqualsAndHashCode.Exclude
-    @ToString.Exclude
-    @OneToMany(mappedBy = "address", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<EntityAddress> entityAddresses = new HashSet<>();
-    */
 
     @CreationTimestamp
     @Temporal(TemporalType.TIMESTAMP)

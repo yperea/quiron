@@ -63,15 +63,6 @@ public class AppRepository<T> implements IAppRepository<T> {
         return get(i);
     }
 
-/*
-    @Override
-    public T create3(T entity) {
-        T newEntity = entityDAO.insert3(entity);
-        entityDAO.saveChanges();
-        return newEntity;
-    }
-*/
-
     @Override
     public void update(T entity) {
         entityDAO.update(entity);

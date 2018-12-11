@@ -1,6 +1,5 @@
 package co.net.quiron.domain.location;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
@@ -13,7 +12,6 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
-//import com.fasterxml.jackson.annotation;
 
 /**
  * This class represents the Country domain for the application.
@@ -47,7 +45,7 @@ public class Country implements Serializable{
 
     /* Using Database Default value with a LocalDate type for createdDate
     @CreationTimestamp
-    @Column(name = "CreatedDate", insertable = false)
+    @Column(name = "CreatedDate")
     private LocalDate createdDate;
     */
     @CreationTimestamp
@@ -74,8 +72,6 @@ public class Country implements Serializable{
     public void addState(State state) {
         states.add(state);
         state.setCountry(this);
-
-        //logger.trace("addState(States): Adding the States to the collection.");
     }
 
     /**
@@ -86,8 +82,6 @@ public class Country implements Serializable{
     public void removeState(State state) {
         states.remove(state);
         state.setCountry(null);
-
-        //logger.trace("removeState(States): Removing the States from the collection.");
     }
 }
 
