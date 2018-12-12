@@ -1,8 +1,11 @@
 package co.net.quiron.controller.care;
 
 import co.net.quiron.application.account.AccountManager;
+import co.net.quiron.application.care.MedicationManager;
+import co.net.quiron.application.care.TreatmentManager;
 import co.net.quiron.application.care.VisitManager;
 import co.net.quiron.application.vendor.ApiMedicManager;
+import co.net.quiron.domain.care.Medication;
 import co.net.quiron.domain.care.Visit;
 import co.net.quiron.vendor.com.apimedic.Issue;
 import co.net.quiron.vendor.com.apimedic.Symptom;
@@ -77,11 +80,14 @@ public class VisitForm extends HttpServlet {
             actualEndTime = visit.getActualEndDate().format(timeFormatter);
         }
 
+        List<Medication> medications = new MedicationManager().getMedications();
+
         session.setAttribute("visit", visit);
         request.setAttribute("startTime", actualStartTime);
         request.setAttribute("endTime", actualEndTime);
         request.setAttribute("symptoms", symptoms);
         request.setAttribute("issues", issues);
+        request.setAttribute("medications", medications);
 
         RequestDispatcher dispatcher = request.getRequestDispatcher(url);
         dispatcher.forward(request, response);
@@ -98,6 +104,7 @@ public class VisitForm extends HttpServlet {
         String title = "My Visit";
         String personType = (String) session.getAttribute("personType");
         String username = request.getUserPrincipal().getName();
+        boolean prescriptionAdded = false;
 
         Visit visit = (Visit) session.getAttribute("visit");
         AccountManager accountManager = (AccountManager) session.getAttribute("account");
@@ -157,8 +164,38 @@ public class VisitForm extends HttpServlet {
             visit.setPatientTemperature(Double.parseDouble(request.getParameter("temperature")));
             visit.setProviderComments(request.getParameter("providerComment"));
 
-            if (visitManager.saveVisit(visit)) {
+
+            boolean visitSaved = visitManager.saveVisit(visit);
+
+            if (visitSaved) {
+
                 session.setAttribute("visit", visit);
+
+                if ((request.getParameter("medicationId") != null && !request.getParameter("medicationId").isEmpty())
+                        && (request.getParameter("treatmentStartDate") != null && !request.getParameter("treatmentStartDate").isEmpty())
+                        && (request.getParameter("treatmentEndDate") != null && !request.getParameter("treatmentEndDate").isEmpty())
+                        && (request.getParameter("prescriptionInstructions") != null && !request.getParameter("prescriptionInstructions").isEmpty())
+                ) {
+                    //TreatmentManager treatmentManager = new TreatmentManager();
+
+
+                    int medicationId = Integer.parseInt(request.getParameter("medicationId"));
+
+                    LocalDate treatmentStartDate = LocalDate.parse(request.getParameter("treatmentStartDate"),
+                            DateTimeFormatter.ofPattern("MM/d/yyyy"));
+
+                    LocalDate treatmentEndDate = LocalDate.parse(request.getParameter("treatmentEndDate"),
+                            DateTimeFormatter.ofPattern("MM/d/yyyy"));
+
+                    String prescriptionInstructions = request.getParameter("prescriptionInstructions");
+
+                    prescriptionAdded = visitManager.addPrescription(medicationId, treatmentStartDate, treatmentEndDate, prescriptionInstructions);
+
+                    session.setAttribute("medicationId", medicationId);
+                    session.setAttribute("treatmentStartDate", treatmentStartDate);
+                    session.setAttribute("treatmentEndDate", treatmentEndDate);
+                    session.setAttribute("prescriptionInstructions", prescriptionInstructions);
+                }
             }
 
             session.setAttribute("message", visitManager.getMessage());

@@ -12,6 +12,7 @@ import lombok.Data;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
@@ -153,6 +154,23 @@ public class VisitManager {
         message = new Message(MessageType.INFO, "Visit Information successfully updated.");
 
         success = true;
+        return success;
+    }
+
+    /**
+     * Add prescription boolean.
+     *
+     * @param medicationId       the medication id
+     * @param treatmentStartDate the treatment start date
+     * @param treatmentEndDate   the treatment end date
+     * @param instructions       the instructions
+     * @return the boolean
+     */
+    public boolean addPrescription(int medicationId, LocalDate treatmentStartDate, LocalDate treatmentEndDate, String instructions) {
+        boolean success = false;
+
+
+
         return success;
     }
 }
