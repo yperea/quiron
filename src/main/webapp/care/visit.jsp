@@ -30,8 +30,9 @@
                 </div>
 
                 <button class="btn btn-sm btn-outline-secondary dropdown-toggle"
+                        id="create-prescription"
                         data-toggle="modal"
-                        data-target="#addPrescription">
+                        data-target="#dialog-form">
                     <span data-feather="calendar"></span>
                     Add Prescription
                 </button>
@@ -52,6 +53,7 @@
                 <%--<c:set var="personType" value="provider" />--%>
 
                 <form class="needs-validation"
+                      id="frmVisit"
                       action="${root}/patient/visit"
                       method="POST"
                       novalidate>
@@ -156,7 +158,7 @@
                         <div class="col-md-6 mb-3">
                             <label for="scheduledStartDate">Scheduled Date</label>
                             <input type="text"
-                                   class="form-control"
+                                   class="form-control date-picker"
                                    id="scheduledStartDate"
                                    name="scheduledStartDate"
                                    placeholder="mm/dd/yyyy"
@@ -205,7 +207,7 @@
                         <div class="col-md-6 mb-3">
                             <label for="startDate">Actual Date</label>
                             <input type="text"
-                                   class="form-control"
+                                   class="form-control date-picker"
                                    id="startDate"
                                    name="startDate"
                                    placeholder="mm/dd/yyyy"
@@ -442,13 +444,13 @@
 
         <!-- modal form -->
         <!-- The Modal -->
-        <div class="modal fade" id="addPrescription">
+        <div class="modal fade" id="dialog-form">
             <div class="modal-dialog">
                 <div class="modal-content">
 
                     <!-- Modal Header -->
                     <div class="modal-header">
-                        <h4 class="modal-title">Modal Heading</h4>
+                        <h4 class="modal-title">Prescription</h4>
                         <button type="button" class="close" data-dismiss="modal">&times;</button>
                     </div>
 
@@ -456,8 +458,8 @@
                     <div class="modal-body">
 
                         <form class="needs-validation"
-                              id="modalForm"
-                              action="${root}/patient/visit"
+                              id="frmPrescription"
+                              action=""
                               method="POST"
                               novalidate>
 
@@ -538,22 +540,7 @@
                             </div>
 
                             <div class="mb-3">
-                                <label for="providerComment">Provider Comments</label>
-                                <textarea class="form-control"
-                                          id="providerComment"
-                                          name="providerComment"
-                                          size="512"
-                                        <c:if test="${personType == null || personType == 'patient' }">
-                                            disabled
-                                        </c:if>
-                                          required >${visit.providerComments}</textarea>
-                                <div class="invalid-feedback">
-                                    Please enter your comments.
-                                </div>
-                            </div>
-
-                            <div class="mb-3">
-                                <label for="instructions">Provider Comments</label>
+                                <label for="instructions">Instructions</label>
                                 <textarea class="form-control"
                                           id="instructions"
                                           name="instructions"
@@ -570,7 +557,7 @@
                     <!-- Modal footer -->
                     <div class="modal-footer">
                         <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-                        <input type="button" name="addgroupbtn" class="btn btn-primary" value="Save Prescription">
+                        <button type="submit" form="frmPrescription" class="btn btn-primary" id="btnAddPrescription" name="btnAddPrescription">Save Prescription</button>
                     </div>
 
                 </div>
@@ -640,7 +627,8 @@
         <div class="row justify-content-center">
 
             <div class="table-responsive col-md-9">
-                <table class="table table-striped table-sm">
+                <table class="table table-striped table-sm"
+                       id="prescriptions">
                     <thead>
                     <tr>
                         <th>#</th>
