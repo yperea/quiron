@@ -5,6 +5,7 @@ import co.net.quiron.application.factory.RepositoryFactory;
 import co.net.quiron.domain.care.Treatment;
 import co.net.quiron.domain.care.Visit;
 import co.net.quiron.domain.person.Patient;
+import co.net.quiron.domain.person.Provider;
 import co.net.quiron.persistence.interfaces.IAppRepository;
 import co.net.quiron.util.Message;
 import co.net.quiron.util.MessageType;
@@ -16,6 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
+import java.util.stream.Collectors;
 
 /**
  * The type Treatment manager.
@@ -126,11 +128,14 @@ public class TreatmentManager {
         return success;
     }
 
-
-/*
+    /**
+     * Gets provider treatments list.
+     *
+     * @return the provider treatments list
+     */
     public List<Treatment> getProviderTreatmentsList() {
 
-        EntityManager<Provider> providerRepository = RepositoryFactory.getDBContext(Provider.class);
+        IAppRepository<Provider> providerRepository = RepositoryFactory.getDBContext(Provider.class);
         Map<String, Object> params = new TreeMap<>();
         int providerId = accountManager.getId();
         Provider provider = providerRepository.get(providerId);
@@ -138,8 +143,8 @@ public class TreatmentManager {
 
         List<Treatment> treatments = treatmentRepository.getList()
                 .stream()
-                .filter(v -> state.equals(v.getStatus()))
-                .filter(ps -> ps.getProviderSchedule()
+                .filter(v -> v.getVisit()
+                        .getProviderSchedule()
                         .getProvider()
                         .equals(provider))
                 .collect(Collectors.toList());
@@ -151,6 +156,5 @@ public class TreatmentManager {
 
         return treatments;
     }
-*/
 
 }

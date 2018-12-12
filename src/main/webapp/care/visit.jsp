@@ -463,34 +463,107 @@
 
                             <div class="row">
                                 <div class="col-md-6 mb-3">
-                                    <label for="organization1">Organization</label>
+                                    <label for="treatmentStartDate">Start Date</label>
                                     <input type="text"
-                                           class="form-control"
-                                           id="organization1"
-                                           name="organization1"
-                                           placeholder=""
-                                           value="${visit.providerSchedule.organization.name}"
-                                           disabled
+                                           class="form-control date-picker"
+                                           id="treatmentStartDate"
+                                           name="treatmentStartDate"
+                                           placeholder="mm/dd/yyyy"
+                                           value="<fmt:formatDate value="${now}" pattern="MM/d/yyyy" />"
+<%--
+                                            <c:if test="${visit.actualStartDate == null}">
+                                                value="<fmt:formatDate value="${now}" pattern="MM/d/yyyy" />"
+                                            </c:if>
+                                            <c:if test="${visit.actualStartDate != null}">
+                                                value="<tags:localDateTime date="${visit.actualStartDate}" pattern="MM/d/yyyy"/>"
+                                            </c:if>
+
+                                            <c:if test="${personType == null || personType == 'patient' }">
+                                                disabled
+                                            </c:if>
+--%>
+
                                            required />
                                     <div class="invalid-feedback">
-                                        Organization required.
+                                        Please enter a valid date.
                                     </div>
                                 </div>
+
                                 <div class="col-md-6 mb-3">
-                                    <label for="provider1">Provider</label>
+                                    <label for="treatmentEndDate">EndDate</label>
                                     <input type="text"
-                                           class="form-control"
-                                           id="provider1"
-                                           name="provider1"
-                                           placeholder=""
-                                           value="${visit.providerSchedule.provider.lastName} , ${visit.providerSchedule.provider.firstName}"
-                                           disabled
+                                           class="form-control date-picker"
+                                           id="treatmentEndDate"
+                                           name="treatmentEndDate"
+                                           placeholder="mm/dd/yyyy"
+                                           value="<fmt:formatDate value="${now}" pattern="MM/d/yyyy" />"
+                                    <%--
+                                                                                <c:if test="${visit.actualStartDate == null}">
+                                                                                    value="<fmt:formatDate value="${now}" pattern="MM/d/yyyy" />"
+                                                                                </c:if>
+                                                                                <c:if test="${visit.actualStartDate != null}">
+                                                                                    value="<tags:localDateTime date="${visit.actualStartDate}" pattern="MM/d/yyyy"/>"
+                                                                                </c:if>
+
+                                                                                <c:if test="${personType == null || personType == 'patient' }">
+                                                                                    disabled
+                                                                                </c:if>
+                                    --%>
+
                                            required />
                                     <div class="invalid-feedback">
-                                        Provider required.
+                                        Please enter a valid date.
                                     </div>
                                 </div>
                             </div>
+
+
+                            <div class="row">
+                                <div class="col-md-12 mb-3">
+                                    <label for="medication">Medication</label>
+                                    <select class="custom-select d-block w-100"
+                                            id="medication"
+                                            name="medication"
+                                            required />
+                                    <option value="">Choose...</option>
+                                    <c:forEach var="symptom" items="${symptoms}">
+                                        <option value="${symptom.ID}" <c:if test="${visit.symptomId == symptom.ID}">selected</c:if> >${symptom.name}</option>
+                                    </c:forEach>
+
+                                    </select>
+                                    <div class="invalid-feedback">
+                                        Please provide a valid medication.
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="providerComment">Provider Comments</label>
+                                <textarea class="form-control"
+                                          id="providerComment"
+                                          name="providerComment"
+                                          size="512"
+                                        <c:if test="${personType == null || personType == 'patient' }">
+                                            disabled
+                                        </c:if>
+                                          required >${visit.providerComments}</textarea>
+                                <div class="invalid-feedback">
+                                    Please enter your comments.
+                                </div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="instructions">Provider Comments</label>
+                                <textarea class="form-control"
+                                          id="instructions"
+                                          name="instructions"
+                                          size="512"
+                                          required >${visit.providerComments}</textarea>
+                                <div class="invalid-feedback">
+                                    Please enter prescription instructions.
+                                </div>
+                            </div>
+
                         </form>
                     </div>
 
@@ -559,9 +632,9 @@
                 </div>
             </div>
         </div>--%>
-        <!--
+
         <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-            <h4 class="h4">Details</h4>
+            <h4 class="h4">Prescription</h4>
         </div>
 
         <div class="row justify-content-center">
@@ -694,7 +767,6 @@
                 </table>
             </div>
         </div>
-        -->
     </main>
 
     <%@include file="../shared/cdn-jss.jsp"%>

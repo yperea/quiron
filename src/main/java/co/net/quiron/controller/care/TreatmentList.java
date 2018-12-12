@@ -1,7 +1,10 @@
 package co.net.quiron.controller.care;
 
+import co.net.quiron.application.account.AccountManager;
 import co.net.quiron.application.care.TreatmentManager;
+import co.net.quiron.application.care.VisitManager;
 import co.net.quiron.domain.care.Treatment;
+import co.net.quiron.domain.care.Visit;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -30,13 +33,21 @@ public class TreatmentList extends HttpServlet {
         String personType = (String) session.getAttribute("personType");
         String username = request.getUserPrincipal().getName();
 
+        AccountManager accountManager = (AccountManager) session.getAttribute("account");
+        if (accountManager == null){
+            accountManager = new AccountManager(username, personType);
+            session.setAttribute("account", accountManager);
+        }
+
+        TreatmentManager treatmentManager = new TreatmentManager(accountManager);
+        List<Treatment> treatments = null;
+        if (personType.equals("provider")) {
+            treatments = treatmentManager.getProviderTreatmentsList();
+        } else {
+            treatments = treatmentManager.getPatientTreatmentsList();
+        }
+
         request.setAttribute("title", title);
-        session.setAttribute("currentPage", "My Treatments");
-
-        TreatmentManager treatmentManager = new TreatmentManager(username, personType);
-
-        List<Treatment> treatments = treatmentManager.getPatientTreatmentsList();
-
         request.setAttribute("treatments", treatments);
         session.setAttribute("message", treatmentManager.getMessage());
 
