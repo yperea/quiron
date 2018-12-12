@@ -104,7 +104,7 @@ public class VisitForm extends HttpServlet {
         String title = "My Visit";
         String personType = (String) session.getAttribute("personType");
         String username = request.getUserPrincipal().getName();
-        boolean prescriptionAdded = false;
+        boolean treatmentAdded = false;
 
         Visit visit = (Visit) session.getAttribute("visit");
         AccountManager accountManager = (AccountManager) session.getAttribute("account");
@@ -179,6 +179,7 @@ public class VisitForm extends HttpServlet {
                     //TreatmentManager treatmentManager = new TreatmentManager();
 
 
+                    int visitId = Integer.parseInt(request.getParameter("visitId"));
                     int medicationId = Integer.parseInt(request.getParameter("medicationId"));
 
                     LocalDate treatmentStartDate = LocalDate.parse(request.getParameter("treatmentStartDate"),
@@ -189,12 +190,17 @@ public class VisitForm extends HttpServlet {
 
                     String prescriptionInstructions = request.getParameter("prescriptionInstructions");
 
-                    prescriptionAdded = visitManager.addPrescription(medicationId, treatmentStartDate, treatmentEndDate, prescriptionInstructions);
+                    treatmentAdded = visitManager.addTreatment(visitId, medicationId, treatmentStartDate, treatmentEndDate, prescriptionInstructions);
 
-                    session.setAttribute("medicationId", medicationId);
+                    if(treatmentAdded) {
+                        session.setAttribute("treatment", visitManager.getTreatment());    
+                    }
+                    
+/*
                     session.setAttribute("treatmentStartDate", treatmentStartDate);
                     session.setAttribute("treatmentEndDate", treatmentEndDate);
                     session.setAttribute("prescriptionInstructions", prescriptionInstructions);
+*/
                 }
             }
 

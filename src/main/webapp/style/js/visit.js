@@ -9,8 +9,8 @@
 (function($){
     $(document).ready(function() {
 
-        var treatmentStartDate = $("#treatmentStartDate");
-        var treatmentEndDate = $("#treatmentEndDate");
+        var treatmentStartDate = $("#startDate");
+        var treatmentEndDate = $("#endDate");
         var treatmentInstructions = $("#instructions");
 
         $('#symptom').change(function() {

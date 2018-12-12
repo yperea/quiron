@@ -2,6 +2,9 @@ package co.net.quiron.application.care;
 
 import co.net.quiron.application.account.AccountManager;
 import co.net.quiron.application.factory.RepositoryFactory;
+import co.net.quiron.domain.care.Medication;
+import co.net.quiron.domain.care.Prescription;
+import co.net.quiron.domain.care.Treatment;
 import co.net.quiron.domain.care.Visit;
 import co.net.quiron.domain.person.Patient;
 import co.net.quiron.domain.person.Provider;
@@ -25,18 +28,11 @@ import java.util.stream.Collectors;
 public class VisitManager {
 
     private final Logger logger = LogManager.getLogger(this.getClass());
-    /**
-     * The Account manager.
-     */
+
     AccountManager accountManager;
-    /**
-     * The Message.
-     */
     Message message;
-    /**
-     * The Visit repository.
-     */
     IAppRepository<Visit> visitRepository;
+    Treatment treatment;
 
     /**
      * Instantiates a new Visit manager.
@@ -166,10 +162,23 @@ public class VisitManager {
      * @param instructions       the instructions
      * @return the boolean
      */
-    public boolean addPrescription(int medicationId, LocalDate treatmentStartDate, LocalDate treatmentEndDate, String instructions) {
+    public boolean addTreatment(int visitId, int medicationId, LocalDate treatmentStartDate, LocalDate treatmentEndDate, String instructions) {
         boolean success = false;
 
+        Medication medication = (Medication) RepositoryFactory.getDBContext(Medication.class).get(medicationId);
 
+        Prescription prescription = (Prescription) RepositoryFactory.getDBContext(Prescription.class)
+                .create(new Prescription(instructions, medication));
+
+        Visit visit = visitRepository.get(visitId);
+
+        Treatment newTreatment = new Treatment(visit);
+        newTreatment.setStartDate(treatmentStartDate);
+        newTreatment.setEndDate(treatmentEndDate);
+
+        newTreatment.addPrescription(prescription);
+
+        treatment = (Treatment) RepositoryFactory.getDBContext(Treatment.class).create(newTreatment);
 
         return success;
     }
