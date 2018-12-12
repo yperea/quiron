@@ -50,4 +50,53 @@ public class TreatmentForm extends HttpServlet {
         RequestDispatcher dispatcher = request.getRequestDispatcher(url);
         dispatcher.forward(request, response);
     }
+
+    @Override
+    protected void doPost(HttpServletRequest request,
+                          HttpServletResponse response) throws ServletException, IOException {
+
+
+        HttpSession session = request.getSession();
+
+        String url = "/quiron/tratments";
+        String title = "My Treatments";
+        String personType = (String) session.getAttribute("personType");
+        String username = request.getUserPrincipal().getName();
+
+        Treatment treatment = (Treatment) session.getAttribute("treatment");
+        AccountManager accountManager = (AccountManager) session.getAttribute("account");
+        if (accountManager == null){
+            accountManager = new AccountManager(username, personType);
+            session.setAttribute("account", accountManager);
+        }
+
+        TreatmentManager treatmentManager = new TreatmentManager(accountManager);
+
+        if ((request.getParameter("treatmentId") != null && !request.getParameter("treatmentId").isEmpty() )
+                &&
+                (personType.equals("provider")
+                        && (request.getParameter("providerComment") != null && !request.getParameter("providerComment").isEmpty())
+                )
+                ||
+                (personType.equals("patient")
+                        && (request.getParameter("providerComment") != null && !request.getParameter("providerComment").isEmpty())
+                        && (request.getParameter("evaluation") != null && !request.getParameter("evaluation").isEmpty())
+                )
+        ) {
+
+            url = "/quiron/treatment?id=" + request.getParameter("treatmentId");
+
+            treatment.setStatus(request.getParameter("statusCode"));
+
+            treatment.setProviderComments(request.getParameter("providerComment"));
+
+            if (treatmentManager.saveTreatment(treatment)) {
+                session.setAttribute("treatment", treatment);
+            }
+
+            session.setAttribute("message", treatmentManager.getMessage());
+            request.setAttribute("title", title);
+        }
+        response.sendRedirect(url);
+    }
 }
