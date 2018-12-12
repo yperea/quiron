@@ -111,7 +111,7 @@ public class VisitForm extends HttpServlet {
         if ((request.getParameter("visitId") != null && !request.getParameter("visitId").isEmpty() )
                 &&
                 (personType.equals("provider")
-                && (request.getParameter("startDate") != null && !request.getParameter("startDate").isEmpty())
+                && (request.getParameter("visitStartDate") != null && !request.getParameter("visitStartDate").isEmpty())
                 && (request.getParameter("startTime") != null && !request.getParameter("startTime").isEmpty())
                 && (request.getParameter("endTime") != null && !request.getParameter("endTime").isEmpty())
                 && (request.getParameter("symptom") != null && !request.getParameter("symptom").isEmpty())
@@ -132,9 +132,9 @@ public class VisitForm extends HttpServlet {
 
             url = "/quiron/visit?id=" + request.getParameter("visitId");
 
-            String actualStartDate = request.getParameter("startDate") + " "
+            String actualStartDate = request.getParameter("visitStartDate") + " "
                                    + request.getParameter("startTime");
-            String actualEndDate = request.getParameter("startDate") + " "
+            String actualEndDate = request.getParameter("visitStartDate") + " "
                                  + request.getParameter("endTime");
 
             visit.setActualStartDate(LocalDateTime.parse(actualStartDate,

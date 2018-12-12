@@ -73,6 +73,19 @@
                     <input type="hidden" id="birthYear" name="birthYear"
                            value="<tags:localDate date="${visit.patient.birthDate}" pattern="yyyy"/>" />
 
+                    <input type="hidden" id="treatmentStartDate" name="treatmentStartDate"
+                           value=""/>
+
+                    <input type="hidden" id="treatmentEndDate" name="treatmentEndDate"
+                           value=""/>
+
+                    <input type="hidden" id="prescriptionInstructions" name="prescriptionInstructions"
+                           value=""/>
+
+                    <input type="hidden" id="medicationId" name="medicationId"
+                           value=""/>
+
+
                     <c:if test="${account.profile.personType == 'patient'}">
                         <div class="row">
                             <div class="col-md-6 mb-3">
@@ -205,11 +218,11 @@
                     <c:if test="${(account.profile.personType == 'patient' && visit.status != 'A') || account.profile.personType == 'provider'}">
                     <div class="row">
                         <div class="col-md-6 mb-3">
-                            <label for="startDate">Actual Date</label>
+                            <label for="visitStartDate">Actual Date</label>
                             <input type="text"
                                    class="form-control date-picker"
-                                   id="startDate"
-                                   name="startDate"
+                                   id="visitStartDate"
+                                   name="visitStartDate"
                                    placeholder="mm/dd/yyyy"
                                    <c:if test="${visit.actualStartDate == null}">
                                        value="<fmt:formatDate value="${now}" pattern="MM/d/yyyy" />"
@@ -465,11 +478,11 @@
 
                             <div class="row">
                                 <div class="col-md-6 mb-3">
-                                    <label for="treatmentStartDate">Start Date</label>
+                                    <label for="startDate">Start Date</label>
                                     <input type="text"
                                            class="form-control date-picker"
-                                           id="treatmentStartDate"
-                                           name="treatmentStartDate"
+                                           id="startDate"
+                                           name="startDate"
                                            placeholder="mm/dd/yyyy"
                                            value="<fmt:formatDate value="${now}" pattern="MM/d/yyyy" />"
 <%--
@@ -492,11 +505,11 @@
                                 </div>
 
                                 <div class="col-md-6 mb-3">
-                                    <label for="treatmentEndDate">EndDate</label>
+                                    <label for="endDate">EndDate</label>
                                     <input type="text"
                                            class="form-control date-picker"
-                                           id="treatmentEndDate"
-                                           name="treatmentEndDate"
+                                           id="endDate"
+                                           name="endDate"
                                            placeholder="mm/dd/yyyy"
                                            value="<fmt:formatDate value="${now}" pattern="MM/d/yyyy" />"
                                     <%--
