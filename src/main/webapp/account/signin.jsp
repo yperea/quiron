@@ -122,7 +122,7 @@
     })();
 </script>
 <!-- Reference to local JS library -->
-<script type="text/javascript" charset="utf-8" src="../style/js/signin.js" ></script>
+<script type="text/javascript" charset="utf-8" src="${root}/style/js/signin.js" ></script>
 </body>
 </html>
 

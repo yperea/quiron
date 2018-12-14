@@ -165,21 +165,32 @@ public class VisitManager {
     public boolean addTreatment(int visitId, int medicationId, LocalDate treatmentStartDate, LocalDate treatmentEndDate, String instructions) {
         boolean success = false;
 
-        Medication medication = (Medication) RepositoryFactory.getDBContext(Medication.class).get(medicationId);
+        Visit visit = visitRepository.get(visitId);
+        //Treatment newTreatment = new Treatment(visit);
 
-        Prescription prescription = (Prescription) RepositoryFactory.getDBContext(Prescription.class)
+        Medication medication = (Medication) RepositoryFactory.getDBContext(Medication.class).get(medicationId);
+        Treatment newTreatment = visit.getTreatments().stream().findFirst().orElse(null);
+        Prescription prescription = null;
+
+        if(newTreatment != null) {
+            RepositoryFactory.getDBContext(Treatment.class).delete(newTreatment);
+            prescription = newTreatment.getPrescriptions().stream().findFirst().orElse(null);
+        }
+
+        //if(prescription != null) {
+        //    RepositoryFactory.getDBContext(Prescription.class).delete(prescription);
+        //}
+
+        prescription = (Prescription) RepositoryFactory.getDBContext(Prescription.class)
                 .create(new Prescription(instructions, medication));
 
-        Visit visit = visitRepository.get(visitId);
-
-        Treatment newTreatment = new Treatment(visit);
+        newTreatment =  new Treatment(visit);
         newTreatment.setStartDate(treatmentStartDate);
         newTreatment.setEndDate(treatmentEndDate);
-
         newTreatment.addPrescription(prescription);
 
         treatment = (Treatment) RepositoryFactory.getDBContext(Treatment.class).create(newTreatment);
-
+        success = true;
         return success;
     }
 }

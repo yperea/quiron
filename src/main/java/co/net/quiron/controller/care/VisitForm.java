@@ -6,6 +6,8 @@ import co.net.quiron.application.care.TreatmentManager;
 import co.net.quiron.application.care.VisitManager;
 import co.net.quiron.application.vendor.ApiMedicManager;
 import co.net.quiron.domain.care.Medication;
+import co.net.quiron.domain.care.Prescription;
+import co.net.quiron.domain.care.Treatment;
 import co.net.quiron.domain.care.Visit;
 import co.net.quiron.vendor.com.apimedic.Issue;
 import co.net.quiron.vendor.com.apimedic.Symptom;
@@ -82,7 +84,11 @@ public class VisitForm extends HttpServlet {
 
         List<Medication> medications = new MedicationManager().getMedications();
 
+        Treatment treatment = visit.getTreatments().stream().findFirst().orElse(null);
+        Prescription prescription = treatment.getPrescriptions().stream().findFirst().orElse(null);
         session.setAttribute("visit", visit);
+        request.setAttribute("treatment", treatment);
+        request.setAttribute("prescription", prescription);
         request.setAttribute("startTime", actualStartTime);
         request.setAttribute("endTime", actualEndTime);
         request.setAttribute("symptoms", symptoms);
@@ -137,6 +143,16 @@ public class VisitForm extends HttpServlet {
                 )
         ) {
 
+            int diagosticId = 0;
+            String diagnosisName = "";
+            int symptomId = Integer.parseInt(request.getParameter("symptom"));
+            String symptomName = request.getParameter("symptomName");
+
+            if(request.getParameter("diagnosis") != null && !request.getParameter("diagnosis").isEmpty()) {
+                diagosticId = Integer.parseInt(request.getParameter("diagnosis"));
+                diagnosisName = request.getParameter("diagnosticName");
+            }
+
             url = "/quiron/visit?id=" + request.getParameter("visitId");
 
             String actualStartDate = request.getParameter("visitStartDate") + " "
@@ -151,10 +167,11 @@ public class VisitForm extends HttpServlet {
                     DateTimeFormatter.ofPattern("MM/d/yyyy HH:mm")));
 
             visit.setStatus(request.getParameter("statusCode"));
-            visit.setSymptomId(Integer.parseInt(request.getParameter("symptom")));
-            //visit.setSymptomName(request.getParameter("symptomName"));
-            visit.setDiagnosticId(Integer.parseInt(request.getParameter("diagnosis")));
-            //visit.setDiagnosticName(request.getParameter("diagnosisName"));
+
+            visit.setSymptomId(symptomId);
+            visit.setSymptomName(symptomName);
+            visit.setDiagnosticId(diagosticId);
+            visit.setDiagnosticName(diagnosisName);
 
             visit.setPatientWeight(Double.parseDouble(request.getParameter("weight")));
             visit.setPatientHeight(Double.parseDouble(request.getParameter("height")));
@@ -174,7 +191,7 @@ public class VisitForm extends HttpServlet {
                 if ((request.getParameter("medicationId") != null && !request.getParameter("medicationId").isEmpty())
                         && (request.getParameter("treatmentStartDate") != null && !request.getParameter("treatmentStartDate").isEmpty())
                         && (request.getParameter("treatmentEndDate") != null && !request.getParameter("treatmentEndDate").isEmpty())
-                        && (request.getParameter("prescriptionInstructions") != null && !request.getParameter("prescriptionInstructions").isEmpty())
+                        && (request.getParameter("treatmentInstructions") != null && !request.getParameter("treatmentInstructions").isEmpty())
                 ) {
                     //TreatmentManager treatmentManager = new TreatmentManager();
 
@@ -188,9 +205,9 @@ public class VisitForm extends HttpServlet {
                     LocalDate treatmentEndDate = LocalDate.parse(request.getParameter("treatmentEndDate"),
                             DateTimeFormatter.ofPattern("MM/d/yyyy"));
 
-                    String prescriptionInstructions = request.getParameter("prescriptionInstructions");
+                    String treatmentInstructions = request.getParameter("treatmentInstructions");
 
-                    treatmentAdded = visitManager.addTreatment(visitId, medicationId, treatmentStartDate, treatmentEndDate, prescriptionInstructions);
+                    treatmentAdded = visitManager.addTreatment(visitId, medicationId, treatmentStartDate, treatmentEndDate, treatmentInstructions);
 
                     if(treatmentAdded) {
                         session.setAttribute("treatment", visitManager.getTreatment());    

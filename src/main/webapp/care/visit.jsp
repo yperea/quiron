@@ -16,19 +16,10 @@
 
             <div class="btn-toolbar mb-2 mb-md-0">
                 <div class="btn-group mr-2">
-<%--
-                    <a class="btn btn-sm btn-outline-warning" href="#" role="button">Pharmacies</a>
-                    &nbsp;
---%>
                     <a class="btn btn-sm btn-outline-success" href="${root}/patient/visits" role="button">My Visits</a>
                     &nbsp;
-                    <c:if test="${personType == 'provider' }">
-                        <a class="btn btn-sm btn-outline-warning" href="${root}/patient/treatment" role="button">Add Prescription</a>
-                        &nbsp;
-                    </c:if>
-
                 </div>
-
+                <c:if test="${personType == 'provider' }">
                 <button class="btn btn-sm btn-outline-secondary dropdown-toggle"
                         id="create-prescription"
                         data-toggle="modal"
@@ -36,16 +27,176 @@
                     <span data-feather="activity"></span>
                     Add Prescription
                 </button>
-
+                </c:if>
             </div>
-
         </div>
+
         <br/>
 
         <div class="row justify-content-center">
+            <div class="col-md-3 order-md-2 mb-4">
+                <c:if test="${prescription != null}">
+                    <div id="importantCard" class="card border-info mb-3">
+                        <div class="card-header"><h6>Important</h6></div>
+                        <div id="importantCardBody" class="card-body text-info">
+                            <h5 class="card-title">Prescription instructions</h5>
+                            <p id="prescriptionDetails" class="card-text">
+                                ${prescription.instructions} of ${prescription.medication.name} from ${treatment.startDate} to ${treatment.endDate}.
+                            </p>
+                        </div>
+                    </div>
+                </c:if>
+<%--
+                <h4 class="d-flex justify-content-between align-items-center mb-3">
+                    <span class="text-muted">Measurements</span>
+                    <span class="badge badge-secondary badge-pill">3</span>
+                </h4>
+                <ul class="list-group mb-3">
+                    <li class="list-group-item d-flex justify-content-between lh-condensed">
+                        <div>
+                            <h6 class="my-0"><label for="bloodPressure">Blood Pressure</label></h6>
+                            <small class="text-muted">Brief description</small>
+                        </div>
+                        <span class="text-muted">
+                            <input type="text"
+                                   class="form-control"
+                                   id="bloodPressure"
+                                   name="bloodPressure"
+                                   placeholder=""
+                                   size="4"
+                                   value="${visit.patientBloodPressure}"
+                                   required />
+                            <div class="invalid-feedback">
+                                Blood pressure required.
+                            </div>
+                        </span>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between lh-condensed">
+                        <div>
+                            <h6 class="my-0"><label for="weight">Weight</label></h6>
+                            <small class="text-muted">Brief description</small>
+                        </div>
+                        <span class="text-muted">
+                            <input type="text"
+                                   class="form-control"
+                                   id="weight"
+                                   name="weight"
+                                   placeholder=""
+                                   size="4"
+                                   value="${visit.patientWeight}"
+                                   required />
+                            <div class="invalid-feedback">
+                                Enter patient weight.
+                            </div>
+                        </span>
+                    </li>
 
-            <div class="col-md-9">
-                <!--<h4 class="mb-3">Your person</h4>-->
+                    <li class="list-group-item d-flex justify-content-between lh-condensed">
+                        <div>
+                            <h6 class="my-0"><label for="height">Height</label></h6>
+                            <small class="text-muted">Brief description</small>
+                        </div>
+                        <span class="text-muted">
+                            <input type="text"
+                                   class="form-control"
+                                   id="height"
+                                   name="height"
+                                   placeholder=""
+                                   size="4"
+                                   value="${visit.patientHeight}"
+                                   required />
+                            <div class="invalid-feedback">
+                                Enter patient height.
+                            </div>
+                        </span>
+                    </li>
+
+                    <li class="list-group-item d-flex justify-content-between lh-condensed">
+                        <div>
+                            <h6 class="my-0"><label for="pulse">Pulse</label></h6>
+                            <small class="text-muted">Brief description</small>
+                        </div>
+                        <span class="text-muted">
+                            <input type="text"
+                                   class="form-control"
+                                   id="pulse"
+                                   name="pulse"
+                                   placeholder=""
+                                   size="4"
+                                   value="${visit.patientPulse}"
+                                   required />
+                            <div class="invalid-feedback">
+                                Enter patient pulse.
+                            </div>
+                        </span>
+                    </li>
+
+                    <li class="list-group-item d-flex justify-content-between lh-condensed">
+                        <div>
+                            <h6 class="my-0"><label for="respiration">Respiration</label></h6>
+                            <small class="text-muted">Brief description</small>
+                        </div>
+                        <span class="text-muted">
+                            <input type="text"
+                                   class="form-control"
+                                   id="respiration"
+                                   name="respiration"
+                                   placeholder=""
+                                   size="4"
+                                   value="${visit.patientRespiration}"
+                                   required />
+                            <div class="invalid-feedback">
+                                Enter patient respiration.
+                            </div>
+                        </span>
+                    </li>
+
+                    <li class="list-group-item d-flex justify-content-between lh-condensed">
+                        <div>
+                            <h6 class="my-0"><label for="bmi">BMI</label></h6>
+                            <small class="text-muted">Brief description</small>
+                        </div>
+                        <span class="text-muted">
+                            <input type="text"
+                                   class="form-control"
+                                   id="bmi"
+                                   name="bmi"
+                                   placeholder=""
+                                   size="4"
+                                   value="${visit.patientBMI}"
+                                   required />
+                            <div class="invalid-feedback">
+                                Enter patient BMI.
+                            </div>
+                        </span>
+                    </li>
+
+                    <li class="list-group-item d-flex justify-content-between lh-condensed">
+                        <div>
+                            <h6 class="my-0"><label for="temperature">Temperature</label></h6>
+                            <small class="text-muted">Brief description</small>
+                        </div>
+                        <span class="text-muted">
+                            <input type="text"
+                                   class="form-control"
+                                   id="temperature"
+                                   name="temperature"
+                                   placeholder=""
+                                   size="4"
+                                   value="${visit.patientTemperature}"
+                                   required />
+                            <div class="invalid-feedback">
+                                Enter patient height.
+                            </div>
+                        </span>
+                    </li>
+                </ul>
+--%>
+            </div>
+
+
+            <div class="col-md-8">
+                <%--<h4 class="mb-3">Visit Information</h4>--%>
 
                 <yp:alert type="${message.type}" url="${message.redirect}">${message.description}</yp:alert>
                 <c:remove var="message" scope="session" />
@@ -67,6 +218,12 @@
                     <input type="hidden" id="diagnosticName" name="diagnosticName"
                            value="${visit.diagnosticName}"/>
 
+                    <input type="hidden" id="symptomId" name="symptomId"
+                           value="${visit.symptomId}"/>
+
+                    <input type="hidden" id="symptomName" name="symptomName"
+                           value="${visit.symptomName}"/>
+
                     <input type="hidden" id="gender" name="gender"
                            value="${visit.patient.gender}"/>
 
@@ -74,16 +231,16 @@
                            value="<tags:localDate date="${visit.patient.birthDate}" pattern="yyyy"/>" />
 
                     <input type="hidden" id="treatmentStartDate" name="treatmentStartDate"
-                           value=""/>
+                           value="<tags:localDate date="${treatment.startDate}" pattern="MM/d/yyyy"/>"/>
 
                     <input type="hidden" id="treatmentEndDate" name="treatmentEndDate"
-                           value=""/>
+                           value="<tags:localDate date="${treatment.endDate}" pattern="MM/d/yyyy"/>"/>
 
-                    <input type="hidden" id="prescriptionInstructions" name="prescriptionInstructions"
-                           value=""/>
+                    <input type="hidden" id="treatmentInstructions" name="treatmentInstructions"
+                           value="${prescription.instructions}"/>
 
                     <input type="hidden" id="medicationId" name="medicationId"
-                           value=""/>
+                           value="${prescription.medication.id}"/>
 
 
                     <c:if test="${account.profile.personType == 'patient'}">
@@ -312,7 +469,7 @@
                                     <c:if test="${personType == 'patient' }">
                                     disabled
                                     </c:if> />
-                                <option value="">Choose...</option>
+                                <option value="0">Choose...</option>
                                 <c:forEach var="issue" items="${issues}">
                                     <option value="${issue.ID}"
                                             <c:if test="${visit.diagnosticId == issue.ID}">selected</c:if> >
@@ -484,20 +641,12 @@
                                            id="startDate"
                                            name="startDate"
                                            placeholder="mm/dd/yyyy"
-                                           value="<fmt:formatDate value="${now}" pattern="MM/d/yyyy" />"
-<%--
-                                            <c:if test="${visit.actualStartDate == null}">
+                                            <c:if test="${treatment.startDate == null}">
                                                 value="<fmt:formatDate value="${now}" pattern="MM/d/yyyy" />"
                                             </c:if>
-                                            <c:if test="${visit.actualStartDate != null}">
-                                                value="<tags:localDateTime date="${visit.actualStartDate}" pattern="MM/d/yyyy"/>"
+                                            <c:if test="${treatment.startDate  != null}">
+                                                value="<tags:localDate date="${treatment.startDate}" pattern="MM/d/yyyy"/>"
                                             </c:if>
-
-                                            <c:if test="${personType == null || personType == 'patient' }">
-                                                disabled
-                                            </c:if>
---%>
-
                                            required />
                                     <div class="invalid-feedback">
                                         Please enter a valid date.
@@ -511,20 +660,12 @@
                                            id="endDate"
                                            name="endDate"
                                            placeholder="mm/dd/yyyy"
-                                           value="<fmt:formatDate value="${now}" pattern="MM/d/yyyy" />"
-                                    <%--
-                                                                                <c:if test="${visit.actualStartDate == null}">
-                                                                                    value="<fmt:formatDate value="${now}" pattern="MM/d/yyyy" />"
-                                                                                </c:if>
-                                                                                <c:if test="${visit.actualStartDate != null}">
-                                                                                    value="<tags:localDateTime date="${visit.actualStartDate}" pattern="MM/d/yyyy"/>"
-                                                                                </c:if>
-
-                                                                                <c:if test="${personType == null || personType == 'patient' }">
-                                                                                    disabled
-                                                                                </c:if>
-                                    --%>
-
+                                            <c:if test="${treatment.endDate == null}">
+                                                value="<fmt:formatDate value="${now}" pattern="MM/d/yyyy" />"
+                                            </c:if>
+                                            <c:if test="${treatment.endDate  != null}">
+                                                value="<tags:localDate date="${treatment.endDate}" pattern="MM/d/yyyy"/>"
+                                            </c:if>
                                            required />
                                     <div class="invalid-feedback">
                                         Please enter a valid date.
@@ -542,7 +683,7 @@
                                             required />
                                     <option value="">Choose...</option>
                                     <c:forEach var="medication" items="${medications}">
-                                        <option value="${medication.id}" <c:if test="${visit.symptomId == medication.id}">selected</c:if> >${medication.name}</option>
+                                        <option value="${medication.id}" <c:if test="${prescription.medication.id == medication.id}">selected</c:if> >${medication.name}</option>
                                     </c:forEach>
 
                                     </select>
@@ -553,14 +694,14 @@
                             </div>
 
                             <div class="mb-3">
-                                <label for="instructions">Instructions</label>
+                                <label for="dosis">Dosis</label>
                                 <textarea class="form-control"
-                                          id="instructions"
-                                          name="instructions"
+                                          id="dosis"
+                                          name="dosis"
                                           size="512"
-                                          required >${visit.providerComments}</textarea>
+                                          required >${prescription.instructions}</textarea>
                                 <div class="invalid-feedback">
-                                    Please enter prescription instructions.
+                                    Please enter prescription dosis.
                                 </div>
                             </div>
 
@@ -577,34 +718,13 @@
             </div>
         </div>
 
-        <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-            <h4 class="h4">Prescription</h4>
-        </div>
-
-        <div class="row justify-content-center">
-
-            <div class="table-responsive col-md-9">
-                <table class="table table-striped table-sm"
-                       id="prescriptions">
-                    <thead>
-                    <tr>
-                        <th>Start Date</th>
-                        <th>End Date</th>
-                        <th>Instructions</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    </tbody>
-                </table>
-            </div>
-        </div>
     </main>
 
     <%@include file="../shared/cdn-jss.jsp"%>
     <%@include file="../shared/footer.jsp"%>
 
     <!-- Reference to local JS library -->
-    <script type="text/javascript" charset="utf-8" src="../style/js/visit.js" ></script>
+    <script type="text/javascript" charset="utf-8" src="${root}/style/js/visit.js" ></script>
 
 </body>
 </html>

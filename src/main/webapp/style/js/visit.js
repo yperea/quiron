@@ -11,17 +11,20 @@
 
         var treatmentStartDate = $("#startDate");
         var treatmentEndDate = $("#endDate");
-        var treatmentInstructions = $("#instructions");
+        var treatmentDosis = $("#dosis");
+        var medication = $("#medication");
+        var treatmentInstructions = "";
 
         $('#symptom').change(function() {
-           console.log('Symptom Id: ' + $(this).val());
-           console.log('Symptom : ' + $("#symptom option:selected").text);
-           loadDiagnosisList($(this).val());
+            var symptomName = $('#symptom').find(":selected").text();
+            $('#symptomName').val(symptomName.trim());
+            $('#diagnosticName').val(null);
+            loadDiagnosisList($(this).val());
         });
 
         $('#diagnosis').change(function() {
-            console.log('Diagnosis Id: ' + $(this).val());
-            console.log('Diagnosis : ' + $(this).text);
+            var diagnosisName = $('#diagnosis').find(":selected").text();
+            $('#diagnosticName').val(diagnosisName.trim());
         });
 
         $(".date-picker").datepicker({
@@ -42,7 +45,7 @@
                 + '&gender=' + gender;
 
             $('#diagnosis').attr('disabled', 'disabled').find('option').remove();
-            addDiagnosticToList(null, "Choose", false);
+            addDiagnosticToList("", "Choose", false);
 
             $.getJSON( url, function(data){
                 $(data).each(function(i, item){
@@ -83,17 +86,27 @@
 
         function addPrescription() {
             var valid = true;
+            var medicationName = $("#medication option:selected").text();
+
             valid = valid && checkLength( treatmentStartDate, 10, 10 );
             valid = valid && checkLength( treatmentEndDate, 10, 10 );
-            valid = valid && checkLength( treatmentInstructions, 0, 512 );
+            valid = valid && checkLength( treatmentDosis, 0, 512 );
 
             if ( valid ) {
-                $( "#prescriptions tbody" ).append( "<tr>" +
-                    "<td>" + treatmentStartDate.val() + "</td>" +
-                    "<td>" + treatmentEndDate.val() + "</td>" +
-                    "<td>" + treatmentInstructions.val() + "</td>" +
-                    "</tr>" );
 
+                $("#treatmentStartDate").val(treatmentStartDate.val());
+                $("#treatmentEndDate").val(treatmentEndDate.val());
+                $("#treatmentInstructions").val(treatmentDosis.val());
+                $("#medicationId").val(medication.val());
+
+                treatmentInstructions = "Please "
+                                      + $("#treatmentInstructions").val() + " of "
+                                      + medicationName + ", from "
+                                      + $("#treatmentStartDate").val() + " to "
+                                      + $("#treatmentEndDate").val() + ". "
+
+
+                $("#prescriptionDetails").text(treatmentInstructions);
                 $( "#dialog-form" ).modal( "hide" );
             }
             return valid;
