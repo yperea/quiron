@@ -80,8 +80,10 @@ public class VisitForm extends HttpServlet {
             prescription = treatment.getPrescriptions().stream().findFirst().orElse(null);
         }
 
+
         request.setAttribute("title", title);
         request.setAttribute("visitId", request.getParameter("id"));
+        //TODO: store visit in a request variable
         session.setAttribute("visit", visit);
         request.setAttribute("treatment", treatment);
         request.setAttribute("prescription", prescription);

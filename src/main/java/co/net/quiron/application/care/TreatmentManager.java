@@ -3,7 +3,6 @@ package co.net.quiron.application.care;
 import co.net.quiron.application.account.AccountManager;
 import co.net.quiron.application.factory.RepositoryFactory;
 import co.net.quiron.domain.care.Treatment;
-import co.net.quiron.domain.care.Visit;
 import co.net.quiron.domain.person.Patient;
 import co.net.quiron.domain.person.Provider;
 import co.net.quiron.persistence.interfaces.IAppRepository;
@@ -13,15 +12,13 @@ import lombok.Data;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 import java.util.stream.Collectors;
 
 /**
- * The type Treatment manager.
+ * This class represents the manager for the operations related to the patient treatments.
  */
 @Data
 public class TreatmentManager {
@@ -30,7 +27,6 @@ public class TreatmentManager {
 
     Message message;
     AccountManager accountManager;
-    IAppRepository<Visit> visitRepository;
     IAppRepository<Treatment> treatmentRepository;
 
     /**
@@ -38,7 +34,6 @@ public class TreatmentManager {
      */
     public TreatmentManager() {
         message = new Message();
-        visitRepository = RepositoryFactory.getDBContext(Visit.class);
         treatmentRepository = RepositoryFactory.getDBContext(Treatment.class);
     }
 
@@ -50,38 +45,6 @@ public class TreatmentManager {
     public TreatmentManager(AccountManager accountManager) {
         this();
         this.accountManager =  accountManager;
-    }
-
-
-    /**
-     * Gets patient treatments list.
-     *
-     * @return the patient treatments list
-     */
-    public List<Treatment> getPatientTreatmentsList() {
-
-        IAppRepository<Patient> patientRepository = RepositoryFactory.getDBContext(Patient.class);
-        Map<String, Object> params = new TreeMap<>();
-        int patientId = accountManager.getId();
-        Patient patient = patientRepository.get(patientId);
-        params.put("patient", patient);
-
-        List<Visit> visits = visitRepository.getListEquals(params);
-        List<Treatment> treatments = new ArrayList<>();
-
-        for (Visit visit: visits) {
-            if (visit.getTreatments().size() > 0) {
-                Treatment treatment = visit.getTreatments().stream().findFirst().get();
-                treatments.add(treatment);
-            }
-        }
-
-        if (treatments.size() == 0) {
-            message.setType(MessageType.WARNING);
-            message.setDescription("Records not found");
-        }
-
-        return treatments;
     }
 
     /**
@@ -104,10 +67,8 @@ public class TreatmentManager {
             message.setType(MessageType.WARNING);
             message.setDescription("Treatment not found");
         }
-
         return treatment;
     }
-
 
     /**
      * Save treatment boolean.
@@ -130,31 +91,39 @@ public class TreatmentManager {
     }
 
     /**
-     * Gets provider treatments list.
+     * Gets treatments list.
      *
-     * @return the provider treatments list
+     * @return the patient treatments list
      */
-    public List<Treatment> getProviderTreatmentsList() {
+    public List<Treatment> getTreatmentsList() {
 
-        IAppRepository<Provider> providerRepository = RepositoryFactory.getDBContext(Provider.class);
-        Map<String, Object> params = new TreeMap<>();
-        int providerId = accountManager.getId();
-        Provider provider = providerRepository.get(providerId);
-        params.put("provider", provider);
+        List<Treatment> treatments;
 
-        List<Treatment> treatments = treatmentRepository.getList()
-                .stream()
-                .filter(v -> v.getVisit()
-                        .getProviderSchedule()
-                        .getProvider()
-                        .equals(provider))
-                .collect(Collectors.toList());
+        if(accountManager.getPersonType().equals("patient")) {
+            Patient patient = (Patient)RepositoryFactory.getDBContext(Patient.class)
+                    .get(accountManager.getId());
+            treatments = treatmentRepository.getList()
+                    .stream()
+                    .filter(v -> v.getVisit()
+                            .getPatient()
+                            .equals(patient))
+                    .collect(Collectors.toList());
+        } else {
+            Provider provider = (Provider)RepositoryFactory.getDBContext(Provider.class)
+                    .get(accountManager.getId());
+            treatments = treatmentRepository.getList()
+                    .stream()
+                    .filter(v -> v.getVisit()
+                            .getProviderSchedule()
+                            .getProvider()
+                            .equals(provider))
+                    .collect(Collectors.toList());
+        }
 
         if (treatments.size() == 0) {
             message.setType(MessageType.WARNING);
             message.setDescription("Records not found");
         }
-
         return treatments;
     }
 }

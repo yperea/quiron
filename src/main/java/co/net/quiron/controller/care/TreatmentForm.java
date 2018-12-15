@@ -27,14 +27,13 @@ public class TreatmentForm extends HttpServlet {
                        HttpServletResponse response) throws ServletException, IOException {
 
         HttpSession session = request.getSession();
-
         String url = "/care/treatment.jsp";
         String title = "My Treatments";
-
         Prescription prescription = null;
         AccountManager accountManager = AccountManager.getAccountManager(session, request);
         TreatmentManager treatmentManager = new TreatmentManager(accountManager);
         int id = Integer.parseInt(FormManager.getNumericValue(request.getParameter("id")));
+
         Treatment treatment = treatmentManager.getPatientTreatment(id);
         if (treatment != null) {
             prescription = treatment.getPrescriptions().stream().findFirst().orElse(null);
@@ -54,13 +53,9 @@ public class TreatmentForm extends HttpServlet {
     protected void doPost(HttpServletRequest request,
                           HttpServletResponse response) throws ServletException, IOException {
 
-
         HttpSession session = request.getSession();
-
         String url = "/quiron/care/treatment";
         String title = "My Treatments";
-        String personType = (String) session.getAttribute("personType");
-        String username = request.getUserPrincipal().getName();
 
         AccountManager accountManager = AccountManager.getAccountManager(session, request);
         int treatmentId = Integer.parseInt(FormManager.getNumericValue(request.getParameter("treatmentId")));

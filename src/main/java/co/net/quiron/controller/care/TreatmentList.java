@@ -30,18 +30,10 @@ public class TreatmentList extends HttpServlet {
 
         String url = "/care/treatments.jsp";
         String title = "My Treatments";
-        String personType = (String) session.getAttribute("personType");
 
         AccountManager accountManager = AccountManager.getAccountManager(session, request);
-
         TreatmentManager treatmentManager = new TreatmentManager(accountManager);
-        List<Treatment> treatments = null;
-        //TODO: simplify this code by deciding inside treatmentManager class
-        if (personType.equals("provider")) {
-            treatments = treatmentManager.getProviderTreatmentsList();
-        } else {
-            treatments = treatmentManager.getPatientTreatmentsList();
-        }
+        List<Treatment> treatments = treatmentManager.getTreatmentsList();
 
         request.setAttribute("title", title);
         request.setAttribute("treatments", treatments);

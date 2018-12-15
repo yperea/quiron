@@ -25,7 +25,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 /**
- * This class represents the manager for the operations related to the Account and user Account.
+ * This class represents the manager for the operations related to the user Account.
  *
  * @Author Yesid Perea
  */
