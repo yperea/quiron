@@ -1,83 +1,85 @@
 # Project Plan
 
 ### Week 2
-- [ ] Create project repository on GitHub.
-- [ ] Create project structure in intellij and push.
-- [ ] Create Problem Statement.
+- [x] Create project repository on GitHub.
+- [x] Create project structure in intellij and push.
+- [x] Create Problem Statement.
 
 ### Week 3
-- [ ] Create screen design for project.
-- [ ] Complete Problem Statement.
-- [ ] List probable technologies to be used.
-- [ ] Create wireframes for the screen design.
-- [ ] Add link to list of indie projects in student repo.
-- [ ] Write project plan.
-- [ ] Complete database design.
-- [ ] Start Professional Development Presentation.
-- [ ] Prepare for Checkpoint 1: Problem statement, project plan, screen design and time log pushed to GitHub.
+- [x] Create screen design for project.
+- [x] Complete Problem Statement.
+- [x] List probable technologies to be used.
+- [x] Create wireframes for the screen design.
+- [x] Add link to list of indie projects in student repo.
+- [x] Write project plan.
+- [x] Complete database design.
+- [x] Start Professional Development Presentation.
+- [x] Prepare for Checkpoint 1: Problem statement, project plan, screen design and time log pushed to GitHub.
 
 ### Week 4 Checkpoint 1
-- [ ] Create document application flow.
-- [ ] Create the objects and entities for hibernate.
-- [ ] Start Professional Development Presentation.
-- [ ] Set up logging for project.
+- [x] Create document application flow.
+- [x] Create the objects and entities for hibernate.
+- [x] Start Professional Development Presentation.
+- [x] Set up logging for project.
 
 ### Week 5
 - [ ] Create class uml diagram.*
-- [ ] Create templates for jsps using bootstrap.
-- [ ] Create database.
-- [ ] Create scripts to populate support tables.*
+- [x] Create templates for jsps using bootstrap.
+- [x] Create database.
+- [x] Create scripts to populate support tables.
 
 ### Week 6
-- [ ] Create authentication process for patients and providers(-).
-- [ ] Build SignUp, SignIn and Logout process for patients (+).
-- [ ] Create db on AWS.
-- [ ] Deploy to AWS for first time.
-- [ ] Determine possible Web Services or APIs to use.
-- [ ] Prepare for Checkpoint 2: Database designed and created, at least one DAO implemented with Hibernate, DAO is unit tested, Log4J is implemented (no System.out.printlns), class design and any other diagrams you plan to use have been created.
+- [x] Create authentication process for patients and providers.
+- [x] Build SignUp, SignIn and Logout process for patients.
+- [x] Create db on AWS.
+- [x] Deploy to AWS for first time.
+- [x] Determine possible Web Services or APIs to use.
+- [x] Prepare for Checkpoint 2: Database designed and created, at least one DAO implemented with Hibernate, DAO is unit tested, Log4J is implemented (no System.out.printlns), class design and any other diagrams you plan to use have been created.
 
 ### Week 7 Checkpoint 2
-- [ ] Weekly journal entry.
-- [ ] Set up authentication locally.
-- [ ] Set up authentication on AWS.
-- [ ] Review and incorporate any feedback from Checkpoint 2.
-- [ ] Build crud jsps for Patient Account.*
-- [ ] Prepare Professional Development Presentation.
+- [x] Set up authentication locally.
+- [x] Set up authentication on AWS.
+- [x] Review and incorporate any feedback from Checkpoint 2.
+- [x] Build crud jsps for Patient Account.
+- [x] Prepare Professional Development Presentation.
 
 ### Week 8 AWS CI Presentation
-- [ ] Build VisitForm and treatment tracking jsps for Patients and Providers views.
-- [ ] Prepare for Checkpoint 3: Deployed to AWS, at least one JSP that displays data from the database is implemented.
-- [ ] Implement Hibernate Validator (?)
+- [x] Build VisitForm and treatment tracking jsps for Patients and Providers views.
+- [x] Prepare for Checkpoint 3: Deployed to AWS, at least one JSP that displays data from the database is implemented.
 
 ### Week 9 Checkpoint 3
-- [ ] Review and incorporate feedback from Checkpoint 3.
-- [ ] Integration with selected APIs.
-- [ ] Carefully review code for standards and best practices - use a code quality tool?
+- [x] Review and incorporate feedback from Checkpoint 3.
+- [x] Carefully review code for standards and best practices - use a code quality tool?
 
 ### Week 10
-- [ ] Unit test all api integrations.
-- [ ] Work on Team project.
+- [x] Unit test all api integrations.
+- [x] Work on Team project.
 
 ### Week 11
-- [ ] Prepare Team project presentation.
+- [x] Integration with selected APIs.
+- [x] Prepare Team project presentation.
 
 ### Week 12 - Team project due.
-- [ ] Review indie project and create list of ToDos.
+- [x] Review indie project and create list of ToDos.
 
 ### Week 13
-- [ ] Complete todos identified in week 12
-- [ ] Prepare for week 13 peer code reviews
-- [ ] Code quality check
-- [ ] Review rubric to make sure I'm on target
+- [x] Complete Todos identified in week 12
+- [x] Prepare for week 13 peer code reviews
+- [x] Code quality check
 
 ### Week 14
-- [ ] Create final presentation
+- [x] Complete Todos identified in week 12
+- [x] Review rubric to make sure I'm on target
 
 ### Week 15
-- [ ] Final Presentation
-- [ ] Create video
+- [x] Implementing visit and treatment workflow
+- [x] Review and incorporate feedback from instructor.
+- [ ] Create final presentation
 - [ ] Finalize all documentation
 - [ ] Code quality check
+- [ ] Final touches before code complete
+- [ ] Create video
 
 ### Week 16
-- [ ] Final touches before code complete
+- [ ] Final Presentation
+
