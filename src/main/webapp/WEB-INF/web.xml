@@ -75,4 +75,9 @@
     <role-name>User</role-name>
   </security-role>
 
+  <error-page>
+    <error-code>404</error-code>
+    <location>/error404</location>
+  </error-page>
+
 </web-app>

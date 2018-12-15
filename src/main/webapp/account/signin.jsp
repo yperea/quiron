@@ -48,7 +48,7 @@
 
 
 <form class="form-signin" action="j_security_check?test=1" method="POST">
-    <img class="mb-4" src="../style/img/QuironIcon75x75.png" alt="" width="72" height="72">
+    <img class="mb-4" src="${root}/style/img/QuironIcon75x75.png" alt="" width="72" height="72">
     <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
 
 
