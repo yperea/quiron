@@ -9,23 +9,22 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
- * Error 404 Controller.
+ * Error 500 Controller.
  */
 @WebServlet(
-        name="Error404",
-        urlPatterns = {"/error404" }
+        name="Error500",
+        urlPatterns = {"/error500" }
 )
-public class Error404 extends HttpServlet {
+public class Error500 extends HttpServlet {
 
     @Override
     protected void doGet (HttpServletRequest request,
                           HttpServletResponse response) throws ServletException, IOException {
 
-        String url = "/public/404.jsp";
-        String title = "Error 404";
+        String url = "/public/500.jsp";
+        String title = "Error 500";
 
         request.setAttribute("title", title);
-
         RequestDispatcher dispatcher = request.getRequestDispatcher(url);
         dispatcher.forward(request, response);
     }
