@@ -1,4 +1,4 @@
-# Time Log (WIP)
+# Time Log
 
 | Date | Task | Hours | Notes|
 |------|------|-------|------|
@@ -63,3 +63,14 @@
 | 11/13/18| Working on Individual Project: Integrating external API from https://apimedic.com/. Implementing communication with Authentication service https://sandbox-authservice.priaid.ch. Implementing Symptoms service query operation.| 10 | |
 | 11/17/18| Working on Week 11 exercise.| 5 | |
 | 11/18/18| Working on Individual Project: Implementing CRUD Test Cases for Medication, Prescription and Treatment entities.| 3 | |
+| 11/19/18| Working on Individual Project: Implementing Visit view and calling Symptoms list from external API.| 2 | |
+| 11/24/18| Working on Individual Project: Implementing Treatment List view.| 2 | |
+| 11/25/18| Working on Individual Project: Implementing Visit form.| 2 | |
+| 12/01/18| Working on Individual Project: Adding JQuery on Visit form to handle external API calling.| 6 | |
+| 12/04/18| Working on Week 13 exercise.| 4 | |
+| 12/07/18| Working on Individual Project: Refactoring AccountManager application class.| 3 | |
+| 12/09/18| Working on Individual Project: Implementing Visit workflow for Provider role.| 5 | |
+| 12/10/18| Working on Individual Project: Installing and play around with QAPlug and cleaning out domain classes code.| 3 | |
+| 12/11/18| Working on Individual Project: Implementing Treatment controllers and managers and Add Prescription feature.| 3 | |
+| 12/14/18| Working on Individual Project: Finishing Add Prescription and adding Treatments list and form views and controllers.| 8 | |
+| 12/15/18| Working on Individual Project: Implementing Instructor's code review recommendations.| 8 | |
