@@ -14,8 +14,8 @@ I would like to build a platform that allows for better control of medical treat
 * Security/Authentication
     * Tomcat's JDBC Realm Authentication
     * Admin role: create/read/update/delete (crud) of all data
-    * Patient role: create/read/update/delete (crud) their own profiles, schedules, in general any data they have entered previously.
-    * Provider role: create/read/update/delete (crud) their own profiles, diagnostics, in general any data they have entered previously.
+    * Patient role: create/read/update (cru) their own profiles, visits and treatments, in general any data they have entered previously.
+    * Provider role: create/read/update (cru) their own profiles, diagnostics, visits and treatments, in general any data they have entered previously.
     * All: anyone can view information pages (no login)
 * Database
     * MySQL
@@ -28,9 +28,8 @@ I would like to build a platform that allows for better control of medical treat
 * Continuing Integration and Delivery
     * AWS CodePipeline
     * AWS CodeDeploy
-    * Jenkins
 * Web Services consumed using Java
-    * Amazon Simple Email Service (TBA)
+    * Using [ApiMedic](https://apimedic.com/) REST Services to obtain possible symptoms and diagnosis during the visit.
 * CSS
     * Bootstrap 4
 * Data Validation
@@ -38,10 +37,11 @@ I would like to build a platform that allows for better control of medical treat
 * Logging
     * Configurable logging using Log4J2. In production, only errors will normally be logged, but logging at a debug level can be turned on to facilitate trouble-shooting.
 * Hosting
-    * AWS
+    * [AWS](http://18.191.31.27:8080/quiron)
 * Independent Research Topic/s
-    * CI tools in AWS
-* Project Lombok to eliminate boilerplate code like getters/setters/equals
+    * CI CodePipeline, CodeDeploy and CodeBuild tools in AWS to build and deploy the application on every commit.
+    * Project Lombok to eliminate boilerplate code like getters/setters/equals
+    * Using jQuery to consume internal REST service and handle modal dialog forms
 * Unit Testing
     * JUnit tests to achieve 80%+ code coverage
 * IDE: IntelliJ IDEA
