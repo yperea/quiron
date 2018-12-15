@@ -23,9 +23,7 @@ public class Error404 extends HttpServlet {
 
         String url = "/public/404.jsp";
         String title = "Error 404";
-
         request.setAttribute("title", title);
-
         RequestDispatcher dispatcher = request.getRequestDispatcher(url);
         dispatcher.forward(request, response);
     }

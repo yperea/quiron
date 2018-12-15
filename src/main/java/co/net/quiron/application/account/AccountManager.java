@@ -18,6 +18,9 @@ import co.net.quiron.util.MessageType;
 import lombok.Data;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
@@ -142,6 +145,8 @@ public class AccountManager {
             profile.setPersonType(patient.getPersonType().getName().toLowerCase());
             profile.setBirthDate(patient.getBirthDate());
             profile.setGender(patient.getGender());
+        } else {
+            message = new Message(MessageType.ERROR, "Something went wrong during the process.");
         }
 
         logger.info("signup(): End Signup.");
@@ -193,6 +198,8 @@ public class AccountManager {
             if (person.getAddresses().size() > 0) {
                 profile.setAddress(person.getAddresses().stream().findFirst().get());
             }
+        } else {
+            message = new Message(MessageType.ERROR, "No " + personType + " profile associated to the username provided.");
         }
         logger.info("loadUserAccount(String): End loading account.");
     }
@@ -317,4 +324,24 @@ public class AccountManager {
         return success;
     }
 
+    public static AccountManager getAccountManager(HttpSession session, HttpServletRequest request) {
+
+        String username = null;
+        String personType = null;
+
+        AccountManager accountManager = (AccountManager) session.getAttribute("account");
+        if (accountManager == null){
+
+            if (request.getUserPrincipal()!= null &&
+                session.getAttribute("personType") != null) {
+                username = request.getUserPrincipal().getName();
+                personType = (String) session.getAttribute("personType");
+                accountManager = new AccountManager(username, personType);
+            }
+
+            session.setAttribute("account", accountManager);
+            session.setAttribute("message", accountManager.getMessage());
+        }
+        return accountManager;
+    }
 }

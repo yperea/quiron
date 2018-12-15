@@ -28,14 +28,8 @@ public class Insurance extends HttpServlet {
 
         String url = "/patient/insurance.jsp";
         String title = "My Account";
-        String username = request.getUserPrincipal().getName();
-        String personType = (String) session.getAttribute("personType");
 
-        AccountManager accountManager = (AccountManager) session.getAttribute("account");
-        if (accountManager == null){
-            accountManager = new AccountManager(username, personType);
-        }
-
+        AccountManager accountManager = AccountManager.getAccountManager(session, request);
         OrganizationManager organizationManager = new OrganizationManager();
         List<Organization> companies = organizationManager.getInsuranceCompanies();
 
@@ -55,14 +49,8 @@ public class Insurance extends HttpServlet {
         String url = "/quiron/patient/insurance";
         String title = "My Account";
         request.setAttribute("title", title);
-        String username = request.getUserPrincipal().getName();
-        String personType = (String) session.getAttribute("personType");
 
-        AccountManager accountManager = (AccountManager) session.getAttribute("account");
-        if (accountManager == null){
-            accountManager = new AccountManager(username, personType);
-        }
-
+        AccountManager accountManager = AccountManager.getAccountManager(session, request);
         if ((request.getParameter("company") != null || !request.getParameter("company").isEmpty() )
                 && (request.getParameter("subscriber") != null || !request.getParameter("subscriber").isEmpty())) {
 

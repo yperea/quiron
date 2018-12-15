@@ -23,7 +23,6 @@ public class Error500 extends HttpServlet {
 
         String url = "/public/500.jsp";
         String title = "Error 500";
-
         request.setAttribute("title", title);
         RequestDispatcher dispatcher = request.getRequestDispatcher(url);
         dispatcher.forward(request, response);

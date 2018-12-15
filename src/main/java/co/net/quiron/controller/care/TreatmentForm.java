@@ -14,7 +14,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.text.Normalizer;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,31 +30,16 @@ public class TreatmentForm extends HttpServlet {
 
         String url = "/care/treatment.jsp";
         String title = "My Treatments";
-        String personType = (String) session.getAttribute("personType");
-        String username = request.getUserPrincipal().getName();
 
         Prescription prescription = null;
-
-        AccountManager accountManager = (AccountManager) session.getAttribute("account");
-        if (accountManager == null){
-            accountManager = new AccountManager(username, personType);
-            session.setAttribute("account", accountManager);
-        }
-
+        AccountManager accountManager = AccountManager.getAccountManager(session, request);
         TreatmentManager treatmentManager = new TreatmentManager(accountManager);
         int id = Integer.parseInt(FormManager.getNumericValue(request.getParameter("id")));
-
         Treatment treatment = treatmentManager.getPatientTreatment(id);
         if (treatment != null) {
             prescription = treatment.getPrescriptions().stream().findFirst().orElse(null);
         }
-/*
-        if ((request.getParameter("id") != null && !request.getParameter("id").isEmpty())){
-            int treatmentId = Integer.parseInt(request.getParameter("id"));
-            treatment = treatmentManager.getPatientTreatment(treatmentId);
-            prescription = treatment.getPrescriptions().stream().findFirst().orElse(null);
-        }
-*/
+
         request.setAttribute("title", title);
         session.setAttribute("message", treatmentManager.getMessage());
         request.setAttribute("treatment", treatment);
@@ -78,12 +62,7 @@ public class TreatmentForm extends HttpServlet {
         String personType = (String) session.getAttribute("personType");
         String username = request.getUserPrincipal().getName();
 
-        AccountManager accountManager = (AccountManager) session.getAttribute("account");
-        if (accountManager == null){
-            accountManager = new AccountManager(username, personType);
-            session.setAttribute("account", accountManager);
-        }
-
+        AccountManager accountManager = AccountManager.getAccountManager(session, request);
         int treatmentId = Integer.parseInt(FormManager.getNumericValue(request.getParameter("treatmentId")));
         String statusCode = FormManager.getValue(request.getParameter("statusCode"));
         int evaluation = Integer.parseInt(FormManager.getNumericValue(request.getParameter("evaluation")));
@@ -111,35 +90,6 @@ public class TreatmentForm extends HttpServlet {
             RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(url);
             dispatcher.forward(request, response);
         }
-
-/*
-        if ((request.getParameter("treatmentId") != null && !request.getParameter("treatmentId").isEmpty() )
-                &&
-                (personType.equals("provider")
-                        && (request.getParameter("providerComment") != null && !request.getParameter("providerComment").isEmpty())
-                )
-                ||
-                (personType.equals("patient")
-                        && (request.getParameter("patientComment") != null && !request.getParameter("patientComment").isEmpty())
-                        && (request.getParameter("evaluation") != null && !request.getParameter("evaluation").isEmpty())
-                )
-        ) {
-
-            url = "/quiron/care/treatment?id=" + request.getParameter("treatmentId");
-
-            treatment.setStatus(request.getParameter("statusCode"));
-            treatment.setProviderComments(request.getParameter("providerComment"));
-            treatment.setPatientComments(request.getParameter("patientComment"));
-
-            if (treatmentManager.saveTreatment(treatment)) {
-                session.setAttribute("treatment", treatment);
-            }
-
-            session.setAttribute("message", treatmentManager.getMessage());
-            request.setAttribute("title", title);
-        }
-        response.sendRedirect(url);
-*/
     }
 
     /**

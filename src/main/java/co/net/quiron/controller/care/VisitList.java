@@ -28,14 +28,8 @@ public class VisitList extends HttpServlet {
         String url = "/care/visits.jsp";
         String title = "My Visits";
         String personType = (String) session.getAttribute("personType");
-        String username = request.getUserPrincipal().getName();
 
-        AccountManager accountManager = (AccountManager) session.getAttribute("account");
-        if (accountManager == null){
-            accountManager = new AccountManager(username, personType);
-            session.setAttribute("account", accountManager);
-        }
-
+        AccountManager accountManager = AccountManager.getAccountManager(session, request);
         String state = "A";
         if ((request.getParameter("state") != null && !request.getParameter("state").isEmpty())){
             switch (request.getParameter("state")) {
@@ -48,6 +42,7 @@ public class VisitList extends HttpServlet {
             }
         }
 
+        //TODO: Made the decision inside visitManager
         VisitManager visitManager = new VisitManager(accountManager);
         List<Visit> visits = null;
         if (personType.equals("provider")) {

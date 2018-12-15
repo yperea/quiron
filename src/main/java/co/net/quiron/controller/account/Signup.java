@@ -31,7 +31,7 @@ public class Signup extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request,
-                          HttpServletResponse response) throws ServletException, IOException {
+                          HttpServletResponse response) throws IOException {
 
         HttpSession session = request.getSession();
         String url = "/account/signup";
@@ -66,8 +66,8 @@ public class Signup extends HttpServlet {
             signupSuccess = accountManager.signup(personType, roleId, firstName, lastName, userName, email,
                                                   birthDate, gender, password, confirmation);
             session.setAttribute("account", accountManager);
-            session.setAttribute("profile", accountManager.getProfile());
-            session.setAttribute("personType", personType);
+            //session.setAttribute("profile", accountManager.getProfile());
+            //session.setAttribute("personType", personType);
         }
 
         if (signupSuccess) {

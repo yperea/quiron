@@ -16,7 +16,7 @@ public class Router extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request,
-                         HttpServletResponse response) throws ServletException, IOException {
+                         HttpServletResponse response) throws IOException {
 
         HttpSession session = request.getSession();
         String url = "/quiron/account";
@@ -26,11 +26,9 @@ public class Router extends HttpServlet {
             switch (request.getParameter("tp")) {
                 case "provider":
                     personType = "provider";
-                    //url = "/quiron/provider/account";
                     break;
             }
         }
-
         session.setAttribute("personType", personType);
         response.sendRedirect(url);
     }

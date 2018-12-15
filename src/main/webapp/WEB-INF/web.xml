@@ -75,6 +75,25 @@
     <role-name>User</role-name>
   </security-role>
 
+
+  <error-page>
+    <!-- Missing resource -->
+    <error-code>404</error-code>
+    <location>/error404</location>
+  </error-page>
+
+  <error-page>
+    <!-- Method not allowed -->
+    <error-code>405</error-code>
+    <location>/error500</location>
+  </error-page>
+
+  <error-page>
+    <!-- Uncaught exception -->
+    <error-code>500</error-code>
+    <location>/error500</location>
+  </error-page>
+
   <error-page>
     <location>/error500</location>
   </error-page>

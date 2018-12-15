@@ -33,29 +33,18 @@ public class Account extends HttpServlet {
 
         String url = "/private/profile.jsp";
         String title = "My Account";
-        String username = request.getUserPrincipal().getName();
-        String personType = (String) session.getAttribute("personType");
 
-        AccountManager accountManager = (AccountManager) session.getAttribute("account");
-        if (accountManager == null){
-            accountManager = new AccountManager(username, personType);
-            session.setAttribute("account", accountManager);
-        }
-
+        AccountManager accountManager = AccountManager.getAccountManager(session, request);
         request.setAttribute("title", title);
-        session.setAttribute("username", username);
+
         if (accountManager.isSigned()) {
-/*
-            session.setAttribute("username", username);
-            session.setAttribute("account", accountManager);
-*/
             LocationManager locationManager = new LocationManager();
             Set<State> states = locationManager.getStates("US");
             request.setAttribute("states", states);
             RequestDispatcher dispatcher = request.getRequestDispatcher(url);
             dispatcher.forward(request, response);
         } else {
-            url = "/quiron/account/router?tp=" + personType ;
+            url = "/quiron/account/router?tp=" + session.getAttribute("personType") + "&err=invalid profile";
             session.invalidate();
             response.sendRedirect(url);
         }
@@ -70,20 +59,15 @@ public class Account extends HttpServlet {
 
         String url = "/quiron/account";
         String title = "My Account";
-        String username = request.getUserPrincipal().getName();
         String personType = (String) session.getAttribute("personType");
+        AccountManager accountManager = AccountManager.getAccountManager(session, request);
 
-        AccountManager accountManager = (AccountManager) session.getAttribute("account");
-        if (accountManager == null){
-            accountManager = new AccountManager(username, personType);
-        }
-
-        if ((request.getParameter("firstName") != null || !request.getParameter("firstName").isEmpty() )
-                && (request.getParameter("lastName") != null || !request.getParameter("lastName").isEmpty())
-                && (request.getParameter("address1") != null || !request.getParameter("address1").isEmpty())
-                && (request.getParameter("city") != null || !request.getParameter("city").isEmpty())
-                && (request.getParameter("state") != null || !request.getParameter("state").isEmpty())
-                && (request.getParameter("zip") != null || !request.getParameter("zip").isEmpty())
+        if ((request.getParameter("firstName") != null && !request.getParameter("firstName").isEmpty() )
+                && (request.getParameter("lastName") != null && !request.getParameter("lastName").isEmpty())
+                && (request.getParameter("address1") != null && !request.getParameter("address1").isEmpty())
+                && (request.getParameter("city") != null && !request.getParameter("city").isEmpty())
+                && (request.getParameter("state") != null && !request.getParameter("state").isEmpty())
+                && (request.getParameter("zip") != null && !request.getParameter("zip").isEmpty())
 
         ) {
 

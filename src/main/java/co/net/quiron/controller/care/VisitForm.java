@@ -40,17 +40,8 @@ public class VisitForm extends HttpServlet {
 
         String url = "/care/visit.jsp";
         String title = "My Visits";
-        String personType = (String) session.getAttribute("personType");
-        String username = request.getUserPrincipal().getName();
 
-        request.setAttribute("title", title);
-        request.setAttribute("visitId", request.getParameter("id"));
-
-        AccountManager accountManager = (AccountManager) session.getAttribute("account");
-        if (accountManager == null){
-            accountManager = new AccountManager(username, personType);
-            session.setAttribute("account", accountManager);
-        }
+        AccountManager accountManager = AccountManager.getAccountManager(session, request);
 
         Visit visit = null;
         VisitManager visitManager = new VisitManager(accountManager);
@@ -89,6 +80,8 @@ public class VisitForm extends HttpServlet {
             prescription = treatment.getPrescriptions().stream().findFirst().orElse(null);
         }
 
+        request.setAttribute("title", title);
+        request.setAttribute("visitId", request.getParameter("id"));
         session.setAttribute("visit", visit);
         request.setAttribute("treatment", treatment);
         request.setAttribute("prescription", prescription);
@@ -112,16 +105,10 @@ public class VisitForm extends HttpServlet {
         String url = "/quiron/visits";
         String title = "My Visit";
         String personType = (String) session.getAttribute("personType");
-        String username = request.getUserPrincipal().getName();
         boolean treatmentAdded = false;
 
         Visit visit = (Visit) session.getAttribute("visit");
-        AccountManager accountManager = (AccountManager) session.getAttribute("account");
-        if (accountManager == null){
-            accountManager = new AccountManager(username, personType);
-            session.setAttribute("account", accountManager);
-        }
-
+        AccountManager accountManager = AccountManager.getAccountManager(session, request);
         VisitManager visitManager = new VisitManager(accountManager);
 
         if ((request.getParameter("visitId") != null && !request.getParameter("visitId").isEmpty() )
@@ -198,8 +185,6 @@ public class VisitForm extends HttpServlet {
                         && (request.getParameter("treatmentEndDate") != null && !request.getParameter("treatmentEndDate").isEmpty())
                         && (request.getParameter("treatmentInstructions") != null && !request.getParameter("treatmentInstructions").isEmpty())
                 ) {
-                    //TreatmentManager treatmentManager = new TreatmentManager();
-
 
                     int visitId = Integer.parseInt(request.getParameter("visitId"));
                     int medicationId = Integer.parseInt(request.getParameter("medicationId"));
@@ -217,12 +202,6 @@ public class VisitForm extends HttpServlet {
                     if(treatmentAdded) {
                         session.setAttribute("treatment", visitManager.getTreatment());    
                     }
-                    
-/*
-                    session.setAttribute("treatmentStartDate", treatmentStartDate);
-                    session.setAttribute("treatmentEndDate", treatmentEndDate);
-                    session.setAttribute("prescriptionInstructions", prescriptionInstructions);
-*/
                 }
             }
 

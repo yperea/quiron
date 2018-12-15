@@ -26,14 +26,7 @@ public class Credential extends HttpServlet {
 
         String url = "/account/credentials.jsp";
         String title = "Account Credentials";
-        String username = request.getUserPrincipal().getName();
-        String personType = (String) session.getAttribute("personType");
-
-        AccountManager accountManager = (AccountManager) session.getAttribute("account");
-        if (accountManager == null){
-            accountManager = new AccountManager(username, personType);
-            session.setAttribute("account",accountManager);
-        }
+        AccountManager accountManager = AccountManager.getAccountManager(session, request);
 
         request.setAttribute("title", title);
         RequestDispatcher dispatcher = request.getRequestDispatcher(url);
@@ -47,14 +40,8 @@ public class Credential extends HttpServlet {
         HttpSession session = request.getSession();
         String url = "/quiron/account/credentials";
         String title = "Account Credentials";
-        String username = request.getUserPrincipal().getName();
-        String personType = (String) session.getAttribute("personType");
 
-        AccountManager accountManager = (AccountManager) session.getAttribute("account");
-        if (accountManager == null){
-            accountManager = new AccountManager(username, personType);
-            session.setAttribute("account", accountManager);
-        }
+        AccountManager accountManager = AccountManager.getAccountManager(session, request);
 
         if ((request.getParameter("password") != null || !request.getParameter("password").isEmpty())
                 && (request.getParameter("confirmation") != null || !request.getParameter("confirmation").isEmpty())) {

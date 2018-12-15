@@ -38,32 +38,14 @@ public class AccessDenied extends HttpServlet {
                           HttpServletResponse response) throws ServletException, IOException {
 
         HttpSession session = request.getSession();
-
-        /*
-        if (session.getAttribute("account") == null) {
-            // Session is expired
-            session.setAttribute("expireSessionMessage","Your session has expired. Try again.");
-            response.sendRedirect("/quiron/account/logout");
-            return;
-        }
-        */
-
         String url = "/quiron/account/signin";
         String title = "Sign In";
 
-        //AccountManager accountManager =  new AccountManager();
         Message message =  new Message();
-
-
         message.setType(MessageType.ERROR);
         message.setDescription("Incorrect username or password.");
-        //accountManager.setMessage(message);
-        //session.setAttribute("account", accountManager);
         session.setAttribute("message", message);
-
         request.setAttribute("title", title);
-
         response.sendRedirect(url);
     }
-
 }

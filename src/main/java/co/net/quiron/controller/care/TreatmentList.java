@@ -31,16 +31,12 @@ public class TreatmentList extends HttpServlet {
         String url = "/care/treatments.jsp";
         String title = "My Treatments";
         String personType = (String) session.getAttribute("personType");
-        String username = request.getUserPrincipal().getName();
 
-        AccountManager accountManager = (AccountManager) session.getAttribute("account");
-        if (accountManager == null){
-            accountManager = new AccountManager(username, personType);
-            session.setAttribute("account", accountManager);
-        }
+        AccountManager accountManager = AccountManager.getAccountManager(session, request);
 
         TreatmentManager treatmentManager = new TreatmentManager(accountManager);
         List<Treatment> treatments = null;
+        //TODO: simplify this code by deciding inside treatmentManager class
         if (personType.equals("provider")) {
             treatments = treatmentManager.getProviderTreatmentsList();
         } else {
