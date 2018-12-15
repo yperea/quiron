@@ -16,9 +16,19 @@ import javax.ws.rs.core.Response;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Service exposing diagnosis and symptoms queries from ApiMedic health service.
+ */
 @Path("apimedic")
 public class ApiMedic {
 
+    /**
+     * Gets a list of possible diagnosis based on the symptom, year of birth and gender of the patient.
+     *
+     * @param request the request
+     * @return the diagnosis
+     * @throws JsonProcessingException the json processing exception
+     */
     @GET
     @Produces("application/json")
     @Path("/json/diagnosis")
@@ -27,7 +37,6 @@ public class ApiMedic {
 
         ApiMedicManager apiMedicManager = new ApiMedicManager("/apimedic.properties");
         String requestSymptoms = request.getParameter("symptom");
-        //String requestSymptoms = request.getParameter("relatives[symptom]");
         String requestBirthYear = request.getParameter("birthYear");
         String requestGender = request.getParameter("gender");
         int responseStatusCode = 400;
@@ -56,6 +65,13 @@ public class ApiMedic {
                 .build();
     }
 
+    /**
+     * Gets a list of symptoms.
+     *
+     * @param request the request
+     * @return the symptoms
+     * @throws JsonProcessingException the json processing exception
+     */
     @GET
     @Produces("application/json")
     @Path("/json/symptoms")
@@ -63,9 +79,6 @@ public class ApiMedic {
 
         List<Symptom> symptomList = null;
         ApiMedicManager apiMedicManager = new ApiMedicManager("/apimedic.properties");
-        String requestSymptoms = request.getParameter("symptoms");
-        String requestBirthYear = request.getParameter("birthYear");
-        String requestGender = request.getParameter("gender");
         int responseStatusCode = 400;
 
         symptomList = apiMedicManager.getSymptomsList();
@@ -81,5 +94,4 @@ public class ApiMedic {
                 .entity(json)
                 .build();
     }
-
 }
