@@ -19,7 +19,7 @@ public class FormManager {
      * @param requiredFields List with the required fields to validate.
      * @return whether the form is a valid form or not
      */
-    public boolean validForm(HttpServletRequest request, List<String> requiredFields) {
+    public static boolean validForm(HttpServletRequest request, List<String> requiredFields) {
 
         boolean anyValue = false;
 
@@ -44,7 +44,7 @@ public class FormManager {
      * @param parameterValue Value of the respective parameter.
      * @return The value of the parameter or empty string if it's null.
      */
-    public String getValue(String parameterValue) {
+    public static String getValue(String parameterValue) {
 
         String value = "";
 
@@ -60,7 +60,7 @@ public class FormManager {
      * @param parameterValue Value of the respective parameter.
      * @return The value of the parameter or zero (0) if it's null.
      */
-    public String getNumberValue(String parameterValue) {
+    public static String getNumericValue(String parameterValue) {
 
         String value = "0";
 

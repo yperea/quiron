@@ -102,7 +102,7 @@ public class TreatmentManager {
 
         if (treatment == null) {
             message.setType(MessageType.WARNING);
-            message.setDescription("Record not found");
+            message.setDescription("Treatment not found");
         }
 
         return treatment;

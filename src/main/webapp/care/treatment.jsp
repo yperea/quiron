@@ -12,7 +12,7 @@
 
     <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
         <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-            <h1 class="h2">Treatment No. ${treatmentId}</h1>
+            <h1 class="h2">My Treatments</h1>
 
             <div class="btn-toolbar mb-2 mb-md-0">
                 <div class="btn-group mr-2">
@@ -75,6 +75,7 @@
                     </div>
                 </div>
 --%>
+<%--
                 <h4 class="d-flex justify-content-between align-items-center mb-3">
                     <span class="text-muted">Measurements</span>
                 </h4>
@@ -218,11 +219,12 @@
                         </span>
                     </li>
                 </ul>
+--%>
             </div>
 
 
             <div class="col-md-8">
-                <%--<h4 class="mb-3">Visit Information</h4>--%>
+                <h4 class="mb-3">Treatment No. ${treatment.id}</h4>
 
                 <yp:alert type="${message.type}" url="${message.redirect}">${message.description}</yp:alert>
                 <c:remove var="message" scope="session" />
@@ -234,6 +236,9 @@
                       action="${root}/care/treatment"
                       method="POST"
                       novalidate>
+
+                    <input type="hidden" id="treatmentId" name="treatmentId"
+                           value="${treatment.id}"/>
 
                     <input type="hidden" id="visitId" name="visitId"
                            value="${treatment.visit.id}"/>
@@ -278,7 +283,7 @@
                                    name="medication"
                                    placeholder=""
                                    value="${prescription.medication.name}"
-                                   disabled
+                                   readonly
                                    required />
                             <div class="invalid-feedback">
                                 Medication required.
@@ -295,7 +300,7 @@
                                    name="instructions"
                                    placeholder=""
                                    value="${prescription.instructions}"
-                                   disabled
+                                   readonly
                                    required />
                             <div class="invalid-feedback">
                                 Medication required.
@@ -312,6 +317,7 @@
                                    name="startDate"
                                    placeholder="mm/dd/yyyy"
                                    value="<tags:localDate date="${treatment.startDate}" pattern="MM/d/yyyy"/>"
+                                   readonly
                                    required />
                             <div class="invalid-feedback">
                                 Please enter a valid date.
@@ -325,12 +331,8 @@
                                    id="endDate"
                                    name="endDate"
                                    placeholder="mm/dd/yyyy"
-                                    <c:if test="${treatment.endDate == null}">
-                                        value="<fmt:formatDate value="${now}" pattern="MM/d/yyyy" />"
-                                    </c:if>
-                                    <c:if test="${treatment.endDate  != null}">
-                                        value="<tags:localDate date="${treatment.endDate}" pattern="MM/d/yyyy"/>"
-                                    </c:if>
+                                   value="<tags:localDate date="${treatment.endDate}" pattern="MM/d/yyyy"/>"
+                                   readonly
                                    required />
                             <div class="invalid-feedback">
                                 Please enter a valid date.
@@ -357,13 +359,15 @@
                             <label for="evaluation">Evaluation</label>
                             <input type="number"
                                    step="1"
+                                   min="1"
+                                   max="5"
                                    class="form-control"
                                    id="evaluation"
                                    name="evaluation"
                                    placeholder=""
                                    value="${treatment.evaluation}"
                                     <c:if test="${personType == null || personType == 'provider' }">
-                                        disabled
+                                        readonly
                                     </c:if>
                                    required />
                             <div class="invalid-feedback">
@@ -379,7 +383,7 @@
                                   name="providerComment"
                                   size="512"
                                 <c:if test="${personType == null || personType == 'patient' }">
-                                    disabled
+                                    readonly
                                 </c:if>
                                   required >${treatment.providerComments}</textarea>
                         <div class="invalid-feedback">
@@ -394,7 +398,7 @@
                                   name="patientComment"
                                   size="512"
                                 <c:if test="${personType == null || personType == 'provider' }">
-                                    disabled
+                                    readonly
                                 </c:if>
                                   required >${treatment.patientComments}</textarea>
                         <div class="invalid-feedback">

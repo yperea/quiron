@@ -83,9 +83,12 @@ public class VisitForm extends HttpServlet {
         }
 
         List<Medication> medications = new MedicationManager().getMedications();
-
+        Prescription prescription = null;
         Treatment treatment = visit.getTreatments().stream().findFirst().orElse(null);
-        Prescription prescription = treatment.getPrescriptions().stream().findFirst().orElse(null);
+        if (treatment != null) {
+            prescription = treatment.getPrescriptions().stream().findFirst().orElse(null);
+        }
+
         session.setAttribute("visit", visit);
         request.setAttribute("treatment", treatment);
         request.setAttribute("prescription", prescription);
@@ -160,14 +163,16 @@ public class VisitForm extends HttpServlet {
             String actualEndDate = request.getParameter("visitStartDate") + " "
                                  + request.getParameter("endTime");
 
-            visit.setActualStartDate(LocalDateTime.parse(actualStartDate,
-                    DateTimeFormatter.ofPattern("MM/d/yyyy HH:mm")));
-
-            visit.setActualEndDate(LocalDateTime.parse(actualEndDate,
-                    DateTimeFormatter.ofPattern("MM/d/yyyy HH:mm")));
+            if(request.getParameter("startTime") != null) {
+                visit.setActualStartDate(LocalDateTime.parse(actualStartDate,
+                        DateTimeFormatter.ofPattern("MM/d/yyyy HH:mm")));
+            }
+            if(request.getParameter("endTime") != null) {
+                visit.setActualEndDate(LocalDateTime.parse(actualEndDate,
+                        DateTimeFormatter.ofPattern("MM/d/yyyy HH:mm")));
+            }
 
             visit.setStatus(request.getParameter("statusCode"));
-
             visit.setSymptomId(symptomId);
             visit.setSymptomName(symptomName);
             visit.setDiagnosticId(diagosticId);
