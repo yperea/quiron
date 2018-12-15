@@ -29,7 +29,7 @@ I would like to build a platform that allows for better control of medical treat
     * AWS CodePipeline
     * AWS CodeDeploy
 * Web Services consumed using Java
-    * Using [ApiMedic](https://apimedic.com/) REST Services to obtain possible symptoms and diagnosis during the visit.
+    * Using [ApiMedic](https://apimedic.com/) a healthservice API thet allows you to access a symptom-checker engine.
 * CSS
     * Bootstrap 4
 * Data Validation
