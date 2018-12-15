@@ -43,10 +43,10 @@
                         <tbody>
                         <c:forEach var="treatment" items="${treatments}">
                         <tr>
-                            <td><a class="" href="${root}/care/treatment?id=${treatment.id}" role="button">${treatment.id}</a></td>
+                            <td><a class="" href="${root}/treatment?id=${treatment.id}" role="button">${treatment.id}</a></td>
                             <td>${treatment.startDate}</td>
                             <td>${treatment.endDate}</td>
-                            <td>${treatment.symptomName}</td>
+                            <td>${treatment.visit.symptomName}</td>
                             <td>
                                 <c:forEach var="prescription" items="${treatment.prescriptions}">
                                     ${prescription.medication.name}

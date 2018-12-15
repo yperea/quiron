@@ -205,7 +205,7 @@
 
                 <form class="needs-validation"
                       id="frmVisit"
-                      action="${root}/patient/visit"
+                      action="${root}/care/visit"
                       method="POST"
                       novalidate>
 

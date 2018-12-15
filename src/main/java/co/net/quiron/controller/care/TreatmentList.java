@@ -18,7 +18,7 @@ import java.util.List;
 
 @WebServlet(
         name = "treatments",
-        urlPatterns = {"/patient/treatments", "/provider/treatments"}
+        urlPatterns = {"/care/treatments", "/treatments"}
 )
 public class TreatmentList extends HttpServlet {
 
@@ -49,7 +49,7 @@ public class TreatmentList extends HttpServlet {
 
         request.setAttribute("title", title);
         request.setAttribute("treatments", treatments);
-        session.setAttribute("message", treatmentManager.getMessage());
+        request.setAttribute("message", treatmentManager.getMessage());
 
         RequestDispatcher dispatcher = request.getRequestDispatcher(url);
         dispatcher.forward(request, response);

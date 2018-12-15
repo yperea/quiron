@@ -2,6 +2,7 @@ package co.net.quiron.controller.care;
 
 import co.net.quiron.application.account.AccountManager;
 import co.net.quiron.application.care.TreatmentManager;
+import co.net.quiron.domain.care.Prescription;
 import co.net.quiron.domain.care.Treatment;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -14,7 +15,7 @@ import java.io.IOException;
 
 @WebServlet(
         name = "treatement",
-        urlPatterns = {"/treatment"}
+        urlPatterns = {"/care/treatment", "/treatment"}
 )
 public class TreatmentForm extends HttpServlet {
     @Override
@@ -38,14 +39,17 @@ public class TreatmentForm extends HttpServlet {
         }
 
         Treatment treatment = null;
+        Prescription prescription = null;
+
         TreatmentManager treatmentManager = new TreatmentManager(accountManager);
-        if ((request.getParameter("id") != null
-                && !request.getParameter("id").isEmpty())){
+        if ((request.getParameter("id") != null && !request.getParameter("id").isEmpty())){
             int treatmentId = Integer.parseInt(request.getParameter("id"));
             treatment = treatmentManager.getPatientTreatment(treatmentId);
+            prescription = treatment.getPrescriptions().stream().findFirst().orElse(null);
         }
 
-        session.setAttribute("treatment", treatment);
+        request.setAttribute("treatment", treatment);
+        request.setAttribute("prescription", prescription);
 
         RequestDispatcher dispatcher = request.getRequestDispatcher(url);
         dispatcher.forward(request, response);
@@ -58,12 +62,11 @@ public class TreatmentForm extends HttpServlet {
 
         HttpSession session = request.getSession();
 
-        String url = "/quiron/tratments";
+        String url = "/quiron/care/tratments";
         String title = "My Treatments";
         String personType = (String) session.getAttribute("personType");
         String username = request.getUserPrincipal().getName();
 
-        Treatment treatment = (Treatment) session.getAttribute("treatment");
         AccountManager accountManager = (AccountManager) session.getAttribute("account");
         if (accountManager == null){
             accountManager = new AccountManager(username, personType);
@@ -71,6 +74,7 @@ public class TreatmentForm extends HttpServlet {
         }
 
         TreatmentManager treatmentManager = new TreatmentManager(accountManager);
+        Treatment treatment = new Treatment();
 
         if ((request.getParameter("treatmentId") != null && !request.getParameter("treatmentId").isEmpty() )
                 &&
@@ -79,16 +83,16 @@ public class TreatmentForm extends HttpServlet {
                 )
                 ||
                 (personType.equals("patient")
-                        && (request.getParameter("providerComment") != null && !request.getParameter("providerComment").isEmpty())
+                        && (request.getParameter("patientComment") != null && !request.getParameter("patientComment").isEmpty())
                         && (request.getParameter("evaluation") != null && !request.getParameter("evaluation").isEmpty())
                 )
         ) {
 
-            url = "/quiron/treatment?id=" + request.getParameter("treatmentId");
+            url = "/quiron/care/treatment?id=" + request.getParameter("treatmentId");
 
             treatment.setStatus(request.getParameter("statusCode"));
-
             treatment.setProviderComments(request.getParameter("providerComment"));
+            treatment.setPatientComments(request.getParameter("patientComment"));
 
             if (treatmentManager.saveTreatment(treatment)) {
                 session.setAttribute("treatment", treatment);

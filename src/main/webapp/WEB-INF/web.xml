@@ -57,6 +57,16 @@
     </auth-constraint>
   </security-constraint>
 
+  <security-constraint>
+    <web-resource-collection>
+      <web-resource-name>Care</web-resource-name>
+      <url-pattern>/care/*</url-pattern>
+    </web-resource-collection>
+    <auth-constraint>
+      <role-name>Administrator</role-name>
+      <role-name>User</role-name>
+    </auth-constraint>
+  </security-constraint>
 
   <security-role>
     <role-name>Administrator</role-name>

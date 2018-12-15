@@ -28,7 +28,7 @@ import java.util.List;
 
 @WebServlet(
         name = "visit",
-        urlPatterns = {"/patient/visit", "/provider/visit", "/visit"}
+        urlPatterns = {"/care/visit", "/visit"}
 )
 public class VisitForm extends HttpServlet {
 

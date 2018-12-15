@@ -18,13 +18,13 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link <c:if test="${title == 'My Visits'}">active</c:if>" href="${root}/patient/visits">
+                        <a class="nav-link <c:if test="${title == 'My Visits'}">active</c:if>" href="${root}/care/visits">
                             <span data-feather="clipboard"></span>
                             My Visits
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link <c:if test="${title == 'My Treatments'}">active</c:if>" href="${root}/patient/treatments">
+                        <a class="nav-link <c:if test="${title == 'My Treatments'}">active</c:if>" href="${root}/care/treatments">
                             <span data-feather="activity"></span>
                             My Treatments
                         </a>

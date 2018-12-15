@@ -67,7 +67,7 @@
                         <tbody>
                         <c:forEach var="visit" items="${visits}">
                         <tr>
-                            <td><a class="" href="${root}/patient/visit?id=${visit.id}" role="button">${visit.id}</a></td>
+                            <td><a class="" href="${root}/care/visit?id=${visit.id}" role="button">${visit.id}</a></td>
                             <c:if test="${visit.actualStartDate == null}">
                                 <%--<td>${visit.scheduledStartDate}</td>--%>
                                 <td><tags:localDateTime date="${visit.scheduledStartDate}" pattern="MM/d/yyyy"/></td>
