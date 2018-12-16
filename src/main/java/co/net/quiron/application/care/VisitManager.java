@@ -22,7 +22,7 @@ import java.util.TreeMap;
 import java.util.stream.Collectors;
 
 /**
- * The type Visit manager.
+ * This class represents the manager for the operations related to the patient visits.
  */
 @Data
 public class VisitManager {
@@ -50,63 +50,6 @@ public class VisitManager {
     public VisitManager(AccountManager accountManager) {
         this();
         this.accountManager =  accountManager;
-    }
-
-    /**
-     * Gets patient visits list.
-     *
-     * @param state the state
-     * @return the patient visits list
-     */
-    public List<Visit> getPatientVisitsList(String state) {
-
-        IAppRepository<Patient> patientRepository = RepositoryFactory.getDBContext(Patient.class);
-        Map<String, Object> params = new TreeMap<>();
-        int patientId = accountManager.getId();
-        Patient patient = patientRepository.get(patientId);
-        params.put("patient", patient);
-
-        List<Visit> visits = visitRepository.getListEquals(params)
-                .stream()
-                .filter(v -> state.equals(v.getStatus()))
-                .collect(Collectors.toList());
-
-        if (visits.size() == 0) {
-            message.setType(MessageType.WARNING);
-            message.setDescription("Records not found");
-        }
-
-        return visits;
-    }
-
-    /**
-     * Gets provider visits list.
-     *
-     * @param state the state
-     * @return the provider visits list
-     */
-    public List<Visit> getProviderVisitsList(String state) {
-
-        IAppRepository<Provider> providerRepository = RepositoryFactory.getDBContext(Provider.class);
-        Map<String, Object> params = new TreeMap<>();
-        int providerId = accountManager.getId();
-        Provider provider = providerRepository.get(providerId);
-        params.put("provider", provider);
-
-        List<Visit> visits = visitRepository.getList()
-                .stream()
-                .filter(v -> state.equals(v.getStatus()))
-                .filter(ps -> ps.getProviderSchedule()
-                        .getProvider()
-                        .equals(provider))
-                .collect(Collectors.toList());
-
-        if (visits.size() == 0) {
-            message.setType(MessageType.WARNING);
-            message.setDescription("Records not found");
-        }
-
-        return visits;
     }
 
     /**
@@ -162,26 +105,22 @@ public class VisitManager {
      * @param instructions       the instructions
      * @return the boolean
      */
-    public boolean addTreatment(int visitId, int medicationId, LocalDate treatmentStartDate, LocalDate treatmentEndDate, String instructions) {
+    public boolean addTreatment(int visitId, int medicationId,
+                                LocalDate treatmentStartDate, LocalDate treatmentEndDate,
+                                String instructions) {
         boolean success = false;
-
         Visit visit = visitRepository.get(visitId);
-        //Treatment newTreatment = new Treatment(visit);
-
-        Medication medication = (Medication) RepositoryFactory.getDBContext(Medication.class).get(medicationId);
+        Medication medication = (Medication) RepositoryFactory.getDBContext(Medication.class)
+                .get(medicationId);
         Treatment newTreatment = visit.getTreatments().stream().findFirst().orElse(null);
-        Prescription prescription = null;
+        /*Prescription prescription = null;*/
 
         if(newTreatment != null) {
-            RepositoryFactory.getDBContext(Treatment.class).delete(newTreatment);
-            prescription = newTreatment.getPrescriptions().stream().findFirst().orElse(null);
+            RepositoryFactory.getDBContext(Treatment.class).delete(newTreatment); //This deletes also the prescriptions related
+            //prescription = newTreatment.getPrescriptions().stream().findFirst().orElse(null);
         }
 
-        //if(prescription != null) {
-        //    RepositoryFactory.getDBContext(Prescription.class).delete(prescription);
-        //}
-
-        prescription = (Prescription) RepositoryFactory.getDBContext(Prescription.class)
+        Prescription prescription = (Prescription) RepositoryFactory.getDBContext(Prescription.class)
                 .create(new Prescription(instructions, medication));
 
         newTreatment =  new Treatment(visit);
@@ -189,8 +128,52 @@ public class VisitManager {
         newTreatment.setEndDate(treatmentEndDate);
         newTreatment.addPrescription(prescription);
 
-        treatment = (Treatment) RepositoryFactory.getDBContext(Treatment.class).create(newTreatment);
+        treatment = (Treatment) RepositoryFactory.getDBContext(Treatment.class)
+                .create(newTreatment);
         success = true;
         return success;
+    }
+
+    /**
+     * Gets patient visits list.
+     *
+     * @param state the state
+     * @return the patient visits list
+     */
+    public List<Visit> getVisitsList(String state) {
+
+        if(state == null || state.isEmpty()) {
+            state = "A";
+        }
+        String finalState = state;
+        List<Visit> visits;
+
+        if(accountManager.getPersonType().equals("patient")) {
+            Map<String, Object> params = new TreeMap<>();
+            Patient patient = (Patient) RepositoryFactory.getDBContext(Patient.class)
+                    .get(accountManager.getId());
+            params.put("patient", patient);
+            visits = visitRepository.getListEquals(params)
+                    .stream()
+                    .filter(v -> finalState.equals(v.getStatus()))
+                    .collect(Collectors.toList());
+        } else {
+            Provider provider = (Provider)RepositoryFactory.getDBContext(Provider.class)
+                    .get(accountManager.getId());
+            visits = visitRepository.getList()
+                    .stream()
+                    .filter(v -> finalState.equals(v.getStatus()))
+                    .filter(ps -> ps.getProviderSchedule()
+                            .getProvider()
+                            .equals(provider))
+                    .collect(Collectors.toList());
+        }
+
+        if (visits.size() == 0) {
+            message.setType(MessageType.WARNING);
+            message.setDescription("Records not found");
+        }
+
+        return visits;
     }
 }

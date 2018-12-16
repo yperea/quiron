@@ -24,36 +24,16 @@ public class VisitList extends HttpServlet {
                        HttpServletResponse response) throws ServletException, IOException {
 
         HttpSession session = request.getSession();
-
         String url = "/care/visits.jsp";
         String title = "My Visits";
-        String personType = (String) session.getAttribute("personType");
 
         AccountManager accountManager = AccountManager.getAccountManager(session, request);
-        String state = "A";
-        if ((request.getParameter("state") != null && !request.getParameter("state").isEmpty())){
-            switch (request.getParameter("state")) {
-                case "completed":
-                    state = "C";
-                    break;
-                case "canceled":
-                    state = "D";
-                    break;
-            }
-        }
-
-        //TODO: Made the decision inside visitManager
         VisitManager visitManager = new VisitManager(accountManager);
-        List<Visit> visits = null;
-        if (personType.equals("provider")) {
-            visits = visitManager.getProviderVisitsList(state);
-        } else {
-            visits = visitManager.getPatientVisitsList(state);
-        }
+        List<Visit> visits = visitManager.getVisitsList(request.getParameter("state"));
 
         request.setAttribute("title", title);
         request.setAttribute("visits", visits);
-        request.setAttribute("state", state);
+        request.setAttribute("state", request.getParameter("state"));
         session.setAttribute("message", visitManager.getMessage());
 
         RequestDispatcher dispatcher = request.getRequestDispatcher(url);

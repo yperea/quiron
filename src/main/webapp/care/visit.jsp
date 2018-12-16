@@ -12,11 +12,11 @@
 
     <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
         <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-            <h1 class="h2">Visit No. ${visitId}</h1>
+            <h1 class="h2">My Visits</h1>
 
             <div class="btn-toolbar mb-2 mb-md-0">
                 <div class="btn-group mr-2">
-                    <a class="btn btn-sm btn-outline-success" href="${root}/patient/visits" role="button">My Visits</a>
+                    <a class="btn btn-sm btn-outline-success" href="${root}/visits" role="button">Back to My Visits</a>
                     &nbsp;
                 </div>
                 <c:if test="${personType == 'provider' }">
@@ -35,17 +35,18 @@
 
         <div class="row justify-content-center">
             <div class="col-md-3 order-md-2 mb-4">
-                <c:if test="${prescription != null}">
                     <div id="importantCard" class="card border-info mb-3">
-                        <div class="card-header"><h6>Important</h6></div>
+                        <div class="card-header"><h5>Important</h5></div>
                         <div id="importantCardBody" class="card-body text-info">
-                            <h5 class="card-title">Prescription instructions</h5>
+                            <h6 class="card-title">Prescription instructions</h6>
                             <p id="prescriptionDetails" class="card-text">
-                                ${prescription.instructions} of ${prescription.medication.name} from ${treatment.startDate} to ${treatment.endDate}.
+                                <c:if test="${prescription != null}">
+                                    ${prescription.instructions} of ${prescription.medication.name} from ${treatment.startDate} to ${treatment.endDate}.
+                                </c:if>
                             </p>
                         </div>
                     </div>
-                </c:if>
+
 <%--
                 <h4 class="d-flex justify-content-between align-items-center mb-3">
                     <span class="text-muted">Measurements</span>
@@ -196,12 +197,11 @@
 
 
             <div class="col-md-8">
-                <%--<h4 class="mb-3">Visit Information</h4>--%>
+                <h4 class="mb-3">Visit No. ${visitId}</h4>
 
                 <yp:alert type="${message.type}" url="${message.redirect}">${message.description}</yp:alert>
-                <c:remove var="message" scope="session" />
+                <c:remove var="message" />
                 <c:set var="now" value="<%= new java.util.Date()%>" />
-                <%--<c:set var="personType" value="provider" />--%>
 
                 <form class="needs-validation"
                       id="frmVisit"

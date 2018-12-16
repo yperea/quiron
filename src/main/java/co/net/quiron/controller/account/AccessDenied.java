@@ -1,10 +1,8 @@
 package co.net.quiron.controller.account;
 
-import co.net.quiron.application.account.AccountManager;
 import co.net.quiron.util.Message;
 import co.net.quiron.util.MessageType;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
