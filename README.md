@@ -13,7 +13,6 @@ I would like to build a platform that allows for better control of medical treat
 ### Project Technologies/Techniques
 * Security/Authentication
     * Tomcat's JDBC Realm Authentication
-    * Admin role: create/read/update/delete (crud) of all data
     * Patient role: create/read/update (cru) their own profiles, visits and treatments, in general any data they have entered previously.
     * Provider role: create/read/update (cru) their own profiles, diagnostics, visits and treatments, in general any data they have entered previously.
     * All: anyone can view information pages (no login)

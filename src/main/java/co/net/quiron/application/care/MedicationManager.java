@@ -18,7 +18,6 @@ public class MedicationManager {
      */
     public List<Medication> getMedications() {
         IAppRepository<Medication> medicationRepository = RepositoryFactory.getDBContext(Medication.class);
-        List<Medication> medications = medicationRepository.getList();
-        return medications;
+        return medicationRepository.getList();
     }
 }

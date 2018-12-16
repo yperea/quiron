@@ -63,11 +63,9 @@ public class Signup extends HttpServlet {
             String confirmation = request.getParameter("confirmation");
 
             accountManager =  new AccountManager();
-            signupSuccess = accountManager.signup(personType, roleId, firstName, lastName, userName, email,
+            signupSuccess = accountManager.signUp(personType, roleId, firstName, lastName, userName, email,
                                                   birthDate, gender, password, confirmation);
             session.setAttribute("account", accountManager);
-            //session.setAttribute("profile", accountManager.getProfile());
-            //session.setAttribute("personType", personType);
         }
 
         if (signupSuccess) {

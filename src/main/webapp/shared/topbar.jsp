@@ -45,6 +45,7 @@
 
                 <c:choose>
                     <c:when test="${account.signed != null}" >
+                        <li class="nav-item"><a class="nav-link" href="${root}/account">My Account</a></li>
                         <li class="dropdown user-menu">
                             <a class="nav-link" href="#" class="dropdown-toggle" data-toggle="dropdown">
                                 <img alt="Profile Picture" class="user-image" src="${root}/style/img/QuironIcon75x75.png" />
@@ -58,7 +59,6 @@
                                     <p>
                                         ${account.profile.firstName} ${account.profile.lastName}
                                         <br/><small>${account.profile.personType}</small>
-                                        <br/><small>(${account.username})</small>
                                     </p>
                                 </li>
 
@@ -66,7 +66,7 @@
 
                                     <div class="pull-left">
                                         <a href="${root}/account/credentials"
-                                           class="btn btn-default"><i class="fas fa-user-lock"></i>&nbsp;Account</a>
+                                           class="btn btn-default"><i class="fa fa-lock"></i>&nbsp;Password</a>
                                     </div>
 
                                     <div class="pull-right">
@@ -84,11 +84,9 @@
                         <li class="nav-item"><a class="nav-link" href="${root}/account/router?tp=patient">Log&nbsp;In</a></li>
                     </c:otherwise>
                 </c:choose>
-
             </ul>
-
-
         </div>
+        <%--<small><b>Username:</b> ${account.username}</small>--%>
     </div>
 
 </nav>

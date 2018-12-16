@@ -10,7 +10,6 @@ import lombok.Getter;
 import lombok.Setter;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.glassfish.jersey.internal.util.Base64;
 import sun.misc.BASE64Encoder;
 
 import javax.crypto.Mac;
@@ -25,9 +24,9 @@ import javax.ws.rs.core.Response;
 import java.io.IOException;
 import java.io.StringReader;
 import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
@@ -76,12 +75,8 @@ public class ApiMedicManager implements PropertiesLoader {
         byte[] secretBytes = new byte[0];
         byte[] dataBytes = new byte[0];
 
-        try {
-            secretBytes = secretKey.getBytes("UTF-8");
-            dataBytes = authenticationUrl.getBytes("UTF-8");
-        } catch (UnsupportedEncodingException e) {
-            logger.error("acquireAuthToken: UnsupportedEncodingException. " + e);
-        }
+        secretBytes = secretKey.getBytes(StandardCharsets.UTF_8);
+        dataBytes = authenticationUrl.getBytes(StandardCharsets.UTF_8);
 
         SecretKeySpec keySpec = new SecretKeySpec(secretBytes, "HmacMD5");
         Mac mac = null;
@@ -150,23 +145,23 @@ public class ApiMedicManager implements PropertiesLoader {
         String location = Integer.valueOf(locationId).toString();
         String yearOfBirth = Integer.valueOf(birthYear).toString();
 
-        if (location != null && location != ""
-                && selectorStatus != null && selectorStatus.toString() != "") {
+        if (location != null && !location.equals("")
+                && selectorStatus != null && !selectorStatus.toString().equals("")) {
             apiUrl += "/" + location + "/" + selectorStatus.toString();
         }
 
         apiUrl += "?token=" + token + "&language=" + language;
 
-        if (format != null && format != "") {
+        if (format != null && !format.equals("")) {
             apiUrl += "&format=" + format;
         }
-        if (symptoms != null && symptoms != "") {
+        if (symptoms != null && !symptoms.equals("")) {
             apiUrl += "&symptoms=" + symptoms;
         }
-        if (gender != null && gender.toString() != "") {
+        if (gender != null && !gender.toString().equals("")) {
             apiUrl += "&gender=" + gender.toString();
         }
-        if (yearOfBirth != null && yearOfBirth != "" && birthYear != 0) {
+        if (yearOfBirth != null && !yearOfBirth.equals("") && birthYear != 0) {
             apiUrl += "&year_of_birth=" + birthYear;
         }
 
@@ -202,23 +197,23 @@ public class ApiMedicManager implements PropertiesLoader {
         String location = Integer.valueOf(locationId).toString();
         String yearOfBirth = Integer.valueOf(birthYear).toString();
 
-        if (location != null && location != ""
-                && selectorStatus != null && selectorStatus.toString() != "") {
+        if (location != null && !location.equals("")
+                && selectorStatus != null && !selectorStatus.toString().equals("")) {
             apiUrl += "/" + location + "/" + selectorStatus.toString();
         }
 
         apiUrl += "?token=" + token + "&language=" + language;
 
-        if (format != null && format != "") {
+        if (format != null && !format.equals("")) {
             apiUrl += "&format=" + format;
         }
-        if (symptoms != null && symptoms != "") {
+        if (symptoms != null && !symptoms.equals("")) {
             apiUrl += "&symptoms=" + symptoms;
         }
-        if (gender != null && gender.toString() != "") {
+        if (gender != null && !gender.toString().equals("")) {
             apiUrl += "&gender=" + gender.toString();
         }
-        if (yearOfBirth != null && yearOfBirth != "" && birthYear != 0) {
+        if (yearOfBirth != null && !yearOfBirth.equals("") && birthYear != 0) {
             apiUrl += "&year_of_birth=" + birthYear;
         }
 
@@ -246,10 +241,7 @@ public class ApiMedicManager implements PropertiesLoader {
                                  Gender gender,
                                  int birthYear) {
 
-        String apiUrl = getUrl(serviceName, token, language, format, symptoms, gender, birthYear,
-                        0, null);
-
-        return apiUrl;
+        return getUrl(serviceName, token, language, format, symptoms, gender, birthYear,0, null);
     }
 
     /**
@@ -267,8 +259,6 @@ public class ApiMedicManager implements PropertiesLoader {
                                           int birthYear,
                                           int locationId,
                                           SelectorStatus selectorStatus) {
-
-
 
         String apiUrl = getUrl("symptoms", accessToken, language, format,
                                        inputSymptoms, gender, birthYear,
@@ -300,8 +290,7 @@ public class ApiMedicManager implements PropertiesLoader {
      * @return the symptoms list
      */
     public List<Symptom> getSymptomsList () {
-        List<Symptom> symptomList = getSymptomsList(null, null, 0,0, null);
-        return symptomList;
+        return getSymptomsList(null, null, 0,0, null);
     }
 
     /**
@@ -337,6 +326,14 @@ public class ApiMedicManager implements PropertiesLoader {
         return diagnosisList;
     }
 
+    /**
+     * Gets issues list by symptom.
+     *
+     * @param symptomId  the symptom id
+     * @param genderCode the gender code
+     * @param birthYear  the birth year
+     * @return the issues list by symptom
+     */
     public List<Issue> getIssuesListBySymptom(int symptomId, String genderCode, int birthYear) {
 
         String symptoms =  "[" + Integer.valueOf(symptomId).toString().trim() + "]";

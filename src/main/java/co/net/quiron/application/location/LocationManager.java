@@ -24,11 +24,11 @@ public class LocationManager {
     public Set<State> getStates(String countryCode) {
 
         IAppRepository<Country> countryRepository = RepositoryFactory.getDBContext(Country.class);
-        Set<State> states = countryRepository
-                            .getListEquals("code", countryCode)
-                            .get(0)
-                            .getStates();
-        return states;
+
+        return countryRepository
+                .getListEquals("code", countryCode)
+                .get(0)
+                .getStates();
     }
 
     /**
@@ -40,14 +40,18 @@ public class LocationManager {
     public State getState(int stateId) {
 
         IAppRepository<State> stateRepository = RepositoryFactory.getDBContext(State.class);
-        State state = stateRepository.get(stateId);
-        return state;
+        return stateRepository.get(stateId);
     }
 
 
+    /**
+     * Gets address type.
+     *
+     * @param addressTypeId the address type id
+     * @return the address type
+     */
     public AddressType getAddressType(int addressTypeId) {
         IAppRepository<AddressType> addressTypeRepository = RepositoryFactory.getDBContext(AddressType.class);
-        AddressType addressType = addressTypeRepository.get(addressTypeId);
-        return addressType;
+        return addressTypeRepository.get(addressTypeId);
     }
 }

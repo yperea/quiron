@@ -60,12 +60,6 @@ public class VisitManager {
      */
     public Visit getPatientVisit(int visitId) {
 
-        IAppRepository<Patient> patientRepository = RepositoryFactory.getDBContext(Patient.class);
-        Map<String, Object> params = new TreeMap<>();
-        int patientId = accountManager.getId();
-        Patient patient = patientRepository.get(patientId);
-        params.put("patient", patient);
-
         Visit visit = visitRepository.get(visitId);
 
         if (visit == null) {
@@ -85,7 +79,7 @@ public class VisitManager {
     public boolean saveVisit (Visit visit) {
 
         logger.info("saveVisit(): Start.");
-        boolean success =  false;
+        boolean success;
 
         visitRepository.update(visit);
 
@@ -108,7 +102,7 @@ public class VisitManager {
     public boolean addTreatment(int visitId, int medicationId,
                                 LocalDate treatmentStartDate, LocalDate treatmentEndDate,
                                 String instructions) {
-        boolean success = false;
+        boolean success;
         Visit visit = visitRepository.get(visitId);
         Medication medication = (Medication) RepositoryFactory.getDBContext(Medication.class)
                 .get(medicationId);

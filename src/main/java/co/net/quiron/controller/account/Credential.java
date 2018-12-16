@@ -26,7 +26,7 @@ public class Credential extends HttpServlet {
 
         String url = "/account/credentials.jsp";
         String title = "Account Credentials";
-        AccountManager accountManager = AccountManager.getAccountManager(session, request);
+        AccountManager.getAccountManager(session, request);
 
         request.setAttribute("title", title);
         RequestDispatcher dispatcher = request.getRequestDispatcher(url);
@@ -35,7 +35,7 @@ public class Credential extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request,
-                          HttpServletResponse response) throws ServletException, IOException {
+                          HttpServletResponse response) throws IOException {
 
         HttpSession session = request.getSession();
         String url = "/quiron/account/credentials";

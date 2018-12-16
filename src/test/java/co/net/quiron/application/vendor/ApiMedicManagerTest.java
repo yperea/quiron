@@ -7,6 +7,8 @@ import co.net.quiron.vendor.com.apimedic.SelectorStatus;
 import co.net.quiron.vendor.com.apimedic.Symptom;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -26,6 +28,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class ApiMedicManagerTest implements PropertiesLoader {
 
+    private final Logger logger = LogManager.getLogger(this.getClass());
     private ApiMedicManager apiMedicManager;
     private Properties properties;
     private String propertiesFileName;
@@ -86,21 +89,14 @@ class ApiMedicManagerTest implements PropertiesLoader {
         String token = apiMedicManager.getAccessToken();
 
         String apiUrl = "/diagnosis";
-
-        List<Integer> symptomList = new ArrayList<>();
-
-        symptomList.add(10);
-        //symptomList.add(238);
-        //symptomList.add(104);
-
-        String symptoms = symptomList.toString().replace(" ","");//"[10,238,104]";
-
-
         int birthYear = 1977;
         String gender = "male";
         String language ="en-gb";
         String format = "json";
         String yearOfBirth = Integer.valueOf(birthYear).toString();
+        List<Integer> symptomList = new ArrayList<>();
+        symptomList.add(10);
+        String symptoms = symptomList.toString().replace(" ","");
 
         apiUrl += "?token=" + token + "&language=" + language;
 
@@ -133,9 +129,8 @@ class ApiMedicManagerTest implements PropertiesLoader {
             diagnosisList = mapper.readValue(response, new TypeReference<List<Diagnosis>>(){});
             //Symptoms symptomsList = mapper.readValue(response, Symptoms.class);
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.error("testGetRawDiagnosisListWithNoArguments(): " + e.getStackTrace());
         }
         assertEquals(7, diagnosisList.size());
     }
-
 }

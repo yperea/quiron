@@ -6,8 +6,6 @@ import co.net.quiron.domain.account.Role;
 import co.net.quiron.domain.account.User;
 import co.net.quiron.domain.institution.Organization;
 import co.net.quiron.domain.location.Address;
-import co.net.quiron.domain.location.AddressType;
-import co.net.quiron.domain.location.State;
 import co.net.quiron.domain.person.Patient;
 import co.net.quiron.domain.person.Person;
 import co.net.quiron.domain.person.PersonType;
@@ -26,8 +24,6 @@ import java.time.format.DateTimeFormatter;
 
 /**
  * This class represents the manager for the operations related to the user Account.
- *
- * @Author Yesid Perea
  */
 @Data
 public class AccountManager {
@@ -51,7 +47,7 @@ public class AccountManager {
 
     private IAppRepository<User> userRepository;
 
-/*    private IAppRepository<Patient> patientRepository;
+/*  private IAppRepository<Patient> patientRepository;
     private IAppRepository<Provider> providerRepository;
     private IAppRepository<Person> personRepository;
     private IAppRepository<PersonType> personTypeRepository;
@@ -76,6 +72,9 @@ public class AccountManager {
 
     /**
      * Instantiates an Account manager based on a username.
+     *
+     * @param username   the username
+     * @param personType the person type
      */
     public AccountManager(String username, String personType) {
         this();
@@ -87,7 +86,7 @@ public class AccountManager {
     /**
      * Hanldes the Application Sign Up.
      *
-     * @param type   the person type
+     * @param type         the person type
      * @param roleId       the role id
      * @param firstName    the first name
      * @param lastName     the last name
@@ -99,12 +98,12 @@ public class AccountManager {
      * @param confirmation the confirmation
      * @return the boolean
      */
-    public boolean signup (String type, int roleId, String firstName, String lastName,
-                           String username, String email, String birthDate, String gender,
-                           String password, String confirmation) {
+    public boolean signUp(String type, int roleId, String firstName, String lastName,
+                          String username, String email, String birthDate, String gender,
+                          String password, String confirmation) {
 
 
-        logger.info("signup(): Start signup.");
+        logger.info("signUp(): Start signUp.");
 
         boolean success = false;
         IAppRepository<Role> roleRepository = RepositoryFactory.getDBContext(Role.class);
@@ -116,19 +115,19 @@ public class AccountManager {
         PersonType personType = (PersonType)RepositoryFactory.getDBContext(PersonType.class)
                                 .getListEquals("name", type).get(0);
 
-        logger.trace("signup(): Create Patient.");
+        logger.trace("signUp(): Create Patient.");
         Patient patient = (Patient)RepositoryFactory.getDBContext(Patient.class)
                           .create(new Patient(personType, firstName, lastName,
                                   LocalDate.parse(birthDate, DateTimeFormatter.ofPattern("MM/d/yyyy")),
                                   gender));
 
-        logger.trace("signup(): Create User.");
+        logger.trace("signUp(): Create User.");
         User user = userRepository.create(new User(username, email, password));
 
-        logger.trace("signup(): Associating Patient to User.");
+        logger.trace("signUp(): Associating Patient to User.");
         user.addPerson(patient);
 
-        logger.trace("signup(): Associating Role to User.");
+        logger.trace("signUp(): Associating Role to User.");
         user.addRole((Role)RepositoryFactory.getDBContext(Role.class).get(roleId));
         userRepository.update(user);
 
@@ -149,7 +148,7 @@ public class AccountManager {
             message = new Message(MessageType.ERROR, "Something went wrong during the process.");
         }
 
-        logger.info("signup(): End Signup.");
+        logger.info("signUp(): End Signup.");
         return success;
     }
 
@@ -196,7 +195,8 @@ public class AccountManager {
             }
 
             if (person.getAddresses().size() > 0) {
-                profile.setAddress(person.getAddresses().stream().findFirst().get());
+                //profile.setAddress(person.getAddresses().stream().findFirst().get());
+                profile.setAddress(person.getAddresses().stream().findFirst().orElse(null));
             }
         } else {
             message = new Message(MessageType.ERROR, "No " + personType + " profile associated to the username provided.");
@@ -209,11 +209,12 @@ public class AccountManager {
      *
      * @param password     the password
      * @param confirmation the confirmation
+     * @return the boolean
      */
     public boolean saveCredentials (String password, String confirmation) {
 
         logger.info("saveCredentials(): Start.");
-        boolean success = false;
+        boolean success;
 
         User user = userRepository.get(userId);
 
@@ -234,14 +235,14 @@ public class AccountManager {
     /**
      * Saves User's profile.
      *
-     * @param profile    the user profile
+     * @param profile the user profile
      * @return the operation result
      */
     public boolean saveProfile(Profile profile) {
 
         logger.info("saveProfile(): Start.");
-        boolean success = false;
-        Person person = null;
+        boolean success;
+        Person person;
 
         if(personType.equals("patient")) {
              person = (Person) RepositoryFactory.getDBContext(Patient.class).get(id);
@@ -296,14 +297,14 @@ public class AccountManager {
     /**
      * Saves Patient's Insurance Information.
      *
-     * @param companyId  the insurance company id
+     * @param companyId      the insurance company id
      * @param subscriberCode the subscriber id
      * @return the profile
      */
     public boolean savePatientInsurance(int companyId, String subscriberCode) {
 
         logger.info("savePatientInsurance(): Start.");
-        boolean success = false;
+        boolean success;
 
         Patient patient = (Patient)RepositoryFactory.getDBContext(Patient.class).get(id);
         Organization company = (Organization)RepositoryFactory.getDBContext(Organization.class).get(companyId);
@@ -324,23 +325,34 @@ public class AccountManager {
         return success;
     }
 
+    /**
+     * Gets account manager.
+     *
+     * @param session the session
+     * @param request the request
+     * @return the account manager
+     */
     public static AccountManager getAccountManager(HttpSession session, HttpServletRequest request) {
 
         String username = null;
-        String personType = null;
+        String personType = "patient";
 
         AccountManager accountManager = (AccountManager) session.getAttribute("account");
         if (accountManager == null){
 
-            if (request.getUserPrincipal()!= null &&
-                session.getAttribute("personType") != null) {
+            if (request.getUserPrincipal()!= null) {
                 username = request.getUserPrincipal().getName();
-                personType = (String) session.getAttribute("personType");
-                accountManager = new AccountManager(username, personType);
             }
 
+            if(session.getAttribute("personType") != null) {
+                personType = (String) session.getAttribute("personType");
+            }
+
+            accountManager = new AccountManager(username, personType);
+            if(accountManager != null) {
+                session.setAttribute("message", accountManager.getMessage());
+            }
             session.setAttribute("account", accountManager);
-            session.setAttribute("message", accountManager.getMessage());
         }
         return accountManager;
     }

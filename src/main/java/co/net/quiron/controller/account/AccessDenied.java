@@ -22,7 +22,7 @@ public class AccessDenied extends HttpServlet {
 
     @Override
     protected void doGet (HttpServletRequest request,
-                          HttpServletResponse response) throws ServletException, IOException {
+                          HttpServletResponse response) throws IOException {
 
         String url = "/quiron/account/signin";
         String title = "Sign In";
@@ -33,7 +33,7 @@ public class AccessDenied extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request,
-                          HttpServletResponse response) throws ServletException, IOException {
+                          HttpServletResponse response) throws IOException {
 
         HttpSession session = request.getSession();
         String url = "/quiron/account/signin";

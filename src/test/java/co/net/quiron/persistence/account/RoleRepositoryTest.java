@@ -87,7 +87,6 @@ class RoleRepositoryTest {
         assertNotNull(roleUpdated.getModifiedDate());
     }
 
-    //TODO: Create Test Case for Roles with children
     /**
      * Test the role deletion.
      */

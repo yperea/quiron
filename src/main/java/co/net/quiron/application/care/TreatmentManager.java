@@ -55,12 +55,6 @@ public class TreatmentManager {
      */
     public Treatment getPatientTreatment(int treatmentId) {
 
-        IAppRepository<Patient> patientRepository = RepositoryFactory.getDBContext(Patient.class);
-        Map<String, Object> params = new TreeMap<>();
-        int patientId = accountManager.getId();
-        Patient patient = patientRepository.get(patientId);
-        params.put("patient", patient);
-
         Treatment treatment = treatmentRepository.get(treatmentId);
 
         if (treatment == null) {
@@ -79,7 +73,7 @@ public class TreatmentManager {
     public boolean saveTreatment (Treatment treatment) {
 
         logger.info("saveTreatment(): Start.");
-        boolean success =  false;
+        boolean success;
 
         treatmentRepository.update(treatment);
 

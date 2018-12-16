@@ -22,7 +22,7 @@
         </div>
         <br/>
         <div class="row justify-content-center">
-            <div class="col-md-9">
+            <div class="col-md-11">
                 <!--<h4 class="mb-3">Your person</h4>-->
 
                 <yp:alert type="${message.type}" url="${message.redirect}">${message.description}</yp:alert>
