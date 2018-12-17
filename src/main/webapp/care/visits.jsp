@@ -54,6 +54,9 @@
                             </th>
                             <th>Service</th>
                             <th>Location</th>
+                            <c:if test="${(state == null || state == 'A')&&(account.profile.personType == 'patient')}">
+                            <th class="text-center">Action</th>
+                            </c:if>
                         </tr>
                         </thead>
                         <tbody>
@@ -67,9 +70,9 @@
                                 <td><tags:localDateTime date="${visit.actualStartDate}" pattern="MM/d/yyyy"/></td>
                             </c:if>
                             <td>
-                                <c:if test="${treatment.status == 'A'}">Upcoming</c:if>
-                                <c:if test="${treatment.status == 'C'}">Completed</c:if>
-                                <c:if test="${treatment.status == 'D'}">Canceled</c:if>
+                                <c:if test="${visit.status == null || visit.status == 'A'}">Upcoming</c:if>
+                                <c:if test="${visit.status == 'C'}">Completed</c:if>
+                                <c:if test="${visit.status == 'D'}">Canceled</c:if>
                             </td>
                             <td>
                                 <c:if test="${account.profile.personType == 'patient'}">
@@ -81,6 +84,9 @@
                             </td>
                             <td>${visit.service.name}</td>
                             <td>${visit.providerSchedule.organization.name} ${visit.providerSchedule.address.name}</td>
+                            <c:if test="${(state == null || state == 'A')&&(account.profile.personType == 'patient')}">
+                            <td class="text-center"><a class="" href="${root}/care/visit?id=${visit.id}&op=delete" role="button"><i class="fa fa-trash"></i></a></td>
+                            </c:if>
                         </tr>
                         </c:forEach>
                         </tbody>

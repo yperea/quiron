@@ -10,6 +10,8 @@ import co.net.quiron.domain.care.Prescription;
 import co.net.quiron.domain.care.Treatment;
 import co.net.quiron.domain.care.Visit;
 import co.net.quiron.util.FormManager;
+import co.net.quiron.util.Message;
+import co.net.quiron.util.MessageType;
 import co.net.quiron.vendor.com.apimedic.Issue;
 import co.net.quiron.vendor.com.apimedic.Symptom;
 
@@ -47,6 +49,8 @@ public class VisitForm extends HttpServlet {
         AccountManager accountManager = AccountManager.getAccountManager(session, request);
         VisitManager visitManager = new VisitManager(accountManager);
         int id = Integer.parseInt(FormManager.getNumericValue(request.getParameter("id")));
+        String operation = FormManager.getValue(request.getParameter("op"));
+
         Visit visit = visitManager.getPatientVisit(id);
         List<Symptom> symptoms = getSymptoms();
         List<Issue> issues = getIssues(visit);
@@ -67,6 +71,11 @@ public class VisitForm extends HttpServlet {
             prescription = treatment.getPrescriptions().stream().findFirst().orElse(null);
         }
 
+        if(operation.equals("delete")) {
+            Message message = new Message(MessageType.WARNING, "Your about to delete this Visit.");
+            request.setAttribute("message", message);
+        }
+
         request.setAttribute("title", title);
         request.setAttribute("id", id);
         request.setAttribute("visit", visit);
@@ -77,6 +86,7 @@ public class VisitForm extends HttpServlet {
         request.setAttribute("symptoms", symptoms);
         request.setAttribute("issues", issues);
         request.setAttribute("medications", medications);
+        request.setAttribute("operation", operation);
 
         RequestDispatcher dispatcher = request.getRequestDispatcher(url);
         dispatcher.forward(request, response);
@@ -95,11 +105,14 @@ public class VisitForm extends HttpServlet {
         VisitManager visitManager = new VisitManager(accountManager);
 
         boolean visitSaved = false;
+        boolean visitDeleted = true;
         boolean treatmentAdded = true;
         Prescription prescription = null;
         int visitId = Integer.parseInt(FormManager.getNumericValue(request.getParameter("visitId")));
         Visit visit = visitManager.getPatientVisit(visitId);
 
+
+        String operation = FormManager.getValue(request.getParameter("op"));
         String visitStartDate = FormManager.getValue(request.getParameter("visitStartDate"));
         String visitStartTime = FormManager.getValue(request.getParameter("startTime"));
         String visitEndTime = FormManager.getValue(request.getParameter("endTime"));
@@ -140,36 +153,43 @@ public class VisitForm extends HttpServlet {
                     DateTimeFormatter.ofPattern("MM/d/yyyy HH:mm")));
         }
 
-        url += "?id=" + visitId;
 
         if (FormManager.validForm(request, getVisitRequiredFields(personType))) {
-            visitSaved = visitManager.saveVisit(visit);
-            session.setAttribute("message", visitManager.getMessage());
-            if (visitSaved && personType == "provider") {
 
-                int medicationId = Integer.parseInt(FormManager.getNumericValue(request.getParameter("medicationId")));
-                String prescriptionStartDate = FormManager.getValue(request.getParameter("treatmentStartDate"));
-                String prescriptionEndDate = FormManager.getValue(request.getParameter("treatmentEndDate"));
-                String treatmentInstructions = FormManager.getValue(request.getParameter("treatmentInstructions"));
+            if (operation.equals("delete")) {
+                visitDeleted = visitManager.deleteVisit(visit);
+            }else {
+                visitSaved = visitManager.saveVisit(visit);
+                if (visitSaved && personType == "provider") {
 
-                if (FormManager.validForm(request, getPrescriptionRequiredFields(personType))) {
-                    LocalDate treatmentStartDate = null;
-                    LocalDate treatmentEndDate = null;
-                    if(!prescriptionStartDate.equals("")) {
-                        treatmentStartDate = LocalDate.parse(prescriptionStartDate,
-                                DateTimeFormatter.ofPattern("MM/d/yyyy"));
+                    int medicationId = Integer.parseInt(FormManager.getNumericValue(request.getParameter("medicationId")));
+                    String prescriptionStartDate = FormManager.getValue(request.getParameter("treatmentStartDate"));
+                    String prescriptionEndDate = FormManager.getValue(request.getParameter("treatmentEndDate"));
+                    String treatmentInstructions = FormManager.getValue(request.getParameter("treatmentInstructions"));
+
+                    if (FormManager.validForm(request, getPrescriptionRequiredFields(personType))) {
+                        LocalDate treatmentStartDate = null;
+                        LocalDate treatmentEndDate = null;
+                        if (!prescriptionStartDate.equals("")) {
+                            treatmentStartDate = LocalDate.parse(prescriptionStartDate,
+                                    DateTimeFormatter.ofPattern("MM/d/yyyy"));
+                        }
+                        if (!prescriptionEndDate.equals("")) {
+                            treatmentEndDate = LocalDate.parse(prescriptionEndDate,
+                                    DateTimeFormatter.ofPattern("MM/d/yyyy"));
+                        }
+                        treatmentAdded = visitManager.addTreatment(visitId, medicationId, treatmentStartDate, treatmentEndDate, treatmentInstructions);
                     }
-                    if(!prescriptionEndDate.equals("")) {
-                        treatmentEndDate = LocalDate.parse(prescriptionEndDate,
-                                DateTimeFormatter.ofPattern("MM/d/yyyy"));
-                    }
-                    treatmentAdded = visitManager.addTreatment(visitId, medicationId, treatmentStartDate, treatmentEndDate, treatmentInstructions);
-                    session.setAttribute("message", visitManager.getMessage());
                 }
             }
+            session.setAttribute("message", visitManager.getMessage());
         }
 
         if (visitSaved & treatmentAdded) {
+            url += "?id=" + visitId;
+            response.sendRedirect(url);
+        } else if (visitDeleted) {
+            url = "/quiron/care/visits";
             response.sendRedirect(url);
         } else {
             url = "/care/visit.jsp?id=" + visitId;
@@ -190,6 +210,7 @@ public class VisitForm extends HttpServlet {
             request.setAttribute("symptoms", symptoms);
             request.setAttribute("issues", issues);
             request.setAttribute("medications", medications);
+            request.setAttribute("operation", operation);
 
             RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(url);
             dispatcher.forward(request, response);

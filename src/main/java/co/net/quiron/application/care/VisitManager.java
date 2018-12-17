@@ -73,7 +73,7 @@ public class VisitManager {
     }
 
     /**
-     * Save visit boolean.
+     * Save visit.
      *
      * @param visit the visit
      * @return the boolean
@@ -81,14 +81,52 @@ public class VisitManager {
     public boolean saveVisit (Visit visit) {
 
         logger.info("saveVisit(): Start.");
-        boolean success;
+        boolean success = false;
 
-        visitRepository.update(visit);
+        try{
+            visitRepository.update(visit);
+            logger.info("saveVisit(): Success.");
+            message = new Message(MessageType.INFO, "Visit Information successfully updated.");
+            success = true;
+        }catch (Exception exception) {
+            logger.error("saveVisit(): Error: " + exception.getMessage());
+            logger.trace("saveVisit(): " + exception.getStackTrace());
+            message = new Message(MessageType.ERROR, "Error saving the Visit.");
+        }
 
         logger.info("saveVisit(): End.");
-        message = new Message(MessageType.INFO, "Visit Information successfully updated.");
+        return success;
+    }
 
-        success = true;
+    /**
+     * Delete visit.
+     *
+     * @param visit the visit
+     * @return the boolean
+     */
+    public boolean deleteVisit (Visit visit) {
+
+        logger.info("deleteVisit(): Start.");
+        boolean success = false;
+
+        try{
+            if (accountManager.getId() == visit.getPatient().getId()) {
+                visitRepository.delete(visit);
+                logger.info("deleteVisit(): Success.");
+                message = new Message(MessageType.INFO, "Visit successfully deleted.");
+                success = true;
+            } else {
+                logger.info("deleteVisit(): Illegal attempt.");
+                message = new Message(MessageType.ERROR, "Illegal operation.");
+            }
+
+        }catch (Exception exception) {
+            logger.error("deleteVisit(): Error: " + exception.getMessage());
+            logger.trace("deleteVisit(): " + exception.getStackTrace());
+            message = new Message(MessageType.ERROR, "Error deleting the Visit.");
+        }
+
+        logger.info("deleteVisit(): End.");
         return success;
     }
 

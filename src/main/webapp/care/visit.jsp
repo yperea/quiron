@@ -208,6 +208,8 @@
                       method="POST"
                       novalidate>
 
+                    <input type="hidden" id="op" name="op"
+                           value="${operation}"/>
                     <input type="hidden" id="visitId" name="visitId"
                            value="${visit.id}"/>
                     <input type="hidden" id="diagnosticId" name="diagnosticId"
@@ -369,7 +371,7 @@
                         </div>
                     </div>
 
-                    <c:if test="${(account.profile.personType == 'patient' && visit.status == 'C') || (account.profile.personType == 'provider' && visit.status != 'D')}">
+                    <c:if test="${((account.profile.personType == 'patient' && visit.status == 'C') || (account.profile.personType == 'provider' && visit.status != 'D'))&& operation != 'delete'}">
                     <div class="row">
                         <div class="col-md-6 mb-3">
                             <label for="visitStartDate">Actual Date</label>
@@ -430,6 +432,7 @@
                     </div>
                     </c:if>
 
+                    <c:if test="${operation != 'delete'}">
                     <div class="row">
                         <div class="col-md-12 mb-3">
                             <label for="symptom">Symptom</label>
@@ -466,7 +469,7 @@
                             </div>
                         </div>
 
-                        <c:if test="${(visit.status == 'A' && personType == 'provider') || (visit.status == 'C')}">
+                        <c:if test="${((visit.status == 'A' && personType == 'provider') || (visit.status == 'C'))}">
                         <div class="col-md-12 mb-3">
                             <label for="diagnosis">Diagnosis</label>
 
@@ -503,7 +506,9 @@
                         </div>
                         </c:if>
                     </div>
+                    </c:if>
 
+                    <c:if test="${operation != 'delete'}">
                     <div class="mb-3">
                         <label for="providerComment">Provider Comments</label>
                         <textarea class="form-control"
@@ -518,11 +523,17 @@
                             Please enter your comments.
                         </div>
                     </div>
+                    </c:if>
 
                     <hr class="mb-4">
-                    <c:if test="${account.profile.personType == 'provider'}">
+                    <c:if test="${account.profile.personType == 'provider' && operation != 'delete'}">
                         <button class="btn btn-success btn-lg btn-block" type="submit">Save</button>
                     </c:if>
+
+                    <c:if test="${operation == 'delete'}">
+                        <button class="btn btn-danger btn-lg btn-block" type="submit">Delete</button>
+                    </c:if>
+
                 </form>
             </div>
         </div>
