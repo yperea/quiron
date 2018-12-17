@@ -5,6 +5,8 @@ import co.net.quiron.application.care.TreatmentManager;
 import co.net.quiron.domain.care.Prescription;
 import co.net.quiron.domain.care.Treatment;
 import co.net.quiron.util.FormManager;
+import co.net.quiron.util.Message;
+import co.net.quiron.util.MessageType;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -37,10 +39,11 @@ public class TreatmentForm extends HttpServlet {
         Treatment treatment = treatmentManager.getPatientTreatment(id);
         if (treatment != null) {
             prescription = treatment.getPrescriptions().stream().findFirst().orElse(null);
+        } else {
+            session.setAttribute("message", treatmentManager.getMessage());
         }
 
         request.setAttribute("title", title);
-        session.setAttribute("message", treatmentManager.getMessage());
         request.setAttribute("treatment", treatment);
         request.setAttribute("prescription", prescription);
         request.setAttribute("id", id);
@@ -56,7 +59,7 @@ public class TreatmentForm extends HttpServlet {
         HttpSession session = request.getSession();
         String url = "/quiron/care/treatment";
         String title = "My Treatments";
-
+        Prescription prescription = null;
         AccountManager accountManager = AccountManager.getAccountManager(session, request);
         int treatmentId = Integer.parseInt(FormManager.getNumericValue(request.getParameter("treatmentId")));
         String statusCode = FormManager.getValue(request.getParameter("statusCode"));
@@ -66,6 +69,11 @@ public class TreatmentForm extends HttpServlet {
 
         TreatmentManager treatmentManager = new TreatmentManager(accountManager);
         Treatment treatment = treatmentManager.getPatientTreatment(treatmentId);
+        if (treatment != null) {
+            prescription = treatment.getPrescriptions().stream().findFirst().orElse(null);
+        } else {
+            session.setAttribute("message", treatmentManager.getMessage());
+        }
 
         treatment.setId(treatmentId);
         treatment.setStatus(statusCode);
@@ -73,15 +81,18 @@ public class TreatmentForm extends HttpServlet {
         treatment.setProviderComments(providerComments);
         treatment.setPatientComments(patientComments);
 
-        url += "?id=" + treatmentId;
-
         if (FormManager.validForm(request, getRequiredFields())) {
-            boolean result = treatmentManager.saveTreatment(treatment);
+            url += "?id=" + treatmentId;
+            treatmentManager.saveTreatment(treatment);
             session.setAttribute("message", treatmentManager.getMessage());
             response.sendRedirect(url);
         } else {
+            url = "/care/treatment.jsp?id=" + treatmentId;
             request.setAttribute("title", title);
             request.setAttribute("treatment", treatment);
+            request.setAttribute("prescription", prescription);
+            Message message = new Message(MessageType.ERROR, "Missing data error. Try that again, and if it still doesn't work, let us know.");
+            request.setAttribute("message", message);
             RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(url);
             dispatcher.forward(request, response);
         }

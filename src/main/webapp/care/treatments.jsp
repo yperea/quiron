@@ -32,9 +32,10 @@
                     <table class="table table-striped table-sm">
                         <thead>
                         <tr>
-                            <th>#</th>
+                            <th>Id</th>
                             <th>Start Date</th>
                             <th>End Date</th>
+                            <th>Completed</th>
                             <th>Symptom</th>
                             <th>Medication</th>
                             <th>Evaluation</th>
@@ -46,6 +47,10 @@
                             <td><a class="" href="${root}/treatment?id=${treatment.id}" role="button">${treatment.id}</a></td>
                             <td>${treatment.startDate}</td>
                             <td>${treatment.endDate}</td>
+                            <td>
+                                <c:if test="${treatment.status != 'A'}">Yes</c:if>
+                                <c:if test="${treatment.status == 'A'}">No</c:if>
+                            </td>
                             <td>${treatment.visit.symptomName}</td>
                             <td>
                                 <c:forEach var="prescription" items="${treatment.prescriptions}">

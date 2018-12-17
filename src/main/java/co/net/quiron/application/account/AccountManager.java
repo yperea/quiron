@@ -154,7 +154,7 @@ public class AccountManager {
 
 
     /**
-     * Load the Account.
+     * Load the User Profile.
      */
     public void loadProfile() {
 
@@ -164,42 +164,45 @@ public class AccountManager {
             personType = "patient";
         }
 
-        User user = userRepository.getListEquals("username", username).get(0);
-        String finalPersonType = personType;
-        Person person = user.getPersons()
-                .stream()
-                .filter(p -> finalPersonType.equals(p.getPersonType().getName().toLowerCase()))
-                .findAny()
-                .orElse(null);
+        if(username != null)
+        {
+            User user = userRepository.getListEquals("username", username).get(0);
+            String finalPersonType = personType;
+            Person person = user.getPersons()
+                    .stream()
+                    .filter(p -> finalPersonType.equals(p.getPersonType().getName().toLowerCase()))
+                    .findAny()
+                    .orElse(null);
 
-        if(person != null){
-            this.isSigned = true;
-            this.id = person.getId();
-            this.userId = user.getId();
-            this.username = user.getUsername();
-            this.email = user.getEmail();
+            if(person != null){
+                this.isSigned = true;
+                this.id = person.getId();
+                this.userId = user.getId();
+                this.username = user.getUsername();
+                this.email = user.getEmail();
 
-            profile.setFirstName(person.getFirstName());
-            profile.setLastName(person.getLastName());
-            profile.setPersonType(person.getPersonType().getName().toLowerCase());
-            
-            if(personType.equals("patient")) {
-                Patient patient = (Patient) RepositoryFactory.getDBContext(Patient.class).get(person.getId());
-                profile.setBirthDate(patient.getBirthDate());
-                profile.setGender(patient.getGender());
+                profile.setFirstName(person.getFirstName());
+                profile.setLastName(person.getLastName());
+                profile.setPersonType(person.getPersonType().getName().toLowerCase());
+
+                if(personType.equals("patient")) {
+                    Patient patient = (Patient) RepositoryFactory.getDBContext(Patient.class).get(person.getId());
+                    profile.setBirthDate(patient.getBirthDate());
+                    profile.setGender(patient.getGender());
+                }
+
+                if(personType.equals("provider")) {
+                    Provider provider = (Provider) RepositoryFactory.getDBContext(Provider.class).get(person.getId());
+                    profile.setNpi(provider.getNpi());
+                }
+
+                if (person.getAddresses().size() > 0) {
+                    //profile.setAddress(person.getAddresses().stream().findFirst().get());
+                    profile.setAddress(person.getAddresses().stream().findFirst().orElse(null));
+                }
+            } else {
+                message = new Message(MessageType.ERROR, "No " + personType + " profile associated to the username provided.");
             }
-
-            if(personType.equals("provider")) {
-                Provider provider = (Provider) RepositoryFactory.getDBContext(Provider.class).get(person.getId());
-                profile.setNpi(provider.getNpi());
-            }
-
-            if (person.getAddresses().size() > 0) {
-                //profile.setAddress(person.getAddresses().stream().findFirst().get());
-                profile.setAddress(person.getAddresses().stream().findFirst().orElse(null));
-            }
-        } else {
-            message = new Message(MessageType.ERROR, "No " + personType + " profile associated to the username provided.");
         }
         logger.info("loadUserAccount(String): End loading account.");
     }

@@ -22,6 +22,20 @@
             loadDiagnosisList($(this).val());
         });
 
+        $('.rt-control').change(function() {
+            var controlName = $(this).attr('id');
+            var controlValue = $(this).val();
+            var finalControl = controlName.replace('tmp-', '');
+/*
+            console.log("controlName: " + controlName);
+            console.log("controlValue: " + controlValue);
+            console.log("finalControl: " + finalControl);
+*/
+            eval("$('#" + finalControl + "').val("+ controlValue +")");
+
+        });
+
+
         $('#diagnosis').change(function() {
             var diagnosisName = $('#diagnosis').find(":selected").text();
             $('#diagnosticName').val(diagnosisName.trim());

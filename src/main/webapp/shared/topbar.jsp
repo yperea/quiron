@@ -45,17 +45,19 @@
 
                 <c:choose>
                     <c:when test="${account.signed != null}" >
+                        <li class="nav-item"><a class="nav-link" href="${root}/account">My Visits</a></li>
+                        <li class="nav-item"><a class="nav-link" href="${root}/account">My Treatments</a></li>
                         <li class="nav-item"><a class="nav-link" href="${root}/account">My Account</a></li>
                         <li class="dropdown user-menu">
                             <a class="nav-link" href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                <img alt="Profile Picture" class="user-image" src="${root}/style/img/QuironIcon75x75.png" />
+                                <img alt="Profile Picture" class="user-image" src="${root}/style/img/male.jpg" />
                                 &nbsp;<span class="hidden-xs"></span>
                             </a>
                             <ul class="dropdown-menu">
                                 <li class="my-user-header">
                                     <img alt="Profile Picture"
                                          class="img-circle"
-                                         src="${root}/style/img/QuironIcon75x75.png" />
+                                         src="${root}/style/img/male.jpg" />
                                     <p>
                                         ${account.profile.firstName} ${account.profile.lastName}
                                         <br/><small>${account.profile.personType}</small>

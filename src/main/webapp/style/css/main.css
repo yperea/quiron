@@ -146,3 +146,7 @@ footer {
     z-index: 1030;
     border-bottom: 1px solid #d2d6da;
 }
+
+.rt-control {
+    width: 6em;
+}

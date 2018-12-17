@@ -74,12 +74,9 @@ public class TreatmentManager {
 
         logger.info("saveTreatment(): Start.");
         boolean success;
-
         treatmentRepository.update(treatment);
-
         logger.info("saveTreatment(): End.");
         message = new Message(MessageType.INFO, "Treatment Information successfully updated.");
-
         success = true;
         return success;
     }

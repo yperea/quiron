@@ -11,10 +11,12 @@ import co.net.quiron.domain.person.Provider;
 import co.net.quiron.persistence.interfaces.IAppRepository;
 import co.net.quiron.util.Message;
 import co.net.quiron.util.MessageType;
+import co.net.quiron.util.PropertiesLoader;
 import lombok.Data;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
@@ -107,7 +109,6 @@ public class VisitManager {
         Medication medication = (Medication) RepositoryFactory.getDBContext(Medication.class)
                 .get(medicationId);
         Treatment newTreatment = visit.getTreatments().stream().findFirst().orElse(null);
-        /*Prescription prescription = null;*/
 
         if(newTreatment != null) {
             RepositoryFactory.getDBContext(Treatment.class).delete(newTreatment); //This deletes also the prescriptions related
@@ -120,11 +121,20 @@ public class VisitManager {
         newTreatment =  new Treatment(visit);
         newTreatment.setStartDate(treatmentStartDate);
         newTreatment.setEndDate(treatmentEndDate);
+        newTreatment.setStatus("A");
         newTreatment.addPrescription(prescription);
 
-        treatment = (Treatment) RepositoryFactory.getDBContext(Treatment.class)
-                .create(newTreatment);
-        success = true;
+        try {
+            treatment = (Treatment) RepositoryFactory.getDBContext(Treatment.class)
+                    .create(newTreatment);
+            message = new Message(MessageType.INFO, "Treatment successfully saved.");
+            logger.error("Treatment successfully saved");
+            success = true;
+        }catch (Exception exception) {
+            message = new Message(MessageType.ERROR, "Error creating Treatment.");
+            logger.error(exception.getStackTrace());
+            success = false;
+        }
         return success;
     }
 

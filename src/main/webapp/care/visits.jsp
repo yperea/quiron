@@ -21,11 +21,11 @@
             <h1 class="h2">My Visits</h1>
             <div class="btn-toolbar mb-2 mb-md-0">
                 <div class="btn-group mr-2">
-                    <a class="btn btn-sm btn<c:if test="${state != null && state != 'A'}">-outline</c:if>-danger" href="<c:if test="${state == null || state == 'A'}">#</c:if><c:if test="${state != null && state != 'A'}">${root}/visits</c:if>" role="button">Upcoming</a>
+                    <a class="btn btn-sm btn<c:if test="${state != null && state != 'A'}">-outline</c:if>-warning" href="<c:if test="${state == null || state == 'A'}">#</c:if><c:if test="${state != null && state != 'A'}">${root}/visits</c:if>" role="button">Upcoming</a>
                     &nbsp;
-                    <a class="btn btn-sm btn<c:if test="${state != 'C'}">-outline</c:if>-warning" href="<c:if test="${state == 'C'}">#</c:if><c:if test="${state != 'C'}">${root}/visits?state=C</c:if>" role="button">Completed</a>
+                    <a class="btn btn-sm btn<c:if test="${state != 'C'}">-outline</c:if>-success" href="<c:if test="${state == 'C'}">#</c:if><c:if test="${state != 'C'}">${root}/visits?state=C</c:if>" role="button">Completed</a>
                     &nbsp;
-                    <a class="btn btn-sm btn<c:if test="${state != 'D'}">-outline</c:if>-success" href="<c:if test="${state == 'D'}">#</c:if><c:if test="${state != 'D'}">${root}/visits?state=D</c:if>" role="button">Canceled</a>
+                    <a class="btn btn-sm btn<c:if test="${state != 'D'}">-outline</c:if>-danger" href="<c:if test="${state == 'D'}">#</c:if><c:if test="${state != 'D'}">${root}/visits?state=D</c:if>" role="button">Canceled</a>
                     &nbsp;
                 </div>
             </div>
@@ -41,8 +41,9 @@
                     <table class="table table-striped table-sm">
                         <thead>
                         <tr>
-                            <th>#</th>
+                            <th>Id</th>
                             <th>Date</th>
+                            <th>Status</th>
                             <th>
                             <c:if test="${account.profile.personType == 'patient'}">
                                 Provider
@@ -60,13 +61,16 @@
                         <tr>
                             <td><a class="" href="${root}/care/visit?id=${visit.id}" role="button">${visit.id}</a></td>
                             <c:if test="${visit.actualStartDate == null}">
-                                <%--<td>${visit.scheduledStartDate}</td>--%>
                                 <td><tags:localDateTime date="${visit.scheduledStartDate}" pattern="MM/d/yyyy"/></td>
                             </c:if>
                             <c:if test="${visit.actualStartDate != null}">
-                                <%--<td>${visit.actualStartDate}</td>--%>
-                                <td><tags:localDateTime date="${visit.actualStartDate}" pattern="MM/d/yyyy HH:mm"/></td>
+                                <td><tags:localDateTime date="${visit.actualStartDate}" pattern="MM/d/yyyy"/></td>
                             </c:if>
+                            <td>
+                                <c:if test="${treatment.status == 'A'}">Upcoming</c:if>
+                                <c:if test="${treatment.status == 'C'}">Completed</c:if>
+                                <c:if test="${treatment.status == 'D'}">Canceled</c:if>
+                            </td>
                             <td>
                                 <c:if test="${account.profile.personType == 'patient'}">
                                     ${visit.providerSchedule.provider.firstName} ${visit.providerSchedule.provider.lastName}

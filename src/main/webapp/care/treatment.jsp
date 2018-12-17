@@ -16,7 +16,7 @@
 
             <div class="btn-toolbar mb-2 mb-md-0">
                 <div class="btn-group mr-2">
-                    <a class="btn btn-sm btn-outline-success" href="${root}/care/treatments" role="button">My Treatments</a>
+                    <a class="btn btn-sm btn-outline-success" href="${root}/care/treatments" role="button">Back to My Treatments</a>
                     &nbsp;
                 </div>
             </div>
@@ -31,197 +31,51 @@
                     <span class="text-muted">Visit Information</span>
                 </h4>
 
-
-                <div class="alert alert-success" role="alert">
-<%--
-                    <h4 class="alert-heading">Visit Information</h4>
---%>
-                    <h6 class="card-title">The Service</h6>
-                    <p class="card-text">
-                        <b>Symptoms</b>: ${treatment.visit.symptomName}
-                        <br/>
-                        <b>Symptoms</b>: ${treatment.visit.symptomName}
-                    </p>
-                    <p class="card-text">
-                        <b>Diagnosis</b>: ${treatment.visit.diagnosticName}
-                    </p>
-                    <p class="card-text">
-                        <b>Provider</b>: ${treatment.visit.providerSchedule.provider.lastName} , ${treatment.visit.providerSchedule.provider.firstName}
-                    </p>
-                    <p class="card-text">
-                        <b>Organization</b>: ${treatment.visit.providerSchedule.organization.name}
-                    </p>
-                    <hr>
-                    <p class="mb-0">Whenever you need to, be sure to use margin utilities to keep things nice and tidy.</p>
-                </div>
-
-<%--
-                <div id="serviceCard" class="card border-info mb-3">
-                    <div class="card-header"><h6>Service Information</h6></div>
-                    <div id="serviceCardBody" class="card-body text-info">
-                        <h6 class="card-title">The Service</h6>
-                        <p class="card-text">
-                            <b>Symptoms</b>: ${treatment.visit.symptomName}
-                        </p>
-                        <p class="card-text">
-                            <b>Diagnosis</b>: ${treatment.visit.diagnosticName}
-                        </p>
-                        <p class="card-text">
-                            <b>Provider</b>: ${treatment.visit.providerSchedule.provider.lastName} , ${treatment.visit.providerSchedule.provider.firstName}
-                        </p>
-                        <p class="card-text">
-                            <b>Organization</b>: ${treatment.visit.providerSchedule.organization.name}
-                        </p>
-                    </div>
-                </div>
---%>
-<%--
-                <h4 class="d-flex justify-content-between align-items-center mb-3">
-                    <span class="text-muted">Measurements</span>
-                </h4>
                 <ul class="list-group mb-3">
                     <li class="list-group-item d-flex justify-content-between lh-condensed">
-                        <div>
-                            <h6 class="my-0"><label for="bloodPressure">Blood Pressure</label></h6>
-                            <small class="text-muted">Brief description</small>
+                        <div class="text-success">
+                            <h6 class="my-0">Service</h6>
+                            <h5 class="text-muted">${treatment.visit.service.name}</h5>
+                            <h6 class="my-0">Date</h6>
+                            <h5 class="text-muted"><tags:localDateTime date="${treatment.visit.actualStartDate}" pattern="MM/d/yyyy"/></h5>
                         </div>
-                        <span class="text-muted">
-                            <input type="text"
-                                   class="form-control"
-                                   id="bloodPressure"
-                                   name="bloodPressure"
-                                   placeholder=""
-                                   size="4"
-                                   value="${treatment.visit.patientBloodPressure}"
-                                   required />
-                            <div class="invalid-feedback">
-                                Blood pressure required.
-                            </div>
-                        </span>
-                    </li>
-                    <li class="list-group-item d-flex justify-content-between lh-condensed">
-                        <div>
-                            <h6 class="my-0"><label for="weight">Weight</label></h6>
-                            <small class="text-muted">Brief description</small>
-                        </div>
-                        <span class="text-muted">
-                            <input type="text"
-                                   class="form-control"
-                                   id="weight"
-                                   name="weight"
-                                   placeholder=""
-                                   size="4"
-                                   value="${treatment.visit.patientWeight}"
-                                   required />
-                            <div class="invalid-feedback">
-                                Enter patient weight.
-                            </div>
-                        </span>
                     </li>
 
-                    <li class="list-group-item d-flex justify-content-between lh-condensed">
-                        <div>
-                            <h6 class="my-0"><label for="height">Height</label></h6>
-                            <small class="text-muted">Brief description</small>
-                        </div>
-                        <span class="text-muted">
-                            <input type="text"
-                                   class="form-control"
-                                   id="height"
-                                   name="height"
-                                   placeholder=""
-                                   size="4"
-                                   value="${treatment.visit.patientHeight}"
-                                   required />
-                            <div class="invalid-feedback">
-                                Enter patient height.
+                    <c:if test="${account.profile.personType == 'patient'}">
+                        <li class="list-group-item d-flex justify-content-between lh-condensed">
+                            <div class="text-success">
+                                <h6 class="my-0">Provider</h6>
+                                <h5 class="text-muted">${treatment.visit.providerSchedule.provider.title} ${treatment.visit.providerSchedule.provider.firstName} ${treatment.visit.providerSchedule.provider.lastName}</h5>
+                                <h6 class="my-0">Organization</h6>
+                                <h5 class="text-muted">${treatment.visit.providerSchedule.organization.name}</h5>
                             </div>
-                        </span>
-                    </li>
+                        </li>
+                    </c:if>
+                    <c:if test="${account.profile.personType == 'provider'}">
+                        <li class="list-group-item d-flex justify-content-between lh-condensed">
+                            <div class="text-success">
+                                <h6 class="my-0">Patient</h6>
+                                <h5 class="text-muted">${treatment.visit.patient.title} ${treatment.visit.patient.firstName} ${treatment.visit.patient.lastName}</h5>
+                                <h6 class="my-0">Health Insurance</h6>
+                                <h5 class="text-muted">${treatment.visit.patient.organization.name}</h5>
+                            </div>
+                        </li>
+                    </c:if>
 
                     <li class="list-group-item d-flex justify-content-between lh-condensed">
-                        <div>
-                            <h6 class="my-0"><label for="pulse">Pulse</label></h6>
-                            <small class="text-muted">Brief description</small>
+                        <div class="text-success">
+                            <h6 class="my-0">Symptom</h6>
+                            <h5 class="text-muted">${treatment.visit.symptomName}</h5>
                         </div>
-                        <span class="text-muted">
-                            <input type="text"
-                                   class="form-control"
-                                   id="pulse"
-                                   name="pulse"
-                                   placeholder=""
-                                   size="4"
-                                   value="${treatment.visit.patientPulse}"
-                                   required />
-                            <div class="invalid-feedback">
-                                Enter patient pulse.
-                            </div>
-                        </span>
                     </li>
-
-                    <li class="list-group-item d-flex justify-content-between lh-condensed">
-                        <div>
-                            <h6 class="my-0"><label for="respiration">Respiration</label></h6>
-                            <small class="text-muted">Brief description</small>
+                    <li class="list-group-item d-flex justify-content-between bg-light">
+                        <div class="text-success">
+                            <h6 class="my-0">Diagnosis</h6>
+                            <h5 class="text-muted">${treatment.visit.diagnosticName}</h5>
                         </div>
-                        <span class="text-muted">
-                            <input type="text"
-                                   class="form-control"
-                                   id="respiration"
-                                   name="respiration"
-                                   placeholder=""
-                                   size="4"
-                                   value="${treatment.visit.patientRespiration}"
-                                   required />
-                            <div class="invalid-feedback">
-                                Enter patient respiration.
-                            </div>
-                        </span>
-                    </li>
-
-                    <li class="list-group-item d-flex justify-content-between lh-condensed">
-                        <div>
-                            <h6 class="my-0"><label for="bmi">BMI</label></h6>
-                            <small class="text-muted">Brief description</small>
-                        </div>
-                        <span class="text-muted">
-                            <input type="text"
-                                   class="form-control"
-                                   id="bmi"
-                                   name="bmi"
-                                   placeholder=""
-                                   size="4"
-                                   value="${treatment.visit.patientBMI}"
-                                   required />
-                            <div class="invalid-feedback">
-                                Enter patient BMI.
-                            </div>
-                        </span>
-                    </li>
-
-                    <li class="list-group-item d-flex justify-content-between lh-condensed">
-                        <div>
-                            <h6 class="my-0"><label for="temperature">Temperature</label></h6>
-                            <small class="text-muted">Brief description</small>
-                        </div>
-                        <span class="text-muted">
-                            <input type="text"
-                                   class="form-control"
-                                   id="temperature"
-                                   name="temperature"
-                                   placeholder=""
-                                   size="4"
-                                   value="${treatment.visit.patientTemperature}"
-                                   required />
-                            <div class="invalid-feedback">
-                                Enter patient height.
-                            </div>
-                        </span>
                     </li>
                 </ul>
---%>
             </div>
-
 
             <div class="col-md-8">
                 <h4 class="mb-3">Treatment No. ${treatment.id}</h4>
@@ -229,7 +83,6 @@
                 <yp:alert type="${message.type}" url="${message.redirect}">${message.description}</yp:alert>
                 <c:remove var="message" scope="session" />
                 <c:set var="now" value="<%= new java.util.Date()%>" />
-                <%--<c:set var="personType" value="provider" />--%>
 
                 <form class="needs-validation"
                       id="frmTreatment"
@@ -312,7 +165,7 @@
                         <div class="col-md-6 mb-3">
                             <label for="startDate">Start Date</label>
                             <input type="text"
-                                   class="form-control date-picker"
+                                   class="form-control"
                                    id="startDate"
                                    name="startDate"
                                    placeholder="mm/dd/yyyy"
@@ -327,7 +180,7 @@
                         <div class="col-md-6 mb-3">
                             <label for="endDate">EndDate</label>
                             <input type="text"
-                                   class="form-control date-picker"
+                                   class="form-control"
                                    id="endDate"
                                    name="endDate"
                                    placeholder="mm/dd/yyyy"
@@ -343,14 +196,27 @@
                     <div class="row">
                         <div class="col-md-6 mb-3">
                             <label for="statusCode">Completed</label>
+                            <c:if test="${(account.profile.personType != 'patient')}">
+                                <input type="hidden" id="statusCode" name="statusCode"
+                                       value="${treatment.status}"/>
+                                <input type="text"
+                                       class="form-control"
+                                       <c:if test="${treatment.status == 'A'}">value="No"</c:if>
+                                       <c:if test="${treatment.status != 'A'}">value="Yes"</c:if>
+                                       readonly
+                                       required />
+                            </c:if>
+                            <c:if test="${account.profile.personType == 'patient'}">
                                 <select class="custom-select d-block w-100"
                                         id="statusCode"
                                         name="statusCode"
                                         required />
                                 <option value="">Choose...</option>
-                                <option value="C" <c:if test="${visit.status != 'A'}">selected</c:if>>Yes</option>
-                                <option value="A" <c:if test="${visit.status == 'A'}">selected</c:if>>No</option>
+                                <option value="C" <c:if test="${treatment.status != 'A'}">selected</c:if>>Yes</option>
+                                <option value="A" <c:if test="${treatment.status == 'A'}">selected</c:if>>No</option>
                                 </select>
+                            </c:if>
+
                             <div class="invalid-feedback">
                                 Please select if the treatment was completed or not.
                             </div>
@@ -366,7 +232,7 @@
                                    name="evaluation"
                                    placeholder=""
                                    value="${treatment.evaluation}"
-                                    <c:if test="${personType == null || personType == 'provider' }">
+                                    <c:if test="${personType == 'provider' }">
                                         readonly
                                     </c:if>
                                    required />

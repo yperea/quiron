@@ -6,7 +6,7 @@
                 <%--Type : [${personType}]--%>
                 <ul class="nav flex-column">
                     <li class="nav-item">
-                        <a class="nav-link" href="#">
+                        <a class="nav-link" href="${root}">
                             <span data-feather="home"></span>
                             Home <!--<span class="sr-only">(current)</span>-->
                         </a>
