@@ -22,6 +22,9 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * The type Visit manager test.
+ */
 class VisitManagerTest {
 
     AccountManager accountManager;
@@ -30,6 +33,9 @@ class VisitManagerTest {
     IAppRepository<Provider> providerRepository;
     IAppRepository<Visit> visitRepository;
 
+    /**
+     * Sets up.
+     */
     @BeforeEach
     void setUp() {
         String username = "yesper";
@@ -44,6 +50,9 @@ class VisitManagerTest {
         dbm.runSQL("cleandb.sql");
     }
 
+    /**
+     * Test get patient visit.
+     */
     @Test
     void testGetPatientVisit() {
         int id = 1;
@@ -61,6 +70,9 @@ class VisitManagerTest {
         assertEquals(provider, visit.getProviderSchedule().getProvider());
     }
 
+    /**
+     * Test save visit.
+     */
     @Test
     void testSaveVisit() {
         int id = 1;
@@ -112,6 +124,9 @@ class VisitManagerTest {
 
     }
 
+    /**
+     * Test add treatment.
+     */
     @Test
     void testAddTreatment() {
         int id = 1;
@@ -136,12 +151,18 @@ class VisitManagerTest {
 
     }
 
+    /**
+     * Test get upcoming visits list.
+     */
     @Test
     void testGetUpcomingVisitsList() {
         List<Visit> visits = visitManager.getVisitsList("A");
         assertEquals(1, visits.size());
     }
 
+    /**
+     * Test delete visit.
+     */
     @Test
     void testDeleteVisit() {
         int id = 9;

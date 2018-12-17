@@ -42,6 +42,7 @@ public class VisitManager {
     public VisitManager() {
         message = new Message();
         visitRepository = RepositoryFactory.getDBContext(Visit.class);
+        logger.info("VisitManager(): Instantiate.");
     }
 
     /**
@@ -52,6 +53,7 @@ public class VisitManager {
     public VisitManager(AccountManager accountManager) {
         this();
         this.accountManager =  accountManager;
+        logger.info("VisitManager(AccountManager): Instantiate.");
     }
 
     /**
@@ -61,14 +63,14 @@ public class VisitManager {
      * @return the patient visit
      */
     public Visit getPatientVisit(int visitId) {
-
+        logger.info("getPatientVisit(): Start.");
         Visit visit = visitRepository.get(visitId);
 
         if (visit == null) {
             message.setType(MessageType.WARNING);
             message.setDescription("Record not found");
         }
-
+        logger.info("getPatientVisit(): End.");
         return visit;
     }
 
@@ -142,10 +144,13 @@ public class VisitManager {
     public boolean addTreatment(int visitId, int medicationId,
                                 LocalDate treatmentStartDate, LocalDate treatmentEndDate,
                                 String instructions) {
+        logger.info("addTreatment(): Start.");
         boolean success;
         Visit visit = visitRepository.get(visitId);
+        logger.debug("addTreatment(): Instantiate Medication object.");
         Medication medication = (Medication) RepositoryFactory.getDBContext(Medication.class)
                 .get(medicationId);
+        logger.debug("addTreatment(): Instantiate a new Treatment object.");
         Treatment newTreatment = visit.getTreatments().stream().findFirst().orElse(null);
 
         if(newTreatment != null) {
@@ -153,6 +158,7 @@ public class VisitManager {
             //prescription = newTreatment.getPrescriptions().stream().findFirst().orElse(null);
         }
 
+        logger.debug("addTreatment(): Instantiate a new Prescription object.");
         Prescription prescription = (Prescription) RepositoryFactory.getDBContext(Prescription.class)
                 .create(new Prescription(instructions, medication));
 
@@ -163,16 +169,19 @@ public class VisitManager {
         newTreatment.addPrescription(prescription);
 
         try {
+            logger.debug("addTreatment(): Create a new Treatment for the Visit.");
             treatment = (Treatment) RepositoryFactory.getDBContext(Treatment.class)
                     .create(newTreatment);
             message = new Message(MessageType.INFO, "Treatment successfully saved.");
-            logger.error("Treatment successfully saved");
+            logger.info("Treatment successfully saved");
             success = true;
         }catch (Exception exception) {
             message = new Message(MessageType.ERROR, "Error creating Treatment.");
-            logger.error(exception.getStackTrace());
+            logger.error("addTreatment(): Error: " + exception.getMessage());
+            logger.trace("addTreatment(): " + exception.getStackTrace());
             success = false;
         }
+        logger.info("addTreatment(): End.");
         return success;
     }
 
@@ -184,12 +193,14 @@ public class VisitManager {
      */
     public List<Visit> getVisitsList(String state) {
 
+        logger.info("getVisitsList(): Start.");
         if(state == null || state.isEmpty()) {
             state = "A";
         }
         String finalState = state;
         List<Visit> visits;
 
+        logger.debug("getVisitsList(): Getting the visits list.");
         if(accountManager.getPersonType().equals("patient")) {
             Map<String, Object> params = new TreeMap<>();
             Patient patient = (Patient) RepositoryFactory.getDBContext(Patient.class)
@@ -214,8 +225,9 @@ public class VisitManager {
         if (visits.size() == 0) {
             message.setType(MessageType.WARNING);
             message.setDescription("Records not found");
+            logger.debug("getVisitsList(): Records not found.");
         }
-
+        logger.info("getVisitsList(): End.");
         return visits;
     }
 }
