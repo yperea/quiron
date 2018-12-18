@@ -356,6 +356,8 @@ public class AccountManager {
 
             if(session.getAttribute("personType") != null) {
                 personType = (String) session.getAttribute("personType");
+            } else {
+                session.setAttribute("personType", personType);
             }
 
             accountManager = new AccountManager(username, personType);

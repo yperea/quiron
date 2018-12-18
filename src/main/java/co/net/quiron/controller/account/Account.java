@@ -62,7 +62,7 @@ public class Account extends HttpServlet {
 
         String url = "/quiron/account";
         String title = "My Account";
-        String personType = (String) session.getAttribute("personType");
+        String personType = FormManager.getValue((String) session.getAttribute("personType"));
         AccountManager accountManager = AccountManager.getAccountManager(session, request);
 
         Profile profile = accountManager.getProfile();
@@ -74,7 +74,7 @@ public class Account extends HttpServlet {
         State state = new LocationManager()
                 .getState(Integer.parseInt(FormManager.getNumericValue(request.getParameter("state"))));
 
-        logger.trace("Controller: Account: Post: Peerson Type" + personType);
+        logger.trace("Controller: Account: Post: Person Type" + personType);
 
         //TODO: The Address Type needs to be provided as a property, Enum or an argument.
         if (personType.equals("patient")) {
