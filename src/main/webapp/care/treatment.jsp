@@ -28,7 +28,7 @@
             <div class="col-md-3 order-md-2 mb-4">
 
                 <h4 class="d-flex justify-content-between align-items-center mb-3">
-                    <span class="text-muted">Visit Information</span>
+                    <span class="text-muted">Visit No. ${treatment.visit.id}</span>
                 </h4>
 
                 <ul class="list-group mb-3">
