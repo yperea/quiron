@@ -19,7 +19,8 @@
                     <a class="btn btn-sm btn-outline-success" href="${root}/visits" role="button">Back to My Visits</a>
                     &nbsp;
                 </div>
-                <c:if test="${personType == 'provider' }">
+
+                <c:if test="${personType == 'provider' && visit.status == 'A'}">
                 <button class="btn btn-sm btn-outline-secondary dropdown-toggle"
                         id="create-prescription"
                         data-toggle="modal"
@@ -65,7 +66,7 @@
                                    name="tmp-weight"
                                    placeholder=""
                                    value="${visit.patientWeight}"
-                                    <c:if test="${personType == null || personType == 'patient' }">
+                                    <c:if test="${(personType == null || personType == 'patient') || (visit.status != 'A') }">
                                         readonly
                                     </c:if>
                                    required />
@@ -88,7 +89,7 @@
                                    name="tmp-height"
                                    placeholder=""
                                    value="${visit.patientHeight}"
-                                    <c:if test="${personType == null || personType == 'patient' }">
+                                    <c:if test="${(personType == null || personType == 'patient') || (visit.status != 'A') }">
                                         readonly
                                     </c:if>
                                    required />
@@ -111,7 +112,7 @@
                                    name="tmp-pulse"
                                    placeholder=""
                                    value="${visit.patientPulse}"
-                                    <c:if test="${personType == null || personType == 'patient' }">
+                                    <c:if test="${(personType == null || personType == 'patient') || (visit.status != 'A') }">
                                         readonly
                                     </c:if>
                                    required />
@@ -134,7 +135,7 @@
                                    name="tmp-respiration"
                                    placeholder=""
                                    value="${visit.patientRespiration}"
-                                    <c:if test="${personType == null || personType == 'patient' }">
+                                    <c:if test="${(personType == null || personType == 'patient') || (visit.status != 'A') }">
                                         readonly
                                     </c:if>
                                    required />
@@ -182,7 +183,7 @@
                                    name="tmp-temperature"
                                    placeholder=""
                                    value="${visit.patientTemperature}"
-                                    <c:if test="${personType == null || personType == 'patient' }">
+                                    <c:if test="${(personType == null || personType == 'patient') || (visit.status != 'A') }">
                                         readonly
                                     </c:if>
                                    required />
@@ -526,7 +527,7 @@
                     </c:if>
 
                     <hr class="mb-4">
-                    <c:if test="${account.profile.personType == 'provider' && operation != 'delete'}">
+                    <c:if test="${(account.profile.personType == 'provider' && operation != 'delete') || (account.profile.personType == 'patient') && visit.status == 'A'}">
                         <button class="btn btn-success btn-lg btn-block" type="submit">Save</button>
                     </c:if>
 

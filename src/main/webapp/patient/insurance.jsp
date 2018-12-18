@@ -18,10 +18,12 @@
                 <div class="btn-group mr-2">
                     <a class="btn btn-sm btn-danger" href="#" role="button">Health Insurance</a>
                     &nbsp;
+                    <%--
                     <a class="btn btn-sm btn-outline-warning" href="#" role="button">Pharmacies</a>
                     &nbsp;
                     <a class="btn btn-sm btn-outline-success" href="#" role="button">Payment Info</a>
                     &nbsp;
+                    --%>
                 </div>
             </div>
 
@@ -48,7 +50,7 @@
                                     required />
                             <option value="">Choose...</option>
                             <c:forEach var="company" items="${companies}">
-                                <option value="${company.id}" <c:if test="${account.profile.person.organization.id == company.id}">selected</c:if> >${company.name}</option>
+                                <option value="${company.id}" <c:if test="${account.profile.organization.id == company.id}">selected</c:if> >${company.name}</option>
                             </c:forEach>
                             </select>
                             <div class="invalid-feedback">
@@ -63,7 +65,7 @@
                                    id="subscriber"
                                    name="subscriber"
                                    placeholder=""
-                                   value="${account.profile.person.subscriberCode}"
+                                   value="${account.profile.subscriberCode}"
                                    required />
                             <div class="invalid-feedback">
                                 Please enter a valid date of birth.

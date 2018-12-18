@@ -189,6 +189,8 @@ public class AccountManager {
                     Patient patient = (Patient) RepositoryFactory.getDBContext(Patient.class).get(person.getId());
                     profile.setBirthDate(patient.getBirthDate());
                     profile.setGender(patient.getGender());
+                    profile.setSubscriberCode(patient.getSubscriberCode());
+                    profile.setOrganization(patient.getOrganization());
                 }
 
                 if(personType.equals("provider")) {
@@ -197,7 +199,6 @@ public class AccountManager {
                 }
 
                 if (person.getAddresses().size() > 0) {
-                    //profile.setAddress(person.getAddresses().stream().findFirst().get());
                     profile.setAddress(person.getAddresses().stream().findFirst().orElse(null));
                 }
             } else {

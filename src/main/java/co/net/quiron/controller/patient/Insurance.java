@@ -3,6 +3,9 @@ package co.net.quiron.controller.patient;
 import co.net.quiron.application.account.AccountManager;
 import co.net.quiron.application.institution.OrganizationManager;
 import co.net.quiron.domain.institution.Organization;
+import co.net.quiron.util.FormManager;
+import co.net.quiron.util.Message;
+import co.net.quiron.util.MessageType;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -12,6 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 @WebServlet(
@@ -33,7 +37,8 @@ public class Insurance extends HttpServlet {
         OrganizationManager organizationManager = new OrganizationManager();
         List<Organization> companies = organizationManager.getInsuranceCompanies();
 
-        session.setAttribute("companies", companies);
+        session.setAttribute("account", accountManager);
+        request.setAttribute("companies", companies);
         request.setAttribute("title", title);
         RequestDispatcher dispatcher = request.getRequestDispatcher(url);
         dispatcher.forward(request, response);
@@ -41,7 +46,7 @@ public class Insurance extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request,
-                          HttpServletResponse response) throws IOException {
+                          HttpServletResponse response) throws IOException, ServletException {
 
 
         HttpSession session = request.getSession();
@@ -51,17 +56,36 @@ public class Insurance extends HttpServlet {
         request.setAttribute("title", title);
 
         AccountManager accountManager = AccountManager.getAccountManager(session, request);
-        if ((request.getParameter("company") != null || !request.getParameter("company").isEmpty() )
-                && (request.getParameter("subscriber") != null || !request.getParameter("subscriber").isEmpty())) {
 
-            int companyId = Integer.parseInt(request.getParameter("company"));
-            String subscriberCode = request.getParameter("subscriber");
+        int companyId = Integer.parseInt(FormManager.getNumericValue(request.getParameter("company")));
+        String subscriberCode = FormManager.getValue(request.getParameter("subscriber"));
 
-            if(accountManager.savePatientInsurance(companyId, subscriberCode)) {
-                session.setAttribute("profile", accountManager.getProfile());
-            }
+        if (FormManager.validForm(request, getRequiredFields())) {
+            accountManager.savePatientInsurance(companyId, subscriberCode);
             session.setAttribute("message", accountManager.getMessage());
+            response.sendRedirect(url);
+        } else {
+            url = "/patient/insurance.jsp";
+            request.setAttribute("account", accountManager);
+            request.setAttribute("companies", new OrganizationManager().getInsuranceCompanies());
+            Message message = new Message(MessageType.ERROR, "Missing data error. Try that again, and if it still doesn't work, let us know.");
+            request.setAttribute("message", message);
+            RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(url);
+            dispatcher.forward(request, response);
         }
-        response.sendRedirect(url);
+    }
+
+    /**
+     * Returns a list with the required form fields to validate.
+     *
+     * @return List of required fields.
+     */
+    private List<String> getRequiredFields(){
+
+        List<String> requiredFields = new ArrayList<>();
+        requiredFields.add("company");
+        requiredFields.add("subscriber");
+
+        return requiredFields;
     }
 }

@@ -18,17 +18,13 @@
                     <div class="btn-group mr-2">
                         <a class="btn btn-sm btn-outline-danger" href="${root}/patient/insurance" role="button">Health Insurance</a>
                         &nbsp;
+                        <%--
                         <a class="btn btn-sm btn-outline-warning" href="#" role="button">Pharmacies</a>
                         &nbsp;
                         <a class="btn btn-sm btn-outline-success" href="#" role="button">Payment Info</a>
                         &nbsp;
+                        --%>
                     </div>
-                    <!--
-                    <button class="btn btn-sm btn-outline-secondary dropdown-toggle">
-                        <span data-feather="calendar"></span>
-                        This week
-                    </button>
-                    -->
                 </div>
             </c:if>
         </div>

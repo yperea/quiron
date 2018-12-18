@@ -1,5 +1,6 @@
 package co.net.quiron.domain.account;
 
+import co.net.quiron.domain.institution.Organization;
 import co.net.quiron.domain.location.Address;
 import co.net.quiron.domain.person.Patient;
 import co.net.quiron.domain.person.Person;
@@ -27,4 +28,6 @@ public class Profile  {
     private LocalDate birthDate;
     private String gender;
     private String npi;
+    private String subscriberCode;
+    private Organization organization;
 }

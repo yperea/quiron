@@ -6,6 +6,9 @@ import co.net.quiron.domain.account.Profile;
 import co.net.quiron.domain.location.Address;
 import co.net.quiron.domain.location.AddressType;
 import co.net.quiron.domain.location.State;
+import co.net.quiron.util.FormManager;
+import co.net.quiron.util.Message;
+import co.net.quiron.util.MessageType;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -17,6 +20,8 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 @WebServlet(
@@ -36,11 +41,8 @@ public class Account extends HttpServlet {
 
         AccountManager accountManager = AccountManager.getAccountManager(session, request);
         request.setAttribute("title", title);
-
         if (accountManager.isSigned()) {
-            LocationManager locationManager = new LocationManager();
-            Set<State> states = locationManager.getStates("US");
-            request.setAttribute("states", states);
+            request.setAttribute("states", new LocationManager().getStates("US"));
             RequestDispatcher dispatcher = request.getRequestDispatcher(url);
             dispatcher.forward(request, response);
         } else {
@@ -52,7 +54,7 @@ public class Account extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request,
-                          HttpServletResponse response) throws IOException {
+                          HttpServletResponse response) throws IOException, ServletException {
 
 
         HttpSession session = request.getSession();
@@ -61,6 +63,53 @@ public class Account extends HttpServlet {
         String title = "My Account";
         String personType = (String) session.getAttribute("personType");
         AccountManager accountManager = AccountManager.getAccountManager(session, request);
+
+        Address address = accountManager.getProfile().getAddress();
+        Profile profile = accountManager.getProfile();
+
+        State state = new LocationManager()
+                .getState(Integer.parseInt(FormManager.getNumericValue(request.getParameter("state"))));
+
+        //TODO: The Address Type needs to be provided as a property, Enum or an argument.
+        if (personType.equals("patient")) {
+            address.setAddressType(new LocationManager().getAddressType(1));
+            profile.setGender(FormManager.getValue(request.getParameter("gender")));
+            profile.setBirthDate(LocalDate.parse(FormManager.getValue(request.getParameter("birthDate")),
+                    DateTimeFormatter.ofPattern("MM/d/yyyy")));
+        } else {
+            address.setAddressType(new LocationManager().getAddressType(2));
+            profile.setNpi(FormManager.getValue(request.getParameter("npi")));
+        }
+
+        address.setAddressLine1(FormManager.getValue(request.getParameter("address1")));
+        address.setAddressLine2(FormManager.getValue(request.getParameter("address2")));
+        address.setCity(FormManager.getValue(request.getParameter("city")));
+        address.setPostalCode(FormManager.getValue(request.getParameter("zip")));
+        address.setState(state);
+
+        profile.setFirstName(FormManager.getValue(request.getParameter("firstName")));
+        profile.setLastName(FormManager.getValue(request.getParameter("lastName")));
+        profile.setAddress(address);
+
+        accountManager.saveProfile(profile);
+        session.setAttribute("account", accountManager);
+
+        if (FormManager.validForm(request, getRequiredFields())) {
+            accountManager.saveProfile(profile);
+            session.setAttribute("account", accountManager);
+            session.setAttribute("message", accountManager.getMessage());
+            response.sendRedirect(url);
+        } else {
+            url = "/private/profile.jsp";
+            request.setAttribute("title", title);
+            request.setAttribute("account", accountManager);
+            Message message = new Message(MessageType.ERROR, "Missing data error. Try that again, and if it still doesn't work, let us know.");
+            request.setAttribute("message", message);
+            RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(url);
+            dispatcher.forward(request, response);
+        }
+
+/*
 
         if ((request.getParameter("firstName") != null && !request.getParameter("firstName").isEmpty() )
                 && (request.getParameter("lastName") != null && !request.getParameter("lastName").isEmpty())
@@ -110,5 +159,24 @@ public class Account extends HttpServlet {
             session.setAttribute("message", accountManager.getMessage());
         }
         response.sendRedirect(url);
+*/
     }
+    /**
+     * Returns a list with the required form fields to validate.
+     *
+     * @return List of required fields.
+     */
+    private List<String> getRequiredFields(){
+
+        List<String> requiredFields = new ArrayList<>();
+        requiredFields.add("firstName");
+        requiredFields.add("lastName");
+        requiredFields.add("address1");
+        requiredFields.add("city");
+        requiredFields.add("state");
+        requiredFields.add("zip");
+
+        return requiredFields;
+    }
+
 }

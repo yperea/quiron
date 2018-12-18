@@ -29,8 +29,10 @@ public class TreatmentForm extends HttpServlet {
                        HttpServletResponse response) throws ServletException, IOException {
 
         HttpSession session = request.getSession();
+
         String url = "/care/treatment.jsp";
         String title = "My Treatments";
+
         Prescription prescription = null;
         AccountManager accountManager = AccountManager.getAccountManager(session, request);
         TreatmentManager treatmentManager = new TreatmentManager(accountManager);
@@ -57,10 +59,13 @@ public class TreatmentForm extends HttpServlet {
                           HttpServletResponse response) throws ServletException, IOException {
 
         HttpSession session = request.getSession();
+
         String url = "/quiron/care/treatment";
         String title = "My Treatments";
+
         Prescription prescription = null;
         AccountManager accountManager = AccountManager.getAccountManager(session, request);
+
         int treatmentId = Integer.parseInt(FormManager.getNumericValue(request.getParameter("treatmentId")));
         String statusCode = FormManager.getValue(request.getParameter("statusCode"));
         int evaluation = Integer.parseInt(FormManager.getNumericValue(request.getParameter("evaluation")));
