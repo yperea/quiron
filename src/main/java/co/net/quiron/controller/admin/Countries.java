@@ -25,9 +25,6 @@ public class Countries extends HttpServlet {
         String url = "/admin/countryList.jsp";
         String title = "Country List";
 
-        //CountryManager countryManager = new CountryManager();
-
-        //req.setAttribute("countries", countryManager.getList());
         req.setAttribute("countries", RepositoryFactory.getDBContext(Country.class).getList());
         req.setAttribute("title", title);
 

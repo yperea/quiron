@@ -65,8 +65,8 @@ public class ApiMedicManager implements PropertiesLoader {
      *
      */
     private void acquireAuthToken()
-            /*throws UnsupportedEncodingException, NoSuchAlgorithmException, InvalidKeyException*/
     {
+        logger.info("acquireAuthToken: Start.");
 
         String authenticationUrl = properties.getProperty("apimedic.auth.endpoint");
         String apiKey = properties.getProperty("apimedic.apikey.username");
@@ -83,13 +83,15 @@ public class ApiMedicManager implements PropertiesLoader {
         try {
             mac = Mac.getInstance("HmacMD5");
         } catch (NoSuchAlgorithmException e) {
-            logger.error("acquireAuthToken: NoSuchAlgorithmException. " + e);
+            logger.error("acquireAuthToken: Mac.getInstance(\"HmacMD5\"). " + e.getMessage());
+            logger.trace("acquireAuthToken: Mac.getInstance(\"HmacMD5\"). " + e.getStackTrace());
         }
 
         try {
             mac.init(keySpec);
         } catch (InvalidKeyException e) {
-            logger.error("acquireAuthToken: NoSuchAlgorithmException. " + e);
+            logger.error("acquireAuthToken: mac.init(keySpec). " + e);
+            logger.trace("acquireAuthToken: mac.init(keySpec). " + e.getStackTrace());
         }
 
         byte[] computedHash = mac.doFinal(dataBytes);
@@ -115,6 +117,7 @@ public class ApiMedicManager implements PropertiesLoader {
             accessToken = properties.getProperty("apimedic.token");
         }
 
+        logger.info("acquireAuthToken: End.");
     }
 
 
@@ -290,6 +293,7 @@ public class ApiMedicManager implements PropertiesLoader {
      * @return the symptoms list
      */
     public List<Symptom> getSymptomsList () {
+        logger.info("getSymptomsList().");
         return getSymptomsList(null, null, 0,0, null);
     }
 
@@ -303,6 +307,7 @@ public class ApiMedicManager implements PropertiesLoader {
      */
     public List<Diagnosis> getDiagnosisList(String symptoms, Gender gender, int birthYear) {
 
+        logger.info("getDiagnosisList() Start.");
         String apiUrl = getUrl("diagnosis", accessToken, language, format,
                                 symptoms, gender, birthYear);
 
@@ -319,10 +324,14 @@ public class ApiMedicManager implements PropertiesLoader {
 
         try {
             diagnosisList = mapper.readValue(response, new TypeReference<List<Diagnosis>>(){});
+            logger.debug("getDiagnosisList(): Returning list of diagnosis");
+            logger.trace("getDiagnosisList(): Returning list of diagnosis. " + diagnosisList);
         } catch (IOException e) {
-            logger.error(e.getStackTrace());
+            logger.error("getDiagnosisList(): " + e.getMessage());
+            logger.trace("getDiagnosisList(): " + e.getStackTrace());
         }
 
+        logger.info("getDiagnosisList() End.");
         return diagnosisList;
     }
 
@@ -336,6 +345,7 @@ public class ApiMedicManager implements PropertiesLoader {
      */
     public List<Issue> getIssuesListBySymptom(int symptomId, String genderCode, int birthYear) {
 
+        logger.info("getIssuesListBySymptom() Start.");
         String symptoms =  "[" + Integer.valueOf(symptomId).toString().trim() + "]";
         Gender gender = Gender.male;
         if (!genderCode.equals("M")){
@@ -349,6 +359,7 @@ public class ApiMedicManager implements PropertiesLoader {
             issuesList.add(diagnosis.getIssue());
         }
 
+        logger.info("getIssuesListBySymptom() End.");
         return issuesList;
     }
 }

@@ -110,53 +110,34 @@ public class VisitForm extends HttpServlet {
         Prescription prescription = null;
         int visitId = Integer.parseInt(FormManager.getNumericValue(request.getParameter("visitId")));
         Visit visit = visitManager.getPatientVisit(visitId);
+        visit.setStatus(FormManager.getValue(request.getParameter("statusCode")));
+        visit.setSymptomId(Integer.parseInt(FormManager.getNumericValue(request.getParameter("symptom"))));
+        visit.setSymptomName(FormManager.getValue(request.getParameter("symptomName")));
+        visit.setDiagnosticId(Integer.parseInt(FormManager.getNumericValue(request.getParameter("diagnosis"))));
+        visit.setDiagnosticName(FormManager.getValue(request.getParameter("diagnosticName")));
+        visit.setPatientWeight(Double.parseDouble(FormManager.getNumericValue(request.getParameter("weight"))));
+        visit.setPatientHeight(Double.parseDouble(FormManager.getNumericValue(request.getParameter("height"))));
+        visit.setPatientPulse(Double.parseDouble(FormManager.getNumericValue(request.getParameter("pulse"))));
+        visit.setPatientRespiration(Double.parseDouble(FormManager.getNumericValue(request.getParameter("respiration"))));
+        visit.setPatientBMI(Double.parseDouble(FormManager.getNumericValue(request.getParameter("bmi"))));
+        visit.setPatientTemperature(Double.parseDouble(FormManager.getNumericValue(request.getParameter("temperature"))));
+        visit.setProviderComments(FormManager.getValue(request.getParameter("providerComment")));
 
-
-        String operation = FormManager.getValue(request.getParameter("op"));
-        String visitStartDate = FormManager.getValue(request.getParameter("visitStartDate"));
-        String visitStartTime = FormManager.getValue(request.getParameter("startTime"));
-        String visitEndTime = FormManager.getValue(request.getParameter("endTime"));
-        int symptomId = Integer.parseInt(FormManager.getNumericValue(request.getParameter("symptom")));
-        String symptomName = FormManager.getValue(request.getParameter("symptomName"));
-        int diagnosisId = Integer.parseInt(FormManager.getNumericValue(request.getParameter("diagnosis")));
-        String diagnosisName = FormManager.getValue(request.getParameter("diagnosticName"));
-        String statusCode = FormManager.getValue(request.getParameter("statusCode"));
-        double weight = Double.parseDouble(FormManager.getNumericValue(request.getParameter("weight")));
-        double height = Double.parseDouble(FormManager.getNumericValue(request.getParameter("height")));
-        double pulse = Double.parseDouble(FormManager.getNumericValue(request.getParameter("pulse")));
-        double respiration = Double.parseDouble(FormManager.getNumericValue(request.getParameter("respiration")));
-        double bmi = Double.parseDouble(FormManager.getNumericValue(request.getParameter("bmi")));
-        double temperature = Double.parseDouble(FormManager.getNumericValue(request.getParameter("temperature")));
-        String providerComments = FormManager.getValue(request.getParameter("providerComment"));
-        String actualStartDate = visitStartDate + " " + visitStartTime;
-        String actualEndDate = visitStartDate + " " + visitEndTime;
-
-        visit.setStatus(statusCode);
-        visit.setSymptomId(symptomId);
-        visit.setSymptomName(symptomName);
-        visit.setDiagnosticId(diagnosisId);
-        visit.setDiagnosticName(diagnosisName);
-        visit.setPatientWeight(weight);
-        visit.setPatientHeight(height);
-        visit.setPatientPulse(pulse);
-        visit.setPatientRespiration(respiration);
-        visit.setPatientBMI(bmi);
-        visit.setPatientTemperature(temperature);
-        visit.setProviderComments(providerComments);
-
-        if(!visitStartTime.equals("")) {
-            visit.setActualStartDate(LocalDateTime.parse(actualStartDate,
+        if(!FormManager.getValue(request.getParameter("startTime")).equals("")) {
+            visit.setActualStartDate(LocalDateTime.parse(FormManager.getValue(request.getParameter("visitStartDate"))
+                            + " " + FormManager.getValue(request.getParameter("startTime")),
                     DateTimeFormatter.ofPattern("MM/d/yyyy HH:mm")));
         }
-        if(!visitEndTime.equals("")) {
-            visit.setActualEndDate(LocalDateTime.parse(actualEndDate,
+        if(!FormManager.getValue(request.getParameter("endTime")).equals("")) {
+            visit.setActualEndDate(LocalDateTime.parse(FormManager.getValue(request.getParameter("visitStartDate"))
+                            + " " + FormManager.getValue(request.getParameter("endTime")),
                     DateTimeFormatter.ofPattern("MM/d/yyyy HH:mm")));
         }
 
 
         if (FormManager.validForm(request, getVisitRequiredFields(personType))) {
 
-            if (operation.equals("delete")) {
+            if (FormManager.getValue(request.getParameter("op")).equals("delete")) {
                 visitDeleted = visitManager.deleteVisit(visit);
             }else {
                 visitSaved = visitManager.saveVisit(visit);
@@ -205,12 +186,12 @@ public class VisitForm extends HttpServlet {
             request.setAttribute("title", title);
             request.setAttribute("visit", visit);
             request.setAttribute("prescription", prescription);
-            request.setAttribute("startTime", visitStartTime);
-            request.setAttribute("endTime", visitEndTime);
+            request.setAttribute("startTime", FormManager.getValue(request.getParameter("startTime")));
+            request.setAttribute("endTime", FormManager.getValue(request.getParameter("endTime")));
             request.setAttribute("symptoms", symptoms);
             request.setAttribute("issues", issues);
             request.setAttribute("medications", medications);
-            request.setAttribute("operation", operation);
+            request.setAttribute("operation", FormManager.getValue(request.getParameter("op")));
 
             RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(url);
             dispatcher.forward(request, response);
