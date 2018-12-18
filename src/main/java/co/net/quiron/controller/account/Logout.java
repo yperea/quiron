@@ -1,7 +1,5 @@
 package co.net.quiron.controller.account;
 
-import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -24,6 +22,6 @@ public class Logout extends HttpServlet {
 
         HttpSession session = request.getSession();
         session.invalidate();
-        response.sendRedirect("/quiron");
+        response.sendRedirect("/quiron/account");
     }
 }

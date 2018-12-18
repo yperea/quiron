@@ -58,7 +58,7 @@ class VisitManagerTest {
         int id = 1;
         int patientId =5;
         int providerId = 3;
-        String service = "Therapy";
+        String service = "Medical";
         VisitManager visitManager = new VisitManager(accountManager);
         Visit visit = visitManager.getPatientVisit(id);
         Patient patient = patientRepository.get(patientId);
@@ -165,6 +165,12 @@ class VisitManagerTest {
      */
     @Test
     void testDeleteVisit() {
+
+        String username = "jsmith";
+        String personType = "patient";
+        accountManager = new AccountManager(username, personType);
+        visitManager = new VisitManager(accountManager);
+
         int id = 9;
         Visit visit = visitManager.getPatientVisit(id);
         visitManager.deleteVisit(visit);

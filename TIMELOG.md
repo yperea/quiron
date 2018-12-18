@@ -73,4 +73,6 @@
 | 12/10/18| Working on Individual Project: Installing and play around with QAPlug and cleaning out domain classes code.| 3 | |
 | 12/11/18| Working on Individual Project: Implementing Treatment controllers and managers and Add Prescription feature.| 3 | |
 | 12/14/18| Working on Individual Project: Finishing Add Prescription and adding Treatments list and form views and controllers.| 8 | |
-| 12/15/18| Working on Individual Project: Implementing Instructor's code review recommendations.| 8 | |
+| 12/15/18| Working on Individual Project: Implementing Instructor's code review recommendations and quality checks.| 8 | |
+| 12/16/18| Working on Individual Project: Implementing Instructor's code review recommendations and quality checks.| 8 | |
+| 12/17/18| Working on Individual Project: Implementing validations and look & feel adjustments.| 5 | |

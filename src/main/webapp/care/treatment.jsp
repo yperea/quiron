@@ -263,7 +263,7 @@
                                   id="patientComment"
                                   name="patientComment"
                                   size="512"
-                                <c:if test="${personType == null || personType == 'provider' }">
+                                <c:if test="${personType == 'provider' }">
                                     readonly
                                 </c:if>
                                   required >${treatment.patientComments}</textarea>

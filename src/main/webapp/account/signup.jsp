@@ -24,6 +24,10 @@
                       method="POST"
                       novalidate>
 
+                    <yp:alert type="${message.type}" url="${message.redirect}">${message.description}</yp:alert>
+                    <c:remove var="message"/>
+
+
                     <input type="hidden"
                            id="personType"
                            name="personType"

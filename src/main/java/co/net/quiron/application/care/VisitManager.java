@@ -11,12 +11,10 @@ import co.net.quiron.domain.person.Provider;
 import co.net.quiron.persistence.interfaces.IAppRepository;
 import co.net.quiron.util.Message;
 import co.net.quiron.util.MessageType;
-import co.net.quiron.util.PropertiesLoader;
 import lombok.Data;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;

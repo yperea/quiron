@@ -4,7 +4,6 @@ import co.net.quiron.application.account.AccountManager;
 import co.net.quiron.application.location.LocationManager;
 import co.net.quiron.domain.account.Profile;
 import co.net.quiron.domain.location.Address;
-import co.net.quiron.domain.location.AddressType;
 import co.net.quiron.domain.location.State;
 import co.net.quiron.util.FormManager;
 import co.net.quiron.util.Message;
@@ -22,7 +21,6 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 @WebServlet(
         name="account",
@@ -64,8 +62,11 @@ public class Account extends HttpServlet {
         String personType = (String) session.getAttribute("personType");
         AccountManager accountManager = AccountManager.getAccountManager(session, request);
 
-        Address address = accountManager.getProfile().getAddress();
         Profile profile = accountManager.getProfile();
+        Address address = new Address();
+        if (profile.getAddress() != null) {
+            address = accountManager.getProfile().getAddress();
+        }
 
         State state = new LocationManager()
                 .getState(Integer.parseInt(FormManager.getNumericValue(request.getParameter("state"))));

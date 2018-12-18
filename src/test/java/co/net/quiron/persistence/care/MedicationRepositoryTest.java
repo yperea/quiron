@@ -42,7 +42,7 @@ public class MedicationRepositoryTest {
     @Test
     void testGetAllMedications() {
         List<Medication> MedicationList = medicationRepository.getList();
-        assertEquals(2, MedicationList.size());
+        assertEquals(4, MedicationList.size());
     }
 
 
@@ -85,7 +85,7 @@ public class MedicationRepositoryTest {
     @Test
     void testDeleteMedication() {
 
-        int medicationIdToDelete = 3;
+        int medicationIdToDelete = 5;
         String newMedicationName = "Dolex";
         Medication newMedication = new Medication(newMedicationName);
         Medication insertedMedication = medicationRepository.create(newMedication);

@@ -31,10 +31,10 @@ public class Signup extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request,
-                          HttpServletResponse response) throws IOException {
+                          HttpServletResponse response) throws IOException, ServletException {
 
         HttpSession session = request.getSession();
-        String url = "/account/signup";
+        String url = "/quiron/account";
         String title = "Sign Up";
 
         boolean signupSuccess = false;
@@ -65,19 +65,23 @@ public class Signup extends HttpServlet {
             accountManager =  new AccountManager();
             signupSuccess = accountManager.signUp(personType, roleId, firstName, lastName, userName, email,
                                                   birthDate, gender, password, confirmation);
-            session.setAttribute("account", accountManager);
+            request.setAttribute("message", accountManager.getMessage());
         }
 
         if (signupSuccess) {
-            url = "/quiron/account";
+            request.setAttribute("title", title);
+            response.sendRedirect(url);
         } else {
+            url = "/account/signup.jsp";
             request.setAttribute("firstName", request.getParameter("firstName"));
+            request.setAttribute("birthDate", request.getParameter("birthDate"));
             request.setAttribute("lastName", request.getParameter("lastName"));
             request.setAttribute("userName", request.getParameter("userName"));
             request.setAttribute("email", request.getParameter("email"));
-        }
+            request.setAttribute("gender", request.getParameter("gender"));
 
-        request.setAttribute("title", title);
-        response.sendRedirect(url);
+            RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(url);
+            dispatcher.forward(request, response);
+        }
     }
 }

@@ -527,7 +527,7 @@
                     </c:if>
 
                     <hr class="mb-4">
-                    <c:if test="${(account.profile.personType == 'provider' && operation != 'delete') || (account.profile.personType == 'patient') && visit.status == 'A'}">
+                    <c:if test="${(account.profile.personType == 'provider' && operation != 'delete') || (account.profile.personType == 'patient' && visit.status == 'A' && operation != 'delete')}">
                         <button class="btn btn-success btn-lg btn-block" type="submit">Save</button>
                     </c:if>
 

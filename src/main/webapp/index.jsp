@@ -19,7 +19,7 @@
 
             <div class="carousel-inner" role="listbox">
                 <!-- Slide One - Set the background image for this slide in the line below -->
-                <div class="carousel-item active" style="background-image: url('style/img/slide-background14.jpg')">
+                <div class="carousel-item active" style="background-image: url('style/img/index_hero.jpg')">
                     <div class="container">
                         <div class="carousel-caption text-left">
                             <h1>Project Quiron.</h1>
@@ -29,17 +29,16 @@
                     </div>
                 </div>
                 <!-- Slide Two - Set the background image for this slide in the line below -->
-                <div class="carousel-item" style="background-image: url('style/img/call-background.jpg')">
+                <div class="carousel-item" style="background-image: url('style/img/hero-bg.jpg')">
                     <div class="carousel-caption">
                         <h1>Get Involved.</h1>
-                        <p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
                         <p><a class="btn btn-lg btn-primary" href="#" role="button">Learn more</a></p>
                     </div>
                 </div>
                 <!-- Slide Three - Set the background image for this slide in the line below -->
-                <div class="carousel-item" style="background-image: url('style/img/slide-background11.jpg')">
+                <div class="carousel-item" style="background-image: url('style/img/slide-background14.jpg')">
                     <div class="container">
-                        <div class="carousel-caption text-right">
+                        <div class="carousel-caption text-left">
                             <h1>One more for good measure.</h1>
                             <p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
                             <p><a class="btn btn-lg btn-primary" href="account/signup" role="button">Sign up today</a></p>
@@ -62,25 +61,25 @@
     <!-- Testimonials -->
     <section class="testimonials text-center">
         <div class="container">
-            <h2 class="mb-5">What people are saying...</h2>
+            <h2 class="mb-5">Our Team</h2>
             <div class="row">
                 <div class="col-lg-4">
                     <div class="testimonial-item mx-auto mb-5 mb-lg-0">
-                        <img class="img-fluid rounded-circle mb-3" src="style/img/testimonial1.jpg" alt="">
+                        <img class="img-fluid rounded-circle mb-3" src="style/img/c2.jpg" alt="">
                         <h5>Margaret E.</h5>
                         <p class="font-weight-light mb-0">"This is fantastic! Thanks so much guys!"</p>
                     </div>
                 </div>
                 <div class="col-lg-4">
                     <div class="testimonial-item mx-auto mb-5 mb-lg-0">
-                        <img class="img-fluid rounded-circle mb-3" src="style/img/testimonial2.jpg" alt="">
+                        <img class="img-fluid rounded-circle mb-3" src="style/img/c3.jpg" alt="">
                         <h5>Fred S.</h5>
                         <p class="font-weight-light mb-0">"Bootstrap is amazing. I've been using it to create lots of super nice landing pages."</p>
                     </div>
                 </div>
                 <div class="col-lg-4">
                     <div class="testimonial-item mx-auto mb-5 mb-lg-0">
-                        <img class="img-fluid rounded-circle mb-3" src="style/img/testimonial3.jpg" alt="">
+                        <img class="img-fluid rounded-circle mb-3" src="style/img/c4.jpg" alt="">
                         <h5>Sarah	W.</h5>
                         <p class="font-weight-light mb-0">"Thanks so much for making these free resources available to us!"</p>
                     </div>
@@ -106,8 +105,11 @@
                 <p class="lead">Donec ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis euismod semper. Praesent commodo cursus magna, vel scelerisque nisl consectetur. Fusce dapibus, tellus ac cursus commodo.</p>
             </div>
             <div class="col-md-5">
-                <img class="featurette-image img-fluid mx-auto" data-src="holder.js/500x500/auto" alt="Generic placeholder image">
+                <img class="featurette-image img-fluid mx-auto"  alt="500x500" style="width: 500px; height: 500px;" src="style/img/s3.jpg" data-holder-rendered="true">
             </div>
+
+
+
         </div>
 
         <hr class="featurette-divider">
@@ -118,7 +120,7 @@
                 <p class="lead">Donec ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis euismod semper. Praesent commodo cursus magna, vel scelerisque nisl consectetur. Fusce dapibus, tellus ac cursus commodo.</p>
             </div>
             <div class="col-md-5 order-md-1">
-                <img class="featurette-image img-fluid mx-auto" data-src="holder.js/500x500/auto" alt="Generic placeholder image">
+                <img class="featurette-image img-fluid mx-auto" alt="500x500" src="style/img/dept_4.jpg" data-holder-rendered="true" style="width: 500px; height: 500px;">
             </div>
         </div>
 
@@ -130,7 +132,7 @@
                 <p class="lead">Donec ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis euismod semper. Praesent commodo cursus magna, vel scelerisque nisl consectetur. Fusce dapibus, tellus ac cursus commodo.</p>
             </div>
             <div class="col-md-5">
-                <img class="featurette-image img-fluid mx-auto" data-src="holder.js/500x500/auto" alt="Generic placeholder image">
+                <img class="featurette-image img-fluid mx-auto" alt="500x500" src="style/img/b3.jpg" data-holder-rendered="true" style="width: 500px; height: 500px;">
             </div>
         </div>
 

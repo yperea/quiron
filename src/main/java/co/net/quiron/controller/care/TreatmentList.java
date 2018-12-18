@@ -2,9 +2,7 @@ package co.net.quiron.controller.care;
 
 import co.net.quiron.application.account.AccountManager;
 import co.net.quiron.application.care.TreatmentManager;
-import co.net.quiron.application.care.VisitManager;
 import co.net.quiron.domain.care.Treatment;
-import co.net.quiron.domain.care.Visit;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;

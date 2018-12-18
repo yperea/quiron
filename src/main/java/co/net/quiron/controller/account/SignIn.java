@@ -1,6 +1,5 @@
 package co.net.quiron.controller.account;
 
-import co.net.quiron.application.account.AccountManager;
 import co.net.quiron.util.Message;
 import co.net.quiron.util.MessageType;
 
@@ -10,7 +9,6 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 /**

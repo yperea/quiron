@@ -2,7 +2,6 @@ package co.net.quiron.controller.care;
 
 import co.net.quiron.application.account.AccountManager;
 import co.net.quiron.application.care.MedicationManager;
-import co.net.quiron.application.care.TreatmentManager;
 import co.net.quiron.application.care.VisitManager;
 import co.net.quiron.application.vendor.ApiMedicManager;
 import co.net.quiron.domain.care.Medication;
@@ -15,7 +14,6 @@ import co.net.quiron.util.MessageType;
 import co.net.quiron.vendor.com.apimedic.Issue;
 import co.net.quiron.vendor.com.apimedic.Symptom;
 
-import javax.ejb.Local;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;

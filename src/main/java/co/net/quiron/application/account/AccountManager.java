@@ -121,18 +121,20 @@ public class AccountManager {
                                   LocalDate.parse(birthDate, DateTimeFormatter.ofPattern("MM/d/yyyy")),
                                   gender));
 
-        logger.trace("signUp(): Create User.");
-        User user = userRepository.create(new User(username, email, password));
+        //User user = userRepository.create(new User(username, email, password));
+        try {
+            logger.trace("signUp(): Create User.");
+            User user = userRepository.create(new User(username, email, password));
+            message = new Message(MessageType.INFO, "User successfully created.");
+            logger.info("signUp(): User successfully signed up");
 
-        logger.trace("signUp(): Associating Patient to User.");
-        user.addPerson(patient);
+            logger.trace("signUp(): Associating Patient to User.");
+            user.addPerson(patient);
 
-        logger.trace("signUp(): Associating Role to User.");
-        user.addRole((Role)RepositoryFactory.getDBContext(Role.class).get(roleId));
-        userRepository.update(user);
+            logger.trace("signUp(): Associating Role to User.");
+            user.addRole((Role)RepositoryFactory.getDBContext(Role.class).get(roleId));
+            userRepository.update(user);
 
-        if(user != null){
-            success = true;
             this.id = patient.getId();
             this.isSigned = true;
             this.userId = user.getId();
@@ -144,14 +146,17 @@ public class AccountManager {
             profile.setPersonType(patient.getPersonType().getName().toLowerCase());
             profile.setBirthDate(patient.getBirthDate());
             profile.setGender(patient.getGender());
-        } else {
-            message = new Message(MessageType.ERROR, "Something went wrong during the process.");
+            success = true;
+
+        } catch (Exception exception) {
+            message = new Message(MessageType.ERROR, "Error during sign up. Username already taken.");
+            logger.error("signUp(): Error: " + exception.getMessage());
+            logger.trace("signUp(): " + exception.getStackTrace());
         }
 
         logger.info("signUp(): End Signup.");
         return success;
     }
-
 
     /**
      * Load the User Profile.
