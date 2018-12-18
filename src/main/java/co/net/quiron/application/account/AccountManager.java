@@ -346,6 +346,7 @@ public class AccountManager {
         String username = null;
         String personType = "patient";
 
+
         AccountManager accountManager = (AccountManager) session.getAttribute("account");
         if (accountManager == null){
 

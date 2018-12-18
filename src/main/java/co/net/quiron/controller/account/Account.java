@@ -8,6 +8,8 @@ import co.net.quiron.domain.location.State;
 import co.net.quiron.util.FormManager;
 import co.net.quiron.util.Message;
 import co.net.quiron.util.MessageType;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -56,6 +58,7 @@ public class Account extends HttpServlet {
 
 
         HttpSession session = request.getSession();
+        final Logger logger = LogManager.getLogger(this.getClass());
 
         String url = "/quiron/account";
         String title = "My Account";
@@ -71,6 +74,8 @@ public class Account extends HttpServlet {
         State state = new LocationManager()
                 .getState(Integer.parseInt(FormManager.getNumericValue(request.getParameter("state"))));
 
+        logger.trace("Controller: Account: Post: Peerson Type" + personType);
+
         //TODO: The Address Type needs to be provided as a property, Enum or an argument.
         if (personType.equals("patient")) {
             address.setAddressType(new LocationManager().getAddressType(1));
@@ -82,25 +87,29 @@ public class Account extends HttpServlet {
             profile.setNpi(FormManager.getValue(request.getParameter("npi")));
         }
 
+
         address.setAddressLine1(FormManager.getValue(request.getParameter("address1")));
         address.setAddressLine2(FormManager.getValue(request.getParameter("address2")));
         address.setCity(FormManager.getValue(request.getParameter("city")));
         address.setPostalCode(FormManager.getValue(request.getParameter("zip")));
         address.setState(state);
 
+        logger.trace("Controller: Account: Post: Address: " + address);
+
         profile.setFirstName(FormManager.getValue(request.getParameter("firstName")));
         profile.setLastName(FormManager.getValue(request.getParameter("lastName")));
         profile.setAddress(address);
 
-        accountManager.saveProfile(profile);
-        session.setAttribute("account", accountManager);
+        logger.trace("Controller: Account: Post: Profile: " + profile);
 
         if (FormManager.validForm(request, getRequiredFields())) {
+            logger.trace("Controller| Account| Post| Valid Form: Url: " + url);
             accountManager.saveProfile(profile);
             session.setAttribute("account", accountManager);
             session.setAttribute("message", accountManager.getMessage());
             response.sendRedirect(url);
         } else {
+            logger.trace("Controller| Account| Post| Invalid Form| Url| " + url);
             url = "/private/profile.jsp";
             request.setAttribute("title", title);
             request.setAttribute("account", accountManager);
