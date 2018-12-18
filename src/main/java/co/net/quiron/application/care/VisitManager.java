@@ -31,9 +31,9 @@ public class VisitManager {
 
     private final Logger logger = LogManager.getLogger(this.getClass());
 
+    IAppRepository<Visit> visitRepository;
     AccountManager accountManager;
     Message message;
-    IAppRepository<Visit> visitRepository;
     Treatment treatment;
 
     /**
@@ -42,7 +42,7 @@ public class VisitManager {
     public VisitManager() {
         message = new Message();
         visitRepository = RepositoryFactory.getDBContext(Visit.class);
-        logger.info("VisitManager(): Instantiate.");
+        logger.info("VisitManager(): Instantiation.");
     }
 
     /**
@@ -53,7 +53,7 @@ public class VisitManager {
     public VisitManager(AccountManager accountManager) {
         this();
         this.accountManager =  accountManager;
-        logger.info("VisitManager(AccountManager): Instantiate.");
+        logger.info("VisitManager(AccountManager): Instantiation.");
     }
 
     /**
@@ -98,6 +98,52 @@ public class VisitManager {
 
         logger.info("saveVisit(): End.");
         return success;
+    }
+
+    /**
+     * Gets patient visits list.
+     *
+     * @param state the state
+     * @return the patient visits list
+     */
+    public List<Visit> getVisitsList(String state) {
+
+        logger.info("getVisitsList(): Start.");
+        if(state == null || state.isEmpty()) {
+            state = "A";
+        }
+        String finalState = state;
+        List<Visit> visits;
+
+        logger.debug("getVisitsList(): Getting the visits list.");
+        if(accountManager.getPersonType().equals("patient")) {
+            Map<String, Object> params = new TreeMap<>();
+            Patient patient = (Patient) RepositoryFactory.getDBContext(Patient.class)
+                    .get(accountManager.getId());
+            params.put("patient", patient);
+            visits = visitRepository.getListEquals(params)
+                    .stream()
+                    .filter(v -> finalState.equals(v.getStatus()))
+                    .collect(Collectors.toList());
+        } else {
+            Provider provider = (Provider)RepositoryFactory.getDBContext(Provider.class)
+                    .get(accountManager.getId());
+            visits = visitRepository.getList()
+                    .stream()
+                    .filter(v -> finalState.equals(v.getStatus()))
+                    .filter(ps -> ps.getProviderSchedule()
+                            .getProvider()
+                            .equals(provider))
+                    .collect(Collectors.toList());
+        }
+
+        if (visits.size() == 0) {
+            message.setType(MessageType.WARNING);
+            message.setDescription("Records not found");
+            logger.debug("getVisitsList(): Records not found.");
+        }
+        logger.info("getVisitsList(): End.");
+        return visits;
     }
 
     /**
@@ -185,49 +231,4 @@ public class VisitManager {
         return success;
     }
 
-    /**
-     * Gets patient visits list.
-     *
-     * @param state the state
-     * @return the patient visits list
-     */
-    public List<Visit> getVisitsList(String state) {
-
-        logger.info("getVisitsList(): Start.");
-        if(state == null || state.isEmpty()) {
-            state = "A";
-        }
-        String finalState = state;
-        List<Visit> visits;
-
-        logger.debug("getVisitsList(): Getting the visits list.");
-        if(accountManager.getPersonType().equals("patient")) {
-            Map<String, Object> params = new TreeMap<>();
-            Patient patient = (Patient) RepositoryFactory.getDBContext(Patient.class)
-                    .get(accountManager.getId());
-            params.put("patient", patient);
-            visits = visitRepository.getListEquals(params)
-                    .stream()
-                    .filter(v -> finalState.equals(v.getStatus()))
-                    .collect(Collectors.toList());
-        } else {
-            Provider provider = (Provider)RepositoryFactory.getDBContext(Provider.class)
-                    .get(accountManager.getId());
-            visits = visitRepository.getList()
-                    .stream()
-                    .filter(v -> finalState.equals(v.getStatus()))
-                    .filter(ps -> ps.getProviderSchedule()
-                            .getProvider()
-                            .equals(provider))
-                    .collect(Collectors.toList());
-        }
-
-        if (visits.size() == 0) {
-            message.setType(MessageType.WARNING);
-            message.setDescription("Records not found");
-            logger.debug("getVisitsList(): Records not found.");
-        }
-        logger.info("getVisitsList(): End.");
-        return visits;
-    }
 }

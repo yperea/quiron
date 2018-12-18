@@ -25,9 +25,10 @@ public class TreatmentManager {
 
     private final Logger logger = LogManager.getLogger(this.getClass());
 
-    Message message;
-    AccountManager accountManager;
     IAppRepository<Treatment> treatmentRepository;
+    AccountManager accountManager;
+    Message message;
+
 
     /**
      * Instantiates a new Treatment manager.
@@ -35,6 +36,7 @@ public class TreatmentManager {
     public TreatmentManager() {
         message = new Message();
         treatmentRepository = RepositoryFactory.getDBContext(Treatment.class);
+        logger.info("TreatmentManager(): Instantiation.");
     }
 
     /**
@@ -45,6 +47,7 @@ public class TreatmentManager {
     public TreatmentManager(AccountManager accountManager) {
         this();
         this.accountManager =  accountManager;
+        logger.info("TreatmentManager(AccountManager): Instantiation.");
     }
 
     /**
@@ -54,18 +57,19 @@ public class TreatmentManager {
      * @return the patient visit
      */
     public Treatment getPatientTreatment(int treatmentId) {
-
+        logger.info("getPatientTreatment(): Start.");
         Treatment treatment = treatmentRepository.get(treatmentId);
 
         if (treatment == null) {
             message.setType(MessageType.WARNING);
             message.setDescription("Treatment not found");
         }
+        logger.info("getPatientTreatment(): end.");
         return treatment;
     }
 
     /**
-     * Save treatment boolean.
+     * Save treatment.
      *
      * @param treatment the visit
      * @return the boolean
@@ -73,11 +77,20 @@ public class TreatmentManager {
     public boolean saveTreatment (Treatment treatment) {
 
         logger.info("saveTreatment(): Start.");
-        boolean success;
-        treatmentRepository.update(treatment);
+        boolean success = false;
+
+        try{
+            treatmentRepository.update(treatment);
+            logger.info("saveTreatment(): Success.");
+            message = new Message(MessageType.INFO, "Treatment Information successfully updated.");
+            success = true;
+        }catch (Exception exception) {
+            logger.error("saveTreatment(): Error: " + exception.getMessage());
+            logger.trace("saveTreatment(): " + exception.getStackTrace());
+            message = new Message(MessageType.ERROR, "Error saving the Treatment.");
+        }
+
         logger.info("saveTreatment(): End.");
-        message = new Message(MessageType.INFO, "Treatment Information successfully updated.");
-        success = true;
         return success;
     }
 
@@ -88,8 +101,10 @@ public class TreatmentManager {
      */
     public List<Treatment> getTreatmentsList() {
 
+        logger.info("getTreatmentsList(): Start.");
         List<Treatment> treatments;
 
+        logger.debug("getTreatmentsList(): Getting the treatments list.");
         if(accountManager.getPersonType().equals("patient")) {
             Patient patient = (Patient)RepositoryFactory.getDBContext(Patient.class)
                     .get(accountManager.getId());
@@ -114,7 +129,10 @@ public class TreatmentManager {
         if (treatments.size() == 0) {
             message.setType(MessageType.WARNING);
             message.setDescription("Records not found");
+            logger.debug("getTreatmentsList(): Records not found.");
         }
+
+        logger.info("getTreatmentsList(): End.");
         return treatments;
     }
 }
