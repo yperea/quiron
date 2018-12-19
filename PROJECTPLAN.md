@@ -75,10 +75,10 @@
 - [x] Implementing visit and treatment workflow
 - [x] Review and incorporate feedback from instructor.
 - [ ] Create final presentation
-- [ ] Finalize all documentation
-- [ ] Code quality check
-- [ ] Final touches before code complete
-- [ ] Create video
+- [x] Finalize all documentation
+- [x] Code quality check
+- [x] Final touches before code complete
+- [x] Create video
 
 ### Week 16
 - [ ] Final Presentation

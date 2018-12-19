@@ -76,3 +76,4 @@
 | 12/15/18| Working on Individual Project: Implementing Instructor's code review recommendations and quality checks.| 8 | |
 | 12/16/18| Working on Individual Project: Implementing Instructor's code review recommendations and quality checks.| 8 | |
 | 12/17/18| Working on Individual Project: Implementing validations and look & feel adjustments.| 5 | |
+| 12/18/18| Working on Individual Project: Creting video and more adjustments.| 5 | |
