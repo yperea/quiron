@@ -48,6 +48,7 @@ I would like to build a platform that allows for better control of medical treat
 ### Supporting Materials
 * [Screen Design](docs/design/Screens.md)
 * [Database Design](db/erd/ERDProjectQuiron.png)
+* [Application Demo](https://youtu.be/5yRyZphWTOc)
 
 ### [Project Plan](PROJECTPLAN.md)
 
