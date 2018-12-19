@@ -14,6 +14,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 public class ProviderScheduleRepositoryTest {
     IAppRepository<ProviderSchedule> providerScheduleRepository;
@@ -79,26 +80,29 @@ public class ProviderScheduleRepositoryTest {
     @Test
     void testCreateProviderSchedule() {
 
-        Provider provider = (Provider) RepositoryFactory.getDBContext(Provider.class).get(4);
-        Shift shift = (Shift) RepositoryFactory.getDBContext(Shift.class).get(11);
-        WeekDay weekDay = (WeekDay) RepositoryFactory.getDBContext(WeekDay.class).get(3);
-        Organization organization = (Organization) RepositoryFactory.getDBContext(Organization.class).get(2);
+        Map<String, Integer> shiftScheduleId = new TreeMap<>();
+        shiftScheduleId.put("shift", 12);
+        shiftScheduleId.put("weekDay", 6);
 
+        ShiftSchedule shiftSchedule = shiftScheduleRepository.get(shiftScheduleId);
+        Provider provider = providerRepository.get(3);
+        Organization organization = organizationRepository.get(1);
+        Address location = locationRepository.get(5);
 
-        String shiftName = "Weekday Morning Spring 2019";
-        String shiftDescription = "Weekday Morning Spring 2019";
-        LocalDate shiftStartDate = LocalDate.parse("2019-03-01");
-        LocalDate shiftEndDate = LocalDate.parse("2019-05-31");
-        String shiftStatus = "A";
+        ProviderSchedule providerSchedule = new ProviderSchedule(provider, shiftSchedule, location, organization);
 
-        Shift newShift = new Shift(shiftName, shiftDescription, shiftStartDate, shiftEndDate, shiftStatus);
-        //Shift insertedShift = shiftRepository.create(newShift);
+        providerScheduleRepository.update(providerSchedule);
 
-/*
-        assertNotNull(insertedShift);
-        assertEquals("Weekday Morning Spring 2019", insertedShift.getName());
-        assertNotNull(insertedShift.getCreatedDate());
-*/
+        Map<String, Object> params = new TreeMap<>();
+        params.put("shiftSchedule", shiftSchedule);
+        params.put("provider", provider);
+        params.put("organization", organization);
+        params.put("address", location);
+
+        ProviderSchedule insertedProviderSchedule =  providerScheduleRepository.getListEquals(params).get(0);
+
+        assertNotNull(insertedProviderSchedule);
+
     }
 
 }

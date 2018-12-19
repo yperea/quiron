@@ -1,6 +1,7 @@
 package co.net.quiron.persistence.care;
 
 import co.net.quiron.application.factory.RepositoryFactory;
+import co.net.quiron.domain.care.Service;
 import co.net.quiron.domain.care.Visit;
 import co.net.quiron.domain.institution.Organization;
 import co.net.quiron.domain.location.Address;
@@ -21,12 +22,14 @@ import java.util.Map;
 import java.util.TreeMap;
 import java.util.stream.Collectors;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 public class VisitRepositoryTest {
 
     IAppRepository<Visit> visitRepository;
 
     IAppRepository<Patient> patientRepository;
+    IAppRepository<Service> serviceRepository;
     IAppRepository<ProviderSchedule> providerScheduleRepository;
     IAppRepository<ShiftSchedule> shiftScheduleRepository;
     IAppRepository<Provider> providerRepository;
@@ -40,6 +43,7 @@ public class VisitRepositoryTest {
         visitRepository = RepositoryFactory.getDBContext(Visit.class);
         patientRepository = RepositoryFactory.getDBContext(Patient.class);
 
+        serviceRepository = RepositoryFactory.getDBContext(Service.class);
         providerScheduleRepository = RepositoryFactory.getDBContext(ProviderSchedule.class);
         shiftScheduleRepository = RepositoryFactory.getDBContext(ShiftSchedule.class);
         providerRepository = RepositoryFactory.getDBContext(Provider.class);
@@ -114,6 +118,35 @@ public class VisitRepositoryTest {
         Visit visitUpdated = visitRepository.get(visitId);
 
         assertEquals(actualStartDate, visitUpdated.getActualStartDate().plusHours(6));
+    }
+
+
+    @Test
+    void testCreateVisit() {
+
+        String status = "A";
+        Map<String, Integer> shiftScheduleId = new TreeMap<>();
+        shiftScheduleId.put("shift", 12);
+        shiftScheduleId.put("weekDay", 6);
+
+        ShiftSchedule shiftSchedule = shiftScheduleRepository.get(shiftScheduleId);
+        Provider provider = providerRepository.get(4);
+        Organization organization = organizationRepository.get(1);
+        Address location = locationRepository.get(5);
+        ProviderSchedule providerSchedule = new ProviderSchedule(provider, shiftSchedule, location, organization);
+        providerScheduleRepository.update(providerSchedule);
+
+        Patient patient = patientRepository.get(5);
+        Service service = serviceRepository.get(1);
+
+        Visit visit = new Visit();
+        visit.setProviderSchedule(providerSchedule);
+        visit.setPatient(patient);
+        visit.setService(service);
+        visit.setStatus(status);
+
+        Visit newVisit = visitRepository.create(visit);
+        assertNotNull(newVisit);
     }
 
 }
