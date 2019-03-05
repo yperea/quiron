@@ -36,7 +36,7 @@ I would like to build a platform that allows for better control of medical treat
 * Logging
     * Configurable logging using Log4J2. In production, only errors will normally be logged, but logging at a debug level can be turned on to facilitate trouble-shooting.
 * Hosting
-    * [AWS](http://18.191.31.27:8080/quiron)
+    * [AWS](http://www.quiron.net.co/)
 * Independent Research Topic/s
     * CI CodePipeline, CodeDeploy and CodeBuild tools in AWS to build and deploy the application on every commit.
     * Project Lombok to eliminate boilerplate code like getters/setters/equals
@@ -49,6 +49,7 @@ I would like to build a platform that allows for better control of medical treat
 * [Screen Design](docs/design/Screens.md)
 * [Database Design](db/erd/ERDProjectQuiron.png)
 * [Application Demo](https://youtu.be/5yRyZphWTOc)
+* [Application Website](http://www.quiron.net.co/)
 
 ### [Project Plan](PROJECTPLAN.md)
 
